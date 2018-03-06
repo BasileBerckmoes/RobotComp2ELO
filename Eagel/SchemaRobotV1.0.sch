@@ -7781,7 +7781,6 @@ Source: AVX .. aphvc.pdf</description>
 <part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="SV2" library="con-amp-mt" library_urn="urn:adsk.eagle:library:123" deviceset="L02P" device="" package3d_urn="urn:adsk.eagle:package:5777/1"/>
 <part name="S1" library="switch-dil" library_urn="urn:adsk.eagle:library:375" deviceset="DS01E" device="" package3d_urn="urn:adsk.eagle:package:27201/2"/>
 <part name="S2" library="switch-dil" library_urn="urn:adsk.eagle:library:375" deviceset="DS01E" device="" package3d_urn="urn:adsk.eagle:package:27201/2"/>
 <part name="SV3" library="con-amp-mt" library_urn="urn:adsk.eagle:library:123" deviceset="L05P" device="" package3d_urn="urn:adsk.eagle:package:5784/1"/>
@@ -7798,8 +7797,6 @@ Source: AVX .. aphvc.pdf</description>
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
-<part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="P+8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -7821,7 +7818,6 @@ Source: AVX .. aphvc.pdf</description>
 <text x="-104.14" y="48.26" size="1.778" layer="91">Connector H-Brug (signalen)</text>
 <text x="40.64" y="15.24" size="1.778" layer="91">Connector batterij</text>
 <text x="-30.48" y="205.74" size="1.778" layer="91">Connector IR sensoren</text>
-<text x="71.12" y="241.3" size="1.778" layer="91">Connector h-brug (voeding) NIET MEER NODIG</text>
 <text x="-76.2" y="147.32" size="1.778" layer="91" rot="MR0">Connector US 1</text>
 <text x="-76.2" y="88.9" size="1.778" layer="91" rot="MR0">Connector US 2</text>
 <text x="-15.24" y="78.74" size="1.778" layer="91" rot="MR0">Connector US 3</text>
@@ -7855,8 +7851,6 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="GND3" gate="1" x="91.44" y="129.54"/>
 <instance part="GND4" gate="1" x="93.98" y="58.42"/>
 <instance part="GND5" gate="1" x="27.94" y="63.5"/>
-<instance part="SV2" gate="-1" x="86.36" y="231.14" rot="R180"/>
-<instance part="SV2" gate="-2" x="86.36" y="236.22" rot="R180"/>
 <instance part="S1" gate="1" x="147.32" y="83.82" rot="R270"/>
 <instance part="S2" gate="1" x="147.32" y="78.74" rot="R270"/>
 <instance part="SV3" gate="-1" x="-86.36" y="142.24"/>
@@ -7893,8 +7887,6 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="P+3" gate="VCC" x="-10.16" y="81.28" rot="MR0"/>
 <instance part="P+4" gate="VCC" x="-15.24" y="193.04"/>
 <instance part="P+5" gate="VCC" x="91.44" y="144.78"/>
-<instance part="GND9" gate="1" x="78.74" y="226.06"/>
-<instance part="P+6" gate="VCC" x="68.58" y="241.3"/>
 <instance part="P+7" gate="VCC" x="154.94" y="93.98"/>
 <instance part="P+8" gate="VCC" x="162.56" y="93.98"/>
 <instance part="GND10" gate="1" x="-68.58" y="2.54" rot="MR0"/>
@@ -7967,18 +7959,22 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="GND1" gate="1" pin="GND"/>
 <wire x1="101.6" y1="40.64" x2="101.6" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="33.02" x2="101.6" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="109.22" y1="38.1" x2="109.22" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="40.64" x2="109.22" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="33.02" x2="101.6" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="38.1" x2="132.08" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="40.64" x2="132.08" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="33.02" x2="124.46" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="33.02" x2="116.84" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="116.84" y1="33.02" x2="109.22" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="38.1" x2="124.46" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="116.84" y1="38.1" x2="116.84" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="124.46" y1="40.64" x2="124.46" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="40.64" x2="116.84" y2="33.02" width="0.1524" layer="91"/>
 <junction x="101.6" y="33.02"/>
 <junction x="109.22" y="33.02"/>
 <junction x="116.84" y="33.02"/>
 <junction x="124.46" y="33.02"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R4" gate="G$1" pin="1"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<pinref part="R5" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="GND4" gate="1" pin="GND"/>
@@ -8010,12 +8006,6 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="GND3" gate="1" pin="GND"/>
 <wire x1="83.82" y1="134.62" x2="91.44" y2="134.62" width="0.1524" layer="91"/>
 <wire x1="91.44" y1="134.62" x2="91.44" y2="132.08" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="GND9" gate="1" pin="GND"/>
-<wire x1="78.74" y1="231.14" x2="78.74" y2="228.6" width="0.1524" layer="91"/>
-<pinref part="SV2" gate="-1" pin="S"/>
-<wire x1="78.74" y1="231.14" x2="81.28" y2="231.14" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SV1" gate="-11" pin="S"/>
@@ -8395,14 +8385,6 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="S1" gate="1" pin="1"/>
 <wire x1="83.82" y1="83.82" x2="142.24" y2="83.82" width="0.1524" layer="91"/>
 <label x="121.92" y="83.82" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="VCCIN" class="0">
-<segment>
-<pinref part="P+6" gate="VCC" pin="VCC"/>
-<wire x1="68.58" y1="238.76" x2="68.58" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="236.22" x2="81.28" y2="236.22" width="0.1524" layer="91"/>
-<pinref part="SV2" gate="-2" pin="S"/>
 </segment>
 </net>
 <net name="N$8" class="0">
