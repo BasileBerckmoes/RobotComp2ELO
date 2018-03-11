@@ -9151,8 +9151,8 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="S1" library="SchemaRobotV1.0" deviceset="SPARKFUN-SWITCHES_MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM"/>
 <part name="S2" library="SchemaRobotV1.0" deviceset="SPARKFUN-SWITCHES_MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM"/>
-<part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="U$3" library="SchemaRobotV1.0" deviceset="SPARKFUN-SWITCHES_SWITCH_GOTRON" device=""/>
+<part name="GND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9190,8 +9190,8 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <instance part="P+4" gate="VCC" x="-10.16" y="142.24" rot="MR0"/>
 <instance part="S1" gate="G$1" x="157.48" y="81.28"/>
 <instance part="S2" gate="G$1" x="157.48" y="88.9"/>
-<instance part="P+5" gate="VCC" x="170.18" y="99.06" rot="MR0"/>
 <instance part="U$3" gate="G$1" x="66.04" y="15.24"/>
+<instance part="GND2" gate="1" x="170.18" y="73.66"/>
 </instances>
 <busses>
 <bus name="P2.0,P2.1,P2.2,P2.3,P2.4,P2.5,P2.6,P2.7,P12.7,P12.6,P12.5,P12.4,P12.3,P12.2,P12.1,P12.0,P1.0,P1.1,P1.2,P1.3,P1.4,P1.5,P1.6,P1.7,GND,VDDIO">
@@ -9331,6 +9331,16 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <wire x1="20.32" y1="124.46" x2="-17.78" y2="124.46" width="0.1524" layer="91"/>
 <label x="12.7" y="124.46" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="S2" gate="G$1" pin="2"/>
+<wire x1="162.56" y1="88.9" x2="170.18" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="S1" gate="G$1" pin="2"/>
+<wire x1="162.56" y1="81.28" x2="170.18" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="81.28" x2="170.18" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="GND2" gate="1" pin="GND"/>
+<wire x1="170.18" y1="81.28" x2="170.18" y2="76.2" width="0.1524" layer="91"/>
+<junction x="170.18" y="81.28"/>
+</segment>
 </net>
 <net name="VCC" class="0">
 <segment>
@@ -9377,16 +9387,6 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <wire x1="-17.78" y1="121.92" x2="-10.16" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="121.92" x2="-10.16" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="P+4" gate="VCC" pin="VCC"/>
-</segment>
-<segment>
-<pinref part="S2" gate="G$1" pin="2"/>
-<wire x1="162.56" y1="88.9" x2="170.18" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="170.18" y1="88.9" x2="170.18" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="S1" gate="G$1" pin="2"/>
-<wire x1="162.56" y1="81.28" x2="170.18" y2="81.28" width="0.1524" layer="91"/>
-<wire x1="170.18" y1="81.28" x2="170.18" y2="88.9" width="0.1524" layer="91"/>
-<junction x="170.18" y="88.9"/>
-<pinref part="P+5" gate="VCC" pin="VCC"/>
 </segment>
 </net>
 <net name="P1.7" class="0">
