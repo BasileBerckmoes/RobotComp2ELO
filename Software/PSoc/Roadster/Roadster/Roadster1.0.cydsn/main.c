@@ -11,15 +11,20 @@
 */
 #include "project.h"
 #include "projectMain.h"
-uint_fast8_t infraRoodWaarden[8];
+///uint_fast8_t infraRoodWaarden[8];
 
-
+uint8 IRWaarden;
+uint8 IRDrempel = 200;
 
 CY_ISR(IRSensoren)
 {
-   for(int i = 0; i < 8; i++)
+   for(int i = 1; i < 9; i++)
    {
-    infraRoodWaarden[i] = ADC_IR_GetResult16(i);
+    if (ADC_IR_GetResult16(i) > IRDrempel)
+    {
+        uint_fast8_t tmpWaarde = 2*i;
+       IRDrempel = IRDrempel | tmpWaarde;
+    }
    }
 }
 
@@ -49,7 +54,16 @@ int main(void)
             LCD_Position(0u,9u);
             LCD_PrintInt8(1);
             LCD_Position(1u,0u);
-            LCD_PrintDecUint16(infraRoodWaarden[1]);
+            
+            for(int i = 1; i < 8; i++)
+            {
+                uint_fast8_t tmpWaarde = 2*i;
+                if ((tmpWaarde & IRWaarden) == tmpWaarde)
+                {
+                    //print 1!!
+                }
+            }
+            
             LCD_PrintString("-------------------");
             
             CyDelay(500);
