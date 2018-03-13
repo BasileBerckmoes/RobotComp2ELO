@@ -16,14 +16,21 @@
 uint8 IRWaarden;
 uint8 IRDrempel = 200;
 
+uint8 pwmMotor1;
+uint8 pwmMotor2;
+
 CY_ISR(IRSensoren)
 {
-   for(int i = 1; i < 9; i++)
+   IRWaarden = 0;
+   for(int i = 0; i < 8; i++)
    {
     if (ADC_IR_GetResult16(i) > IRDrempel)
     {
-        uint_fast8_t tmpWaarde = 2*i;
-       IRDrempel = IRDrempel | tmpWaarde;
+   
+       uint8 tmpWaarde = exponent(2,i); 
+       IRWaarden = IRWaarden | tmpWaarde;
+       
+        
     }
    }
 }
@@ -35,7 +42,7 @@ int main(void)
 
     LCD_Start();
     LCD_Position(0u, 0u);
-    LCD_PrintString("TEST");
+    LCD_PrintString("TEST123");
     
     ADC_IR_Start();
     ADC_IR_StartConvert();
@@ -52,22 +59,23 @@ int main(void)
             LCD_Position(0u,0u);
             LCD_PrintString("sensor: ");
             LCD_Position(0u,9u);
-            LCD_PrintInt8(1);
-            LCD_Position(1u,0u);
-            
-            for(int i = 1; i < 8; i++)
+            LCD_PrintDecUint16(IRWaarden);
+            //LCD_Position(1u,0u);
+            for(int i = 0; i < 8; i++)
             {
-                uint_fast8_t tmpWaarde = 2*i;
-                if ((tmpWaarde & IRWaarden) == tmpWaarde)
+                LCD_Position(1,i);
+                uint8 tmpWaarde =  exponent(2,i);
+                if ((IRWaarden & tmpWaarde) == tmpWaarde)
                 {
-                    //print 1!!
+                    LCD_PrintDecUint16(1);
                 }
+                else 
+                {
+                     LCD_PrintDecUint16(0);
+                }  
             }
-            
-            LCD_PrintString("-------------------");
-            
-            CyDelay(500);
-        
+            MotorControl_WriteCompare1(pwmMotor1);
+            MotorControl_WriteCompare2(pwmMotor2);
     }
 }
 
@@ -84,4 +92,15 @@ void telProcedure(void)
     LED5_Write(1);
     CyDelay(1000);
 }
+
+int exponent(int grondgetal, int exponent)
+{
+    uint8 tmpWaarde = 1;
+    for (int i = 0; i < exponent ; i ++)
+    {
+        tmpWaarde = tmpWaarde * grondgetal;
+    }
+    return tmpWaarde;
+}
+
 /* [] END OF FILE */

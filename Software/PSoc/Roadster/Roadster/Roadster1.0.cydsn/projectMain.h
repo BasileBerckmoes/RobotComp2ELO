@@ -10,4 +10,5 @@
  * ========================================
 */
 void telProcedure(void);
+int exponent(int grondgetal, int exponent);
 /* [] END OF FILE */

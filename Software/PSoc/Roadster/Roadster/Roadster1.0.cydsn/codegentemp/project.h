@@ -52,6 +52,7 @@
 #include "SW1.h"
 #include "SW2_aliases.h"
 #include "SW2.h"
+#include "MotorControl.h"
 #include "Clock_1.h"
 #include "LCD.h"
 #include "readIRSensors.h"
