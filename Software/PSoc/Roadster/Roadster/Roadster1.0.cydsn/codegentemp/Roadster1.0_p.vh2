@@ -1,5 +1,5 @@
 -- Project:   Roadster1.0
--- Generated: 03/19/2018 16:28:43
+-- Generated: 03/19/2018 17:27:01
 -- PSoC Creator  4.1 Update 1
 
 ENTITY \Roadster1.0\ IS
@@ -65,7 +65,6 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     SIGNAL LED4(0)__PA : bit;
     SIGNAL LED5(0)__PA : bit;
     SIGNAL LedOn(0)__PA : bit;
-    SIGNAL Net_12 : bit;
     SIGNAL Net_13 : bit;
     SIGNAL Net_242 : bit;
     ATTRIBUTE udbclken_assigned OF Net_242 : SIGNAL IS "True";
@@ -80,6 +79,7 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     SIGNAL Net_416 : bit;
     SIGNAL Net_417 : bit;
     SIGNAL Net_430 : bit;
+    SIGNAL Net_434 : bit;
     SIGNAL SW1(0)__PA : bit;
     SIGNAL SW2(0)__PA : bit;
     SIGNAL Trigger1(0)__PA : bit;
@@ -3062,7 +3062,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \ADC_IR:bSAR_SEQ:cnt_enable\,
-            main_0 => Net_12,
+            main_0 => Net_434,
             main_1 => \ADC_IR:bSAR_SEQ:load_period\);
 
     \MotorControl:PWMUDB:status_2\:macrocell
@@ -3136,7 +3136,7 @@ BEGIN
             vn_ctl_udb_1 => open,
             vn_ctl_udb_0 => open,
             irq => \ADC_IR:SAR:Net_252\,
-            next => Net_12,
+            next => Net_434,
             data_out_udb_11 => \ADC_IR:SAR:Net_207_11\,
             data_out_udb_10 => \ADC_IR:SAR:Net_207_10\,
             data_out_udb_9 => \ADC_IR:SAR:Net_207_9\,

@@ -61,11 +61,11 @@ int main(void)
    
     
     
-    while(SW1_Read() == 1)
+    while(SW1_Read() == 1) //Wait until press on SW1
     {
     }
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-    //telProcedure();
+    telProcedure();
     for(;;)
     {
         if (selectUS >= 0 && selectUS <= 3)
@@ -84,11 +84,11 @@ int main(void)
         while(Echo1_Read() == 1){}
         afstandUS1 = TimerUS_ReadCounter();
             
-            LCD_CLEAR_DISPLAY;
-            LCD_Position(0u,0u);
-            LCD_PrintString("sensor: ");
-            LCD_Position(0u,9u);
-            LCD_PrintDecUint16(afstandUS1);
+            LCD_CLEAR_DISPLAY; //Clear display
+            LCD_Position(0u,0u); //Put cursor top left
+            LCD_PrintString("sensor: "); //print something
+            LCD_Position(0u,9u); //Replace cursor
+            LCD_PrintDecUint16(afstandUS1); //Print the value of first ultrasoonsensor
             //LCD_Position(1u,0u);
             for(int i = 0; i < 8; i++)
             {
@@ -131,5 +131,3 @@ int exponent(int grondgetal, int exponent)
     }
     return tmpWaarde;
 }
-
-/* [] END OF FILE */
