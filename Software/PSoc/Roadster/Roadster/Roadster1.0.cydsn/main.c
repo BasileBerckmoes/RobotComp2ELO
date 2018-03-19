@@ -42,7 +42,7 @@ int main(void)
 
     LCD_Start();
     LCD_Position(0u, 0u);
-    LCD_PrintString("TEST123");
+    LCD_PrintString("Druk om te starten");
     
     ADC_IR_Start();
     ADC_IR_StartConvert();
@@ -51,7 +51,7 @@ int main(void)
         
     }
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-    //telProcedure();
+    telProcedure();
     for(;;)
     {
        
