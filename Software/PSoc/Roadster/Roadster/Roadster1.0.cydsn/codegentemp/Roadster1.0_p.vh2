@@ -1,5 +1,5 @@
 -- Project:   Roadster1.0
--- Generated: 03/19/2018 17:27:01
+-- Generated: 03/26/2018 16:04:11
 -- PSoC Creator  4.1 Update 1
 
 ENTITY \Roadster1.0\ IS
@@ -79,7 +79,7 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     SIGNAL Net_416 : bit;
     SIGNAL Net_417 : bit;
     SIGNAL Net_430 : bit;
-    SIGNAL Net_434 : bit;
+    SIGNAL Net_529 : bit;
     SIGNAL SW1(0)__PA : bit;
     SIGNAL SW2(0)__PA : bit;
     SIGNAL Trigger1(0)__PA : bit;
@@ -321,6 +321,7 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     ATTRIBUTE lib_model OF \MotorControl:PWMUDB:sP8:pwmdp:u0\ : LABEL IS "datapathcell1";
     ATTRIBUTE lib_model OF \TriggerReg:Sync:ctrl_reg\ : LABEL IS "controlcell3";
     ATTRIBUTE lib_model OF \selectUS:Sync:ctrl_reg\ : LABEL IS "controlcell4";
+    ATTRIBUTE lib_model OF \statusEcho:sts:sts_reg\ : LABEL IS "statuscell2";
     ATTRIBUTE lib_model OF \ADC_IR:AMuxHw_2_Decoder_old_id_5\ : LABEL IS "macrocell9";
     ATTRIBUTE lib_model OF \ADC_IR:AMuxHw_2_Decoder_old_id_4\ : LABEL IS "macrocell10";
     ATTRIBUTE lib_model OF \ADC_IR:AMuxHw_2_Decoder_old_id_3\ : LABEL IS "macrocell11";
@@ -3062,7 +3063,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \ADC_IR:bSAR_SEQ:cnt_enable\,
-            main_0 => Net_434,
+            main_0 => Net_529,
             main_1 => \ADC_IR:bSAR_SEQ:load_period\);
 
     \MotorControl:PWMUDB:status_2\:macrocell
@@ -3136,7 +3137,7 @@ BEGIN
             vn_ctl_udb_1 => open,
             vn_ctl_udb_0 => open,
             irq => \ADC_IR:SAR:Net_252\,
-            next => Net_434,
+            next => Net_529,
             data_out_udb_11 => \ADC_IR:SAR:Net_207_11\,
             data_out_udb_10 => \ADC_IR:SAR:Net_207_10\,
             data_out_udb_9 => \ADC_IR:SAR:Net_207_9\,
@@ -3393,6 +3394,22 @@ BEGIN
             control_1 => selectUltraS_1,
             control_0 => selectUltraS_0,
             busclk => ClockBlock_BUS_CLK);
+
+    \statusEcho:sts:sts_reg\:statuscell
+        GENERIC MAP(
+            cy_force_order => 1,
+            cy_md_select => "00000000",
+            clken_mode => 1)
+        PORT MAP(
+            clock => open,
+            status_7 => open,
+            status_6 => open,
+            status_5 => open,
+            status_4 => open,
+            status_3 => open,
+            status_2 => open,
+            status_1 => open,
+            status_0 => Net_402);
 
     \ADC_IR:AMuxHw_2_Decoder_old_id_5\:macrocell
         GENERIC MAP(

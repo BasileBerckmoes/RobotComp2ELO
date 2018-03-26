@@ -11,20 +11,26 @@
 */
 #include "project.h"
 #include "projectMain.h"
-///uint_fast8_t infraRoodWaarden[8];
 
+//INFRAROOD GLOBALS
 uint8 IRWaarden;
-uint8 IRDrempel = 200;
+uint8 IRDrempel = 190;
 
-int afstandUS1 = 0;
+//US GLOBALS
 uint8 selectUS = 0;
 
+uint16 avgUS1[5];
+uint16 avgUS2[5];
+uint16 avgUS3[5];
+
+//MOTOR GLOBALS
 uint8 pwmMotor1;
 uint8 pwmMotor2;
 
+//Interupt "end of conversion" van SAR_ADC 
 CY_ISR(IRSensoren)
 {
-   IRWaarden = 0;
+    IRWaarden = 0;
    for(int i = 0; i < 8; i++)
    {
     if (ADC_IR_GetResult16(i) > IRDrempel)
@@ -34,80 +40,121 @@ CY_ISR(IRSensoren)
     }
    }
 }
-CY_ISR(isrUltraSonen)
-{
-    LED1_Write(~LED1_Read());
-    //afstandUS1 = Timer_1_ReadCounter();
-}    
+  
 
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
-   // readIRSensors_StartEx(IRSensoren);
-    isrUltraSonen_StartEx(isrUltraSonen);
-    
-    LED1_Write(0);
+    readIRSensors_StartEx(IRSensoren);
     
     LCD_Start(); 
     LCD_Position(0u, 0u);
-    LCD_PrintString("S");
+    LCD_PrintString("Druk om te starten");
     
     ADC_IR_Start();
     ADC_IR_StartConvert();
     
-   // Timer_1_Enable();
-   // Timer_1_Start();
     TimerUS_Start();
    
-    
     
     while(SW1_Read() == 1) //Wait until press on SW1
     {
     }
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-    telProcedure();
+    
+    //telProcedure();
+    
     for(;;)
-    {
-        if (selectUS >= 0 && selectUS <= 3)
-        {
-            selectUS++;
-        }else selectUS = 0;
+    { 
+        //US deel
+        /////////////////////////////////////////////////////
+        //Teller die door de mux loopt
+        selectUS = telTot(selectUS, 0, 2); //PAS DIT AAN INDIEN NIET ALE US SENSOREN ZIJN AANGESLOTEN!!!!!
         selectUS_Write(selectUS);
         
-        while(Echo1_Read() == 0)
+        //vraag afstand aan 1 van de 3 us sensoren
+        uint16 counterValue = readUSValue();
+        
+        //schuif uitkomst timer in juiste array
+        if (selectUS == 0) schuifRegister(avgUS1, counterValue);
+        else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
+        else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
+         
+        //LCD deel   
+        /////////////////////////////////////////////////////
+        //print text en een test variable op de lcd
+        printTextopLCD(avgUS1[4]);
+        //print de binaire waarde van de infrarood sensoren op de lcd
+        printBINopLCD(IRWaarden, 1);
+        
+        //motordeel
+        /////////////////////////////////////////////////////
+        MotorControl_WriteCompare1(pwmMotor1);
+        MotorControl_WriteCompare2(pwmMotor2);
+    }
+}
+
+
+uint16 readUSValue(void)
+{
+    while(statusEcho_Read() == 0)
         {
             TriggerReg_Write(1);
             CyDelayUs(10);
             TriggerReg_Write(0);
         }
-        
-        while(Echo1_Read() == 1){}
-        afstandUS1 = TimerUS_ReadCounter();
-            
-            LCD_CLEAR_DISPLAY; //Clear display
-            LCD_Position(0u,0u); //Put cursor top left
-            LCD_PrintString("sensor: "); //print something
-            LCD_Position(0u,9u); //Replace cursor
-            LCD_PrintDecUint16(afstandUS1); //Print the value of first ultrasoonsensor
-            //LCD_Position(1u,0u);
-            for(int i = 0; i < 8; i++)
-            {
-                LCD_Position(1,i);
-                uint8 tmpWaarde =  exponent(2,i);
-                if ((IRWaarden & tmpWaarde) == tmpWaarde)
-                {
-                    LCD_PrintDecUint16(1);
-                }
-                else 
-                {
-                     LCD_PrintDecUint16(0);
-                }  
-            }
-            MotorControl_WriteCompare1(pwmMotor1);
-            MotorControl_WriteCompare2(pwmMotor2);
-    }
+    while(statusEcho_Read() == 1){}
+    return TimerUS_ReadCounter();
 }
 
+void schuifRegister(uint16 array[], uint16 newValue)
+{
+    for(int i = 3; i >= 0; i--)
+    {
+        uint16 tmpvalue = avgUS1[i];
+        array[i + 1] = tmpvalue;
+    }
+    array[0] = newValue;
+}
+
+//methode die een text en een testgetal op een 
+void printTextopLCD(int testValue)
+{
+    LCD_CLEAR_DISPLAY; //Clear display
+    LCD_Position(0u,0u); //Put cursor top left
+    LCD_PrintString("sensor: "); //print something
+    LCD_Position(0u,9u); //Replace cursor
+    LCD_PrintDecUint16(testValue); //Print the value of first ultrasoonsensor
+}
+
+//methode die van min tot max telt en de huidige tel waarde terug geeft
+uint8 telTot(uint8 getal, uint8 min, uint8 max)
+{
+   if (getal >= min && getal <= max - 1)
+        {
+            getal++;
+        }   else getal = min; 
+   return getal;
+}
+
+//methode die een binair getal op de LCD print
+void printBINopLCD(uint8 value, int row)
+{
+    for(int i = 0; i < 8; i++)
+    {
+        LCD_Position(row,i);
+        uint8 tmpWaarde =  exponent(2,i);
+        if ((value & tmpWaarde) == tmpWaarde)
+        {
+            LCD_PrintDecUint16(1);
+        }
+            else 
+        {
+            LCD_PrintDecUint16(0);
+        }  
+     }  
+}
+
+//methode met delays om af te tellen
 void telProcedure(void)
 {
     LED1_Write(1);
@@ -122,6 +169,7 @@ void telProcedure(void)
     CyDelay(1000);
 }
 
+//methode die een macht berekend
 int exponent(int grondgetal, int exponent)
 {
     uint8 tmpWaarde = 1;

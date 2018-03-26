@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
-  <block name="Echo1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="isrUltraSonen" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Echo3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Echo2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Trigger1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="TriggerReg" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <register name="TriggerReg_CONTROL_REG" address="0x40006577" bitWidth="8" desc="" hidden="false" />
+  </block>
+  <block name="Echo1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="readIRSensors" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LCD" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="LCDPort" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   </block>
-  <block name="Clock_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="isrUltraSonen" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="demux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="readIRSensors" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="TriggerReg" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
-    <register name="TriggerReg_CONTROL_REG" address="0x40006576" bitWidth="8" desc="" hidden="false" />
+  <block name="statusEcho" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <register name="statusEcho_STATUS_REG" address="0x40006565" bitWidth="8" desc="" hidden="false" />
+    <register name="statusEcho_MASK_REG" address="0x40006585" bitWidth="8" desc="" hidden="false" />
+    <register name="statusEcho_STATUS_AUX_CTL_REG" address="0x40006595" bitWidth="8" desc="" hidden="false">
+      <field name="FIFO0" from="5" to="5" access="RW" resetVal="" desc="FIFO0 clear" hidden="false">
+        <value name="ENABLED" value="1" desc="Enable counter" />
+        <value name="DISABLED" value="0" desc="Disable counter" />
+      </field>
+      <field name="INTRENBL" from="4" to="4" access="RW" resetVal="" desc="Enables or disables the Interrupt" hidden="false">
+        <value name="ENABLED" value="1" desc="Interrupt enabled" />
+        <value name="DISABLED" value="0" desc="Interrupt disabled" />
+      </field>
+      <field name="FIFO1LEVEL" from="3" to="3" access="RW" resetVal="" desc="FIFO level" hidden="false">
+        <value name="ENABLED" value="1" desc="FIFO LVL: input mode: FIFO at least 1/2 empty; output mode: FIFO at least 1/2 full" />
+        <value name="DISABLED" value="0" desc="FIFO LVL: input mode: FIFO not full; output mode: FIFO not empty" />
+      </field>
+      <field name="FIFO0LEVEL" from="2" to="2" access="RW" resetVal="" desc="FIFO level" hidden="false">
+        <value name="ENABLED" value="1" desc="FIFO LVL: input mode: FIFO at least 1/2 empty; output mode: FIFO at least 1/2 full" />
+        <value name="DISABLED" value="0" desc="FIFO LVL: input mode: FIFO not full; output mode: FIFO not empty" />
+      </field>
+      <field name="FIFO1CLEAR" from="1" to="1" access="RW" resetVal="" desc="FIFO clear" hidden="false">
+        <value name="ENABLED" value="1" desc="Clear FIFO state" />
+        <value name="DISABLED" value="0" desc="Normal FIFO operation" />
+      </field>
+      <field name="FIFO0CLEAR" from="0" to="0" access="RW" resetVal="" desc="FIFO clear" hidden="false">
+        <value name="ENABLED" value="1" desc="Clear FIFO state" />
+        <value name="DISABLED" value="0" desc="Normal FIFO operation" />
+      </field>
+    </register>
   </block>
-  <block name="Trigger3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Trigger2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="selectUS" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
-    <register name="selectUS_CONTROL_REG" address="0x40006574" bitWidth="8" desc="" hidden="false" />
+    <register name="selectUS_CONTROL_REG" address="0x40006575" bitWidth="8" desc="" hidden="false" />
   </block>
+  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Trigger3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="mux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="TimerUS" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -76,9 +107,20 @@
     <register name="TimerUS_PERIOD" address="0x40004F04" bitWidth="16" desc="TMRx.PER0 - Assigned Period" hidden="false" />
     <register name="TimerUS_COUNTER" address="0x40004F06" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
-  <block name="Trigger1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Trigger2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="timer_clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="mux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR6" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR8" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR7" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LedOn" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IR2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SW1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LED5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="MotorControl" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="vmIRQ" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="vmCompare" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -89,12 +131,12 @@
     <block name="PWMUDB" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <register name="MotorControl__COMPARE1" address="0x40006420" bitWidth="8" desc="UDB.D0 - Assigned Compare1 Value" hidden="false" />
     <register name="MotorControl__COMPARE2" address="0x40006430" bitWidth="8" desc="UDB.D1 - Assigned Compare2 Value" hidden="false" />
-    <register name="MotorControl_Control_Reg" address="0x40006471" bitWidth="8" desc="UDB Control Register - Assigned Control Register Value" hidden="false">
+    <register name="MotorControl_Control_Reg" address="0x40006470" bitWidth="8" desc="UDB Control Register - Assigned Control Register Value" hidden="false">
       <field name="CTRL_ENABLE" from="7" to="7" access="RW" resetVal="" desc="Enable the PWM" hidden="false" />
       <field name="CTRL_CMPMODE2" from="5" to="3" access="RW" resetVal="" desc="Compare mode 2" hidden="false" />
       <field name="CTRL_CMPMODE1" from="2" to="0" access="RW" resetVal="" desc="Compare mode 1" hidden="false" />
     </register>
-    <register name="MotorControl_STATUS_MASK" address="0x40006481" bitWidth="8" desc="UDB Status bits Interrupt Mask Enable Register" hidden="false">
+    <register name="MotorControl_STATUS_MASK" address="0x40006480" bitWidth="8" desc="UDB Status bits Interrupt Mask Enable Register" hidden="false">
       <field name="PWM_STS_CMP1" from="0" to="0" access="R" resetVal="" desc="Enables the Interrupt on Compare 1" hidden="false" />
       <field name="PWM_STS_CMP2" from="1" to="1" access="R" resetVal="" desc="Enables the Interrupt on Compare 2" hidden="false" />
       <field name="PWM_STS_TC" from="2" to="2" access="R" resetVal="" desc="Enables the Interrupt on Terminal Count" hidden="false" />
@@ -128,19 +170,8 @@
       </field>
     </register>
   </block>
-  <block name="IR5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR7" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR6" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="LedOn" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="IR8" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="LED5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="LED4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SW2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="SW1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LED4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LED1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="ADC_IR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="or_internal" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -161,13 +192,13 @@
       <block name="ZeroTerminal_5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="ZeroTerminal_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="ADC_SAR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-      <block name="vRef_Vdda_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="cy_analog_noconnect_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+      <block name="cy_analog_virtualmux_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="or_internalClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="noconnect_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="cy_analog_virtualmux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="cy_analog_virtualmux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-      <block name="cy_analog_virtualmux_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+      <block name="vRef_1024" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="noconnect" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="ZeroTerminal_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
       <block name="cy_analog_virtualmux_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />

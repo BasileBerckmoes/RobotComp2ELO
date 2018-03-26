@@ -92,6 +92,7 @@
 <dep name=".\Generated_Source\PSoC5\project.h" />
 <dep name=".\Generated_Source\PSoC5\readIRSensors.h" />
 <dep name=".\Generated_Source\PSoC5\selectUS.h" />
+<dep name=".\Generated_Source\PSoC5\statusEcho.h" />
 <dep name=".\main.c" />
 <dep name=".\projectMain.h" />
 </file>
@@ -173,6 +174,7 @@
 <file name=".\Generated_Source\PSoC5\project.h" />
 <file name=".\Generated_Source\PSoC5\readIRSensors.h" />
 <file name=".\Generated_Source\PSoC5\selectUS.h" />
+<file name=".\Generated_Source\PSoC5\statusEcho.h" />
 <file name=".\main.c" />
 <file name=".\projectMain.h" />
 <file name=".\CortexM3\ARM_GCC_541\Debug\ADC_IR.o">
@@ -832,6 +834,19 @@
 <dep name=".\Generated_Source\PSoC5\selectUS_PM.c" />
 </file>
 <file name=".\Generated_Source\PSoC5\selectUS_PM.c" />
+<file name=".\CortexM3\ARM_GCC_541\Debug\statusEcho.o">
+<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC5\CyLib.h" />
+<dep name=".\Generated_Source\PSoC5\CySpc.h" />
+<dep name=".\Generated_Source\PSoC5\cyPm.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+<dep name=".\Generated_Source\PSoC5\statusEcho.c" />
+<dep name=".\Generated_Source\PSoC5\statusEcho.h" />
+</file>
+<file name=".\Generated_Source\PSoC5\statusEcho.c" />
 <file name=".\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o">
 <dep name=".\Generated_Source\PSoC5\CyBootAsmGnu.s" />
 <dep name=".\Generated_Source\PSoC5\cydevicegnu.inc" />
@@ -1149,6 +1164,7 @@
 <dep name=".\CortexM3\ARM_GCC_541\Debug\Trigger3.o" />
 <dep name=".\CortexM3\ARM_GCC_541\Debug\selectUS.o" />
 <dep name=".\CortexM3\ARM_GCC_541\Debug\selectUS_PM.o" />
+<dep name=".\CortexM3\ARM_GCC_541\Debug\statusEcho.o" />
 <dep name=".\CortexM3\ARM_GCC_541\Debug\Roadster1.0.a" />
 <dep name="${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" />
 </file>
@@ -1238,6 +1254,7 @@
 <name_val_pair name="Generated_Source\PSoC5\Trigger3.c" v="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="Generated_Source\PSoC5\selectUS.c" v="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="Generated_Source\PSoC5\selectUS_PM.c" v="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og" />
+<name_val_pair name="Generated_Source\PSoC5\statusEcho.c" v="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\basile.berckmoes\AppData\Local\Cypress Semiconductor\PSoC Creator\4.1&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\basile.berckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\Roadster1.0.cyprj -d CY8C5288LTI-LP090 -s C:\Users\basile.berckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
@@ -1297,45 +1314,45 @@
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_pins_v2_20\PSoC5\API\aliases.h</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_pins_v2_20\PSoC5\API\pins.c</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_pins_v2_20\PSoC5\API\pins.h</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\ADC_SAR_SEQ_v2_0.cysym</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\ADC_SAR_SEQ_v2_0.pdf</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\ADC_SAR_SEQ_v2_0.cystate</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\cycustomizer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\cyconfigtab.Designer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\cyconfigtab.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\cyparameters.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\Resources.Designer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\cyshapebuilder.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\cyconfigtab.resx</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\Custom\Resources.resx</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\PSoC5\ADC_SAR_SEQ_v2_0.cysch</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\PSoC5\API\ADC_SAR_SEQ.c</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\PSoC5\API\ADC_SAR_SEQ.h</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\PSoC5\API\ADC_SAR_SEQ_PM.c</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_0\PSoC5\API\ADC_SAR_SEQ_INT.c</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\ADC_SAR_SEQ_v2_10.cysym</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\ADC_SAR_SEQ_v2_10.pdf</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\ADC_SAR_SEQ_v2_10.cystate</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\cycustomizer.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\cyconfigtab.Designer.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\cyconfigtab.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\cyparameters.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\Resources.Designer.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\cyshapebuilder.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\cyconfigtab.resx</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\Custom\Resources.resx</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\API\ADC_SAR_SEQ.c</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\API\ADC_SAR_SEQ.h</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\API\ADC_SAR_SEQ_PM.c</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\API\ADC_SAR_SEQ_INT.c</v>
 <v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_AMUX_v2_0\ADC_AMUX_v2_0.cysym</v>
 <v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_AMUX_v2_0\ADC_AMUX_v2_0.v</v>
 <v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_AMUX_v2_0\Custom\cyverilogbuilder.cs</v>
 <v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_AMUX_v2_0\Custom\cyamuxcustomizer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\ADC_SAR_v3_0.cysym</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\ADC_SAR_v3_0.pdf</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\ADC_SAR_v3_0.cycdx</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\ADC_SAR_v3_0.cystate</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cyadcsarcontrol.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cyadcsarcontrol.designer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cyadcsarcustomizer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cyadcsarparameters.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cydictparser.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cyclockreader.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\Resources.Designer.cs</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\cyadcsarcontrol.resx</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\Custom\Resources.resx</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\PSoC5\ADC_SAR_v3_0.cydmacap</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\PSoC5\ADC_SAR_v3_0.cysch</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\PSoC5\API\ADC_SAR.c</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\PSoC5\API\ADC_SAR.h</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\PSoC5\API\ADC_SAR_INT.c</v>
-<v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_v3_0\PSoC5\API\ADC_SAR_PM.c</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\ADC_SAR_v3_10.cysym</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\ADC_SAR_v3_10.pdf</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\ADC_SAR_v3_10.cycdx</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\ADC_SAR_v3_10.cystate</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cyadcsarcontrol.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cyadcsarcontrol.designer.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cyadcsarcustomizer.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cyadcsarparameters.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cydictparser.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cyclockreader.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\Resources.Designer.cs</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\cyadcsarcontrol.resx</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\Custom\Resources.resx</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\PSoC5\ADC_SAR_v3_10.cydmacap</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\PSoC5\ADC_SAR_v3_10.cysch</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\PSoC5\API\ADC_SAR.c</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\PSoC5\API\ADC_SAR.h</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\PSoC5\API\ADC_SAR_INT.c</v>
+<v>..\..\..\..\..\..\..\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_v3_10\PSoC5\API\ADC_SAR_PM.c</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.cysym</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.pdf</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v</v>
@@ -1353,15 +1370,17 @@
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_noconnect_v1_0\cy_analog_noconnect_v1_0.pdf</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_noconnect_v1_0\cy_analog_noconnect_v1_0.primitive</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_noconnect_v1_0\Custom\custom.cs</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\cy_vref_v1_60.cyprimitive</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\cy_vref_v1_60.cysym</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\cy_vref_v1_60.pdf</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\cy_vref_v1_60.v</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\cy_vref_v1_60.cystate</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\Custom\custom.cs</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\Custom\cyvrefidcontrol.cs</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\Custom\cyvrefidcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_60\Custom\cyvrefidcontrol.resx</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.cysym</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.cystate</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.cyprimitive</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.pdf</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\Custom\custom.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\Custom\cyvrefidcontrol.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\Custom\cyvrefidcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\Custom\Resources.Designer.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\Custom\cyvrefidcontrol.resx</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\Custom\Resources.resx</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.cysym</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.pdf</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v</v>
@@ -1495,6 +1514,21 @@
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\mux_v1_10\mux_v1_10.cystate</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\mux_v1_10\mux_v1_10.pdf</v>
 <v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\mux_v1_10\Custom\custom.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.cydmacap</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.pdf</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.cystate</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.v</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.cysym</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.cycdx</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\API\CyStatusReg.c</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\API\CyStatusReg.h</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\StatusRegParameters.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\Resource.Designer.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\cybitfieldcontrol.designer.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\cybitfieldcontrol.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\custom.cs</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\cybitfieldcontrol.resx</v>
+<v>${CyRoot}\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\Custom\Resource.resx</v>
 <v>.\Roadster1.0.cydwr</v>
 <v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\cy_boot_v5_60\PSoC5\API\cm3gcc.ld</v>
 <v>${CyRoot}\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\cy_boot_v5_60\PSoC5\API\Cm3RealView.scat</v>
@@ -1710,6 +1744,8 @@
 <v>Generated_Source\PSoC5\selectUS.h</v>
 <v>Generated_Source\PSoC5\selectUS.c</v>
 <v>Generated_Source\PSoC5\selectUS_PM.c</v>
+<v>Generated_Source\PSoC5\statusEcho.c</v>
+<v>Generated_Source\PSoC5\statusEcho.h</v>
 </gen_list>
 <warp_dep>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\warp\lib\ieee\work\stdlogic.vif</v>
@@ -1719,7 +1755,7 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="131659469342426954" />
+<deps_time v="131665466611587272" />
 <top_block v="TopDesign" />
 <last_generation v="0" />
 <pdl_path v="" />
@@ -1729,7 +1765,7 @@
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" v="131659470892412111" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" v="131665511497697464" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>
