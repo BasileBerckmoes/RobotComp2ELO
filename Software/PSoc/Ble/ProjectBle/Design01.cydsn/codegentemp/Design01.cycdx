@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
   <block name="cy_constant_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="cy_constant_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="key" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="rxPuttyISR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="key" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="cy_constant_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="txBleISR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Em_EEPROM_Dynamic" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="rxBleISR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="bleTx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LCDD" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="LCDPort" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  </block>
   <block name="VDAC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="viDAC8" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -121,7 +123,30 @@
       <field name="data" from="7" to="0" access="RW" resetVal="" desc="8 DAC Data bits" hidden="false" />
     </register>
   </block>
-  <block name="bleRx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="bleUart1" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
+    <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <register name="TX_bleUart1_TX_DATA" address="0x4000644A" bitWidth="8" desc="TX Data Register" hidden="false" />
+    <register name="TX_bleUart1_TX_STATUS" address="0x4000646A" bitWidth="8" desc="TX status register" hidden="false">
+      <field name="bleUart1_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
+    </register>
+    <register name="RX_bleUart1_RX_ADDRESS1" address="0x40006529" bitWidth="8" desc="RX Address1 Register" hidden="false" />
+    <register name="RX_bleUart1_RX_ADDRESS2" address="0x40006539" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="RX_bleUart1_RX_DATA" address="0x40006549" bitWidth="8" desc="RX Data Register" hidden="false" />
+    <register name="RX_bleUart1_RX_STATUS" address="0x40006568" bitWidth="8" desc="RX status register" hidden="false">
+      <field name="bleUart1_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_RX_STS_STOP_ERROR" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_RX_STS_OVERRUN" from="4" to="4" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" hidden="false" />
+      <field name="bleUart1_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
+    </register>
+  </block>
   <block name="Opamp_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="ABuf" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="abuf_negInput_mux" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -187,47 +212,24 @@
       <field name="swinp" from="2" to="2" access="RW" resetVal="" desc="Switch Enable Positive Input" hidden="false" />
     </register>
   </block>
-  <block name="bleUart1" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
-    <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="TX_bleUart1_TX_DATA" address="0x4000644B" bitWidth="8" desc="TX Data Register" hidden="false" />
-    <register name="RX_bleUart1_RX_STATUS" address="0x40006468" bitWidth="8" desc="RX status register" hidden="false">
-      <field name="bleUart1_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_RX_STS_STOP_ERROR" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_RX_STS_OVERRUN" from="4" to="4" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
-    </register>
-    <register name="TX_bleUart1_TX_STATUS" address="0x4000646B" bitWidth="8" desc="TX status register" hidden="false">
-      <field name="bleUart1_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
-      <field name="bleUart1_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
-    </register>
-    <register name="RX_bleUart1_RX_ADDRESS1" address="0x40006528" bitWidth="8" desc="RX Address1 Register" hidden="false" />
-    <register name="RX_bleUart1_RX_ADDRESS2" address="0x40006538" bitWidth="8" desc="RX Address2 Register" hidden="false" />
-    <register name="RX_bleUart1_RX_DATA" address="0x40006548" bitWidth="8" desc="RX Data Register" hidden="false" />
-  </block>
+  <block name="bleRx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Tx_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Rx_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="bleTx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="puttyUart1" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
     <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="TX_puttyUart1_TX_DATA" address="0x4000644A" bitWidth="8" desc="TX Data Register" hidden="false" />
-    <register name="TX_puttyUart1_TX_STATUS" address="0x4000646A" bitWidth="8" desc="TX status register" hidden="false">
+    <register name="TX_puttyUart1_TX_DATA" address="0x4000644B" bitWidth="8" desc="TX Data Register" hidden="false" />
+    <register name="TX_puttyUart1_TX_STATUS" address="0x4000646B" bitWidth="8" desc="TX status register" hidden="false">
       <field name="puttyUart1_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="puttyUart1_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
       <field name="puttyUart1_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
       <field name="puttyUart1_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
     </register>
-    <register name="RX_puttyUart1_RX_ADDRESS1" address="0x40006529" bitWidth="8" desc="RX Address1 Register" hidden="false" />
-    <register name="RX_puttyUart1_RX_ADDRESS2" address="0x40006539" bitWidth="8" desc="RX Address2 Register" hidden="false" />
-    <register name="RX_puttyUart1_RX_DATA" address="0x40006549" bitWidth="8" desc="RX Data Register" hidden="false" />
-    <register name="RX_puttyUart1_RX_STATUS" address="0x40006569" bitWidth="8" desc="RX status register" hidden="false">
+    <register name="RX_puttyUart1_RX_ADDRESS1" address="0x4000652A" bitWidth="8" desc="RX Address1 Register" hidden="false" />
+    <register name="RX_puttyUart1_RX_ADDRESS2" address="0x4000653A" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="RX_puttyUart1_RX_DATA" address="0x4000654A" bitWidth="8" desc="RX Data Register" hidden="false" />
+    <register name="RX_puttyUart1_RX_STATUS" address="0x4000656B" bitWidth="8" desc="RX status register" hidden="false">
       <field name="puttyUart1_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="puttyUart1_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
       <field name="puttyUart1_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
@@ -237,4 +239,5 @@
       <field name="puttyUart1_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
     </register>
   </block>
+  <block name="Rx_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
 </blockRegMap>

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 1
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 1
 
 
    1              		.syntax unified
@@ -40,7 +40,7 @@ ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 1
   10:main.c        ****  * ========================================
   11:main.c        **** */
   12:main.c        **** #include "project.h"
-  13:main.c        **** 
+  13:main.c        **** char teller;
   14:main.c        **** 
   15:main.c        **** CY_ISR(dataBinnenPutty)
   16:main.c        **** {
@@ -48,863 +48,1206 @@ ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 1
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
-  32 0000 08B5     		push	{r3, lr}
+  32 0000 10B5     		push	{r4, lr}
   33              		.cfi_def_cfa_offset 8
-  34              		.cfi_offset 3, -8
+  34              		.cfi_offset 4, -8
   35              		.cfi_offset 14, -4
   17:main.c        ****     char charBinnen = puttyUart1_GetChar();
   36              		.loc 1 17 0
   37 0002 FFF7FEFF 		bl	puttyUart1_GetChar
   38              	.LVL0:
-  18:main.c        ****     puttyUart1_PutChar(charBinnen);
-  39              		.loc 1 18 0
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 2
+  39 0006 0446     		mov	r4, r0
+  40              	.LVL1:
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 2
 
 
-  40 0006 FFF7FEFF 		bl	puttyUart1_PutChar
-  41              	.LVL1:
-  19:main.c        ****     
-  20:main.c        ****     bleUart1_PutString("AT");
-  42              		.loc 1 20 0
-  43 000a 0248     		ldr	r0, .L3
-  44 000c FFF7FEFF 		bl	bleUart1_PutString
-  45              	.LVL2:
-  46 0010 08BD     		pop	{r3, pc}
-  47              	.L4:
-  48 0012 00BF     		.align	2
-  49              	.L3:
-  50 0014 00000000 		.word	.LC0
-  51              		.cfi_endproc
-  52              	.LFE63:
-  53              		.size	dataBinnenPutty, .-dataBinnenPutty
-  54              		.section	.text.bleAntwoord,"ax",%progbits
-  55              		.align	2
-  56              		.global	bleAntwoord
-  57              		.thumb
-  58              		.thumb_func
-  59              		.type	bleAntwoord, %function
-  60              	bleAntwoord:
-  61              	.LFB64:
-  21:main.c        **** }
-  22:main.c        **** 
-  23:main.c        **** CY_ISR(bleAntwoord)
-  24:main.c        **** {
-  62              		.loc 1 24 0
-  63              		.cfi_startproc
-  64              		@ args = 0, pretend = 0, frame = 0
-  65              		@ frame_needed = 0, uses_anonymous_args = 0
-  66 0000 08B5     		push	{r3, lr}
-  67              		.cfi_def_cfa_offset 8
-  68              		.cfi_offset 3, -8
-  69              		.cfi_offset 14, -4
-  25:main.c        ****     char charBinnen = bleUart1_GetChar();
-  70              		.loc 1 25 0
-  71 0002 FFF7FEFF 		bl	bleUart1_GetChar
-  72              	.LVL3:
-  26:main.c        ****     puttyUart1_PutChar(charBinnen);
+  18:main.c        ****     if (charBinnen == '\n') teller=charBinnen;
+  41              		.loc 1 18 0
+  42 0008 0A28     		cmp	r0, #10
+  43 000a 01D1     		bne	.L2
+  44              		.loc 1 18 0 is_stmt 0 discriminator 1
+  45 000c 044B     		ldr	r3, .L4
+  46 000e 1870     		strb	r0, [r3]
+  47              	.L2:
+  19:main.c        ****     puttyUart1_PutChar(charBinnen);
+  48              		.loc 1 19 0 is_stmt 1
+  49 0010 2046     		mov	r0, r4
+  50              	.LVL2:
+  51 0012 FFF7FEFF 		bl	puttyUart1_PutChar
+  52              	.LVL3:
+  20:main.c        ****     
+  21:main.c        ****     //puttyUart1_PutChar(charBinnen);
+  22:main.c        ****     bleUart1_PutChar(charBinnen);
+  53              		.loc 1 22 0
+  54 0016 2046     		mov	r0, r4
+  55 0018 FFF7FEFF 		bl	bleUart1_PutChar
+  56              	.LVL4:
+  57 001c 10BD     		pop	{r4, pc}
+  58              	.L5:
+  59 001e 00BF     		.align	2
+  60              	.L4:
+  61 0020 00000000 		.word	teller
+  62              		.cfi_endproc
+  63              	.LFE63:
+  64              		.size	dataBinnenPutty, .-dataBinnenPutty
+  65              		.section	.text.bleAntwoord,"ax",%progbits
+  66              		.align	2
+  67              		.global	bleAntwoord
+  68              		.thumb
+  69              		.thumb_func
+  70              		.type	bleAntwoord, %function
+  71              	bleAntwoord:
+  72              	.LFB64:
+  23:main.c        **** }
+  24:main.c        **** 
+  25:main.c        **** CY_ISR(bleAntwoord)
+  26:main.c        **** {
   73              		.loc 1 26 0
-  74 0006 FFF7FEFF 		bl	puttyUart1_PutChar
-  75              	.LVL4:
-  76 000a 08BD     		pop	{r3, pc}
-  77              		.cfi_endproc
-  78              	.LFE64:
-  79              		.size	bleAntwoord, .-bleAntwoord
-  80              		.section	.text.main,"ax",%progbits
-  81              		.align	2
-  82              		.global	main
-  83              		.thumb
-  84              		.thumb_func
-  85              		.type	main, %function
-  86              	main:
-  87              	.LFB65:
-  27:main.c        **** }
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 3
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77 0000 10B5     		push	{r4, lr}
+  78              		.cfi_def_cfa_offset 8
+  79              		.cfi_offset 4, -8
+  80              		.cfi_offset 14, -4
+  27:main.c        ****     
+  28:main.c        ****     char charBinnen = bleUart1_GetChar();
+  81              		.loc 1 28 0
+  82 0002 FFF7FEFF 		bl	bleUart1_GetChar
+  83              	.LVL5:
+  84 0006 0446     		mov	r4, r0
+  85              	.LVL6:
+  29:main.c        ****     teller++;
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 3
 
 
-  28:main.c        **** 
-  29:main.c        **** int main(void)
-  30:main.c        **** {
-  88              		.loc 1 30 0
-  89              		.cfi_startproc
-  90              		@ Volatile: function does not return.
-  91              		@ args = 0, pretend = 0, frame = 0
-  92              		@ frame_needed = 0, uses_anonymous_args = 0
-  93 0000 08B5     		push	{r3, lr}
-  94              		.cfi_def_cfa_offset 8
-  95              		.cfi_offset 3, -8
-  96              		.cfi_offset 14, -4
-  31:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
-  97              		.loc 1 31 0
-  98              		.syntax unified
-  99              	@ 31 "main.c" 1
- 100 0002 62B6     		CPSIE   i
- 101              	@ 0 "" 2
-  32:main.c        ****     rxPuttyISR_StartEx(dataBinnenPutty);
- 102              		.loc 1 32 0
- 103              		.thumb
- 104              		.syntax unified
- 105 0004 0748     		ldr	r0, .L10
- 106 0006 FFF7FEFF 		bl	rxPuttyISR_StartEx
- 107              	.LVL5:
-  33:main.c        ****     
-  34:main.c        ****     rxBleISR_StartEx(bleAntwoord);
- 108              		.loc 1 34 0
- 109 000a 0748     		ldr	r0, .L10+4
- 110 000c FFF7FEFF 		bl	rxBleISR_StartEx
- 111              	.LVL6:
+  86              		.loc 1 29 0
+  87 0008 054A     		ldr	r2, .L9
+  88 000a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  89 000c 0133     		adds	r3, r3, #1
+  90 000e 1370     		strb	r3, [r2]
+  30:main.c        ****     puttyUart1_PutChar(charBinnen); 
+  91              		.loc 1 30 0
+  92 0010 FFF7FEFF 		bl	puttyUart1_PutChar
+  93              	.LVL7:
+  31:main.c        ****     if(charBinnen == '\r')
+  94              		.loc 1 31 0
+  95 0014 0D2C     		cmp	r4, #13
+  96 0016 02D1     		bne	.L6
+  32:main.c        ****     {
+  33:main.c        ****         bleUart1_PutChar('\n');
+  97              		.loc 1 33 0
+  98 0018 0A20     		movs	r0, #10
+  99 001a FFF7FEFF 		bl	bleUart1_PutChar
+ 100              	.LVL8:
+ 101              	.L6:
+ 102 001e 10BD     		pop	{r4, pc}
+ 103              	.LVL9:
+ 104              	.L10:
+ 105              		.align	2
+ 106              	.L9:
+ 107 0020 00000000 		.word	teller
+ 108              		.cfi_endproc
+ 109              	.LFE64:
+ 110              		.size	bleAntwoord, .-bleAntwoord
+ 111              		.section	.text.main,"ax",%progbits
+ 112              		.align	2
+ 113              		.global	main
+ 114              		.thumb
+ 115              		.thumb_func
+ 116              		.type	main, %function
+ 117              	main:
+ 118              	.LFB65:
+  34:main.c        ****     }
   35:main.c        ****     
-  36:main.c        ****     VDAC_Start();
- 112              		.loc 1 36 0
- 113 0010 FFF7FEFF 		bl	VDAC_Start
- 114              	.LVL7:
-  37:main.c        ****     Opamp_1_Start();
- 115              		.loc 1 37 0
- 116 0014 FFF7FEFF 		bl	Opamp_1_Start
- 117              	.LVL8:
-  38:main.c        ****     puttyUart1_Start();
- 118              		.loc 1 38 0
- 119 0018 FFF7FEFF 		bl	puttyUart1_Start
- 120              	.LVL9:
-  39:main.c        ****     bleUart1_Start();
- 121              		.loc 1 39 0
- 122 001c FFF7FEFF 		bl	bleUart1_Start
- 123              	.LVL10:
- 124              	.L8:
- 125 0020 FEE7     		b	.L8
- 126              	.L11:
- 127 0022 00BF     		.align	2
- 128              	.L10:
- 129 0024 00000000 		.word	dataBinnenPutty
- 130 0028 00000000 		.word	bleAntwoord
- 131              		.cfi_endproc
- 132              	.LFE65:
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 4
+  36:main.c        ****    
+  37:main.c        **** }
+  38:main.c        **** 
+  39:main.c        **** int main(void)
+  40:main.c        **** {
+ 119              		.loc 1 40 0
+ 120              		.cfi_startproc
+ 121              		@ Volatile: function does not return.
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124 0000 08B5     		push	{r3, lr}
+ 125              		.cfi_def_cfa_offset 8
+ 126              		.cfi_offset 3, -8
+ 127              		.cfi_offset 14, -4
+  41:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 128              		.loc 1 41 0
+ 129              		.syntax unified
+ 130              	@ 41 "main.c" 1
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 4
 
 
- 133              		.size	main, .-main
- 134              		.section	.rodata.str1.4,"aMS",%progbits,1
- 135              		.align	2
- 136              	.LC0:
- 137 0000 415400   		.ascii	"AT\000"
- 138              		.text
- 139              	.Letext0:
- 140              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 141              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 142              		.file 4 "Generated_Source\\PSoC5/puttyUart1.h"
- 143              		.file 5 "Generated_Source\\PSoC5/bleUart1.h"
- 144              		.file 6 "Generated_Source\\PSoC5/rxPuttyISR.h"
- 145              		.file 7 "Generated_Source\\PSoC5/rxBleISR.h"
- 146              		.file 8 "Generated_Source\\PSoC5/VDAC.h"
- 147              		.file 9 "Generated_Source\\PSoC5/Opamp_1.h"
- 148              		.file 10 "Generated_Source\\PSoC5/core_cm3.h"
- 149              		.section	.debug_info,"",%progbits
- 150              	.Ldebug_info0:
- 151 0000 0D020000 		.4byte	0x20d
- 152 0004 0400     		.2byte	0x4
- 153 0006 00000000 		.4byte	.Ldebug_abbrev0
- 154 000a 04       		.byte	0x4
- 155 000b 01       		.uleb128 0x1
- 156 000c 75000000 		.4byte	.LASF29
- 157 0010 0C       		.byte	0xc
- 158 0011 E9010000 		.4byte	.LASF30
- 159 0015 35010000 		.4byte	.LASF31
- 160 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 161 001d 00000000 		.4byte	0
- 162 0021 00000000 		.4byte	.Ldebug_line0
- 163 0025 02       		.uleb128 0x2
- 164 0026 01       		.byte	0x1
- 165 0027 06       		.byte	0x6
- 166 0028 5B000000 		.4byte	.LASF0
- 167 002c 02       		.uleb128 0x2
- 168 002d 01       		.byte	0x1
- 169 002e 08       		.byte	0x8
- 170 002f 67000000 		.4byte	.LASF1
- 171 0033 02       		.uleb128 0x2
- 172 0034 02       		.byte	0x2
- 173 0035 05       		.byte	0x5
- 174 0036 3A020000 		.4byte	.LASF2
- 175 003a 02       		.uleb128 0x2
- 176 003b 02       		.byte	0x2
- 177 003c 07       		.byte	0x7
- 178 003d 15010000 		.4byte	.LASF3
- 179 0041 03       		.uleb128 0x3
- 180 0042 13000000 		.4byte	.LASF9
- 181 0046 02       		.byte	0x2
- 182 0047 3F       		.byte	0x3f
- 183 0048 4C000000 		.4byte	0x4c
- 184 004c 02       		.uleb128 0x2
- 185 004d 04       		.byte	0x4
- 186 004e 05       		.byte	0x5
- 187 004f 4F020000 		.4byte	.LASF4
- 188 0053 02       		.uleb128 0x2
- 189 0054 04       		.byte	0x4
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 5
+ 131 0002 62B6     		CPSIE   i
+ 132              	@ 0 "" 2
+  42:main.c        ****     rxPuttyISR_StartEx(dataBinnenPutty);
+ 133              		.loc 1 42 0
+ 134              		.thumb
+ 135              		.syntax unified
+ 136 0004 1848     		ldr	r0, .L14
+ 137 0006 FFF7FEFF 		bl	rxPuttyISR_StartEx
+ 138              	.LVL10:
+  43:main.c        ****     
+  44:main.c        ****     rxBleISR_StartEx(bleAntwoord);
+ 139              		.loc 1 44 0
+ 140 000a 1848     		ldr	r0, .L14+4
+ 141 000c FFF7FEFF 		bl	rxBleISR_StartEx
+ 142              	.LVL11:
+  45:main.c        ****     
+  46:main.c        ****     LCDD_Start();
+ 143              		.loc 1 46 0
+ 144 0010 FFF7FEFF 		bl	LCDD_Start
+ 145              	.LVL12:
+  47:main.c        ****     LCDD_Position(0u,0u);
+ 146              		.loc 1 47 0
+ 147 0014 0021     		movs	r1, #0
+ 148 0016 0846     		mov	r0, r1
+ 149 0018 FFF7FEFF 		bl	LCDD_Position
+ 150              	.LVL13:
+  48:main.c        ****     LCDD_PrintString("hello");
+ 151              		.loc 1 48 0
+ 152 001c 1448     		ldr	r0, .L14+8
+ 153 001e FFF7FEFF 		bl	LCDD_PrintString
+ 154              	.LVL14:
+  49:main.c        ****     VDAC_Start();
+ 155              		.loc 1 49 0
+ 156 0022 FFF7FEFF 		bl	VDAC_Start
+ 157              	.LVL15:
+  50:main.c        ****     Opamp_1_Start();
+ 158              		.loc 1 50 0
+ 159 0026 FFF7FEFF 		bl	Opamp_1_Start
+ 160              	.LVL16:
+  51:main.c        ****     puttyUart1_Start();
+ 161              		.loc 1 51 0
+ 162 002a FFF7FEFF 		bl	puttyUart1_Start
+ 163              	.LVL17:
+  52:main.c        ****     bleUart1_Start();
+ 164              		.loc 1 52 0
+ 165 002e FFF7FEFF 		bl	bleUart1_Start
+ 166              	.LVL18:
+ 167              	.L12:
+  53:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  54:main.c        **** 
+  55:main.c        ****     for(;;)
+  56:main.c        ****     {
+  57:main.c        ****         LCDD_Position(0u,0u);
+ 168              		.loc 1 57 0 discriminator 1
+ 169 0032 0021     		movs	r1, #0
+ 170 0034 0846     		mov	r0, r1
+ 171 0036 FFF7FEFF 		bl	LCDD_Position
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 5
 
 
- 190 0055 07       		.byte	0x7
- 191 0056 03010000 		.4byte	.LASF5
- 192 005a 02       		.uleb128 0x2
- 193 005b 08       		.byte	0x8
- 194 005c 05       		.byte	0x5
- 195 005d DB010000 		.4byte	.LASF6
- 196 0061 02       		.uleb128 0x2
- 197 0062 08       		.byte	0x8
- 198 0063 07       		.byte	0x7
- 199 0064 B3010000 		.4byte	.LASF7
- 200 0068 04       		.uleb128 0x4
- 201 0069 04       		.byte	0x4
- 202 006a 05       		.byte	0x5
- 203 006b 696E7400 		.ascii	"int\000"
- 204 006f 02       		.uleb128 0x2
- 205 0070 04       		.byte	0x4
- 206 0071 07       		.byte	0x7
- 207 0072 A6010000 		.4byte	.LASF8
- 208 0076 03       		.uleb128 0x3
- 209 0077 CA010000 		.4byte	.LASF10
- 210 007b 03       		.byte	0x3
- 211 007c 2C       		.byte	0x2c
- 212 007d 41000000 		.4byte	0x41
- 213 0081 02       		.uleb128 0x2
- 214 0082 04       		.byte	0x4
- 215 0083 04       		.byte	0x4
- 216 0084 55000000 		.4byte	.LASF11
- 217 0088 02       		.uleb128 0x2
- 218 0089 08       		.byte	0x8
- 219 008a 04       		.byte	0x4
- 220 008b 9A010000 		.4byte	.LASF12
- 221 008f 02       		.uleb128 0x2
- 222 0090 01       		.byte	0x1
- 223 0091 08       		.byte	0x8
- 224 0092 F0010000 		.4byte	.LASF13
- 225 0096 02       		.uleb128 0x2
- 226 0097 08       		.byte	0x8
- 227 0098 04       		.byte	0x4
- 228 0099 58020000 		.4byte	.LASF14
- 229 009d 02       		.uleb128 0x2
- 230 009e 04       		.byte	0x4
- 231 009f 07       		.byte	0x7
- 232 00a0 D2010000 		.4byte	.LASF15
- 233 00a4 05       		.uleb128 0x5
- 234 00a5 17020000 		.4byte	.LASF16
- 235 00a9 01       		.byte	0x1
- 236 00aa 0F       		.byte	0xf
- 237 00ab 00000000 		.4byte	.LFB63
- 238 00af 18000000 		.4byte	.LFE63-.LFB63
- 239 00b3 01       		.uleb128 0x1
- 240 00b4 9C       		.byte	0x9c
- 241 00b5 EE000000 		.4byte	0xee
- 242 00b9 06       		.uleb128 0x6
- 243 00ba 44020000 		.4byte	.LASF18
- 244 00be 01       		.byte	0x1
- 245 00bf 11       		.byte	0x11
- 246 00c0 8F000000 		.4byte	0x8f
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 6
+ 172              	.LVL19:
+  58:main.c        ****         LCDD_PrintString("fuck this");
+ 173              		.loc 1 58 0 discriminator 1
+ 174 003a 0E48     		ldr	r0, .L14+12
+ 175 003c FFF7FEFF 		bl	LCDD_PrintString
+ 176              	.LVL20:
+  59:main.c        ****         LCDD_Position(1u,0u);
+ 177              		.loc 1 59 0 discriminator 1
+ 178 0040 0021     		movs	r1, #0
+ 179 0042 0120     		movs	r0, #1
+ 180 0044 FFF7FEFF 		bl	LCDD_Position
+ 181              	.LVL21:
+  60:main.c        ****         LCDD_PrintString("TIME FOR WEED!");
+ 182              		.loc 1 60 0 discriminator 1
+ 183 0048 0B48     		ldr	r0, .L14+16
+ 184 004a FFF7FEFF 		bl	LCDD_PrintString
+ 185              	.LVL22:
+  61:main.c        ****         CyDelay(1000);
+ 186              		.loc 1 61 0 discriminator 1
+ 187 004e 4FF47A70 		mov	r0, #1000
+ 188 0052 FFF7FEFF 		bl	CyDelay
+ 189              	.LVL23:
+  62:main.c        ****         LCDD_ClearDisplay();
+ 190              		.loc 1 62 0 discriminator 1
+ 191 0056 0120     		movs	r0, #1
+ 192 0058 FFF7FEFF 		bl	LCDD_WriteControl
+ 193              	.LVL24:
+  63:main.c        ****         CyDelay(1000);
+ 194              		.loc 1 63 0 discriminator 1
+ 195 005c 4FF47A70 		mov	r0, #1000
+ 196 0060 FFF7FEFF 		bl	CyDelay
+ 197              	.LVL25:
+ 198 0064 E5E7     		b	.L12
+ 199              	.L15:
+ 200 0066 00BF     		.align	2
+ 201              	.L14:
+ 202 0068 00000000 		.word	dataBinnenPutty
+ 203 006c 00000000 		.word	bleAntwoord
+ 204 0070 00000000 		.word	.LC0
+ 205 0074 08000000 		.word	.LC1
+ 206 0078 14000000 		.word	.LC2
+ 207              		.cfi_endproc
+ 208              	.LFE65:
+ 209              		.size	main, .-main
+ 210              		.comm	teller,1,1
+ 211              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 212              		.align	2
+ 213              	.LC0:
+ 214 0000 68656C6C 		.ascii	"hello\000"
+ 214      6F00
+ 215 0006 0000     		.space	2
+ 216              	.LC1:
+ 217 0008 6675636B 		.ascii	"fuck this\000"
+ 217      20746869 
+ 217      7300
+ 218 0012 0000     		.space	2
+ 219              	.LC2:
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 6
 
 
- 247 00c4 00000000 		.4byte	.LLST0
- 248 00c8 07       		.uleb128 0x7
- 249 00c9 06000000 		.4byte	.LVL0
- 250 00cd A2010000 		.4byte	0x1a2
- 251 00d1 07       		.uleb128 0x7
- 252 00d2 0A000000 		.4byte	.LVL1
- 253 00d6 AD010000 		.4byte	0x1ad
- 254 00da 08       		.uleb128 0x8
- 255 00db 10000000 		.4byte	.LVL2
- 256 00df B8010000 		.4byte	0x1b8
- 257 00e3 09       		.uleb128 0x9
- 258 00e4 01       		.uleb128 0x1
- 259 00e5 50       		.byte	0x50
- 260 00e6 05       		.uleb128 0x5
- 261 00e7 03       		.byte	0x3
- 262 00e8 00000000 		.4byte	.LC0
- 263 00ec 00       		.byte	0
- 264 00ed 00       		.byte	0
- 265 00ee 05       		.uleb128 0x5
- 266 00ef 49000000 		.4byte	.LASF17
- 267 00f3 01       		.byte	0x1
- 268 00f4 17       		.byte	0x17
- 269 00f5 00000000 		.4byte	.LFB64
- 270 00f9 0C000000 		.4byte	.LFE64-.LFB64
- 271 00fd 01       		.uleb128 0x1
- 272 00fe 9C       		.byte	0x9c
- 273 00ff 25010000 		.4byte	0x125
- 274 0103 06       		.uleb128 0x6
- 275 0104 44020000 		.4byte	.LASF18
- 276 0108 01       		.byte	0x1
- 277 0109 19       		.byte	0x19
- 278 010a 8F000000 		.4byte	0x8f
- 279 010e 13000000 		.4byte	.LLST1
- 280 0112 07       		.uleb128 0x7
- 281 0113 06000000 		.4byte	.LVL3
- 282 0117 C3010000 		.4byte	0x1c3
- 283 011b 07       		.uleb128 0x7
- 284 011c 0A000000 		.4byte	.LVL4
- 285 0120 AD010000 		.4byte	0x1ad
- 286 0124 00       		.byte	0
- 287 0125 0A       		.uleb128 0xa
- 288 0126 A1010000 		.4byte	.LASF32
- 289 012a 01       		.byte	0x1
- 290 012b 1D       		.byte	0x1d
- 291 012c 68000000 		.4byte	0x68
- 292 0130 00000000 		.4byte	.LFB65
- 293 0134 2C000000 		.4byte	.LFE65-.LFB65
- 294 0138 01       		.uleb128 0x1
- 295 0139 9C       		.byte	0x9c
- 296 013a 91010000 		.4byte	0x191
- 297 013e 0B       		.uleb128 0xb
- 298 013f 0A000000 		.4byte	.LVL5
- 299 0143 CE010000 		.4byte	0x1ce
- 300 0147 55010000 		.4byte	0x155
- 301 014b 09       		.uleb128 0x9
- 302 014c 01       		.uleb128 0x1
- 303 014d 50       		.byte	0x50
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 7
+ 220 0014 54494D45 		.ascii	"TIME FOR WEED!\000"
+ 220      20464F52 
+ 220      20574545 
+ 220      442100
+ 221              		.text
+ 222              	.Letext0:
+ 223              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 224              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 225              		.file 4 "Generated_Source\\PSoC5/core_cm3.h"
+ 226              		.file 5 "Generated_Source\\PSoC5/puttyUart1.h"
+ 227              		.file 6 "Generated_Source\\PSoC5/bleUart1.h"
+ 228              		.file 7 "Generated_Source\\PSoC5/rxPuttyISR.h"
+ 229              		.file 8 "Generated_Source\\PSoC5/rxBleISR.h"
+ 230              		.file 9 "Generated_Source\\PSoC5/LCDD.h"
+ 231              		.file 10 "Generated_Source\\PSoC5/VDAC.h"
+ 232              		.file 11 "Generated_Source\\PSoC5/Opamp_1.h"
+ 233              		.file 12 "Generated_Source\\PSoC5/CyLib.h"
+ 234              		.section	.debug_info,"",%progbits
+ 235              	.Ldebug_info0:
+ 236 0000 46030000 		.4byte	0x346
+ 237 0004 0400     		.2byte	0x4
+ 238 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 239 000a 04       		.byte	0x4
+ 240 000b 01       		.uleb128 0x1
+ 241 000c FF000000 		.4byte	.LASF36
+ 242 0010 0C       		.byte	0xc
+ 243 0011 3C020000 		.4byte	.LASF37
+ 244 0015 1A000000 		.4byte	.LASF38
+ 245 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 246 001d 00000000 		.4byte	0
+ 247 0021 00000000 		.4byte	.Ldebug_line0
+ 248 0025 02       		.uleb128 0x2
+ 249 0026 01       		.byte	0x1
+ 250 0027 06       		.byte	0x6
+ 251 0028 E5000000 		.4byte	.LASF0
+ 252 002c 02       		.uleb128 0x2
+ 253 002d 01       		.byte	0x1
+ 254 002e 08       		.byte	0x8
+ 255 002f F1000000 		.4byte	.LASF1
+ 256 0033 02       		.uleb128 0x2
+ 257 0034 02       		.byte	0x2
+ 258 0035 05       		.byte	0x5
+ 259 0036 7A020000 		.4byte	.LASF2
+ 260 003a 02       		.uleb128 0x2
+ 261 003b 02       		.byte	0x2
+ 262 003c 07       		.byte	0x7
+ 263 003d 9F010000 		.4byte	.LASF3
+ 264 0041 03       		.uleb128 0x3
+ 265 0042 7E000000 		.4byte	.LASF9
+ 266 0046 02       		.byte	0x2
+ 267 0047 3F       		.byte	0x3f
+ 268 0048 4C000000 		.4byte	0x4c
+ 269 004c 02       		.uleb128 0x2
+ 270 004d 04       		.byte	0x4
+ 271 004e 05       		.byte	0x5
+ 272 004f 8F020000 		.4byte	.LASF4
+ 273 0053 02       		.uleb128 0x2
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 7
 
 
- 304 014e 05       		.uleb128 0x5
- 305 014f 03       		.byte	0x3
- 306 0150 00000000 		.4byte	dataBinnenPutty
- 307 0154 00       		.byte	0
- 308 0155 0B       		.uleb128 0xb
- 309 0156 10000000 		.4byte	.LVL6
- 310 015a D9010000 		.4byte	0x1d9
- 311 015e 6C010000 		.4byte	0x16c
- 312 0162 09       		.uleb128 0x9
- 313 0163 01       		.uleb128 0x1
- 314 0164 50       		.byte	0x50
- 315 0165 05       		.uleb128 0x5
- 316 0166 03       		.byte	0x3
- 317 0167 00000000 		.4byte	bleAntwoord
- 318 016b 00       		.byte	0
- 319 016c 07       		.uleb128 0x7
- 320 016d 14000000 		.4byte	.LVL7
- 321 0171 E4010000 		.4byte	0x1e4
- 322 0175 07       		.uleb128 0x7
- 323 0176 18000000 		.4byte	.LVL8
- 324 017a EF010000 		.4byte	0x1ef
- 325 017e 07       		.uleb128 0x7
- 326 017f 1C000000 		.4byte	.LVL9
- 327 0183 FA010000 		.4byte	0x1fa
- 328 0187 07       		.uleb128 0x7
- 329 0188 20000000 		.4byte	.LVL10
- 330 018c 05020000 		.4byte	0x205
- 331 0190 00       		.byte	0
- 332 0191 0C       		.uleb128 0xc
- 333 0192 28010000 		.4byte	.LASF33
- 334 0196 0A       		.byte	0xa
- 335 0197 1207     		.2byte	0x712
- 336 0199 9D010000 		.4byte	0x19d
- 337 019d 0D       		.uleb128 0xd
- 338 019e 76000000 		.4byte	0x76
- 339 01a2 0E       		.uleb128 0xe
- 340 01a3 36000000 		.4byte	.LASF19
- 341 01a7 36000000 		.4byte	.LASF19
- 342 01ab 04       		.byte	0x4
- 343 01ac 71       		.byte	0x71
- 344 01ad 0E       		.uleb128 0xe
- 345 01ae 00000000 		.4byte	.LASF20
- 346 01b2 00000000 		.4byte	.LASF20
- 347 01b6 04       		.byte	0x4
- 348 01b7 8A       		.byte	0x8a
- 349 01b8 0E       		.uleb128 0xe
- 350 01b9 27020000 		.4byte	.LASF21
- 351 01bd 27020000 		.4byte	.LASF21
- 352 01c1 05       		.byte	0x5
- 353 01c2 8B       		.byte	0x8b
- 354 01c3 0E       		.uleb128 0xe
- 355 01c4 64020000 		.4byte	.LASF22
- 356 01c8 64020000 		.4byte	.LASF22
- 357 01cc 05       		.byte	0x5
- 358 01cd 71       		.byte	0x71
- 359 01ce 0E       		.uleb128 0xe
- 360 01cf 75020000 		.4byte	.LASF23
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 8
+ 274 0054 04       		.byte	0x4
+ 275 0055 07       		.byte	0x7
+ 276 0056 8D010000 		.4byte	.LASF5
+ 277 005a 02       		.uleb128 0x2
+ 278 005b 08       		.byte	0x8
+ 279 005c 05       		.byte	0x5
+ 280 005d 2E020000 		.4byte	.LASF6
+ 281 0061 02       		.uleb128 0x2
+ 282 0062 08       		.byte	0x8
+ 283 0063 07       		.byte	0x7
+ 284 0064 EA010000 		.4byte	.LASF7
+ 285 0068 04       		.uleb128 0x4
+ 286 0069 04       		.byte	0x4
+ 287 006a 05       		.byte	0x5
+ 288 006b 696E7400 		.ascii	"int\000"
+ 289 006f 02       		.uleb128 0x2
+ 290 0070 04       		.byte	0x4
+ 291 0071 07       		.byte	0x7
+ 292 0072 DD010000 		.4byte	.LASF8
+ 293 0076 03       		.uleb128 0x3
+ 294 0077 1D020000 		.4byte	.LASF10
+ 295 007b 03       		.byte	0x3
+ 296 007c 2C       		.byte	0x2c
+ 297 007d 41000000 		.4byte	0x41
+ 298 0081 02       		.uleb128 0x2
+ 299 0082 04       		.byte	0x4
+ 300 0083 04       		.byte	0x4
+ 301 0084 DF000000 		.4byte	.LASF11
+ 302 0088 02       		.uleb128 0x2
+ 303 0089 08       		.byte	0x8
+ 304 008a 04       		.byte	0x4
+ 305 008b BF010000 		.4byte	.LASF12
+ 306 008f 02       		.uleb128 0x2
+ 307 0090 01       		.byte	0x1
+ 308 0091 08       		.byte	0x8
+ 309 0092 43020000 		.4byte	.LASF13
+ 310 0096 02       		.uleb128 0x2
+ 311 0097 08       		.byte	0x8
+ 312 0098 04       		.byte	0x4
+ 313 0099 98020000 		.4byte	.LASF14
+ 314 009d 02       		.uleb128 0x2
+ 315 009e 04       		.byte	0x4
+ 316 009f 07       		.byte	0x7
+ 317 00a0 25020000 		.4byte	.LASF15
+ 318 00a4 05       		.uleb128 0x5
+ 319 00a5 6A020000 		.4byte	.LASF16
+ 320 00a9 01       		.byte	0x1
+ 321 00aa 0F       		.byte	0xf
+ 322 00ab 00000000 		.4byte	.LFB63
+ 323 00af 24000000 		.4byte	.LFE63-.LFB63
+ 324 00b3 01       		.uleb128 0x1
+ 325 00b4 9C       		.byte	0x9c
+ 326 00b5 F6000000 		.4byte	0xf6
+ 327 00b9 06       		.uleb128 0x6
+ 328 00ba 84020000 		.4byte	.LASF18
+ 329 00be 01       		.byte	0x1
+ 330 00bf 11       		.byte	0x11
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 8
 
 
- 361 01d3 75020000 		.4byte	.LASF23
- 362 01d7 06       		.byte	0x6
- 363 01d8 18       		.byte	0x18
- 364 01d9 0E       		.uleb128 0xe
- 365 01da F5010000 		.4byte	.LASF24
- 366 01de F5010000 		.4byte	.LASF24
- 367 01e2 07       		.byte	0x7
- 368 01e3 18       		.byte	0x18
- 369 01e4 0E       		.uleb128 0xe
- 370 01e5 2B000000 		.4byte	.LASF25
- 371 01e9 2B000000 		.4byte	.LASF25
- 372 01ed 08       		.byte	0x8
- 373 01ee 33       		.byte	0x33
- 374 01ef 0E       		.uleb128 0xe
- 375 01f0 1D000000 		.4byte	.LASF26
- 376 01f4 1D000000 		.4byte	.LASF26
- 377 01f8 09       		.byte	0x9
- 378 01f9 33       		.byte	0x33
- 379 01fa 0E       		.uleb128 0xe
- 380 01fb 06020000 		.4byte	.LASF27
- 381 01ff 06020000 		.4byte	.LASF27
- 382 0203 04       		.byte	0x4
- 383 0204 54       		.byte	0x54
- 384 0205 0E       		.uleb128 0xe
- 385 0206 88020000 		.4byte	.LASF28
- 386 020a 88020000 		.4byte	.LASF28
- 387 020e 05       		.byte	0x5
- 388 020f 54       		.byte	0x54
- 389 0210 00       		.byte	0
- 390              		.section	.debug_abbrev,"",%progbits
- 391              	.Ldebug_abbrev0:
- 392 0000 01       		.uleb128 0x1
- 393 0001 11       		.uleb128 0x11
- 394 0002 01       		.byte	0x1
- 395 0003 25       		.uleb128 0x25
- 396 0004 0E       		.uleb128 0xe
- 397 0005 13       		.uleb128 0x13
- 398 0006 0B       		.uleb128 0xb
- 399 0007 03       		.uleb128 0x3
- 400 0008 0E       		.uleb128 0xe
- 401 0009 1B       		.uleb128 0x1b
- 402 000a 0E       		.uleb128 0xe
- 403 000b 55       		.uleb128 0x55
- 404 000c 17       		.uleb128 0x17
- 405 000d 11       		.uleb128 0x11
- 406 000e 01       		.uleb128 0x1
- 407 000f 10       		.uleb128 0x10
- 408 0010 17       		.uleb128 0x17
- 409 0011 00       		.byte	0
- 410 0012 00       		.byte	0
- 411 0013 02       		.uleb128 0x2
- 412 0014 24       		.uleb128 0x24
- 413 0015 00       		.byte	0
- 414 0016 0B       		.uleb128 0xb
- 415 0017 0B       		.uleb128 0xb
- 416 0018 3E       		.uleb128 0x3e
- 417 0019 0B       		.uleb128 0xb
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 9
+ 331 00c0 8F000000 		.4byte	0x8f
+ 332 00c4 00000000 		.4byte	.LLST0
+ 333 00c8 07       		.uleb128 0x7
+ 334 00c9 06000000 		.4byte	.LVL0
+ 335 00cd A4020000 		.4byte	0x2a4
+ 336 00d1 08       		.uleb128 0x8
+ 337 00d2 16000000 		.4byte	.LVL3
+ 338 00d6 AF020000 		.4byte	0x2af
+ 339 00da E5000000 		.4byte	0xe5
+ 340 00de 09       		.uleb128 0x9
+ 341 00df 01       		.uleb128 0x1
+ 342 00e0 50       		.byte	0x50
+ 343 00e1 02       		.uleb128 0x2
+ 344 00e2 74       		.byte	0x74
+ 345 00e3 00       		.sleb128 0
+ 346 00e4 00       		.byte	0
+ 347 00e5 0A       		.uleb128 0xa
+ 348 00e6 1C000000 		.4byte	.LVL4
+ 349 00ea BA020000 		.4byte	0x2ba
+ 350 00ee 09       		.uleb128 0x9
+ 351 00ef 01       		.uleb128 0x1
+ 352 00f0 50       		.byte	0x50
+ 353 00f1 02       		.uleb128 0x2
+ 354 00f2 74       		.byte	0x74
+ 355 00f3 00       		.sleb128 0
+ 356 00f4 00       		.byte	0
+ 357 00f5 00       		.byte	0
+ 358 00f6 05       		.uleb128 0x5
+ 359 00f7 A4000000 		.4byte	.LASF17
+ 360 00fb 01       		.byte	0x1
+ 361 00fc 19       		.byte	0x19
+ 362 00fd 00000000 		.4byte	.LFB64
+ 363 0101 24000000 		.4byte	.LFE64-.LFB64
+ 364 0105 01       		.uleb128 0x1
+ 365 0106 9C       		.byte	0x9c
+ 366 0107 47010000 		.4byte	0x147
+ 367 010b 06       		.uleb128 0x6
+ 368 010c 84020000 		.4byte	.LASF18
+ 369 0110 01       		.byte	0x1
+ 370 0111 1C       		.byte	0x1c
+ 371 0112 8F000000 		.4byte	0x8f
+ 372 0116 13000000 		.4byte	.LLST1
+ 373 011a 07       		.uleb128 0x7
+ 374 011b 06000000 		.4byte	.LVL5
+ 375 011f C5020000 		.4byte	0x2c5
+ 376 0123 08       		.uleb128 0x8
+ 377 0124 14000000 		.4byte	.LVL7
+ 378 0128 AF020000 		.4byte	0x2af
+ 379 012c 37010000 		.4byte	0x137
+ 380 0130 09       		.uleb128 0x9
+ 381 0131 01       		.uleb128 0x1
+ 382 0132 50       		.byte	0x50
+ 383 0133 02       		.uleb128 0x2
+ 384 0134 74       		.byte	0x74
+ 385 0135 00       		.sleb128 0
+ 386 0136 00       		.byte	0
+ 387 0137 0A       		.uleb128 0xa
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 9
 
 
- 418 001a 03       		.uleb128 0x3
- 419 001b 0E       		.uleb128 0xe
- 420 001c 00       		.byte	0
- 421 001d 00       		.byte	0
- 422 001e 03       		.uleb128 0x3
- 423 001f 16       		.uleb128 0x16
- 424 0020 00       		.byte	0
- 425 0021 03       		.uleb128 0x3
- 426 0022 0E       		.uleb128 0xe
- 427 0023 3A       		.uleb128 0x3a
- 428 0024 0B       		.uleb128 0xb
- 429 0025 3B       		.uleb128 0x3b
- 430 0026 0B       		.uleb128 0xb
- 431 0027 49       		.uleb128 0x49
- 432 0028 13       		.uleb128 0x13
- 433 0029 00       		.byte	0
- 434 002a 00       		.byte	0
- 435 002b 04       		.uleb128 0x4
- 436 002c 24       		.uleb128 0x24
- 437 002d 00       		.byte	0
- 438 002e 0B       		.uleb128 0xb
- 439 002f 0B       		.uleb128 0xb
- 440 0030 3E       		.uleb128 0x3e
- 441 0031 0B       		.uleb128 0xb
- 442 0032 03       		.uleb128 0x3
- 443 0033 08       		.uleb128 0x8
- 444 0034 00       		.byte	0
- 445 0035 00       		.byte	0
- 446 0036 05       		.uleb128 0x5
- 447 0037 2E       		.uleb128 0x2e
- 448 0038 01       		.byte	0x1
- 449 0039 3F       		.uleb128 0x3f
- 450 003a 19       		.uleb128 0x19
- 451 003b 03       		.uleb128 0x3
- 452 003c 0E       		.uleb128 0xe
- 453 003d 3A       		.uleb128 0x3a
- 454 003e 0B       		.uleb128 0xb
- 455 003f 3B       		.uleb128 0x3b
- 456 0040 0B       		.uleb128 0xb
- 457 0041 27       		.uleb128 0x27
- 458 0042 19       		.uleb128 0x19
- 459 0043 11       		.uleb128 0x11
- 460 0044 01       		.uleb128 0x1
- 461 0045 12       		.uleb128 0x12
- 462 0046 06       		.uleb128 0x6
- 463 0047 40       		.uleb128 0x40
- 464 0048 18       		.uleb128 0x18
- 465 0049 9742     		.uleb128 0x2117
- 466 004b 19       		.uleb128 0x19
- 467 004c 01       		.uleb128 0x1
- 468 004d 13       		.uleb128 0x13
- 469 004e 00       		.byte	0
- 470 004f 00       		.byte	0
- 471 0050 06       		.uleb128 0x6
- 472 0051 34       		.uleb128 0x34
- 473 0052 00       		.byte	0
- 474 0053 03       		.uleb128 0x3
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 10
+ 388 0138 1E000000 		.4byte	.LVL8
+ 389 013c BA020000 		.4byte	0x2ba
+ 390 0140 09       		.uleb128 0x9
+ 391 0141 01       		.uleb128 0x1
+ 392 0142 50       		.byte	0x50
+ 393 0143 01       		.uleb128 0x1
+ 394 0144 3A       		.byte	0x3a
+ 395 0145 00       		.byte	0
+ 396 0146 00       		.byte	0
+ 397 0147 0B       		.uleb128 0xb
+ 398 0148 C6010000 		.4byte	.LASF39
+ 399 014c 01       		.byte	0x1
+ 400 014d 27       		.byte	0x27
+ 401 014e 68000000 		.4byte	0x68
+ 402 0152 00000000 		.4byte	.LFB65
+ 403 0156 7C000000 		.4byte	.LFE65-.LFB65
+ 404 015a 01       		.uleb128 0x1
+ 405 015b 9C       		.byte	0x9c
+ 406 015c 82020000 		.4byte	0x282
+ 407 0160 08       		.uleb128 0x8
+ 408 0161 0A000000 		.4byte	.LVL10
+ 409 0165 D0020000 		.4byte	0x2d0
+ 410 0169 77010000 		.4byte	0x177
+ 411 016d 09       		.uleb128 0x9
+ 412 016e 01       		.uleb128 0x1
+ 413 016f 50       		.byte	0x50
+ 414 0170 05       		.uleb128 0x5
+ 415 0171 03       		.byte	0x3
+ 416 0172 00000000 		.4byte	dataBinnenPutty
+ 417 0176 00       		.byte	0
+ 418 0177 08       		.uleb128 0x8
+ 419 0178 10000000 		.4byte	.LVL11
+ 420 017c DB020000 		.4byte	0x2db
+ 421 0180 8E010000 		.4byte	0x18e
+ 422 0184 09       		.uleb128 0x9
+ 423 0185 01       		.uleb128 0x1
+ 424 0186 50       		.byte	0x50
+ 425 0187 05       		.uleb128 0x5
+ 426 0188 03       		.byte	0x3
+ 427 0189 00000000 		.4byte	bleAntwoord
+ 428 018d 00       		.byte	0
+ 429 018e 07       		.uleb128 0x7
+ 430 018f 14000000 		.4byte	.LVL12
+ 431 0193 E6020000 		.4byte	0x2e6
+ 432 0197 08       		.uleb128 0x8
+ 433 0198 1C000000 		.4byte	.LVL13
+ 434 019c F1020000 		.4byte	0x2f1
+ 435 01a0 AF010000 		.4byte	0x1af
+ 436 01a4 09       		.uleb128 0x9
+ 437 01a5 01       		.uleb128 0x1
+ 438 01a6 50       		.byte	0x50
+ 439 01a7 01       		.uleb128 0x1
+ 440 01a8 30       		.byte	0x30
+ 441 01a9 09       		.uleb128 0x9
+ 442 01aa 01       		.uleb128 0x1
+ 443 01ab 51       		.byte	0x51
+ 444 01ac 01       		.uleb128 0x1
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 10
 
 
- 475 0054 0E       		.uleb128 0xe
- 476 0055 3A       		.uleb128 0x3a
- 477 0056 0B       		.uleb128 0xb
- 478 0057 3B       		.uleb128 0x3b
- 479 0058 0B       		.uleb128 0xb
- 480 0059 49       		.uleb128 0x49
- 481 005a 13       		.uleb128 0x13
- 482 005b 02       		.uleb128 0x2
- 483 005c 17       		.uleb128 0x17
- 484 005d 00       		.byte	0
- 485 005e 00       		.byte	0
- 486 005f 07       		.uleb128 0x7
- 487 0060 898201   		.uleb128 0x4109
- 488 0063 00       		.byte	0
- 489 0064 11       		.uleb128 0x11
- 490 0065 01       		.uleb128 0x1
- 491 0066 31       		.uleb128 0x31
- 492 0067 13       		.uleb128 0x13
- 493 0068 00       		.byte	0
- 494 0069 00       		.byte	0
- 495 006a 08       		.uleb128 0x8
- 496 006b 898201   		.uleb128 0x4109
- 497 006e 01       		.byte	0x1
- 498 006f 11       		.uleb128 0x11
- 499 0070 01       		.uleb128 0x1
- 500 0071 31       		.uleb128 0x31
- 501 0072 13       		.uleb128 0x13
- 502 0073 00       		.byte	0
- 503 0074 00       		.byte	0
- 504 0075 09       		.uleb128 0x9
- 505 0076 8A8201   		.uleb128 0x410a
- 506 0079 00       		.byte	0
- 507 007a 02       		.uleb128 0x2
- 508 007b 18       		.uleb128 0x18
- 509 007c 9142     		.uleb128 0x2111
- 510 007e 18       		.uleb128 0x18
- 511 007f 00       		.byte	0
- 512 0080 00       		.byte	0
- 513 0081 0A       		.uleb128 0xa
- 514 0082 2E       		.uleb128 0x2e
- 515 0083 01       		.byte	0x1
- 516 0084 3F       		.uleb128 0x3f
- 517 0085 19       		.uleb128 0x19
- 518 0086 03       		.uleb128 0x3
- 519 0087 0E       		.uleb128 0xe
- 520 0088 3A       		.uleb128 0x3a
- 521 0089 0B       		.uleb128 0xb
- 522 008a 3B       		.uleb128 0x3b
- 523 008b 0B       		.uleb128 0xb
- 524 008c 27       		.uleb128 0x27
- 525 008d 19       		.uleb128 0x19
- 526 008e 49       		.uleb128 0x49
- 527 008f 13       		.uleb128 0x13
- 528 0090 8701     		.uleb128 0x87
- 529 0092 19       		.uleb128 0x19
- 530 0093 11       		.uleb128 0x11
- 531 0094 01       		.uleb128 0x1
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 11
+ 445 01ad 30       		.byte	0x30
+ 446 01ae 00       		.byte	0
+ 447 01af 08       		.uleb128 0x8
+ 448 01b0 22000000 		.4byte	.LVL14
+ 449 01b4 FC020000 		.4byte	0x2fc
+ 450 01b8 C6010000 		.4byte	0x1c6
+ 451 01bc 09       		.uleb128 0x9
+ 452 01bd 01       		.uleb128 0x1
+ 453 01be 50       		.byte	0x50
+ 454 01bf 05       		.uleb128 0x5
+ 455 01c0 03       		.byte	0x3
+ 456 01c1 00000000 		.4byte	.LC0
+ 457 01c5 00       		.byte	0
+ 458 01c6 07       		.uleb128 0x7
+ 459 01c7 26000000 		.4byte	.LVL15
+ 460 01cb 07030000 		.4byte	0x307
+ 461 01cf 07       		.uleb128 0x7
+ 462 01d0 2A000000 		.4byte	.LVL16
+ 463 01d4 12030000 		.4byte	0x312
+ 464 01d8 07       		.uleb128 0x7
+ 465 01d9 2E000000 		.4byte	.LVL17
+ 466 01dd 1D030000 		.4byte	0x31d
+ 467 01e1 07       		.uleb128 0x7
+ 468 01e2 32000000 		.4byte	.LVL18
+ 469 01e6 28030000 		.4byte	0x328
+ 470 01ea 08       		.uleb128 0x8
+ 471 01eb 3A000000 		.4byte	.LVL19
+ 472 01ef F1020000 		.4byte	0x2f1
+ 473 01f3 02020000 		.4byte	0x202
+ 474 01f7 09       		.uleb128 0x9
+ 475 01f8 01       		.uleb128 0x1
+ 476 01f9 50       		.byte	0x50
+ 477 01fa 01       		.uleb128 0x1
+ 478 01fb 30       		.byte	0x30
+ 479 01fc 09       		.uleb128 0x9
+ 480 01fd 01       		.uleb128 0x1
+ 481 01fe 51       		.byte	0x51
+ 482 01ff 01       		.uleb128 0x1
+ 483 0200 30       		.byte	0x30
+ 484 0201 00       		.byte	0
+ 485 0202 08       		.uleb128 0x8
+ 486 0203 40000000 		.4byte	.LVL20
+ 487 0207 FC020000 		.4byte	0x2fc
+ 488 020b 19020000 		.4byte	0x219
+ 489 020f 09       		.uleb128 0x9
+ 490 0210 01       		.uleb128 0x1
+ 491 0211 50       		.byte	0x50
+ 492 0212 05       		.uleb128 0x5
+ 493 0213 03       		.byte	0x3
+ 494 0214 08000000 		.4byte	.LC1
+ 495 0218 00       		.byte	0
+ 496 0219 08       		.uleb128 0x8
+ 497 021a 48000000 		.4byte	.LVL21
+ 498 021e F1020000 		.4byte	0x2f1
+ 499 0222 31020000 		.4byte	0x231
+ 500 0226 09       		.uleb128 0x9
+ 501 0227 01       		.uleb128 0x1
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 11
 
 
- 532 0095 12       		.uleb128 0x12
- 533 0096 06       		.uleb128 0x6
- 534 0097 40       		.uleb128 0x40
- 535 0098 18       		.uleb128 0x18
- 536 0099 9742     		.uleb128 0x2117
- 537 009b 19       		.uleb128 0x19
- 538 009c 01       		.uleb128 0x1
- 539 009d 13       		.uleb128 0x13
- 540 009e 00       		.byte	0
- 541 009f 00       		.byte	0
- 542 00a0 0B       		.uleb128 0xb
- 543 00a1 898201   		.uleb128 0x4109
- 544 00a4 01       		.byte	0x1
- 545 00a5 11       		.uleb128 0x11
- 546 00a6 01       		.uleb128 0x1
- 547 00a7 31       		.uleb128 0x31
- 548 00a8 13       		.uleb128 0x13
- 549 00a9 01       		.uleb128 0x1
- 550 00aa 13       		.uleb128 0x13
- 551 00ab 00       		.byte	0
- 552 00ac 00       		.byte	0
- 553 00ad 0C       		.uleb128 0xc
- 554 00ae 34       		.uleb128 0x34
- 555 00af 00       		.byte	0
- 556 00b0 03       		.uleb128 0x3
- 557 00b1 0E       		.uleb128 0xe
- 558 00b2 3A       		.uleb128 0x3a
- 559 00b3 0B       		.uleb128 0xb
- 560 00b4 3B       		.uleb128 0x3b
- 561 00b5 05       		.uleb128 0x5
- 562 00b6 49       		.uleb128 0x49
- 563 00b7 13       		.uleb128 0x13
- 564 00b8 3F       		.uleb128 0x3f
- 565 00b9 19       		.uleb128 0x19
- 566 00ba 3C       		.uleb128 0x3c
- 567 00bb 19       		.uleb128 0x19
- 568 00bc 00       		.byte	0
- 569 00bd 00       		.byte	0
- 570 00be 0D       		.uleb128 0xd
- 571 00bf 35       		.uleb128 0x35
- 572 00c0 00       		.byte	0
- 573 00c1 49       		.uleb128 0x49
- 574 00c2 13       		.uleb128 0x13
- 575 00c3 00       		.byte	0
- 576 00c4 00       		.byte	0
- 577 00c5 0E       		.uleb128 0xe
- 578 00c6 2E       		.uleb128 0x2e
- 579 00c7 00       		.byte	0
- 580 00c8 3F       		.uleb128 0x3f
- 581 00c9 19       		.uleb128 0x19
- 582 00ca 3C       		.uleb128 0x3c
- 583 00cb 19       		.uleb128 0x19
- 584 00cc 6E       		.uleb128 0x6e
- 585 00cd 0E       		.uleb128 0xe
- 586 00ce 03       		.uleb128 0x3
- 587 00cf 0E       		.uleb128 0xe
- 588 00d0 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 12
+ 502 0228 50       		.byte	0x50
+ 503 0229 01       		.uleb128 0x1
+ 504 022a 31       		.byte	0x31
+ 505 022b 09       		.uleb128 0x9
+ 506 022c 01       		.uleb128 0x1
+ 507 022d 51       		.byte	0x51
+ 508 022e 01       		.uleb128 0x1
+ 509 022f 30       		.byte	0x30
+ 510 0230 00       		.byte	0
+ 511 0231 08       		.uleb128 0x8
+ 512 0232 4E000000 		.4byte	.LVL22
+ 513 0236 FC020000 		.4byte	0x2fc
+ 514 023a 48020000 		.4byte	0x248
+ 515 023e 09       		.uleb128 0x9
+ 516 023f 01       		.uleb128 0x1
+ 517 0240 50       		.byte	0x50
+ 518 0241 05       		.uleb128 0x5
+ 519 0242 03       		.byte	0x3
+ 520 0243 14000000 		.4byte	.LC2
+ 521 0247 00       		.byte	0
+ 522 0248 08       		.uleb128 0x8
+ 523 0249 56000000 		.4byte	.LVL23
+ 524 024d 33030000 		.4byte	0x333
+ 525 0251 5D020000 		.4byte	0x25d
+ 526 0255 09       		.uleb128 0x9
+ 527 0256 01       		.uleb128 0x1
+ 528 0257 50       		.byte	0x50
+ 529 0258 03       		.uleb128 0x3
+ 530 0259 0A       		.byte	0xa
+ 531 025a E803     		.2byte	0x3e8
+ 532 025c 00       		.byte	0
+ 533 025d 08       		.uleb128 0x8
+ 534 025e 5C000000 		.4byte	.LVL24
+ 535 0262 3E030000 		.4byte	0x33e
+ 536 0266 70020000 		.4byte	0x270
+ 537 026a 09       		.uleb128 0x9
+ 538 026b 01       		.uleb128 0x1
+ 539 026c 50       		.byte	0x50
+ 540 026d 01       		.uleb128 0x1
+ 541 026e 31       		.byte	0x31
+ 542 026f 00       		.byte	0
+ 543 0270 0A       		.uleb128 0xa
+ 544 0271 64000000 		.4byte	.LVL25
+ 545 0275 33030000 		.4byte	0x333
+ 546 0279 09       		.uleb128 0x9
+ 547 027a 01       		.uleb128 0x1
+ 548 027b 50       		.byte	0x50
+ 549 027c 03       		.uleb128 0x3
+ 550 027d 0A       		.byte	0xa
+ 551 027e E803     		.2byte	0x3e8
+ 552 0280 00       		.byte	0
+ 553 0281 00       		.byte	0
+ 554 0282 0C       		.uleb128 0xc
+ 555 0283 B2010000 		.4byte	.LASF19
+ 556 0287 04       		.byte	0x4
+ 557 0288 1207     		.2byte	0x712
+ 558 028a 8E020000 		.4byte	0x28e
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 12
 
 
- 589 00d1 0B       		.uleb128 0xb
- 590 00d2 3B       		.uleb128 0x3b
- 591 00d3 0B       		.uleb128 0xb
- 592 00d4 00       		.byte	0
- 593 00d5 00       		.byte	0
- 594 00d6 00       		.byte	0
- 595              		.section	.debug_loc,"",%progbits
- 596              	.Ldebug_loc0:
- 597              	.LLST0:
- 598 0000 06000000 		.4byte	.LVL0
- 599 0004 09000000 		.4byte	.LVL1-1
- 600 0008 0100     		.2byte	0x1
- 601 000a 50       		.byte	0x50
- 602 000b 00000000 		.4byte	0
- 603 000f 00000000 		.4byte	0
- 604              	.LLST1:
- 605 0013 06000000 		.4byte	.LVL3
- 606 0017 09000000 		.4byte	.LVL4-1
- 607 001b 0100     		.2byte	0x1
- 608 001d 50       		.byte	0x50
- 609 001e 00000000 		.4byte	0
- 610 0022 00000000 		.4byte	0
- 611              		.section	.debug_aranges,"",%progbits
- 612 0000 2C000000 		.4byte	0x2c
- 613 0004 0200     		.2byte	0x2
- 614 0006 00000000 		.4byte	.Ldebug_info0
- 615 000a 04       		.byte	0x4
- 616 000b 00       		.byte	0
- 617 000c 0000     		.2byte	0
- 618 000e 0000     		.2byte	0
- 619 0010 00000000 		.4byte	.LFB63
- 620 0014 18000000 		.4byte	.LFE63-.LFB63
- 621 0018 00000000 		.4byte	.LFB64
- 622 001c 0C000000 		.4byte	.LFE64-.LFB64
- 623 0020 00000000 		.4byte	.LFB65
- 624 0024 2C000000 		.4byte	.LFE65-.LFB65
- 625 0028 00000000 		.4byte	0
- 626 002c 00000000 		.4byte	0
- 627              		.section	.debug_ranges,"",%progbits
- 628              	.Ldebug_ranges0:
- 629 0000 00000000 		.4byte	.LFB63
- 630 0004 18000000 		.4byte	.LFE63
- 631 0008 00000000 		.4byte	.LFB64
- 632 000c 0C000000 		.4byte	.LFE64
- 633 0010 00000000 		.4byte	.LFB65
- 634 0014 2C000000 		.4byte	.LFE65
- 635 0018 00000000 		.4byte	0
- 636 001c 00000000 		.4byte	0
- 637              		.section	.debug_line,"",%progbits
- 638              	.Ldebug_line0:
- 639 0000 D1010000 		.section	.debug_str,"MS",%progbits,1
- 639      02009201 
- 639      00000201 
- 639      FB0E0D00 
- 639      01010101 
- 640              	.LASF20:
- 641 0000 70757474 		.ascii	"puttyUart1_PutChar\000"
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 13
+ 559 028e 0D       		.uleb128 0xd
+ 560 028f 76000000 		.4byte	0x76
+ 561 0293 0E       		.uleb128 0xe
+ 562 0294 13000000 		.4byte	.LASF20
+ 563 0298 01       		.byte	0x1
+ 564 0299 0D       		.byte	0xd
+ 565 029a 8F000000 		.4byte	0x8f
+ 566 029e 05       		.uleb128 0x5
+ 567 029f 03       		.byte	0x3
+ 568 02a0 00000000 		.4byte	teller
+ 569 02a4 0F       		.uleb128 0xf
+ 570 02a5 BB000000 		.4byte	.LASF21
+ 571 02a9 BB000000 		.4byte	.LASF21
+ 572 02ad 05       		.byte	0x5
+ 573 02ae 71       		.byte	0x71
+ 574 02af 0F       		.uleb128 0xf
+ 575 02b0 00000000 		.4byte	.LASF22
+ 576 02b4 00000000 		.4byte	.LASF22
+ 577 02b8 05       		.byte	0x5
+ 578 02b9 8A       		.byte	0x8a
+ 579 02ba 0F       		.uleb128 0xf
+ 580 02bb 0C020000 		.4byte	.LASF23
+ 581 02bf 0C020000 		.4byte	.LASF23
+ 582 02c3 06       		.byte	0x6
+ 583 02c4 8A       		.byte	0x8a
+ 584 02c5 0F       		.uleb128 0xf
+ 585 02c6 A4020000 		.4byte	.LASF24
+ 586 02ca A4020000 		.4byte	.LASF24
+ 587 02ce 06       		.byte	0x6
+ 588 02cf 71       		.byte	0x71
+ 589 02d0 0F       		.uleb128 0xf
+ 590 02d1 B5020000 		.4byte	.LASF25
+ 591 02d5 B5020000 		.4byte	.LASF25
+ 592 02d9 07       		.byte	0x7
+ 593 02da 18       		.byte	0x18
+ 594 02db 0F       		.uleb128 0xf
+ 595 02dc 48020000 		.4byte	.LASF26
+ 596 02e0 48020000 		.4byte	.LASF26
+ 597 02e4 08       		.byte	0x8
+ 598 02e5 18       		.byte	0x18
+ 599 02e6 0F       		.uleb128 0xf
+ 600 02e7 01020000 		.4byte	.LASF27
+ 601 02eb 01020000 		.4byte	.LASF27
+ 602 02ef 09       		.byte	0x9
+ 603 02f0 38       		.byte	0x38
+ 604 02f1 0F       		.uleb128 0xf
+ 605 02f2 96000000 		.4byte	.LASF28
+ 606 02f6 96000000 		.4byte	.LASF28
+ 607 02fa 09       		.byte	0x9
+ 608 02fb 3D       		.byte	0x3d
+ 609 02fc 0F       		.uleb128 0xf
+ 610 02fd CE000000 		.4byte	.LASF29
+ 611 0301 CE000000 		.4byte	.LASF29
+ 612 0305 09       		.byte	0x9
+ 613 0306 3C       		.byte	0x3c
+ 614 0307 0F       		.uleb128 0xf
+ 615 0308 B0000000 		.4byte	.LASF30
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 13
 
 
- 641      79556172 
- 641      74315F50 
- 641      75744368 
- 641      617200
- 642              	.LASF9:
- 643 0013 5F5F696E 		.ascii	"__int32_t\000"
- 643      7433325F 
- 643      7400
- 644              	.LASF26:
- 645 001d 4F70616D 		.ascii	"Opamp_1_Start\000"
- 645      705F315F 
- 645      53746172 
- 645      7400
- 646              	.LASF25:
- 647 002b 56444143 		.ascii	"VDAC_Start\000"
- 647      5F537461 
- 647      727400
- 648              	.LASF19:
- 649 0036 70757474 		.ascii	"puttyUart1_GetChar\000"
- 649      79556172 
- 649      74315F47 
- 649      65744368 
- 649      617200
- 650              	.LASF17:
- 651 0049 626C6541 		.ascii	"bleAntwoord\000"
- 651      6E74776F 
- 651      6F726400 
- 652              	.LASF11:
- 653 0055 666C6F61 		.ascii	"float\000"
- 653      7400
- 654              	.LASF0:
- 655 005b 7369676E 		.ascii	"signed char\000"
- 655      65642063 
- 655      68617200 
- 656              	.LASF1:
- 657 0067 756E7369 		.ascii	"unsigned char\000"
- 657      676E6564 
- 657      20636861 
- 657      7200
- 658              	.LASF29:
- 659 0075 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 659      43313120 
- 659      352E342E 
- 659      31203230 
- 659      31363036 
- 660 00a8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 660      20726576 
- 660      6973696F 
- 660      6E203233 
- 660      37373135 
- 661 00db 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 661      66756E63 
- 661      74696F6E 
- 661      2D736563 
- 661      74696F6E 
- 662              	.LASF5:
- 663 0103 6C6F6E67 		.ascii	"long unsigned int\000"
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 14
+ 616 030c B0000000 		.4byte	.LASF30
+ 617 0310 0A       		.byte	0xa
+ 618 0311 33       		.byte	0x33
+ 619 0312 0F       		.uleb128 0xf
+ 620 0313 88000000 		.4byte	.LASF31
+ 621 0317 88000000 		.4byte	.LASF31
+ 622 031b 0B       		.byte	0xb
+ 623 031c 33       		.byte	0x33
+ 624 031d 0F       		.uleb128 0xf
+ 625 031e 59020000 		.4byte	.LASF32
+ 626 0322 59020000 		.4byte	.LASF32
+ 627 0326 05       		.byte	0x5
+ 628 0327 54       		.byte	0x54
+ 629 0328 0F       		.uleb128 0xf
+ 630 0329 D0020000 		.4byte	.LASF33
+ 631 032d D0020000 		.4byte	.LASF33
+ 632 0331 06       		.byte	0x6
+ 633 0332 54       		.byte	0x54
+ 634 0333 0F       		.uleb128 0xf
+ 635 0334 C8020000 		.4byte	.LASF34
+ 636 0338 C8020000 		.4byte	.LASF34
+ 637 033c 0C       		.byte	0xc
+ 638 033d 76       		.byte	0x76
+ 639 033e 0F       		.uleb128 0xf
+ 640 033f CB010000 		.4byte	.LASF35
+ 641 0343 CB010000 		.4byte	.LASF35
+ 642 0347 09       		.byte	0x9
+ 643 0348 3A       		.byte	0x3a
+ 644 0349 00       		.byte	0
+ 645              		.section	.debug_abbrev,"",%progbits
+ 646              	.Ldebug_abbrev0:
+ 647 0000 01       		.uleb128 0x1
+ 648 0001 11       		.uleb128 0x11
+ 649 0002 01       		.byte	0x1
+ 650 0003 25       		.uleb128 0x25
+ 651 0004 0E       		.uleb128 0xe
+ 652 0005 13       		.uleb128 0x13
+ 653 0006 0B       		.uleb128 0xb
+ 654 0007 03       		.uleb128 0x3
+ 655 0008 0E       		.uleb128 0xe
+ 656 0009 1B       		.uleb128 0x1b
+ 657 000a 0E       		.uleb128 0xe
+ 658 000b 55       		.uleb128 0x55
+ 659 000c 17       		.uleb128 0x17
+ 660 000d 11       		.uleb128 0x11
+ 661 000e 01       		.uleb128 0x1
+ 662 000f 10       		.uleb128 0x10
+ 663 0010 17       		.uleb128 0x17
+ 664 0011 00       		.byte	0
+ 665 0012 00       		.byte	0
+ 666 0013 02       		.uleb128 0x2
+ 667 0014 24       		.uleb128 0x24
+ 668 0015 00       		.byte	0
+ 669 0016 0B       		.uleb128 0xb
+ 670 0017 0B       		.uleb128 0xb
+ 671 0018 3E       		.uleb128 0x3e
+ 672 0019 0B       		.uleb128 0xb
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 14
 
 
- 663      20756E73 
- 663      69676E65 
- 663      6420696E 
- 663      7400
- 664              	.LASF3:
- 665 0115 73686F72 		.ascii	"short unsigned int\000"
- 665      7420756E 
- 665      7369676E 
- 665      65642069 
- 665      6E7400
- 666              	.LASF33:
- 667 0128 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 667      52784275 
- 667      66666572 
- 667      00
- 668              	.LASF31:
- 669 0135 433A5C55 		.ascii	"C:\\Users\\basile.berckmoes\\Documents\\GitHub\\Rob"
- 669      73657273 
- 669      5C626173 
- 669      696C652E 
- 669      62657263 
- 670 0163 6F74436F 		.ascii	"otComp2ELO\\Software\\PSoc\\Ble\\ProjectBle\\Design"
- 670      6D703245 
- 670      4C4F5C53 
- 670      6F667477 
- 670      6172655C 
- 671 0191 30312E63 		.ascii	"01.cydsn\000"
- 671      7964736E 
- 671      00
- 672              	.LASF12:
- 673 019a 646F7562 		.ascii	"double\000"
- 673      6C6500
- 674              	.LASF32:
- 675 01a1 6D61696E 		.ascii	"main\000"
- 675      00
- 676              	.LASF8:
- 677 01a6 756E7369 		.ascii	"unsigned int\000"
- 677      676E6564 
- 677      20696E74 
- 677      00
- 678              	.LASF7:
- 679 01b3 6C6F6E67 		.ascii	"long long unsigned int\000"
- 679      206C6F6E 
- 679      6720756E 
- 679      7369676E 
- 679      65642069 
- 680              	.LASF10:
- 681 01ca 696E7433 		.ascii	"int32_t\000"
- 681      325F7400 
- 682              	.LASF15:
- 683 01d2 73697A65 		.ascii	"sizetype\000"
- 683      74797065 
- 683      00
- 684              	.LASF6:
- 685 01db 6C6F6E67 		.ascii	"long long int\000"
- 685      206C6F6E 
- 685      6720696E 
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 15
+ 673 001a 03       		.uleb128 0x3
+ 674 001b 0E       		.uleb128 0xe
+ 675 001c 00       		.byte	0
+ 676 001d 00       		.byte	0
+ 677 001e 03       		.uleb128 0x3
+ 678 001f 16       		.uleb128 0x16
+ 679 0020 00       		.byte	0
+ 680 0021 03       		.uleb128 0x3
+ 681 0022 0E       		.uleb128 0xe
+ 682 0023 3A       		.uleb128 0x3a
+ 683 0024 0B       		.uleb128 0xb
+ 684 0025 3B       		.uleb128 0x3b
+ 685 0026 0B       		.uleb128 0xb
+ 686 0027 49       		.uleb128 0x49
+ 687 0028 13       		.uleb128 0x13
+ 688 0029 00       		.byte	0
+ 689 002a 00       		.byte	0
+ 690 002b 04       		.uleb128 0x4
+ 691 002c 24       		.uleb128 0x24
+ 692 002d 00       		.byte	0
+ 693 002e 0B       		.uleb128 0xb
+ 694 002f 0B       		.uleb128 0xb
+ 695 0030 3E       		.uleb128 0x3e
+ 696 0031 0B       		.uleb128 0xb
+ 697 0032 03       		.uleb128 0x3
+ 698 0033 08       		.uleb128 0x8
+ 699 0034 00       		.byte	0
+ 700 0035 00       		.byte	0
+ 701 0036 05       		.uleb128 0x5
+ 702 0037 2E       		.uleb128 0x2e
+ 703 0038 01       		.byte	0x1
+ 704 0039 3F       		.uleb128 0x3f
+ 705 003a 19       		.uleb128 0x19
+ 706 003b 03       		.uleb128 0x3
+ 707 003c 0E       		.uleb128 0xe
+ 708 003d 3A       		.uleb128 0x3a
+ 709 003e 0B       		.uleb128 0xb
+ 710 003f 3B       		.uleb128 0x3b
+ 711 0040 0B       		.uleb128 0xb
+ 712 0041 27       		.uleb128 0x27
+ 713 0042 19       		.uleb128 0x19
+ 714 0043 11       		.uleb128 0x11
+ 715 0044 01       		.uleb128 0x1
+ 716 0045 12       		.uleb128 0x12
+ 717 0046 06       		.uleb128 0x6
+ 718 0047 40       		.uleb128 0x40
+ 719 0048 18       		.uleb128 0x18
+ 720 0049 9742     		.uleb128 0x2117
+ 721 004b 19       		.uleb128 0x19
+ 722 004c 01       		.uleb128 0x1
+ 723 004d 13       		.uleb128 0x13
+ 724 004e 00       		.byte	0
+ 725 004f 00       		.byte	0
+ 726 0050 06       		.uleb128 0x6
+ 727 0051 34       		.uleb128 0x34
+ 728 0052 00       		.byte	0
+ 729 0053 03       		.uleb128 0x3
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 15
 
 
- 685      7400
- 686              	.LASF30:
- 687 01e9 6D61696E 		.ascii	"main.c\000"
- 687      2E6300
- 688              	.LASF13:
- 689 01f0 63686172 		.ascii	"char\000"
- 689      00
- 690              	.LASF24:
- 691 01f5 7278426C 		.ascii	"rxBleISR_StartEx\000"
- 691      65495352 
- 691      5F537461 
- 691      72744578 
- 691      00
- 692              	.LASF27:
- 693 0206 70757474 		.ascii	"puttyUart1_Start\000"
- 693      79556172 
- 693      74315F53 
- 693      74617274 
- 693      00
- 694              	.LASF16:
- 695 0217 64617461 		.ascii	"dataBinnenPutty\000"
- 695      42696E6E 
- 695      656E5075 
- 695      74747900 
- 696              	.LASF21:
- 697 0227 626C6555 		.ascii	"bleUart1_PutString\000"
- 697      61727431 
- 697      5F507574 
- 697      53747269 
- 697      6E6700
- 698              	.LASF2:
- 699 023a 73686F72 		.ascii	"short int\000"
- 699      7420696E 
- 699      7400
- 700              	.LASF18:
- 701 0244 63686172 		.ascii	"charBinnen\000"
- 701      42696E6E 
- 701      656E00
- 702              	.LASF4:
- 703 024f 6C6F6E67 		.ascii	"long int\000"
- 703      20696E74 
- 703      00
- 704              	.LASF14:
- 705 0258 6C6F6E67 		.ascii	"long double\000"
- 705      20646F75 
- 705      626C6500 
- 706              	.LASF22:
- 707 0264 626C6555 		.ascii	"bleUart1_GetChar\000"
- 707      61727431 
- 707      5F476574 
- 707      43686172 
- 707      00
- 708              	.LASF23:
- 709 0275 72785075 		.ascii	"rxPuttyISR_StartEx\000"
- 709      74747949 
- 709      53525F53 
- 709      74617274 
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccakyL0Q.s 			page 16
+ 730 0054 0E       		.uleb128 0xe
+ 731 0055 3A       		.uleb128 0x3a
+ 732 0056 0B       		.uleb128 0xb
+ 733 0057 3B       		.uleb128 0x3b
+ 734 0058 0B       		.uleb128 0xb
+ 735 0059 49       		.uleb128 0x49
+ 736 005a 13       		.uleb128 0x13
+ 737 005b 02       		.uleb128 0x2
+ 738 005c 17       		.uleb128 0x17
+ 739 005d 00       		.byte	0
+ 740 005e 00       		.byte	0
+ 741 005f 07       		.uleb128 0x7
+ 742 0060 898201   		.uleb128 0x4109
+ 743 0063 00       		.byte	0
+ 744 0064 11       		.uleb128 0x11
+ 745 0065 01       		.uleb128 0x1
+ 746 0066 31       		.uleb128 0x31
+ 747 0067 13       		.uleb128 0x13
+ 748 0068 00       		.byte	0
+ 749 0069 00       		.byte	0
+ 750 006a 08       		.uleb128 0x8
+ 751 006b 898201   		.uleb128 0x4109
+ 752 006e 01       		.byte	0x1
+ 753 006f 11       		.uleb128 0x11
+ 754 0070 01       		.uleb128 0x1
+ 755 0071 31       		.uleb128 0x31
+ 756 0072 13       		.uleb128 0x13
+ 757 0073 01       		.uleb128 0x1
+ 758 0074 13       		.uleb128 0x13
+ 759 0075 00       		.byte	0
+ 760 0076 00       		.byte	0
+ 761 0077 09       		.uleb128 0x9
+ 762 0078 8A8201   		.uleb128 0x410a
+ 763 007b 00       		.byte	0
+ 764 007c 02       		.uleb128 0x2
+ 765 007d 18       		.uleb128 0x18
+ 766 007e 9142     		.uleb128 0x2111
+ 767 0080 18       		.uleb128 0x18
+ 768 0081 00       		.byte	0
+ 769 0082 00       		.byte	0
+ 770 0083 0A       		.uleb128 0xa
+ 771 0084 898201   		.uleb128 0x4109
+ 772 0087 01       		.byte	0x1
+ 773 0088 11       		.uleb128 0x11
+ 774 0089 01       		.uleb128 0x1
+ 775 008a 31       		.uleb128 0x31
+ 776 008b 13       		.uleb128 0x13
+ 777 008c 00       		.byte	0
+ 778 008d 00       		.byte	0
+ 779 008e 0B       		.uleb128 0xb
+ 780 008f 2E       		.uleb128 0x2e
+ 781 0090 01       		.byte	0x1
+ 782 0091 3F       		.uleb128 0x3f
+ 783 0092 19       		.uleb128 0x19
+ 784 0093 03       		.uleb128 0x3
+ 785 0094 0E       		.uleb128 0xe
+ 786 0095 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 16
 
 
- 709      457800
- 710              	.LASF28:
- 711 0288 626C6555 		.ascii	"bleUart1_Start\000"
- 711      61727431 
- 711      5F537461 
- 711      727400
- 712              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 787 0096 0B       		.uleb128 0xb
+ 788 0097 3B       		.uleb128 0x3b
+ 789 0098 0B       		.uleb128 0xb
+ 790 0099 27       		.uleb128 0x27
+ 791 009a 19       		.uleb128 0x19
+ 792 009b 49       		.uleb128 0x49
+ 793 009c 13       		.uleb128 0x13
+ 794 009d 8701     		.uleb128 0x87
+ 795 009f 19       		.uleb128 0x19
+ 796 00a0 11       		.uleb128 0x11
+ 797 00a1 01       		.uleb128 0x1
+ 798 00a2 12       		.uleb128 0x12
+ 799 00a3 06       		.uleb128 0x6
+ 800 00a4 40       		.uleb128 0x40
+ 801 00a5 18       		.uleb128 0x18
+ 802 00a6 9742     		.uleb128 0x2117
+ 803 00a8 19       		.uleb128 0x19
+ 804 00a9 01       		.uleb128 0x1
+ 805 00aa 13       		.uleb128 0x13
+ 806 00ab 00       		.byte	0
+ 807 00ac 00       		.byte	0
+ 808 00ad 0C       		.uleb128 0xc
+ 809 00ae 34       		.uleb128 0x34
+ 810 00af 00       		.byte	0
+ 811 00b0 03       		.uleb128 0x3
+ 812 00b1 0E       		.uleb128 0xe
+ 813 00b2 3A       		.uleb128 0x3a
+ 814 00b3 0B       		.uleb128 0xb
+ 815 00b4 3B       		.uleb128 0x3b
+ 816 00b5 05       		.uleb128 0x5
+ 817 00b6 49       		.uleb128 0x49
+ 818 00b7 13       		.uleb128 0x13
+ 819 00b8 3F       		.uleb128 0x3f
+ 820 00b9 19       		.uleb128 0x19
+ 821 00ba 3C       		.uleb128 0x3c
+ 822 00bb 19       		.uleb128 0x19
+ 823 00bc 00       		.byte	0
+ 824 00bd 00       		.byte	0
+ 825 00be 0D       		.uleb128 0xd
+ 826 00bf 35       		.uleb128 0x35
+ 827 00c0 00       		.byte	0
+ 828 00c1 49       		.uleb128 0x49
+ 829 00c2 13       		.uleb128 0x13
+ 830 00c3 00       		.byte	0
+ 831 00c4 00       		.byte	0
+ 832 00c5 0E       		.uleb128 0xe
+ 833 00c6 34       		.uleb128 0x34
+ 834 00c7 00       		.byte	0
+ 835 00c8 03       		.uleb128 0x3
+ 836 00c9 0E       		.uleb128 0xe
+ 837 00ca 3A       		.uleb128 0x3a
+ 838 00cb 0B       		.uleb128 0xb
+ 839 00cc 3B       		.uleb128 0x3b
+ 840 00cd 0B       		.uleb128 0xb
+ 841 00ce 49       		.uleb128 0x49
+ 842 00cf 13       		.uleb128 0x13
+ 843 00d0 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 17
+
+
+ 844 00d1 19       		.uleb128 0x19
+ 845 00d2 02       		.uleb128 0x2
+ 846 00d3 18       		.uleb128 0x18
+ 847 00d4 00       		.byte	0
+ 848 00d5 00       		.byte	0
+ 849 00d6 0F       		.uleb128 0xf
+ 850 00d7 2E       		.uleb128 0x2e
+ 851 00d8 00       		.byte	0
+ 852 00d9 3F       		.uleb128 0x3f
+ 853 00da 19       		.uleb128 0x19
+ 854 00db 3C       		.uleb128 0x3c
+ 855 00dc 19       		.uleb128 0x19
+ 856 00dd 6E       		.uleb128 0x6e
+ 857 00de 0E       		.uleb128 0xe
+ 858 00df 03       		.uleb128 0x3
+ 859 00e0 0E       		.uleb128 0xe
+ 860 00e1 3A       		.uleb128 0x3a
+ 861 00e2 0B       		.uleb128 0xb
+ 862 00e3 3B       		.uleb128 0x3b
+ 863 00e4 0B       		.uleb128 0xb
+ 864 00e5 00       		.byte	0
+ 865 00e6 00       		.byte	0
+ 866 00e7 00       		.byte	0
+ 867              		.section	.debug_loc,"",%progbits
+ 868              	.Ldebug_loc0:
+ 869              	.LLST0:
+ 870 0000 08000000 		.4byte	.LVL1
+ 871 0004 12000000 		.4byte	.LVL2
+ 872 0008 0100     		.2byte	0x1
+ 873 000a 50       		.byte	0x50
+ 874 000b 00000000 		.4byte	0
+ 875 000f 00000000 		.4byte	0
+ 876              	.LLST1:
+ 877 0013 08000000 		.4byte	.LVL6
+ 878 0017 20000000 		.4byte	.LVL9
+ 879 001b 0100     		.2byte	0x1
+ 880 001d 54       		.byte	0x54
+ 881 001e 00000000 		.4byte	0
+ 882 0022 00000000 		.4byte	0
+ 883              		.section	.debug_aranges,"",%progbits
+ 884 0000 2C000000 		.4byte	0x2c
+ 885 0004 0200     		.2byte	0x2
+ 886 0006 00000000 		.4byte	.Ldebug_info0
+ 887 000a 04       		.byte	0x4
+ 888 000b 00       		.byte	0
+ 889 000c 0000     		.2byte	0
+ 890 000e 0000     		.2byte	0
+ 891 0010 00000000 		.4byte	.LFB63
+ 892 0014 24000000 		.4byte	.LFE63-.LFB63
+ 893 0018 00000000 		.4byte	.LFB64
+ 894 001c 24000000 		.4byte	.LFE64-.LFB64
+ 895 0020 00000000 		.4byte	.LFB65
+ 896 0024 7C000000 		.4byte	.LFE65-.LFB65
+ 897 0028 00000000 		.4byte	0
+ 898 002c 00000000 		.4byte	0
+ 899              		.section	.debug_ranges,"",%progbits
+ 900              	.Ldebug_ranges0:
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 18
+
+
+ 901 0000 00000000 		.4byte	.LFB63
+ 902 0004 24000000 		.4byte	.LFE63
+ 903 0008 00000000 		.4byte	.LFB64
+ 904 000c 24000000 		.4byte	.LFE64
+ 905 0010 00000000 		.4byte	.LFB65
+ 906 0014 7C000000 		.4byte	.LFE65
+ 907 0018 00000000 		.4byte	0
+ 908 001c 00000000 		.4byte	0
+ 909              		.section	.debug_line,"",%progbits
+ 910              	.Ldebug_line0:
+ 911 0000 17020000 		.section	.debug_str,"MS",%progbits,1
+ 911      0200A701 
+ 911      00000201 
+ 911      FB0E0D00 
+ 911      01010101 
+ 912              	.LASF22:
+ 913 0000 70757474 		.ascii	"puttyUart1_PutChar\000"
+ 913      79556172 
+ 913      74315F50 
+ 913      75744368 
+ 913      617200
+ 914              	.LASF20:
+ 915 0013 74656C6C 		.ascii	"teller\000"
+ 915      657200
+ 916              	.LASF38:
+ 917 001a 433A5C55 		.ascii	"C:\\Users\\BasileBerckmoes\\Documents\\GitHub\\Robo"
+ 917      73657273 
+ 917      5C426173 
+ 917      696C6542 
+ 917      6572636B 
+ 918 0048 74436F6D 		.ascii	"tComp2ELO\\Software\\PSoc\\Ble\\ProjectBle\\Design0"
+ 918      7032454C 
+ 918      4F5C536F 
+ 918      66747761 
+ 918      72655C50 
+ 919 0076 312E6379 		.ascii	"1.cydsn\000"
+ 919      64736E00 
+ 920              	.LASF9:
+ 921 007e 5F5F696E 		.ascii	"__int32_t\000"
+ 921      7433325F 
+ 921      7400
+ 922              	.LASF31:
+ 923 0088 4F70616D 		.ascii	"Opamp_1_Start\000"
+ 923      705F315F 
+ 923      53746172 
+ 923      7400
+ 924              	.LASF28:
+ 925 0096 4C434444 		.ascii	"LCDD_Position\000"
+ 925      5F506F73 
+ 925      6974696F 
+ 925      6E00
+ 926              	.LASF17:
+ 927 00a4 626C6541 		.ascii	"bleAntwoord\000"
+ 927      6E74776F 
+ 927      6F726400 
+ 928              	.LASF30:
+ 929 00b0 56444143 		.ascii	"VDAC_Start\000"
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 19
+
+
+ 929      5F537461 
+ 929      727400
+ 930              	.LASF21:
+ 931 00bb 70757474 		.ascii	"puttyUart1_GetChar\000"
+ 931      79556172 
+ 931      74315F47 
+ 931      65744368 
+ 931      617200
+ 932              	.LASF29:
+ 933 00ce 4C434444 		.ascii	"LCDD_PrintString\000"
+ 933      5F507269 
+ 933      6E745374 
+ 933      72696E67 
+ 933      00
+ 934              	.LASF11:
+ 935 00df 666C6F61 		.ascii	"float\000"
+ 935      7400
+ 936              	.LASF0:
+ 937 00e5 7369676E 		.ascii	"signed char\000"
+ 937      65642063 
+ 937      68617200 
+ 938              	.LASF1:
+ 939 00f1 756E7369 		.ascii	"unsigned char\000"
+ 939      676E6564 
+ 939      20636861 
+ 939      7200
+ 940              	.LASF36:
+ 941 00ff 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 941      43313120 
+ 941      352E342E 
+ 941      31203230 
+ 941      31363036 
+ 942 0132 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 942      20726576 
+ 942      6973696F 
+ 942      6E203233 
+ 942      37373135 
+ 943 0165 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 943      66756E63 
+ 943      74696F6E 
+ 943      2D736563 
+ 943      74696F6E 
+ 944              	.LASF5:
+ 945 018d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 945      20756E73 
+ 945      69676E65 
+ 945      6420696E 
+ 945      7400
+ 946              	.LASF3:
+ 947 019f 73686F72 		.ascii	"short unsigned int\000"
+ 947      7420756E 
+ 947      7369676E 
+ 947      65642069 
+ 947      6E7400
+ 948              	.LASF19:
+ 949 01b2 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 949      52784275 
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 20
+
+
+ 949      66666572 
+ 949      00
+ 950              	.LASF12:
+ 951 01bf 646F7562 		.ascii	"double\000"
+ 951      6C6500
+ 952              	.LASF39:
+ 953 01c6 6D61696E 		.ascii	"main\000"
+ 953      00
+ 954              	.LASF35:
+ 955 01cb 4C434444 		.ascii	"LCDD_WriteControl\000"
+ 955      5F577269 
+ 955      7465436F 
+ 955      6E74726F 
+ 955      6C00
+ 956              	.LASF8:
+ 957 01dd 756E7369 		.ascii	"unsigned int\000"
+ 957      676E6564 
+ 957      20696E74 
+ 957      00
+ 958              	.LASF7:
+ 959 01ea 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 959      206C6F6E 
+ 959      6720756E 
+ 959      7369676E 
+ 959      65642069 
+ 960              	.LASF27:
+ 961 0201 4C434444 		.ascii	"LCDD_Start\000"
+ 961      5F537461 
+ 961      727400
+ 962              	.LASF23:
+ 963 020c 626C6555 		.ascii	"bleUart1_PutChar\000"
+ 963      61727431 
+ 963      5F507574 
+ 963      43686172 
+ 963      00
+ 964              	.LASF10:
+ 965 021d 696E7433 		.ascii	"int32_t\000"
+ 965      325F7400 
+ 966              	.LASF15:
+ 967 0225 73697A65 		.ascii	"sizetype\000"
+ 967      74797065 
+ 967      00
+ 968              	.LASF6:
+ 969 022e 6C6F6E67 		.ascii	"long long int\000"
+ 969      206C6F6E 
+ 969      6720696E 
+ 969      7400
+ 970              	.LASF37:
+ 971 023c 6D61696E 		.ascii	"main.c\000"
+ 971      2E6300
+ 972              	.LASF13:
+ 973 0243 63686172 		.ascii	"char\000"
+ 973      00
+ 974              	.LASF26:
+ 975 0248 7278426C 		.ascii	"rxBleISR_StartEx\000"
+ 975      65495352 
+ 975      5F537461 
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccLk5Rwk.s 			page 21
+
+
+ 975      72744578 
+ 975      00
+ 976              	.LASF32:
+ 977 0259 70757474 		.ascii	"puttyUart1_Start\000"
+ 977      79556172 
+ 977      74315F53 
+ 977      74617274 
+ 977      00
+ 978              	.LASF16:
+ 979 026a 64617461 		.ascii	"dataBinnenPutty\000"
+ 979      42696E6E 
+ 979      656E5075 
+ 979      74747900 
+ 980              	.LASF2:
+ 981 027a 73686F72 		.ascii	"short int\000"
+ 981      7420696E 
+ 981      7400
+ 982              	.LASF18:
+ 983 0284 63686172 		.ascii	"charBinnen\000"
+ 983      42696E6E 
+ 983      656E00
+ 984              	.LASF4:
+ 985 028f 6C6F6E67 		.ascii	"long int\000"
+ 985      20696E74 
+ 985      00
+ 986              	.LASF14:
+ 987 0298 6C6F6E67 		.ascii	"long double\000"
+ 987      20646F75 
+ 987      626C6500 
+ 988              	.LASF24:
+ 989 02a4 626C6555 		.ascii	"bleUart1_GetChar\000"
+ 989      61727431 
+ 989      5F476574 
+ 989      43686172 
+ 989      00
+ 990              	.LASF25:
+ 991 02b5 72785075 		.ascii	"rxPuttyISR_StartEx\000"
+ 991      74747949 
+ 991      53525F53 
+ 991      74617274 
+ 991      457800
+ 992              	.LASF34:
+ 993 02c8 43794465 		.ascii	"CyDelay\000"
+ 993      6C617900 
+ 994              	.LASF33:
+ 995 02d0 626C6555 		.ascii	"bleUart1_Start\000"
+ 995      61727431 
+ 995      5F537461 
+ 995      727400
+ 996              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

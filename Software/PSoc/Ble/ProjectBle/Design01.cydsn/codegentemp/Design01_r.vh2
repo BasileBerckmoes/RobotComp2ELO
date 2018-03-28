@@ -1,13 +1,20 @@
 -- Project:   Design01
--- Generated: 03/28/2018 17:36:08
--- PSoC Creator  4.1 Update 1
+-- Generated: 03/28/2018 19:43:58
+-- PSoC Creator  4.2
 
 ENTITY Design01 IS
     PORT(
         bleRx(0)_PAD : IN std_ulogic;
         Rx_1(0)_PAD : IN std_ulogic;
         Tx_1(0)_PAD : OUT std_ulogic;
-        bleTx(0)_PAD : OUT std_ulogic);
+        bleTx(0)_PAD : OUT std_ulogic;
+        \LCDD:LCDPort(0)_PAD\ : OUT std_ulogic;
+        \LCDD:LCDPort(1)_PAD\ : OUT std_ulogic;
+        \LCDD:LCDPort(2)_PAD\ : OUT std_ulogic;
+        \LCDD:LCDPort(3)_PAD\ : OUT std_ulogic;
+        \LCDD:LCDPort(4)_PAD\ : OUT std_ulogic;
+        \LCDD:LCDPort(5)_PAD\ : OUT std_ulogic;
+        \LCDD:LCDPort(6)_PAD\ : OUT std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VUSB OF __DEFAULT__ : ENTITY IS 5e0;
@@ -33,9 +40,9 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     SIGNAL ClockBlock_XTAL_32KHZ : bit;
     SIGNAL Dedicated_Output__PA : bit;
     SIGNAL MODIN1_0 : bit;
-    ATTRIBUTE placement_force OF MODIN1_0 : SIGNAL IS "U(1,1,A)2";
+    ATTRIBUTE placement_force OF MODIN1_0 : SIGNAL IS "U(0,1,B)2";
     SIGNAL MODIN1_1 : bit;
-    ATTRIBUTE placement_force OF MODIN1_1 : SIGNAL IS "U(1,1,A)0";
+    ATTRIBUTE placement_force OF MODIN1_1 : SIGNAL IS "U(0,1,B)0";
     SIGNAL MODIN4_3 : bit;
     SIGNAL MODIN4_4 : bit;
     SIGNAL MODIN4_5 : bit;
@@ -43,79 +50,85 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     SIGNAL Net_14 : bit;
     SIGNAL Net_16 : bit;
     SIGNAL Net_27 : bit;
-    ATTRIBUTE placement_force OF Net_27 : SIGNAL IS "U(1,3,B)1";
+    ATTRIBUTE placement_force OF Net_27 : SIGNAL IS "U(1,3,B)3";
     SIGNAL Net_32 : bit;
-    SIGNAL Net_33 : bit;
     SIGNAL Net_34 : bit;
     SIGNAL Net_9 : bit;
-    ATTRIBUTE placement_force OF Net_9 : SIGNAL IS "U(0,2,A)2";
+    ATTRIBUTE placement_force OF Net_9 : SIGNAL IS "U(1,1,A)0";
     SIGNAL Rx_1(0)__PA : bit;
     SIGNAL Tx_1(0)__PA : bit;
+    SIGNAL \\\LCDD:LCDPort(0)\\__PA\ : bit;
+    SIGNAL \\\LCDD:LCDPort(1)\\__PA\ : bit;
+    SIGNAL \\\LCDD:LCDPort(2)\\__PA\ : bit;
+    SIGNAL \\\LCDD:LCDPort(3)\\__PA\ : bit;
+    SIGNAL \\\LCDD:LCDPort(4)\\__PA\ : bit;
+    SIGNAL \\\LCDD:LCDPort(5)\\__PA\ : bit;
+    SIGNAL \\\LCDD:LCDPort(6)\\__PA\ : bit;
     SIGNAL \bleUart1:BUART:counter_load_not\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:counter_load_not\ : SIGNAL IS "U(1,2,B)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:counter_load_not\ : SIGNAL IS "U(0,3,A)1";
     SIGNAL \bleUart1:BUART:rx_bitclk_enable\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_bitclk_enable\ : SIGNAL IS "U(1,1,A)3";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_bitclk_enable\ : SIGNAL IS "U(0,1,B)3";
     SIGNAL \bleUart1:BUART:rx_count7_tc\ : bit;
     SIGNAL \bleUart1:BUART:rx_count_0\ : bit;
     SIGNAL \bleUart1:BUART:rx_count_1\ : bit;
     SIGNAL \bleUart1:BUART:rx_count_2\ : bit;
     SIGNAL \bleUart1:BUART:rx_counter_load\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_counter_load\ : SIGNAL IS "U(1,0,A)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_counter_load\ : SIGNAL IS "U(0,2,A)1";
     SIGNAL \bleUart1:BUART:rx_fifofull\ : bit;
     SIGNAL \bleUart1:BUART:rx_fifonotempty\ : bit;
     SIGNAL \bleUart1:BUART:rx_last\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_last\ : SIGNAL IS "U(0,2,A)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_last\ : SIGNAL IS "U(0,3,B)3";
     SIGNAL \bleUart1:BUART:rx_load_fifo\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_load_fifo\ : SIGNAL IS "U(1,0,B)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_load_fifo\ : SIGNAL IS "U(0,2,A)3";
     SIGNAL \bleUart1:BUART:rx_postpoll\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_postpoll\ : SIGNAL IS "U(1,1,A)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_postpoll\ : SIGNAL IS "U(0,1,B)1";
     SIGNAL \bleUart1:BUART:rx_state_0\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_0\ : SIGNAL IS "U(1,0,B)0";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_0\ : SIGNAL IS "U(0,2,A)0";
     SIGNAL \bleUart1:BUART:rx_state_2\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_2\ : SIGNAL IS "U(1,0,A)0";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_2\ : SIGNAL IS "U(0,2,B)0";
     SIGNAL \bleUart1:BUART:rx_state_3\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_3\ : SIGNAL IS "U(1,0,A)2";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_3\ : SIGNAL IS "U(0,2,A)2";
     SIGNAL \bleUart1:BUART:rx_state_stop1_reg\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_stop1_reg\ : SIGNAL IS "U(1,0,B)3";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_state_stop1_reg\ : SIGNAL IS "U(0,2,B)3";
     SIGNAL \bleUart1:BUART:rx_status_3\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_status_3\ : SIGNAL IS "U(1,0,B)2";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_status_3\ : SIGNAL IS "U(0,2,B)2";
     SIGNAL \bleUart1:BUART:rx_status_4\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_status_4\ : SIGNAL IS "U(1,1,B)0";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_status_4\ : SIGNAL IS "U(1,1,B)2";
     SIGNAL \bleUart1:BUART:rx_status_5\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_status_5\ : SIGNAL IS "U(1,1,B)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:rx_status_5\ : SIGNAL IS "U(1,1,B)0";
     SIGNAL \bleUart1:BUART:tx_bitclk\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_bitclk\ : SIGNAL IS "U(1,2,A)1";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_bitclk\ : SIGNAL IS "U(0,3,B)1";
     SIGNAL \bleUart1:BUART:tx_bitclk_enable_pre\ : bit;
     SIGNAL \bleUart1:BUART:tx_counter_dp\ : bit;
     SIGNAL \bleUart1:BUART:tx_ctrl_mark_last\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_ctrl_mark_last\ : SIGNAL IS "U(1,1,B)2";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_ctrl_mark_last\ : SIGNAL IS "U(0,2,B)1";
     SIGNAL \bleUart1:BUART:tx_fifo_empty\ : bit;
     SIGNAL \bleUart1:BUART:tx_fifo_notfull\ : bit;
     SIGNAL \bleUart1:BUART:tx_shift_out\ : bit;
     SIGNAL \bleUart1:BUART:tx_state_0\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_state_0\ : SIGNAL IS "U(1,2,A)0";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_state_0\ : SIGNAL IS "U(0,3,B)0";
     SIGNAL \bleUart1:BUART:tx_state_1\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_state_1\ : SIGNAL IS "U(1,2,B)3";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_state_1\ : SIGNAL IS "U(1,3,A)1";
     SIGNAL \bleUart1:BUART:tx_state_2\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_state_2\ : SIGNAL IS "U(1,2,B)0";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_state_2\ : SIGNAL IS "U(0,3,A)0";
     SIGNAL \bleUart1:BUART:tx_status_0\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_status_0\ : SIGNAL IS "U(1,2,A)2";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_status_0\ : SIGNAL IS "U(0,3,A)2";
     SIGNAL \bleUart1:BUART:tx_status_2\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_status_2\ : SIGNAL IS "U(1,3,A)2";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:tx_status_2\ : SIGNAL IS "U(0,3,A)3";
     SIGNAL \bleUart1:BUART:txn\ : bit;
-    ATTRIBUTE placement_force OF \bleUart1:BUART:txn\ : SIGNAL IS "U(1,3,B)0";
+    ATTRIBUTE placement_force OF \bleUart1:BUART:txn\ : SIGNAL IS "U(1,3,A)0";
     SIGNAL \bleUart1:Net_9\ : bit;
     ATTRIBUTE udbclken_assigned OF \bleUart1:Net_9\ : SIGNAL IS "True";
     ATTRIBUTE global_signal OF \bleUart1:Net_9\ : SIGNAL IS true;
     SIGNAL \bleUart1:Net_9_local\ : bit;
     SIGNAL \puttyUart1:BUART:counter_load_not\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:counter_load_not\ : SIGNAL IS "U(0,2,B)3";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:counter_load_not\ : SIGNAL IS "U(1,2,B)2";
     SIGNAL \puttyUart1:BUART:pollcount_0\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:pollcount_0\ : SIGNAL IS "U(0,0,B)2";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:pollcount_0\ : SIGNAL IS "U(0,1,A)2";
     SIGNAL \puttyUart1:BUART:pollcount_1\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:pollcount_1\ : SIGNAL IS "U(0,0,B)3";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:pollcount_1\ : SIGNAL IS "U(0,1,A)0";
     SIGNAL \puttyUart1:BUART:rx_bitclk_enable\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_bitclk_enable\ : SIGNAL IS "U(0,2,B)2";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_bitclk_enable\ : SIGNAL IS "U(0,1,A)3";
     SIGNAL \puttyUart1:BUART:rx_count7_tc\ : bit;
     SIGNAL \puttyUart1:BUART:rx_count_0\ : bit;
     SIGNAL \puttyUart1:BUART:rx_count_1\ : bit;
@@ -125,50 +138,50 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     SIGNAL \puttyUart1:BUART:rx_count_5\ : bit;
     SIGNAL \puttyUart1:BUART:rx_count_6\ : bit;
     SIGNAL \puttyUart1:BUART:rx_counter_load\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_counter_load\ : SIGNAL IS "U(0,2,A)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_counter_load\ : SIGNAL IS "U(0,0,A)1";
     SIGNAL \puttyUart1:BUART:rx_fifofull\ : bit;
     SIGNAL \puttyUart1:BUART:rx_fifonotempty\ : bit;
     SIGNAL \puttyUart1:BUART:rx_last\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_last\ : SIGNAL IS "U(0,0,B)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_last\ : SIGNAL IS "U(1,0,B)0";
     SIGNAL \puttyUart1:BUART:rx_load_fifo\ : bit;
     ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_load_fifo\ : SIGNAL IS "U(0,0,A)3";
     SIGNAL \puttyUart1:BUART:rx_postpoll\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_postpoll\ : SIGNAL IS "U(0,1,B)2";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_postpoll\ : SIGNAL IS "U(0,1,A)1";
     SIGNAL \puttyUart1:BUART:rx_state_0\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_0\ : SIGNAL IS "U(0,1,B)1";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_0\ : SIGNAL IS "U(0,0,A)0";
     SIGNAL \puttyUart1:BUART:rx_state_2\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_2\ : SIGNAL IS "U(0,0,A)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_2\ : SIGNAL IS "U(0,0,B)0";
     SIGNAL \puttyUart1:BUART:rx_state_3\ : bit;
     ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_3\ : SIGNAL IS "U(0,0,A)2";
     SIGNAL \puttyUart1:BUART:rx_state_stop1_reg\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_stop1_reg\ : SIGNAL IS "U(0,0,A)1";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_state_stop1_reg\ : SIGNAL IS "U(0,0,B)3";
     SIGNAL \puttyUart1:BUART:rx_status_3\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_status_3\ : SIGNAL IS "U(0,1,B)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_status_3\ : SIGNAL IS "U(0,0,B)2";
     SIGNAL \puttyUart1:BUART:rx_status_4\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_status_4\ : SIGNAL IS "U(0,1,A)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_status_4\ : SIGNAL IS "U(1,1,A)2";
     SIGNAL \puttyUart1:BUART:rx_status_5\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_status_5\ : SIGNAL IS "U(0,1,A)3";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:rx_status_5\ : SIGNAL IS "U(1,0,A)0";
     SIGNAL \puttyUart1:BUART:tx_bitclk\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_bitclk\ : SIGNAL IS "U(0,3,B)1";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_bitclk\ : SIGNAL IS "U(1,2,B)1";
     SIGNAL \puttyUart1:BUART:tx_bitclk_enable_pre\ : bit;
     SIGNAL \puttyUart1:BUART:tx_counter_dp\ : bit;
     SIGNAL \puttyUart1:BUART:tx_ctrl_mark_last\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_ctrl_mark_last\ : SIGNAL IS "U(0,1,A)2";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_ctrl_mark_last\ : SIGNAL IS "U(0,0,B)1";
     SIGNAL \puttyUart1:BUART:tx_fifo_empty\ : bit;
     SIGNAL \puttyUart1:BUART:tx_fifo_notfull\ : bit;
     SIGNAL \puttyUart1:BUART:tx_shift_out\ : bit;
     SIGNAL \puttyUart1:BUART:tx_state_0\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_state_0\ : SIGNAL IS "U(0,3,A)2";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_state_0\ : SIGNAL IS "U(1,2,A)0";
     SIGNAL \puttyUart1:BUART:tx_state_1\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_state_1\ : SIGNAL IS "U(0,3,A)1";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_state_1\ : SIGNAL IS "U(1,2,A)2";
     SIGNAL \puttyUart1:BUART:tx_state_2\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_state_2\ : SIGNAL IS "U(0,3,A)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_state_2\ : SIGNAL IS "U(1,2,B)0";
     SIGNAL \puttyUart1:BUART:tx_status_0\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_status_0\ : SIGNAL IS "U(0,3,B)3";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_status_0\ : SIGNAL IS "U(1,2,A)1";
     SIGNAL \puttyUart1:BUART:tx_status_2\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_status_2\ : SIGNAL IS "U(0,2,B)1";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:tx_status_2\ : SIGNAL IS "U(1,3,B)2";
     SIGNAL \puttyUart1:BUART:txn\ : bit;
-    ATTRIBUTE placement_force OF \puttyUart1:BUART:txn\ : SIGNAL IS "U(0,3,B)0";
+    ATTRIBUTE placement_force OF \puttyUart1:BUART:txn\ : SIGNAL IS "U(1,1,A)3";
     SIGNAL \puttyUart1:Net_9\ : bit;
     ATTRIBUTE udbclken_assigned OF \puttyUart1:Net_9\ : SIGNAL IS "True";
     ATTRIBUTE global_signal OF \puttyUart1:Net_9\ : SIGNAL IS true;
@@ -195,113 +208,126 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     ATTRIBUTE Location OF bleTx(0) : LABEL IS "P12[2]";
     ATTRIBUTE lib_model OF key(0) : LABEL IS "iocell5";
     ATTRIBUTE Location OF key(0) : LABEL IS "P0[7]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(0)\ : LABEL IS "iocell6";
+    ATTRIBUTE Location OF \LCDD:LCDPort(0)\ : LABEL IS "P2[0]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(1)\ : LABEL IS "iocell7";
+    ATTRIBUTE Location OF \LCDD:LCDPort(1)\ : LABEL IS "P2[1]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(2)\ : LABEL IS "iocell8";
+    ATTRIBUTE Location OF \LCDD:LCDPort(2)\ : LABEL IS "P2[2]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(3)\ : LABEL IS "iocell9";
+    ATTRIBUTE Location OF \LCDD:LCDPort(3)\ : LABEL IS "P2[3]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(4)\ : LABEL IS "iocell10";
+    ATTRIBUTE Location OF \LCDD:LCDPort(4)\ : LABEL IS "P2[4]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(5)\ : LABEL IS "iocell11";
+    ATTRIBUTE Location OF \LCDD:LCDPort(5)\ : LABEL IS "P2[5]";
+    ATTRIBUTE lib_model OF \LCDD:LCDPort(6)\ : LABEL IS "iocell12";
+    ATTRIBUTE Location OF \LCDD:LCDPort(6)\ : LABEL IS "P2[6]";
     ATTRIBUTE lib_model OF Net_27 : LABEL IS "macrocell1";
     ATTRIBUTE Location OF Net_27 : LABEL IS "U(1,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:counter_load_not\ : LABEL IS "macrocell2";
-    ATTRIBUTE Location OF \bleUart1:BUART:counter_load_not\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:counter_load_not\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_status_0\ : LABEL IS "macrocell3";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_status_0\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_status_0\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_status_2\ : LABEL IS "macrocell4";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_status_2\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_status_2\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_counter_load\ : LABEL IS "macrocell5";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_counter_load\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_counter_load\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_postpoll\ : LABEL IS "macrocell6";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_postpoll\ : LABEL IS "U(1,1)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_postpoll\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_status_4\ : LABEL IS "macrocell7";
     ATTRIBUTE Location OF \bleUart1:BUART:rx_status_4\ : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_status_5\ : LABEL IS "macrocell8";
     ATTRIBUTE Location OF \bleUart1:BUART:rx_status_5\ : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF Net_9 : LABEL IS "macrocell9";
-    ATTRIBUTE Location OF Net_9 : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF Net_9 : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:counter_load_not\ : LABEL IS "macrocell10";
-    ATTRIBUTE Location OF \puttyUart1:BUART:counter_load_not\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:counter_load_not\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_status_0\ : LABEL IS "macrocell11";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_status_0\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_status_0\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_status_2\ : LABEL IS "macrocell12";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_status_2\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_status_2\ : LABEL IS "U(1,3)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_counter_load\ : LABEL IS "macrocell13";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_counter_load\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_counter_load\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_postpoll\ : LABEL IS "macrocell14";
     ATTRIBUTE Location OF \puttyUart1:BUART:rx_postpoll\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_status_4\ : LABEL IS "macrocell15";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_status_4\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_status_4\ : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_status_5\ : LABEL IS "macrocell16";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_status_5\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_status_5\ : LABEL IS "U(1,0)";
     ATTRIBUTE Location OF \Opamp_1:ABuf\ : LABEL IS "F(OpAmp,3)";
     ATTRIBUTE Location OF \VDAC:viDAC8\ : LABEL IS "F(VIDAC,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:sTX:TxShifter:u0\ : LABEL IS "datapathcell1";
-    ATTRIBUTE Location OF \bleUart1:BUART:sTX:TxShifter:u0\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \bleUart1:BUART:sTX:TxShifter:u0\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "datapathcell2";
-    ATTRIBUTE Location OF \bleUart1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:sTX:TxSts\ : LABEL IS "statusicell1";
-    ATTRIBUTE Location OF \bleUart1:BUART:sTX:TxSts\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \bleUart1:BUART:sTX:TxSts\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:sRX:RxShifter:u0\ : LABEL IS "datapathcell3";
-    ATTRIBUTE Location OF \bleUart1:BUART:sRX:RxShifter:u0\ : LABEL IS "U(1,1)";
-    ATTRIBUTE Location OF \bleUart1:BUART:sRX:RxBitCounter\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:sRX:RxShifter:u0\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \bleUart1:BUART:sRX:RxBitCounter\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:sRX:RxSts\ : LABEL IS "statusicell2";
-    ATTRIBUTE Location OF \bleUart1:BUART:sRX:RxSts\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:sRX:RxSts\ : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:sTX:TxShifter:u0\ : LABEL IS "datapathcell4";
-    ATTRIBUTE Location OF \puttyUart1:BUART:sTX:TxShifter:u0\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:sTX:TxShifter:u0\ : LABEL IS "U(1,3)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "datapathcell5";
-    ATTRIBUTE Location OF \puttyUart1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:sTX:TxSts\ : LABEL IS "statusicell3";
-    ATTRIBUTE Location OF \puttyUart1:BUART:sTX:TxSts\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:sTX:TxSts\ : LABEL IS "U(1,3)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:sRX:RxShifter:u0\ : LABEL IS "datapathcell6";
-    ATTRIBUTE Location OF \puttyUart1:BUART:sRX:RxShifter:u0\ : LABEL IS "U(0,1)";
-    ATTRIBUTE Location OF \puttyUart1:BUART:sRX:RxBitCounter\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:sRX:RxShifter:u0\ : LABEL IS "U(0,0)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:sRX:RxBitCounter\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:sRX:RxSts\ : LABEL IS "statusicell4";
-    ATTRIBUTE Location OF \puttyUart1:BUART:sRX:RxSts\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:sRX:RxSts\ : LABEL IS "U(1,0)";
     ATTRIBUTE Location OF rxPuttyISR : LABEL IS "[IntrContainer=(0)][IntrId=(1)]";
     ATTRIBUTE Location OF rxBleISR : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
-    ATTRIBUTE Location OF txBleISR : LABEL IS "[IntrContainer=(0)][IntrId=(2)]";
     ATTRIBUTE lib_model OF \bleUart1:BUART:txn\ : LABEL IS "macrocell17";
     ATTRIBUTE Location OF \bleUart1:BUART:txn\ : LABEL IS "U(1,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_state_1\ : LABEL IS "macrocell18";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_state_1\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_state_1\ : LABEL IS "U(1,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_state_0\ : LABEL IS "macrocell19";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_state_0\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_state_0\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_state_2\ : LABEL IS "macrocell20";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_state_2\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_state_2\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_bitclk\ : LABEL IS "macrocell21";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_bitclk\ : LABEL IS "U(1,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_bitclk\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:tx_ctrl_mark_last\ : LABEL IS "macrocell22";
-    ATTRIBUTE Location OF \bleUart1:BUART:tx_ctrl_mark_last\ : LABEL IS "U(1,1)";
-    ATTRIBUTE lib_model OF Dedicated_Output : LABEL IS "iocell6";
+    ATTRIBUTE Location OF \bleUart1:BUART:tx_ctrl_mark_last\ : LABEL IS "U(0,2)";
+    ATTRIBUTE lib_model OF Dedicated_Output : LABEL IS "iocell13";
     ATTRIBUTE Location OF Dedicated_Output : LABEL IS "P3[7]";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_state_0\ : LABEL IS "macrocell23";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_0\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_0\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_load_fifo\ : LABEL IS "macrocell24";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_load_fifo\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_load_fifo\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_state_3\ : LABEL IS "macrocell25";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_3\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_3\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_state_2\ : LABEL IS "macrocell26";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_2\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_2\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_bitclk_enable\ : LABEL IS "macrocell27";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_bitclk_enable\ : LABEL IS "U(1,1)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_bitclk_enable\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_state_stop1_reg\ : LABEL IS "macrocell28";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_stop1_reg\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_state_stop1_reg\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF MODIN1_1 : LABEL IS "macrocell29";
-    ATTRIBUTE Location OF MODIN1_1 : LABEL IS "U(1,1)";
+    ATTRIBUTE Location OF MODIN1_1 : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF MODIN1_0 : LABEL IS "macrocell30";
-    ATTRIBUTE Location OF MODIN1_0 : LABEL IS "U(1,1)";
+    ATTRIBUTE Location OF MODIN1_0 : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_status_3\ : LABEL IS "macrocell31";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_status_3\ : LABEL IS "U(1,0)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_status_3\ : LABEL IS "U(0,2)";
     ATTRIBUTE lib_model OF \bleUart1:BUART:rx_last\ : LABEL IS "macrocell32";
-    ATTRIBUTE Location OF \bleUart1:BUART:rx_last\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \bleUart1:BUART:rx_last\ : LABEL IS "U(0,3)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:txn\ : LABEL IS "macrocell33";
-    ATTRIBUTE Location OF \puttyUart1:BUART:txn\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:txn\ : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_state_1\ : LABEL IS "macrocell34";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_state_1\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_state_1\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_state_0\ : LABEL IS "macrocell35";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_state_0\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_state_0\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_state_2\ : LABEL IS "macrocell36";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_state_2\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_state_2\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_bitclk\ : LABEL IS "macrocell37";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_bitclk\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_bitclk\ : LABEL IS "U(1,2)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:tx_ctrl_mark_last\ : LABEL IS "macrocell38";
-    ATTRIBUTE Location OF \puttyUart1:BUART:tx_ctrl_mark_last\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:tx_ctrl_mark_last\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_state_0\ : LABEL IS "macrocell39";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_state_0\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_state_0\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_load_fifo\ : LABEL IS "macrocell40";
     ATTRIBUTE Location OF \puttyUart1:BUART:rx_load_fifo\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_state_3\ : LABEL IS "macrocell41";
@@ -309,17 +335,17 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_state_2\ : LABEL IS "macrocell42";
     ATTRIBUTE Location OF \puttyUart1:BUART:rx_state_2\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_bitclk_enable\ : LABEL IS "macrocell43";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_bitclk_enable\ : LABEL IS "U(0,2)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_bitclk_enable\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_state_stop1_reg\ : LABEL IS "macrocell44";
     ATTRIBUTE Location OF \puttyUart1:BUART:rx_state_stop1_reg\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:pollcount_1\ : LABEL IS "macrocell45";
-    ATTRIBUTE Location OF \puttyUart1:BUART:pollcount_1\ : LABEL IS "U(0,0)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:pollcount_1\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:pollcount_0\ : LABEL IS "macrocell46";
-    ATTRIBUTE Location OF \puttyUart1:BUART:pollcount_0\ : LABEL IS "U(0,0)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:pollcount_0\ : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_status_3\ : LABEL IS "macrocell47";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_status_3\ : LABEL IS "U(0,1)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_status_3\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \puttyUart1:BUART:rx_last\ : LABEL IS "macrocell48";
-    ATTRIBUTE Location OF \puttyUart1:BUART:rx_last\ : LABEL IS "U(0,0)";
+    ATTRIBUTE Location OF \puttyUart1:BUART:rx_last\ : LABEL IS "U(1,0)";
     COMPONENT abufcell
     END COMPONENT;
     COMPONENT clockblockcell
@@ -467,8 +493,6 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
             f0_blk_stat_comb : OUT std_ulogic;
             f1_bus_stat_comb : OUT std_ulogic;
             f1_blk_stat_comb : OUT std_ulogic;
-            ce0 : OUT std_ulogic;
-            ce0i : IN std_ulogic;
             p_in_0 : IN std_ulogic;
             p_in_1 : IN std_ulogic;
             p_in_2 : IN std_ulogic;
@@ -485,6 +509,8 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
             p_out_5 : OUT std_ulogic;
             p_out_6 : OUT std_ulogic;
             p_out_7 : OUT std_ulogic;
+            ce0i : IN std_ulogic;
+            ce0 : OUT std_ulogic;
             cl0i : IN std_ulogic;
             cl0 : OUT std_ulogic;
             z0i : IN std_ulogic;
@@ -522,11 +548,11 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     END COMPONENT;
     COMPONENT iocell
         PORT (
-            pin_input : IN std_ulogic;
             oe : IN std_ulogic;
             fb : OUT std_ulogic;
-            pad_in : IN std_ulogic;
             pa_out : OUT std_ulogic;
+            pin_input : IN std_ulogic;
+            pad_in : IN std_ulogic;
             pad_out : OUT std_ulogic;
             oe_reg : OUT std_ulogic;
             oe_internal : IN std_ulogic;
@@ -928,7 +954,7 @@ BEGIN
             drive_mode => "110",
             ibuf_enabled => "1",
             id => "e851a3b9-efb8-48be-bbb8-b303b216c393",
-            init_dr_st => "1",
+            init_dr_st => "0",
             input_buffer_sel => "00",
             input_clk_en => 0,
             input_sync => "1",
@@ -1097,6 +1123,210 @@ BEGIN
         PORT MAP(
             pa_out => key(0)__PA,
             oe => open,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort\:logicalport
+        GENERIC MAP(
+            drive_mode => "110110110110110110110",
+            ibuf_enabled => "1111111",
+            id => "e339a48c-0ac3-4a50-a404-2ac4834734b6/ed092b9b-d398-4703-be89-cebf998501f6",
+            init_dr_st => "0000000",
+            input_buffer_sel => "00000000000000",
+            input_clk_en => 0,
+            input_sync => "1111111",
+            input_sync_mode => "0000000",
+            intr_mode => "00000000000000",
+            invert_in_clock => 0,
+            invert_in_clock_en => 0,
+            invert_in_reset => 0,
+            invert_out_clock => 0,
+            invert_out_clock_en => 0,
+            invert_out_reset => 0,
+            io_voltage => ",,,,,,",
+            layout_mode => "CONTIGUOUS",
+            oe_conn => "0000000",
+            oe_reset => 0,
+            oe_sync => "0000000",
+            output_clk_en => 0,
+            output_clock_mode => "0000000",
+            output_conn => "0000000",
+            output_mode => "0000000",
+            output_reset => 0,
+            output_sync => "0000000",
+            ovt_hyst_trim => "0000000",
+            ovt_needed => "0000000",
+            ovt_slew_control => "00000000000000",
+            pa_in_clock => -1,
+            pa_in_clock_en => -1,
+            pa_in_reset => -1,
+            pa_out_clock => -1,
+            pa_out_clock_en => -1,
+            pa_out_reset => -1,
+            pin_aliases => ",,,,,,",
+            pin_mode => "OOOOOOO",
+            por_state => 4,
+            port_alias_group => "",
+            port_alias_required => 0,
+            sio_group_cnt => 0,
+            sio_hifreq => "00000000",
+            sio_hyst => "1111111",
+            sio_ibuf => "00000000",
+            sio_info => "00000000000000",
+            sio_obuf => "00000000",
+            sio_refsel => "00000000",
+            sio_vohsel => "00000000",
+            sio_vtrip => "00000000",
+            slew_rate => "0000000",
+            spanning => 0,
+            sw_only => 0,
+            use_annotation => "0000000",
+            vtrip => "10101010101010",
+            width => 7,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0)
+        PORT MAP(
+            in_clock_en => open,
+            in_reset => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    \LCDD:LCDPort(0)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(0)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(0)_PAD\,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort(1)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 1,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(1)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(1)_PAD\,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort(2)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 2,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(2)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(2)_PAD\,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort(3)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 3,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(3)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(3)_PAD\,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort(4)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 4,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(4)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(4)_PAD\,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort(5)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 5,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(5)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(5)_PAD\,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \LCDD:LCDPort(6)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\LCDD:LCDPort\",
+            logicalport_pin_id => 6,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\LCDD:LCDPort(6)\\__PA\,
+            oe => open,
+            pad_in => \LCDD:LCDPort(6)_PAD\,
             in_clock => open,
             in_clock_en => '1',
             in_reset => '0',
@@ -1379,8 +1609,7 @@ BEGIN
             status_3 => \bleUart1:BUART:tx_fifo_notfull\,
             status_2 => \bleUart1:BUART:tx_status_2\,
             status_1 => \bleUart1:BUART:tx_fifo_empty\,
-            status_0 => \bleUart1:BUART:tx_status_0\,
-            interrupt => Net_33);
+            status_0 => \bleUart1:BUART:tx_status_0\);
 
     \bleUart1:BUART:sRX:RxShifter:u0\:datapathcell
         GENERIC MAP(
@@ -1649,14 +1878,6 @@ BEGIN
             is_nmi => 0)
         PORT MAP(
             interrupt => Net_34,
-            clock => ClockBlock_BUS_CLK);
-
-    txBleISR:interrupt
-        GENERIC MAP(
-            int_type => "00",
-            is_nmi => 0)
-        PORT MAP(
-            interrupt => Net_33,
             clock => ClockBlock_BUS_CLK);
 
     \bleUart1:BUART:txn\:macrocell
