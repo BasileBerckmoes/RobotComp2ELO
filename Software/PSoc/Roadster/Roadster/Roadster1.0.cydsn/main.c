@@ -18,6 +18,7 @@ uint8 IRDrempel = 190;
 
 //US GLOBALS
 uint8 selectUS = 0;
+uint16 mediaan;
 
 uint16 avgUS1[5];
 uint16 avgUS2[5];
@@ -78,6 +79,9 @@ int main(void)
         if (selectUS == 0) schuifRegister(avgUS1, counterValue);
         else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
         else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
+        
+        //berekenen van de mediaan
+        
          
         //LCD deel   
         /////////////////////////////////////////////////////
@@ -116,6 +120,19 @@ void schuifRegister(uint16 array[], uint16 newValue)
     array[0] = newValue;
 }
 
+void berekenMediaan(uint16 array[]) 
+{ 
+    uint16 tmp = 0;
+    uint16 tmpArray[] = {UINT16_MAX,UINT16_MAX,UINT16_MAX,UINT16_MAX,UINT16_MAX};
+    for(int i = 0; i < 5; i++)
+    {
+        for(int j = 0; j < 5; j++) 
+        {
+            if (array[j] < tmpArray[i]) tmpArray[i] = array[j];
+        }
+    }
+    mediaan = tmpArray[3];
+}    
 //methode die een text en een testgetal op een 
 void printTextopLCD(int testValue)
 {

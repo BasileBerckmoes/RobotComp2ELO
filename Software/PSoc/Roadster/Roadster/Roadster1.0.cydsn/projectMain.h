@@ -28,5 +28,6 @@ void schuifRegister(uint16 array[], uint16 newValue);
 int exponent(int grondgetal, int exponent);
 uint8 telTot(uint8 getal, uint8 min, uint8 max);
 void telProcedure(void);
+void berekenMediaan(uint16 array[])
 
 /* [] END OF FILE */
