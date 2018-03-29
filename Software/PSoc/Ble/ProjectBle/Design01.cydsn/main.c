@@ -15,11 +15,17 @@ char teller;
 CY_ISR(dataBinnenPutty)
 {
     char charBinnen = puttyUart1_GetChar();
-    if (charBinnen == '\n') teller=charBinnen;
     puttyUart1_PutChar(charBinnen);
+    bleUart1_PutChar(charBinnen);
+    
+    if (charBinnen == '\r')
+    {
+        puttyUart1_PutChar('\n');
+    bleUart1_PutChar('\n');
+    }
     
     //puttyUart1_PutChar(charBinnen);
-    bleUart1_PutChar(charBinnen);
+    
 }
 
 CY_ISR(bleAntwoord)
@@ -28,10 +34,10 @@ CY_ISR(bleAntwoord)
     char charBinnen = bleUart1_GetChar();
     teller++;
     puttyUart1_PutChar(charBinnen); 
-    if(charBinnen == '\r')
-    {
-        bleUart1_PutChar('\n');
-    }
+    //if(charBinnen == '\r')
+    //{
+    //    bleUart1_PutChar('\n');
+    //}
     
    
 }

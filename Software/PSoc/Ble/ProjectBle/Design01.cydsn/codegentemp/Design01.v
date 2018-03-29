@@ -1,6 +1,6 @@
 // ======================================================================
 // Design01.v generated from TopDesign.cysch
-// 03/28/2018 at 19:43
+// 03/29/2018 at 20:57
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -561,7 +561,6 @@ module top ;
           wire  Net_16;
           wire  Net_15;
           wire  Net_14;
-          wire  Net_13;
           wire  Net_12;
           wire  Net_11;
           wire  Net_10;
@@ -581,6 +580,7 @@ module top ;
           wire [7:0] Net_5;
           wire  Net_4;
     electrical  Net_3;
+          wire  Net_13;
     electrical  Net_2;
           wire  Net_27;
           wire  Net_32;
