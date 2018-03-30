@@ -25,8 +25,8 @@ uint16 avgUS2[5];
 uint16 avgUS3[5];
 
 //MOTOR GLOBALS
-uint8 pwmMotor1;
-uint8 pwmMotor2;
+uint8 pwmMotor1 = 60;
+uint8 pwmMotor2 = 50;
 
 //Interupt "end of conversion" van SAR_ADC 
 CY_ISR(IRSensoren)
@@ -42,11 +42,18 @@ CY_ISR(IRSensoren)
    }
 }
   
+CY_ISR(SwitchMotorEN)
+{
+   ENA_Write(~ENA_Read());
+   ENB_Write(ENA_Read());
+   CyDelay(200);
+}
 
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
     readIRSensors_StartEx(IRSensoren);
+    EnMotorISR_StartEx(SwitchMotorEN);
     
     LCD_Start(); 
     LCD_Position(0u, 0u);
@@ -55,6 +62,13 @@ int main(void)
     ADC_IR_Start();
     ADC_IR_StartConvert();
     
+    
+    MotorControl_Start();
+    MotorControl_WriteCompare1(pwmMotor1);
+    MotorControl_WriteCompare2(pwmMotor2);
+    ENA_Write(0);
+    ENB_Write(ENA_Read());
+
     TimerUS_Start();
    
     
@@ -73,12 +87,12 @@ int main(void)
         selectUS_Write(selectUS);
         
         //vraag afstand aan 1 van de 3 us sensoren
-        uint16 counterValue = readUSValue();
+       // uint16 counterValue = readUSValue();
         
         //schuif uitkomst timer in juiste array
-        if (selectUS == 0) schuifRegister(avgUS1, counterValue);
-        else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
-        else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
+        //if (selectUS == 0) schuifRegister(avgUS1, counterValue);
+        //else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
+        //else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
         
         //berekenen van de mediaan
         
@@ -196,3 +210,4 @@ int exponent(int grondgetal, int exponent)
     }
     return tmpWaarde;
 }
+

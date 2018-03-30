@@ -7227,7 +7227,7 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <part name="P+9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="J1" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_04" device="SCREW" value="Connector US1"/>
 <part name="J2" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_04" device="SCREW" value="Connector US 2"/>
-<part name="J3" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_04" device="SCREW" value="Connector US 2"/>
+<part name="J3" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_04" device="SCREW" value="Connector US 3"/>
 <part name="J4" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_08" device="3.5MM-8" value="Connector H-Brug"/>
 <part name="J5" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_04" device="SCREW" value="Connector IR voeding"/>
 <part name="J6" library="SchemaRobotV1.0" deviceset="SPARKFUN-CONNECTORS_CONN_08" device="3.5MM-8" value="Connector IR signalen"/>
