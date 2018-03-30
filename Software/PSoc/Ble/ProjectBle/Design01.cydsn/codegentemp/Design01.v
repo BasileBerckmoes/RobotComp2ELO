@@ -1,6 +1,6 @@
 // ======================================================================
 // Design01.v generated from TopDesign.cysch
-// 03/29/2018 at 20:57
+// 03/30/2018 at 22:23
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -554,18 +554,18 @@ endmodule
 // top
 module top ;
 
-          wire  Net_20;
-          wire  Net_19;
-          wire  Net_18;
-          wire  Net_17;
+          wire  Net_55;
+          wire  Net_54;
+          wire  Net_53;
+          wire  Net_52;
           wire  Net_16;
-          wire  Net_15;
-          wire  Net_14;
-          wire  Net_12;
-          wire  Net_11;
-          wire  Net_10;
+          wire  Net_51;
+          wire  Net_50;
+          wire  Net_49;
+          wire  Net_48;
+          wire  Net_47;
           wire  Net_9;
-          wire  Net_8;
+          wire  Net_46;
           wire  Net_38;
           wire  Net_37;
           wire  Net_36;
@@ -704,17 +704,17 @@ module top ;
     UART_v2_50_3 puttyUart1 (
         .cts_n(1'b0),
         .tx(Net_9),
-        .rts_n(Net_10),
-        .tx_en(Net_11),
+        .rts_n(Net_47),
+        .tx_en(Net_48),
         .clock(1'b0),
         .reset(Net_13),
-        .rx(Net_14),
-        .tx_interrupt(Net_15),
+        .rx(Net_50),
+        .tx_interrupt(Net_51),
         .rx_interrupt(Net_16),
-        .tx_data(Net_17),
-        .tx_clk(Net_18),
-        .rx_data(Net_19),
-        .rx_clk(Net_20));
+        .tx_data(Net_52),
+        .tx_clk(Net_53),
+        .rx_data(Net_54),
+        .rx_clk(Net_55));
     defparam puttyUart1.Address1 = 0;
     defparam puttyUart1.Address2 = 0;
     defparam puttyUart1.EnIntRXInterrupt = 0;
@@ -789,7 +789,7 @@ module top ;
 		Rx_1
 		 (.oe(tmpOE__Rx_1_net),
 		  .y({1'b0}),
-		  .fb({Net_14}),
+		  .fb({Net_50}),
 		  .io({tmpIO_0__Rx_1_net[0:0]}),
 		  .siovref(tmpSIOVREF__Rx_1_net),
 		  .interrupt({tmpINTERRUPT_0__Rx_1_net[0:0]}),

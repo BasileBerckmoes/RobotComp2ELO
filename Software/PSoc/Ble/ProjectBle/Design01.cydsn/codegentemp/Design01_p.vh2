@@ -1,5 +1,5 @@
 -- Project:   Design01
--- Generated: 03/29/2018 20:57:51
+-- Generated: 03/30/2018 22:23:30
 -- PSoC Creator  4.2
 
 ENTITY Design01 IS
@@ -45,11 +45,11 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     SIGNAL MODIN4_4 : bit;
     SIGNAL MODIN4_5 : bit;
     SIGNAL MODIN4_6 : bit;
-    SIGNAL Net_14 : bit;
     SIGNAL Net_16 : bit;
     SIGNAL Net_27 : bit;
     SIGNAL Net_32 : bit;
     SIGNAL Net_34 : bit;
+    SIGNAL Net_50 : bit;
     SIGNAL Net_9 : bit;
     SIGNAL Rx_1(0)__PA : bit;
     SIGNAL Tx_1(0)__PA : bit;
@@ -756,7 +756,7 @@ BEGIN
         PORT MAP(
             pa_out => Rx_1(0)__PA,
             oe => open,
-            fb => Net_14,
+            fb => Net_50,
             pad_in => Rx_1(0)_PAD,
             in_clock => ClockBlock_BUS_CLK,
             in_clock_en => '1',
@@ -1391,7 +1391,7 @@ BEGIN
         PORT MAP(
             q => \puttyUart1:BUART:rx_postpoll\,
             main_0 => \puttyUart1:BUART:pollcount_1\,
-            main_1 => Net_14,
+            main_1 => Net_50,
             main_2 => \puttyUart1:BUART:pollcount_0\);
 
     \puttyUart1:BUART:rx_status_4\:macrocell
@@ -2161,7 +2161,7 @@ BEGIN
             main_6 => \puttyUart1:BUART:rx_count_5\,
             main_7 => \puttyUart1:BUART:rx_count_4\,
             main_8 => \puttyUart1:BUART:pollcount_1\,
-            main_9 => Net_14,
+            main_9 => Net_50,
             main_10 => \puttyUart1:BUART:pollcount_0\);
 
     \puttyUart1:BUART:rx_load_fifo\:macrocell
@@ -2217,7 +2217,7 @@ BEGIN
             main_5 => \puttyUart1:BUART:rx_count_6\,
             main_6 => \puttyUart1:BUART:rx_count_5\,
             main_7 => \puttyUart1:BUART:rx_count_4\,
-            main_8 => Net_14,
+            main_8 => Net_50,
             main_9 => \puttyUart1:BUART:rx_last\);
 
     \puttyUart1:BUART:rx_bitclk_enable\:macrocell
@@ -2259,7 +2259,7 @@ BEGIN
             main_0 => \puttyUart1:BUART:rx_count_2\,
             main_1 => \puttyUart1:BUART:rx_count_1\,
             main_2 => \puttyUart1:BUART:pollcount_1\,
-            main_3 => Net_14,
+            main_3 => Net_50,
             main_4 => \puttyUart1:BUART:pollcount_0\);
 
     \puttyUart1:BUART:pollcount_0\:macrocell
@@ -2273,7 +2273,7 @@ BEGIN
             clock_0 => \puttyUart1:Net_9\,
             main_0 => \puttyUart1:BUART:rx_count_2\,
             main_1 => \puttyUart1:BUART:rx_count_1\,
-            main_2 => Net_14,
+            main_2 => Net_50,
             main_3 => \puttyUart1:BUART:pollcount_0\);
 
     \puttyUart1:BUART:rx_status_3\:macrocell
@@ -2291,7 +2291,7 @@ BEGIN
             main_3 => \puttyUart1:BUART:rx_state_3\,
             main_4 => \puttyUart1:BUART:rx_state_2\,
             main_5 => \puttyUart1:BUART:pollcount_1\,
-            main_6 => Net_14,
+            main_6 => Net_50,
             main_7 => \puttyUart1:BUART:pollcount_0\);
 
     \puttyUart1:BUART:rx_last\:macrocell
@@ -2303,6 +2303,6 @@ BEGIN
         PORT MAP(
             q => \puttyUart1:BUART:rx_last\,
             clock_0 => \puttyUart1:Net_9\,
-            main_0 => Net_14);
+            main_0 => Net_50);
 
 END __DEFAULT__;

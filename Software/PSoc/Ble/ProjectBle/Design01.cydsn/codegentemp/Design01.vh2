@@ -2,7 +2,7 @@
 --	Conversion of Design01.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Thu Mar 29 20:57:50 2018
+--	Fri Mar 30 22:23:29 2018
 --
 
 USE cypress.cypress.all;
@@ -381,7 +381,7 @@ SIGNAL \puttyUart1:BUART:reset_sr\ : bit;
 SIGNAL \puttyUart1:BUART:HalfDuplexSend_last\ : bit;
 SIGNAL Net_9 : bit;
 SIGNAL \puttyUart1:BUART:txn\ : bit;
-SIGNAL Net_15 : bit;
+SIGNAL Net_51 : bit;
 SIGNAL \puttyUart1:BUART:tx_interrupt_out\ : bit;
 SIGNAL Net_16 : bit;
 SIGNAL \puttyUart1:BUART:rx_interrupt_out\ : bit;
@@ -469,7 +469,7 @@ SIGNAL \puttyUart1:BUART:tx_status_0\ : bit;
 SIGNAL \puttyUart1:BUART:tx_status_1\ : bit;
 SIGNAL \puttyUart1:BUART:tx_status_2\ : bit;
 SIGNAL \puttyUart1:BUART:tx_status_3\ : bit;
-SIGNAL Net_11 : bit;
+SIGNAL Net_48 : bit;
 SIGNAL \puttyUart1:BUART:tx_bitclk\ : bit;
 SIGNAL \puttyUart1:BUART:tx_ctrl_mark_last\ : bit;
 SIGNAL \puttyUart1:BUART:tx_mark\ : bit;
@@ -557,7 +557,7 @@ SIGNAL \puttyUart1:BUART:rx_poll_bit1\ : bit;
 SIGNAL \puttyUart1:BUART:rx_poll_bit2\ : bit;
 SIGNAL \puttyUart1:BUART:pollingrange\ : bit;
 SIGNAL \puttyUart1:BUART:pollcount_1\ : bit;
-SIGNAL Net_14 : bit;
+SIGNAL Net_50 : bit;
 SIGNAL \puttyUart1:BUART:sRX:s23Poll:add_vv_vv_MODGEN_6_1\ : bit;
 SIGNAL \puttyUart1:BUART:pollcount_0\ : bit;
 SIGNAL \puttyUart1:BUART:sRX:s23Poll:add_vv_vv_MODGEN_6_0\ : bit;
@@ -613,7 +613,7 @@ SIGNAL \puttyUart1:BUART:rx_status_4\ : bit;
 SIGNAL \puttyUart1:BUART:rx_status_5\ : bit;
 SIGNAL \puttyUart1:BUART:rx_status_6\ : bit;
 SIGNAL \puttyUart1:BUART:rx_addr_match_status\ : bit;
-SIGNAL Net_10 : bit;
+SIGNAL Net_47 : bit;
 SIGNAL \puttyUart1:BUART:rx_markspace_pre\ : bit;
 SIGNAL \puttyUart1:BUART:rx_parity_error_pre\ : bit;
 SIGNAL \puttyUart1:BUART:rx_break_status\ : bit;
@@ -778,7 +778,7 @@ SIGNAL \puttyUart1:BUART:txn\\D\ : bit;
 SIGNAL \puttyUart1:BUART:tx_state_1\\D\ : bit;
 SIGNAL \puttyUart1:BUART:tx_state_0\\D\ : bit;
 SIGNAL \puttyUart1:BUART:tx_state_2\\D\ : bit;
-SIGNAL Net_11D : bit;
+SIGNAL Net_48D : bit;
 SIGNAL \puttyUart1:BUART:tx_bitclk\\D\ : bit;
 SIGNAL \puttyUart1:BUART:tx_ctrl_mark_last\\D\ : bit;
 SIGNAL \puttyUart1:BUART:tx_mark\\D\ : bit;
@@ -966,14 +966,14 @@ Net_9 <= (not \puttyUart1:BUART:txn\);
 	OR \puttyUart1:BUART:rx_state_0\
 	OR \puttyUart1:BUART:rx_state_1\);
 
-\puttyUart1:BUART:pollcount_1\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not \puttyUart1:BUART:pollcount_1\ and Net_14 and \puttyUart1:BUART:pollcount_0\)
+\puttyUart1:BUART:pollcount_1\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not \puttyUart1:BUART:pollcount_1\ and Net_50 and \puttyUart1:BUART:pollcount_0\)
 	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not \puttyUart1:BUART:pollcount_0\ and \puttyUart1:BUART:pollcount_1\)
-	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not Net_14 and \puttyUart1:BUART:pollcount_1\));
+	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not Net_50 and \puttyUart1:BUART:pollcount_1\));
 
-\puttyUart1:BUART:pollcount_0\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not \puttyUart1:BUART:pollcount_0\ and Net_14)
-	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not Net_14 and \puttyUart1:BUART:pollcount_0\));
+\puttyUart1:BUART:pollcount_0\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not \puttyUart1:BUART:pollcount_0\ and Net_50)
+	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_count_2\ and not \puttyUart1:BUART:rx_count_1\ and not Net_50 and \puttyUart1:BUART:pollcount_0\));
 
-\puttyUart1:BUART:rx_postpoll\ <= ((Net_14 and \puttyUart1:BUART:pollcount_0\)
+\puttyUart1:BUART:rx_postpoll\ <= ((Net_50 and \puttyUart1:BUART:pollcount_0\)
 	OR \puttyUart1:BUART:pollcount_1\);
 
 \puttyUart1:BUART:rx_status_4\ <= ((\puttyUart1:BUART:rx_load_fifo\ and \puttyUart1:BUART:rx_fifofull\));
@@ -981,7 +981,7 @@ Net_9 <= (not \puttyUart1:BUART:txn\);
 \puttyUart1:BUART:rx_status_5\ <= ((\puttyUart1:BUART:rx_fifonotempty\ and \puttyUart1:BUART:rx_state_stop1_reg\));
 
 \puttyUart1:BUART:rx_stop_bit_error\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:pollcount_1\ and not \puttyUart1:BUART:pollcount_0\ and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_3\ and \puttyUart1:BUART:rx_state_2\)
-	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:pollcount_1\ and not Net_14 and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_3\ and \puttyUart1:BUART:rx_state_2\));
+	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:pollcount_1\ and not Net_50 and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_3\ and \puttyUart1:BUART:rx_state_2\));
 
 \puttyUart1:BUART:rx_load_fifo\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:rx_state_2\ and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_3\)
 	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:rx_state_2\ and not \puttyUart1:BUART:rx_count_6\ and not \puttyUart1:BUART:rx_count_4\ and \puttyUart1:BUART:rx_state_0\)
@@ -994,7 +994,7 @@ Net_9 <= (not \puttyUart1:BUART:txn\);
 	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_2\ and \puttyUart1:BUART:rx_state_3\)
 	OR (not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_0\ and \puttyUart1:BUART:rx_state_3\));
 
-\puttyUart1:BUART:rx_state_2\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:rx_state_2\ and not Net_14 and \puttyUart1:BUART:rx_last\)
+\puttyUart1:BUART:rx_state_2\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:rx_state_2\ and not Net_50 and \puttyUart1:BUART:rx_last\)
 	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_0\ and not \puttyUart1:BUART:rx_state_2\ and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_3\)
 	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:rx_count_6\ and not \puttyUart1:BUART:rx_count_4\ and \puttyUart1:BUART:rx_state_0\)
 	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:rx_count_6\ and not \puttyUart1:BUART:rx_count_5\ and \puttyUart1:BUART:rx_state_0\)
@@ -1005,14 +1005,14 @@ Net_9 <= (not \puttyUart1:BUART:txn\);
 \puttyUart1:BUART:rx_state_1\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_1\));
 
 \puttyUart1:BUART:rx_state_0\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:pollcount_1\ and not \puttyUart1:BUART:pollcount_0\ and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_2\)
-	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:pollcount_1\ and not Net_14 and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_2\)
+	OR (not \puttyUart1:BUART:reset_reg\ and not \puttyUart1:BUART:rx_state_1\ and not \puttyUart1:BUART:rx_state_3\ and not \puttyUart1:BUART:pollcount_1\ and not Net_50 and \puttyUart1:BUART:rx_bitclk_enable\ and \puttyUart1:BUART:rx_state_2\)
 	OR (not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_0\ and \puttyUart1:BUART:rx_count_5\ and \puttyUart1:BUART:rx_count_4\)
 	OR (not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_0\ and \puttyUart1:BUART:rx_count_6\)
 	OR (not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_0\ and \puttyUart1:BUART:rx_state_3\)
 	OR (not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_1\ and \puttyUart1:BUART:rx_state_0\)
 	OR (not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_state_0\ and \puttyUart1:BUART:rx_state_2\));
 
-\puttyUart1:BUART:rx_last\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and Net_14));
+\puttyUart1:BUART:rx_last\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and Net_50));
 
 \puttyUart1:BUART:rx_address_detected\\D\ <= ((not \puttyUart1:BUART:reset_reg\ and \puttyUart1:BUART:rx_address_detected\));
 
@@ -1779,7 +1779,7 @@ Rx_1:cy_psoc3_pins_v1_10
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(tmpOE__bleRx_net_0),
 		y=>(zero),
-		fb=>Net_14,
+		fb=>Net_50,
 		analog=>(open),
 		io=>(tmpIO_0__Rx_1_net_0),
 		siovref=>(tmpSIOVREF__Rx_1_net_0),
@@ -2221,10 +2221,10 @@ Net_29:cy_dff
 	PORT MAP(d=>\puttyUart1:BUART:tx_state_2\\D\,
 		clk=>\puttyUart1:BUART:clock_op\,
 		q=>\puttyUart1:BUART:tx_state_2\);
-Net_11:cy_dff
+Net_48:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\puttyUart1:BUART:clock_op\,
-		q=>Net_11);
+		q=>Net_48);
 \puttyUart1:BUART:tx_bitclk\:cy_dff
 	PORT MAP(d=>\puttyUart1:BUART:tx_bitclk\\D\,
 		clk=>\puttyUart1:BUART:clock_op\,
