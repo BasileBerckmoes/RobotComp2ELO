@@ -14,7 +14,7 @@
 //#if (!#defined(myUART_H))
 //#define myUART_H
     
-#include <project.h>            
+#include "project.h"          
 
 //#define	FALSE	0
 //#define TRUE	!FALSE
@@ -34,7 +34,7 @@
         char   RxStr[20];   // received Rx packet (to hold individual command message)
         struct {            // anonimous structure
             char cmd;       // 1-byte command
-            char valstr[19];// command value           
+            uint8 valstr[19];// command value           
         };
     } RB;
 
@@ -48,6 +48,6 @@ CY_ISR_PROTO(MyRxInt);          // process Rx interrupt
 uint8	IsCharReady(void);		// Returns TRUE when a char is ready
 uint8	GetRxStr(void);			// Extract command string from buffer, non-blocking 
 
-
+void ProcessCommandMsg(void);
 //#endif
 /* [] END OF FILE */

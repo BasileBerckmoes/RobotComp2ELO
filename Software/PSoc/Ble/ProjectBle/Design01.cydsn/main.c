@@ -10,12 +10,19 @@
  * ========================================
 */
 #include "project.h"
+#include <string.h>
+#include <stdlib.h> //atoi
+#include <stdio.h> 
+#include <myUART1.h>
+
 char teller;
 
 uint8 valueX=0;
 uint8 valueY=0;
 
 uint8 motorStatus = 0;
+
+uint8 IRWaarden = 0;
 
 CY_ISR(dataBinnenPutty)
 {
@@ -81,14 +88,28 @@ int main(void)
 
     for(;;)
     {
+        
+        if (IsCharReady())
+        {
+            if(GetRxStr())
+            {
+                ProcessCommandMsg();
+            }
+        }
         LCDD_Position(0u,0u);
         //LCDD_PrintString("fuck this");
         LCDD_Position(1u,0u);
-        //LCDD_PrintString("TIME FOR WEED!");
+        LCDD_PrintDecUint16(IRWaarden);
         CyDelay(1000);
         LCDD_ClearDisplay();
         CyDelay(1000);
     }
 }
-
+void ProcessCommandMsg(void){
+    if (RB.cmd == 'I')
+    {
+        IRWaarden = RB.valstr[0];
+    }
+        
+}
 /* [] END OF FILE */
