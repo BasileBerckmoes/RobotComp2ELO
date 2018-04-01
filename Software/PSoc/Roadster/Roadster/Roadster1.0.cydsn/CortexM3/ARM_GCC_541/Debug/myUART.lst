@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 1
 
 
    1              		.syntax unified
@@ -27,38 +27,38 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
   24              		.type	MyRxInt, %function
   25              	MyRxInt:
   26              	.LFB63:
-  27              		.file 1 "..\\myUART.c"
-   1:..\myUART.c   **** /* ==================================================
-   2:..\myUART.c   ****  * Followed by project posted by 
-   3:..\myUART.c   ****  * Bob Marlowe TxRx20
-   4:..\myUART.c   ****  * http://www.cypress.com/?app=forum&id=2233&rID=63901
-   5:..\myUART.c   **** 
-   6:..\myUART.c   ****  * Provided As-is, without any warranties to perform
-   7:..\myUART.c   ****  * under license terms CREATIVE COMMONS - SHARE ALIKE
-   8:..\myUART.c   ****  *
-   9:..\myUART.c   ****  * ==================================================
-  10:..\myUART.c   **** */
-  11:..\myUART.c   **** 
-  12:..\myUART.c   ****     
-  13:..\myUART.c   **** #include "myUART.h"
-  14:..\myUART.c   **** 
-  15:..\myUART.c   **** 
-  16:..\myUART.c   **** // defines ==================================================================
-  17:..\myUART.c   **** 
-  18:..\myUART.c   **** 
-  19:..\myUART.c   **** uint8	RxBuffer[RxBufferSize];     // Rx circular buffer to hold all incoming command
-  20:..\myUART.c   **** uint8  *RxReadIndex	 = RxBuffer;    // pointer to position in RxBuffer to write incoming Rx bytes
-  21:..\myUART.c   **** uint8  *RxWriteIndex = RxBuffer;    // pointer to position in RxBuffer to read and process bytes
-  22:..\myUART.c   **** 
-  23:..\myUART.c   **** 
-  24:..\myUART.c   **** char   *RxStrIndex = RB.RxStr;      // pointer to command string buffer (processed messages)
-  25:..\myUART.c   ****                                     // each Rx command consists of: <byte command><string value><CR
-  26:..\myUART.c   **** 
-  27:..\myUART.c   **** //===========================================================================
-  28:..\myUART.c   **** 
-  29:..\myUART.c   **** CY_ISR(MyRxInt) //interrupt on Rx byte received
-  30:..\myUART.c   **** {   
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 2
+  27              		.file 1 "myUART.c"
+   1:myUART.c      **** /* ==================================================
+   2:myUART.c      ****  * Followed by project posted by 
+   3:myUART.c      ****  * Bob Marlowe TxRx20
+   4:myUART.c      ****  * http://www.cypress.com/?app=forum&id=2233&rID=63901
+   5:myUART.c      **** 
+   6:myUART.c      ****  * Provided As-is, without any warranties to perform
+   7:myUART.c      ****  * under license terms CREATIVE COMMONS - SHARE ALIKE
+   8:myUART.c      ****  *
+   9:myUART.c      ****  * ==================================================
+  10:myUART.c      **** */
+  11:myUART.c      **** 
+  12:myUART.c      ****     
+  13:myUART.c      **** #include "myUART.h"
+  14:myUART.c      **** 
+  15:myUART.c      **** 
+  16:myUART.c      **** // defines ==================================================================
+  17:myUART.c      **** 
+  18:myUART.c      **** 
+  19:myUART.c      **** uint8	RxBuffer[RxBufferSize];     // Rx circular buffer to hold all incoming command
+  20:myUART.c      **** uint8  *RxReadIndex	 = RxBuffer;    // pointer to position in RxBuffer to write incoming Rx bytes
+  21:myUART.c      **** uint8  *RxWriteIndex = RxBuffer;    // pointer to position in RxBuffer to read and process bytes
+  22:myUART.c      **** 
+  23:myUART.c      **** 
+  24:myUART.c      **** char   *RxStrIndex = RB.RxStr;      // pointer to command string buffer (processed messages)
+  25:myUART.c      ****                                     // each Rx command consists of: <byte command><string value><CR
+  26:myUART.c      **** 
+  27:myUART.c      **** //===========================================================================
+  28:myUART.c      **** 
+  29:myUART.c      **** CY_ISR(MyRxInt) //interrupt on Rx byte received
+  30:myUART.c      **** {   
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 2
 
 
   28              		.loc 1 30 0
@@ -71,22 +71,22 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
   35              		.cfi_offset 4, -12
   36              		.cfi_offset 5, -8
   37              		.cfi_offset 14, -4
-  31:..\myUART.c   ****     //move all available characters from Rx queue to RxBuffer
-  32:..\myUART.c   ****     while(BleUart1_ReadRxStatus() & BleUart1_RX_STS_FIFO_NOTEMPTY)
+  31:myUART.c      ****     //move all available characters from Rx queue to RxBuffer
+  32:myUART.c      ****     while(BleUart_ReadRxStatus() & BleUart_RX_STS_FIFO_NOTEMPTY)
   38              		.loc 1 32 0
   39 0002 0DE0     		b	.L3
   40              	.L4:
-  33:..\myUART.c   **** 	{
-  34:..\myUART.c   **** 		*RxWriteIndex++ = BleUart1_ReadRxData();
+  33:myUART.c      **** 	{
+  34:myUART.c      **** 		*RxWriteIndex++ = BleUart_ReadRxData();
   41              		.loc 1 34 0
   42 0004 094C     		ldr	r4, .L6
   43 0006 2568     		ldr	r5, [r4]
   44 0008 6B1C     		adds	r3, r5, #1
   45 000a 2360     		str	r3, [r4]
-  46 000c FFF7FEFF 		bl	BleUart1_ReadRxData
+  46 000c FFF7FEFF 		bl	BleUart_ReadRxData
   47              	.LVL0:
   48 0010 2870     		strb	r0, [r5]
-  35:..\myUART.c   **** 		if (RxWriteIndex >= RxBuffer + RxBufferSize) RxWriteIndex = RxBuffer;      
+  35:myUART.c      **** 		if (RxWriteIndex >= RxBuffer + RxBufferSize) RxWriteIndex = RxBuffer;      
   49              		.loc 1 35 0
   50 0012 2268     		ldr	r2, [r4]
   51 0014 064B     		ldr	r3, .L6+4
@@ -96,14 +96,14 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
   55 001a A3F18002 		sub	r2, r3, #128
   56 001e 2260     		str	r2, [r4]
   57              	.L3:
-  32:..\myUART.c   **** 	{
+  32:myUART.c      **** 	{
   58              		.loc 1 32 0 is_stmt 1
-  59 0020 FFF7FEFF 		bl	BleUart1_ReadRxStatus
+  59 0020 FFF7FEFF 		bl	BleUart_ReadRxStatus
   60              	.LVL1:
   61 0024 10F0200F 		tst	r0, #32
   62 0028 ECD1     		bne	.L4
-  36:..\myUART.c   **** 	}   
-  37:..\myUART.c   **** }
+  36:myUART.c      **** 	}   
+  37:myUART.c      **** }
   63              		.loc 1 37 0
   64 002a 38BD     		pop	{r3, r4, r5, pc}
   65              	.L7:
@@ -118,28 +118,28 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
   74              		.align	2
   75              		.global	IsCharReady
   76              		.thumb
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 3
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 3
 
 
   77              		.thumb_func
   78              		.type	IsCharReady, %function
   79              	IsCharReady:
   80              	.LFB64:
-  38:..\myUART.c   **** 
-  39:..\myUART.c   **** //===========================================================================
-  40:..\myUART.c   **** uint8 IsCharReady(void) 
-  41:..\myUART.c   **** {
+  38:myUART.c      **** 
+  39:myUART.c      **** //===========================================================================
+  40:myUART.c      **** uint8 IsCharReady(void) 
+  41:myUART.c      **** {
   81              		.loc 1 41 0
   82              		.cfi_startproc
   83              		@ args = 0, pretend = 0, frame = 0
   84              		@ frame_needed = 0, uses_anonymous_args = 0
   85              		@ link register save eliminated.
-  42:..\myUART.c   **** 	return !(RxWriteIndex == RxReadIndex);
+  42:myUART.c      **** 	return !(RxWriteIndex == RxReadIndex);
   86              		.loc 1 42 0
   87 0000 034B     		ldr	r3, .L9
   88 0002 1868     		ldr	r0, [r3]
   89 0004 5B68     		ldr	r3, [r3, #4]
-  43:..\myUART.c   **** }
+  43:myUART.c      **** }
   90              		.loc 1 43 0
   91 0006 C01A     		subs	r0, r0, r3
   92 0008 18BF     		it	ne
@@ -160,31 +160,31 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  107              		.type	GetRxStr, %function
  108              	GetRxStr:
  109              	.LFB65:
-  44:..\myUART.c   **** 
-  45:..\myUART.c   **** //===========================================================================
-  46:..\myUART.c   **** 
-  47:..\myUART.c   **** uint8 GetRxStr(void)
-  48:..\myUART.c   **** {
+  44:myUART.c      **** 
+  45:myUART.c      **** //===========================================================================
+  46:myUART.c      **** 
+  47:myUART.c      **** uint8 GetRxStr(void)
+  48:myUART.c      **** {
  110              		.loc 1 48 0
  111              		.cfi_startproc
  112              		@ args = 0, pretend = 0, frame = 0
  113              		@ frame_needed = 0, uses_anonymous_args = 0
  114              		@ link register save eliminated.
  115              	.LVL2:
-  49:..\myUART.c   ****     uint8 RxStr_flag = 0;
-  50:..\myUART.c   ****     static uint8 Ch;//static?
-  51:..\myUART.c   ****    
-  52:..\myUART.c   **** 	Ch = *RxReadIndex++;       //read next char in buffer
+  49:myUART.c      ****     uint8 RxStr_flag = 0;
+  50:myUART.c      ****     static uint8 Ch;//static?
+  51:myUART.c      ****    
+  52:myUART.c      **** 	Ch = *RxReadIndex++;       //read next char in buffer
  116              		.loc 1 52 0
  117 0000 1049     		ldr	r1, .L17
  118 0002 4B68     		ldr	r3, [r1, #4]
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 4
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 4
 
 
  119 0004 5A1C     		adds	r2, r3, #1
  120 0006 4A60     		str	r2, [r1, #4]
  121 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-  53:..\myUART.c   ****     if (RxReadIndex >= RxBuffer + RxBufferSize) RxReadIndex = RxBuffer;
+  53:myUART.c      ****     if (RxReadIndex >= RxBuffer + RxBufferSize) RxReadIndex = RxBuffer;
  122              		.loc 1 53 0
  123 000a 0F49     		ldr	r1, .L17+4
  124 000c 8A42     		cmp	r2, r1
@@ -194,9 +194,9 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  128 0012 0C4A     		ldr	r2, .L17
  129 0014 5160     		str	r1, [r2, #4]
  130              	.L12:
-  54:..\myUART.c   ****             
-  55:..\myUART.c   ****     //if (Ch == EOM_char)
-  56:..\myUART.c   ****     if ( (Ch == EOM_CR) || (Ch == EOM_LF) ) //any standard terminator
+  54:myUART.c      ****             
+  55:myUART.c      ****     //if (Ch == EOM_char)
+  56:myUART.c      ****     if ( (Ch == EOM_CR) || (Ch == EOM_LF) ) //any standard terminator
  131              		.loc 1 56 0 is_stmt 1
  132 0016 0D2B     		cmp	r3, #13
  133 0018 01D0     		beq	.L13
@@ -204,56 +204,56 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  135 001a 0A2B     		cmp	r3, #10
  136 001c 09D1     		bne	.L14
  137              	.L13:
-  57:..\myUART.c   ****     {
-  58:..\myUART.c   ****         *RxStrIndex = 0;        //terminate string excluding EOM_char
+  57:myUART.c      ****     {
+  58:myUART.c      ****         *RxStrIndex = 0;        //terminate string excluding EOM_char
  138              		.loc 1 58 0 is_stmt 1
  139 001e 094A     		ldr	r2, .L17
  140 0020 9368     		ldr	r3, [r2, #8]
  141 0022 0021     		movs	r1, #0
  142 0024 1970     		strb	r1, [r3]
-  59:..\myUART.c   ****         RxStrIndex = RB.RxStr;  //reset pointer
+  59:myUART.c      ****         RxStrIndex = RB.RxStr;  //reset pointer
  143              		.loc 1 59 0
  144 0026 094B     		ldr	r3, .L17+8
  145 0028 9360     		str	r3, [r2, #8]
-  60:..\myUART.c   ****         if (strlen(RB.RxStr) > 0)//non-empty message received
+  60:myUART.c      ****         if (strlen(RB.RxStr) > 0)//non-empty message received
  146              		.loc 1 60 0
  147 002a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  148 002c 43B9     		cbnz	r3, .L16
-  49:..\myUART.c   ****     static uint8 Ch;//static?
+  49:myUART.c      ****     static uint8 Ch;//static?
  149              		.loc 1 49 0
  150 002e 0846     		mov	r0, r1
  151 0030 7047     		bx	lr
  152              	.L14:
-  61:..\myUART.c   ****         {
-  62:..\myUART.c   ****             RxStr_flag  = 1;    //set flag to process message
-  63:..\myUART.c   ****         }   
-  64:..\myUART.c   ****     }
-  65:..\myUART.c   ****     else                        //string body char received
-  66:..\myUART.c   ****     {
-  67:..\myUART.c   ****         *RxStrIndex++ = Ch;     //build command message   
+  61:myUART.c      ****         {
+  62:myUART.c      ****             RxStr_flag  = 1;    //set flag to process message
+  63:myUART.c      ****         }   
+  64:myUART.c      ****     }
+  65:myUART.c      ****     else                        //string body char received
+  66:myUART.c      ****     {
+  67:myUART.c      ****         *RxStrIndex++ = Ch;     //build command message   
  153              		.loc 1 67 0
  154 0032 0449     		ldr	r1, .L17
  155 0034 8A68     		ldr	r2, [r1, #8]
  156 0036 501C     		adds	r0, r2, #1
  157 0038 8860     		str	r0, [r1, #8]
  158 003a 1370     		strb	r3, [r2]
-  49:..\myUART.c   ****     static uint8 Ch;//static?
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 5
+  49:myUART.c      ****     static uint8 Ch;//static?
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 5
 
 
  159              		.loc 1 49 0
  160 003c 0020     		movs	r0, #0
  161 003e 7047     		bx	lr
  162              	.L16:
-  62:..\myUART.c   ****         }   
+  62:myUART.c      ****         }   
  163              		.loc 1 62 0
  164 0040 0120     		movs	r0, #1
  165              	.LVL3:
-  68:..\myUART.c   ****         //todo: problem if first char is empty space
-  69:..\myUART.c   ****     }   
-  70:..\myUART.c   **** 
-  71:..\myUART.c   ****     return RxStr_flag;        
-  72:..\myUART.c   **** }
+  68:myUART.c      ****         //todo: problem if first char is empty space
+  69:myUART.c      ****     }   
+  70:myUART.c      **** 
+  71:myUART.c      ****     return RxStr_flag;        
+  72:myUART.c      **** }
  166              		.loc 1 72 0
  167 0042 7047     		bx	lr
  168              	.L18:
@@ -291,41 +291,41 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  200              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
  201              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
  202              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
- 203              		.file 6 "Generated_Source\\PSoC5/BleUart1.h"
- 204              		.file 7 "..\\myUART.h"
+ 203              		.file 6 "Generated_Source\\PSoC5/BleUart.h"
+ 204              		.file 7 "myUART.h"
  205              		.section	.debug_info,"",%progbits
  206              	.Ldebug_info0:
  207 0000 12020000 		.4byte	0x212
  208 0004 0400     		.2byte	0x4
  209 0006 00000000 		.4byte	.Ldebug_abbrev0
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 6
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 6
 
 
  210 000a 04       		.byte	0x4
  211 000b 01       		.uleb128 0x1
- 212 000c 63010000 		.4byte	.LASF25
+ 212 000c 41010000 		.4byte	.LASF25
  213 0010 0C       		.byte	0xc
- 214 0011 10020000 		.4byte	.LASF26
- 215 0015 D5000000 		.4byte	.LASF27
+ 214 0011 5C020000 		.4byte	.LASF26
+ 215 0015 B3000000 		.4byte	.LASF27
  216 0019 00000000 		.4byte	.Ldebug_ranges0+0
  217 001d 00000000 		.4byte	0
  218 0021 00000000 		.4byte	.Ldebug_line0
  219 0025 02       		.uleb128 0x2
  220 0026 01       		.byte	0x1
  221 0027 06       		.byte	0x6
- 222 0028 46020000 		.4byte	.LASF0
+ 222 0028 38020000 		.4byte	.LASF0
  223 002c 02       		.uleb128 0x2
  224 002d 01       		.byte	0x1
  225 002e 08       		.byte	0x8
- 226 002f 61000000 		.4byte	.LASF1
+ 226 002f 55000000 		.4byte	.LASF1
  227 0033 02       		.uleb128 0x2
  228 0034 02       		.byte	0x2
  229 0035 05       		.byte	0x5
- 230 0036 21020000 		.4byte	.LASF2
+ 230 0036 13020000 		.4byte	.LASF2
  231 003a 02       		.uleb128 0x2
  232 003b 02       		.byte	0x2
  233 003c 07       		.byte	0x7
- 234 003d 8C000000 		.4byte	.LASF3
+ 234 003d 80000000 		.4byte	.LASF3
  235 0041 03       		.uleb128 0x3
  236 0042 0D000000 		.4byte	.LASF9
  237 0046 02       		.byte	0x2
@@ -334,19 +334,19 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  240 004c 02       		.uleb128 0x2
  241 004d 04       		.byte	0x4
  242 004e 05       		.byte	0x5
- 243 004f 31020000 		.4byte	.LASF4
+ 243 004f 23020000 		.4byte	.LASF4
  244 0053 02       		.uleb128 0x2
  245 0054 04       		.byte	0x4
  246 0055 07       		.byte	0x7
- 247 0056 7A000000 		.4byte	.LASF5
+ 247 0056 6E000000 		.4byte	.LASF5
  248 005a 02       		.uleb128 0x2
  249 005b 08       		.byte	0x8
  250 005c 05       		.byte	0x5
- 251 005d 02020000 		.4byte	.LASF6
+ 251 005d 00020000 		.4byte	.LASF6
  252 0061 02       		.uleb128 0x2
  253 0062 08       		.byte	0x8
  254 0063 07       		.byte	0x7
- 255 0064 4C010000 		.4byte	.LASF7
+ 255 0064 2A010000 		.4byte	.LASF7
  256 0068 04       		.uleb128 0x4
  257 0069 04       		.byte	0x4
  258 006a 05       		.byte	0x5
@@ -354,40 +354,40 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  260 006f 02       		.uleb128 0x2
  261 0070 04       		.byte	0x4
  262 0071 07       		.byte	0x7
- 263 0072 3F010000 		.4byte	.LASF8
+ 263 0072 1D010000 		.4byte	.LASF8
  264 0076 03       		.uleb128 0x3
- 265 0077 F1010000 		.4byte	.LASF10
+ 265 0077 2E000000 		.4byte	.LASF10
  266 007b 03       		.byte	0x3
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 7
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 7
 
 
  267 007c 2C       		.byte	0x2c
  268 007d 41000000 		.4byte	0x41
  269 0081 05       		.uleb128 0x5
- 270 0082 2B020000 		.4byte	.LASF11
+ 270 0082 1D020000 		.4byte	.LASF11
  271 0086 04       		.byte	0x4
  272 0087 9201     		.2byte	0x192
  273 0089 2C000000 		.4byte	0x2c
  274 008d 02       		.uleb128 0x2
  275 008e 04       		.byte	0x4
  276 008f 04       		.byte	0x4
- 277 0090 52000000 		.4byte	.LASF12
+ 277 0090 46000000 		.4byte	.LASF12
  278 0094 02       		.uleb128 0x2
  279 0095 08       		.byte	0x8
  280 0096 04       		.byte	0x4
- 281 0097 C2000000 		.4byte	.LASF13
+ 281 0097 A0000000 		.4byte	.LASF13
  282 009b 02       		.uleb128 0x2
  283 009c 01       		.byte	0x1
  284 009d 08       		.byte	0x8
- 285 009e 1C020000 		.4byte	.LASF14
+ 285 009e 0E020000 		.4byte	.LASF14
  286 00a2 02       		.uleb128 0x2
  287 00a3 08       		.byte	0x8
  288 00a4 04       		.byte	0x4
- 289 00a5 3A020000 		.4byte	.LASF15
+ 289 00a5 2C020000 		.4byte	.LASF15
  290 00a9 02       		.uleb128 0x2
  291 00aa 04       		.byte	0x4
  292 00ab 07       		.byte	0x7
- 293 00ac F9010000 		.4byte	.LASF16
+ 293 00ac E2010000 		.4byte	.LASF16
  294 00b0 06       		.uleb128 0x6
  295 00b1 04       		.byte	0x4
  296 00b2 9B000000 		.4byte	0x9b
@@ -403,7 +403,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  306 00c5 9B000000 		.4byte	0x9b
  307 00c9 00       		.byte	0
  308 00ca 09       		.uleb128 0x9
- 309 00cb 63020000 		.4byte	.LASF17
+ 309 00cb 55020000 		.4byte	.LASF17
  310 00cf 07       		.byte	0x7
  311 00d0 25       		.byte	0x25
  312 00d1 D7000000 		.4byte	0xd7
@@ -417,8 +417,8 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  320 00e5 12       		.byte	0x12
  321 00e6 00       		.byte	0
  322 00e7 0C       		.uleb128 0xc
- 323 00e8 48000000 		.4byte	.LASF28
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 8
+ 323 00e8 3C000000 		.4byte	.LASF28
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 8
 
 
  324 00ec 14       		.byte	0x14
@@ -426,7 +426,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  326 00ee 21       		.byte	0x21
  327 00ef 04010000 		.4byte	0x104
  328 00f3 0D       		.uleb128 0xd
- 329 00f4 42000000 		.4byte	.LASF29
+ 329 00f4 36000000 		.4byte	.LASF29
  330 00f8 07       		.byte	0x7
  331 00f9 22       		.byte	0x22
  332 00fa 04010000 		.4byte	0x104
@@ -441,7 +441,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  341 0112 13       		.byte	0x13
  342 0113 00       		.byte	0
  343 0114 0F       		.uleb128 0xf
- 344 0115 52020000 		.4byte	.LASF30
+ 344 0115 44020000 		.4byte	.LASF30
  345 0119 01       		.byte	0x1
  346 011a 1D       		.byte	0x1d
  347 011b 00000000 		.4byte	.LFB63
@@ -457,7 +457,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  357 0137 0A020000 		.4byte	0x20a
  358 013b 00       		.byte	0
  359 013c 11       		.uleb128 0x11
- 360 013d C9000000 		.4byte	.LASF31
+ 360 013d A7000000 		.4byte	.LASF31
  361 0141 01       		.byte	0x1
  362 0142 28       		.byte	0x28
  363 0143 81000000 		.4byte	0x81
@@ -466,7 +466,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  366 014f 01       		.uleb128 0x1
  367 0150 9C       		.byte	0x9c
  368 0151 12       		.uleb128 0x12
- 369 0152 5A020000 		.4byte	.LASF32
+ 369 0152 4C020000 		.4byte	.LASF32
  370 0156 01       		.byte	0x1
  371 0157 2F       		.byte	0x2f
  372 0158 81000000 		.4byte	0x81
@@ -476,9 +476,9 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  376 0165 9C       		.byte	0x9c
  377 0166 84010000 		.4byte	0x184
  378 016a 13       		.uleb128 0x13
- 379 016b 6F000000 		.4byte	.LASF33
+ 379 016b 63000000 		.4byte	.LASF33
  380 016f 01       		.byte	0x1
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 9
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 9
 
 
  381 0170 31       		.byte	0x31
@@ -491,7 +491,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  388 017f 81000000 		.4byte	0x81
  389 0183 00       		.byte	0
  390 0184 15       		.uleb128 0x15
- 391 0185 9F000000 		.4byte	.LASF18
+ 391 0185 93000000 		.4byte	.LASF18
  392 0189 05       		.byte	0x5
  393 018a 1207     		.2byte	0x712
  394 018c 90010000 		.4byte	0x190
@@ -513,7 +513,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  410 01b3 7F       		.byte	0x7f
  411 01b4 00       		.byte	0
  412 01b5 18       		.uleb128 0x18
- 413 01b6 58000000 		.4byte	.LASF19
+ 413 01b6 4C000000 		.4byte	.LASF19
  414 01ba 01       		.byte	0x1
  415 01bb 13       		.byte	0x13
  416 01bc A5010000 		.4byte	0x1a5
@@ -521,7 +521,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  418 01c1 03       		.byte	0x3
  419 01c2 00000000 		.4byte	RxBuffer
  420 01c6 18       		.uleb128 0x18
- 421 01c7 36000000 		.4byte	.LASF20
+ 421 01c7 22000000 		.4byte	.LASF20
  422 01cb 01       		.byte	0x1
  423 01cc 14       		.byte	0x14
  424 01cd D7010000 		.4byte	0x1d7
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  435 01e4 D7010000 		.4byte	0x1d7
  436 01e8 05       		.uleb128 0x5
  437 01e9 03       		.byte	0x3
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 10
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 10
 
 
  438 01ea 00000000 		.4byte	RxWriteIndex
@@ -551,13 +551,13 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  445 01fa 03       		.byte	0x3
  446 01fb 00000000 		.4byte	RxStrIndex
  447 01ff 19       		.uleb128 0x19
- 448 0200 22000000 		.4byte	.LASF23
- 449 0204 22000000 		.4byte	.LASF23
+ 448 0200 CF010000 		.4byte	.LASF23
+ 449 0204 CF010000 		.4byte	.LASF23
  450 0208 06       		.byte	0x6
  451 0209 6F       		.byte	0x6f
  452 020a 19       		.uleb128 0x19
- 453 020b AC000000 		.4byte	.LASF24
- 454 020f AC000000 		.4byte	.LASF24
+ 453 020b EB010000 		.4byte	.LASF24
+ 454 020f EB010000 		.4byte	.LASF24
  455 0213 06       		.byte	0x6
  456 0214 70       		.byte	0x70
  457 0215 00       		.byte	0
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  492 0020 00       		.byte	0
  493 0021 03       		.uleb128 0x3
  494 0022 0E       		.uleb128 0xe
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 11
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 11
 
 
  495 0023 3A       		.uleb128 0x3a
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  549 0059 08       		.uleb128 0x8
  550 005a 0D       		.uleb128 0xd
  551 005b 00       		.byte	0
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 12
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 12
 
 
  552 005c 03       		.uleb128 0x3
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  606 0092 3B       		.uleb128 0x3b
  607 0093 0B       		.uleb128 0xb
  608 0094 01       		.uleb128 0x1
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 13
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 13
 
 
  609 0095 13       		.uleb128 0x13
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  663 00ce 13       		.uleb128 0x13
  664 00cf 00       		.byte	0
  665 00d0 00       		.byte	0
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 14
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 14
 
 
  666 00d1 11       		.uleb128 0x11
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  720 0109 00       		.byte	0
  721 010a 03       		.uleb128 0x3
  722 010b 0E       		.uleb128 0xe
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 15
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 15
 
 
  723 010c 3A       		.uleb128 0x3a
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  777 0142 3B       		.uleb128 0x3b
  778 0143 0B       		.uleb128 0xb
  779 0144 49       		.uleb128 0x49
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 16
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 16
 
 
  780 0145 13       		.uleb128 0x13
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  834 0017 00000000 		.4byte	0
  835 001b 00000000 		.4byte	0
  836              		.section	.debug_aranges,"",%progbits
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 17
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 17
 
 
  837 0000 2C000000 		.4byte	0x2c
@@ -988,8 +988,8 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  861 001c 00000000 		.4byte	0
  862              		.section	.debug_line,"",%progbits
  863              	.Ldebug_line0:
- 864 0000 D2010000 		.section	.debug_str,"MS",%progbits,1
- 864      02006E01 
+ 864 0000 CB010000 		.section	.debug_str,"MS",%progbits,1
+ 864      02006701 
  864      00000201 
  864      FB0E0D00 
  864      01010101 
@@ -1006,166 +1006,166 @@ ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 1
  870 0017 52785374 		.ascii	"RxStrIndex\000"
  870      72496E64 
  870      657800
- 871              	.LASF23:
- 872 0022 426C6555 		.ascii	"BleUart1_ReadRxData\000"
- 872      61727431 
- 872      5F526561 
- 872      64527844 
- 872      61746100 
- 873              	.LASF20:
- 874 0036 52785265 		.ascii	"RxReadIndex\000"
- 874      6164496E 
- 874      64657800 
+ 871              	.LASF20:
+ 872 0022 52785265 		.ascii	"RxReadIndex\000"
+ 872      6164496E 
+ 872      64657800 
+ 873              	.LASF10:
+ 874 002e 696E7433 		.ascii	"int32_t\000"
+ 874      325F7400 
  875              	.LASF29:
- 876 0042 52785374 		.ascii	"RxStr\000"
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 18
-
-
+ 876 0036 52785374 		.ascii	"RxStr\000"
  876      7200
  877              	.LASF28:
- 878 0048 54527842 		.ascii	"TRxBuffer\000"
+ 878 003c 54527842 		.ascii	"TRxBuffer\000"
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 18
+
+
  878      75666665 
  878      7200
  879              	.LASF12:
- 880 0052 666C6F61 		.ascii	"float\000"
+ 880 0046 666C6F61 		.ascii	"float\000"
  880      7400
  881              	.LASF19:
- 882 0058 52784275 		.ascii	"RxBuffer\000"
+ 882 004c 52784275 		.ascii	"RxBuffer\000"
  882      66666572 
  882      00
  883              	.LASF1:
- 884 0061 756E7369 		.ascii	"unsigned char\000"
+ 884 0055 756E7369 		.ascii	"unsigned char\000"
  884      676E6564 
  884      20636861 
  884      7200
  885              	.LASF33:
- 886 006f 52785374 		.ascii	"RxStr_flag\000"
+ 886 0063 52785374 		.ascii	"RxStr_flag\000"
  886      725F666C 
  886      616700
  887              	.LASF5:
- 888 007a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 888 006e 6C6F6E67 		.ascii	"long unsigned int\000"
  888      20756E73 
  888      69676E65 
  888      6420696E 
  888      7400
  889              	.LASF3:
- 890 008c 73686F72 		.ascii	"short unsigned int\000"
+ 890 0080 73686F72 		.ascii	"short unsigned int\000"
  890      7420756E 
  890      7369676E 
  890      65642069 
  890      6E7400
  891              	.LASF18:
- 892 009f 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 892 0093 49544D5F 		.ascii	"ITM_RxBuffer\000"
  892      52784275 
  892      66666572 
  892      00
- 893              	.LASF24:
- 894 00ac 426C6555 		.ascii	"BleUart1_ReadRxStatus\000"
- 894      61727431 
- 894      5F526561 
- 894      64527853 
- 894      74617475 
- 895              	.LASF13:
- 896 00c2 646F7562 		.ascii	"double\000"
- 896      6C6500
- 897              	.LASF31:
- 898 00c9 49734368 		.ascii	"IsCharReady\000"
- 898      61725265 
- 898      61647900 
- 899              	.LASF27:
- 900 00d5 433A5C55 		.ascii	"C:\\Users\\BasileBerckmoes\\Documents\\GitHub\\Robo"
- 900      73657273 
- 900      5C426173 
- 900      696C6542 
- 900      6572636B 
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 19
+ 893              	.LASF13:
+ 894 00a0 646F7562 		.ascii	"double\000"
+ 894      6C6500
+ 895              	.LASF31:
+ 896 00a7 49734368 		.ascii	"IsCharReady\000"
+ 896      61725265 
+ 896      61647900 
+ 897              	.LASF27:
+ 898 00b3 433A5C55 		.ascii	"C:\\Users\\BasileBerckmoes\\Documents\\GitHub\\Robo"
+ 898      73657273 
+ 898      5C426173 
+ 898      696C6542 
+ 898      6572636B 
+ 899 00e1 74436F6D 		.ascii	"tComp2ELO\\Software\\PSoc\\Roadster\\Roadster\\Road"
+ 899      7032454C 
+ 899      4F5C536F 
+ 899      66747761 
+ 899      72655C50 
+ 900 010f 73746572 		.ascii	"ster1.0.cydsn\000"
+ 900      312E302E 
+ 900      63796473 
+ 900      6E00
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 19
 
 
- 901 0103 74436F6D 		.ascii	"tComp2ELO\\Software\\PSoc\\Roadster\\Roadster\\Road"
- 901      7032454C 
- 901      4F5C536F 
- 901      66747761 
- 901      72655C50 
- 902 0131 73746572 		.ascii	"ster1.0.cydsn\000"
- 902      312E302E 
- 902      63796473 
- 902      6E00
- 903              	.LASF8:
- 904 013f 756E7369 		.ascii	"unsigned int\000"
- 904      676E6564 
- 904      20696E74 
- 904      00
- 905              	.LASF7:
- 906 014c 6C6F6E67 		.ascii	"long long unsigned int\000"
- 906      206C6F6E 
- 906      6720756E 
- 906      7369676E 
- 906      65642069 
- 907              	.LASF25:
- 908 0163 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 908      43313120 
- 908      352E342E 
- 908      31203230 
- 908      31363036 
- 909 0196 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 909      20726576 
- 909      6973696F 
- 909      6E203233 
- 909      37373135 
- 910 01c9 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 910      66756E63 
- 910      74696F6E 
- 910      2D736563 
- 910      74696F6E 
- 911              	.LASF10:
- 912 01f1 696E7433 		.ascii	"int32_t\000"
- 912      325F7400 
- 913              	.LASF16:
- 914 01f9 73697A65 		.ascii	"sizetype\000"
- 914      74797065 
- 914      00
+ 901              	.LASF8:
+ 902 011d 756E7369 		.ascii	"unsigned int\000"
+ 902      676E6564 
+ 902      20696E74 
+ 902      00
+ 903              	.LASF7:
+ 904 012a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 904      206C6F6E 
+ 904      6720756E 
+ 904      7369676E 
+ 904      65642069 
+ 905              	.LASF25:
+ 906 0141 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 906      43313120 
+ 906      352E342E 
+ 906      31203230 
+ 906      31363036 
+ 907 0174 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 907      20726576 
+ 907      6973696F 
+ 907      6E203233 
+ 907      37373135 
+ 908 01a7 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 908      66756E63 
+ 908      74696F6E 
+ 908      2D736563 
+ 908      74696F6E 
+ 909              	.LASF23:
+ 910 01cf 426C6555 		.ascii	"BleUart_ReadRxData\000"
+ 910      6172745F 
+ 910      52656164 
+ 910      52784461 
+ 910      746100
+ 911              	.LASF16:
+ 912 01e2 73697A65 		.ascii	"sizetype\000"
+ 912      74797065 
+ 912      00
+ 913              	.LASF24:
+ 914 01eb 426C6555 		.ascii	"BleUart_ReadRxStatus\000"
+ 914      6172745F 
+ 914      52656164 
+ 914      52785374 
+ 914      61747573 
  915              	.LASF6:
- 916 0202 6C6F6E67 		.ascii	"long long int\000"
+ 916 0200 6C6F6E67 		.ascii	"long long int\000"
  916      206C6F6E 
  916      6720696E 
  916      7400
- 917              	.LASF26:
- 918 0210 2E2E5C6D 		.ascii	"..\\myUART.c\000"
- 918      79554152 
- 918      542E6300 
- 919              	.LASF14:
- 920 021c 63686172 		.ascii	"char\000"
- 920      00
- 921              	.LASF2:
- 922 0221 73686F72 		.ascii	"short int\000"
-ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\cczswMRr.s 			page 20
+ 917              	.LASF14:
+ 918 020e 63686172 		.ascii	"char\000"
+ 918      00
+ 919              	.LASF2:
+ 920 0213 73686F72 		.ascii	"short int\000"
+ 920      7420696E 
+ 920      7400
+ 921              	.LASF11:
+ 922 021d 75696E74 		.ascii	"uint8\000"
+ARM GAS  C:\Users\BASILE~1\AppData\Local\Temp\ccJxQhKm.s 			page 20
 
 
- 922      7420696E 
- 922      7400
- 923              	.LASF11:
- 924 022b 75696E74 		.ascii	"uint8\000"
- 924      3800
- 925              	.LASF4:
- 926 0231 6C6F6E67 		.ascii	"long int\000"
- 926      20696E74 
- 926      00
- 927              	.LASF15:
- 928 023a 6C6F6E67 		.ascii	"long double\000"
- 928      20646F75 
- 928      626C6500 
- 929              	.LASF0:
- 930 0246 7369676E 		.ascii	"signed char\000"
- 930      65642063 
- 930      68617200 
- 931              	.LASF30:
- 932 0252 4D795278 		.ascii	"MyRxInt\000"
- 932      496E7400 
- 933              	.LASF32:
- 934 025a 47657452 		.ascii	"GetRxStr\000"
- 934      78537472 
- 934      00
- 935              	.LASF17:
- 936 0263 76616C73 		.ascii	"valstr\000"
- 936      747200
+ 922      3800
+ 923              	.LASF4:
+ 924 0223 6C6F6E67 		.ascii	"long int\000"
+ 924      20696E74 
+ 924      00
+ 925              	.LASF15:
+ 926 022c 6C6F6E67 		.ascii	"long double\000"
+ 926      20646F75 
+ 926      626C6500 
+ 927              	.LASF0:
+ 928 0238 7369676E 		.ascii	"signed char\000"
+ 928      65642063 
+ 928      68617200 
+ 929              	.LASF30:
+ 930 0244 4D795278 		.ascii	"MyRxInt\000"
+ 930      496E7400 
+ 931              	.LASF32:
+ 932 024c 47657452 		.ascii	"GetRxStr\000"
+ 932      78537472 
+ 932      00
+ 933              	.LASF17:
+ 934 0255 76616C73 		.ascii	"valstr\000"
+ 934      747200
+ 935              	.LASF26:
+ 936 025c 6D795541 		.ascii	"myUART.c\000"
+ 936      52542E63 
+ 936      00
  937              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

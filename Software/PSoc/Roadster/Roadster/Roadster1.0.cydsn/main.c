@@ -12,6 +12,7 @@
 
 #include "projectMain.h"
 #include "project.h"
+#include <myUART.h>
 
 //INFRAROOD GLOBALS
 uint8 IRWaarden;
@@ -64,7 +65,7 @@ int main(void)
     //Interrupts
     readIRSensors_StartEx(IRSensoren);
     EnMotorISR_StartEx(SwitchMotorEN);
-    bleRxISR1_StartEx(BleDataBinnen);
+    BleRxISR_StartEx(BleDataBinnen);
     
     LCD_Position(0u, 0u);
     LCD_PrintString("Druk om te starten");
@@ -127,9 +128,9 @@ void initFirmwire()
     
     TimerUS_Start();
    
-    BleVdac_Start();
-    BleOpamp_Start();
-    BleUart1_Start();
+    BleVDAC_Start();
+    BleBuffer_Start();
+    BleUart_Start();
 }    
     
 uint16 readUSValue(void)

@@ -29,9 +29,9 @@ char   *RxStrIndex = RB.RxStr;      // pointer to command string buffer (process
 CY_ISR(MyRxInt) //interrupt on Rx byte received
 {   
     //move all available characters from Rx queue to RxBuffer
-    while(bleUart1_ReadRxStatus() & bleUart1_RX_STS_FIFO_NOTEMPTY)
+    while(BleUart_ReadRxStatus() & BleUart_RX_STS_FIFO_NOTEMPTY)
 	{
-		*RxWriteIndex++ = bleUart1_ReadRxData();
+		*RxWriteIndex++ = BleUart_ReadRxData();
 		if (RxWriteIndex >= RxBuffer + RxBufferSize) RxWriteIndex = RxBuffer;      
 	}   
 }
