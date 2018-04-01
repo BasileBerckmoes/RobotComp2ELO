@@ -9,8 +9,9 @@
  *
  * ========================================
 */
-#include "project.h"
+
 #include "projectMain.h"
+#include "project.h"
 
 //INFRAROOD GLOBALS
 uint8 IRWaarden;
@@ -49,27 +50,31 @@ CY_ISR(SwitchMotorEN)
    CyDelay(200);
 }
 
+CY_ISR(BleDataBinnen)
+{
+    LED5_Write(~LED5_Read());
+}
+
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
+    
+    initFirmwire();
+    
+    //Interrupts
     readIRSensors_StartEx(IRSensoren);
     EnMotorISR_StartEx(SwitchMotorEN);
+    bleRxISR1_StartEx(BleDataBinnen);
     
-    LCD_Start(); 
     LCD_Position(0u, 0u);
     LCD_PrintString("Druk om te starten");
     
-    ADC_IR_Start();
-    ADC_IR_StartConvert();
-    
-    
-    MotorControl_Start();
     MotorControl_WriteCompare1(pwmMotor1);
     MotorControl_WriteCompare2(pwmMotor2);
     ENA_Write(0);
     ENB_Write(ENA_Read());
 
-    TimerUS_Start();
+    
    
     
     while(SW1_Read() == 1) //Wait until press on SW1
@@ -84,7 +89,7 @@ int main(void)
         /////////////////////////////////////////////////////
         //Teller die door de mux loopt
         selectUS = telTot(selectUS, 0, 2); //PAS DIT AAN INDIEN NIET ALE US SENSOREN ZIJN AANGESLOTEN!!!!!
-        selectUS_Write(selectUS);
+        //selectUS_Write(selectUS);
         
         //vraag afstand aan 1 van de 3 us sensoren
        // uint16 counterValue = readUSValue();
@@ -111,7 +116,22 @@ int main(void)
     }
 }
 
-
+void initFirmwire()
+{
+    ADC_IR_Start();
+    ADC_IR_StartConvert();
+    
+    LCD_Start(); 
+    
+    MotorControl_Start();
+    
+    TimerUS_Start();
+   
+    BleVdac_Start();
+    BleOpamp_Start();
+    BleUart1_Start();
+}    
+    
 uint16 readUSValue(void)
 {
     while(statusEcho_Read() == 0)
@@ -136,7 +156,7 @@ void schuifRegister(uint16 array[], uint16 newValue)
 
 void berekenMediaan(uint16 array[]) 
 { 
-    uint16 tmp = 0;
+    //uint16 tmp = 0;
     uint16 tmpArray[] = {UINT16_MAX,UINT16_MAX,UINT16_MAX,UINT16_MAX,UINT16_MAX};
     for(int i = 0; i < 5; i++)
     {

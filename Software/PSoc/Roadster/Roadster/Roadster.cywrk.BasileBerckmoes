@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Roadster\Roadster1.0\Source Files\main.c">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Roadster\Roadster1.0\Roadster1.0.cydwr\Pins">
 <ExpandedNodeIds>
 <v>Roadster</v>
 <v>Roadster\Roadster1.0</v>
@@ -30,9 +30,11 @@
 <v>Roadster\Roadster1.0\Roadster1.0.cydwr\EEPROM</v>
 <v>Roadster\Roadster1.0\Header Files</v>
 <v>Roadster\Roadster1.0\Header Files\cyapicallbacks.h</v>
+<v>Roadster\Roadster1.0\Header Files\myUART.h</v>
 <v>Roadster\Roadster1.0\Header Files\projectMain.h</v>
 <v>Roadster\Roadster1.0\Source Files</v>
 <v>Roadster\Roadster1.0\Source Files\main.c</v>
+<v>Roadster\Roadster1.0\Source Files\myUART.c</v>
 <v>Roadster\Roadster1.0\Generated_Source</v>
 <v>Roadster\Roadster1.0\Generated_Source\PSoC5</v>
 </ExpandedNodeIds>
@@ -52,9 +54,11 @@
 <v>Roadster\Roadster1.0\Roadster1.0.cydwr\EEPROM</v>
 <v>Roadster\Roadster1.0\Header Files</v>
 <v>Roadster\Roadster1.0\Header Files\cyapicallbacks.h</v>
+<v>Roadster\Roadster1.0\Header Files\myUART.h</v>
 <v>Roadster\Roadster1.0\Header Files\projectMain.h</v>
 <v>Roadster\Roadster1.0\Source Files</v>
 <v>Roadster\Roadster1.0\Source Files\main.c</v>
+<v>Roadster\Roadster1.0\Source Files\myUART.c</v>
 <v>Roadster\Roadster1.0\Generated_Source</v>
 <v>Roadster\Roadster1.0\Generated_Source\PSoC5</v>
 <v>Roadster\Roadster1.0\Generated_Source\PSoC5\ADC_IR</v>
@@ -84,7 +88,6 @@
 <v>Roadster\Roadster1.0\Generated_Source\PSoC5\IR5</v>
 <v>Roadster\Roadster1.0\Generated_Source\PSoC5\IR6</v>
 <v>Roadster\Roadster1.0\Generated_Source\PSoC5\IR7</v>
-<v>Roadster\Roadster1.0\Generated_Source\PSoC5\IR8</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -164,6 +167,7 @@
 <v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
 <v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\MotorControl.lst</v>
 <v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\MotorControl_PM.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\myUART.lst</v>
 <v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\readIRSensors.lst</v>
 <v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\selectUS.lst</v>
 <v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\selectUS_PM.lst</v>
@@ -187,6 +191,53 @@
 <VisibleNodeIds>
 <v>Roadster</v>
 <v>Roadster\Roadster1.0</v>
+<v>Roadster\Roadster1.0\CortexM3</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_FinalBuf_dma.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_INT.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_IntClock.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_IRQ.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_PM.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_SAR.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_SAR_INT.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_SAR_PM.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_IR_TempBuf_dma.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_3.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\Echo1.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\Echo2.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\Echo3.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ENA.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\ENB.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\EnMotorISR.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IN1.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IN2.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IN3.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IN4.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR1.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR2.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR3.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR4.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR5.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR6.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR7.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\IR8.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\isrUltraSonen.lst</v>
+<v>Roadster\Roadster1.0\CortexM3\ARM_GCC_541\Debug\Listing Files\LCD.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -199,7 +250,7 @@
 <v>Roadster</v>
 <v>Roadster\Roadster1.0</v>
 <v>Roadster\Roadster1.0\PSoC 5LP Architecture TRM</v>
-<v>Roadster\Roadster1.0\CY8C52LP Family Datasheet</v>
+<v>Roadster\Roadster1.0\CY8C58LP Family Datasheet</v>
 <v>Roadster\Roadster1.0\System Reference Guides</v>
 <v>Roadster\Roadster1.0\System Reference Guides\cy_boot_v5_60</v>
 <v>Roadster\Roadster1.0\ADC_SAR_SEQ_v2_10.pdf</v>
@@ -224,7 +275,7 @@
 <v>Roadster</v>
 <v>Roadster\Roadster1.0</v>
 <v>Roadster\Roadster1.0\PSoC 5LP Architecture TRM</v>
-<v>Roadster\Roadster1.0\CY8C52LP Family Datasheet</v>
+<v>Roadster\Roadster1.0\CY8C58LP Family Datasheet</v>
 <v>Roadster\Roadster1.0\System Reference Guides</v>
 <v>Roadster\Roadster1.0\System Reference Guides\cy_boot_v5_60</v>
 <v>Roadster\Roadster1.0\ADC_SAR_SEQ_v2_10.pdf</v>
@@ -257,6 +308,10 @@
 <name v=".\Roadster1.0.cydsn\main.c" />
 <name v=".\Roadster1.0.cydsn\projectMain.h" />
 <name v=".\Roadster1.0.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Roadster1.0.cydsn\cyapicallbacks.h" />
+<name v=".\Roadster1.0.cydsn\Generated_Source\PSoC5\project.h" />
+<name v=".\myUART.c" />
+<name v=".\myUART.h" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -264,7 +319,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1439, 657" SelectedTabbedMdiWindow="dcc035a9-65bd-4a72-8c48-8b4ee3328fa0"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="5c2fc9fd-589c-4089-88c4-03b6b9774676" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\Roadster1.0.cydwr" Guid="6aae844a-72a3-462f-8194-e0fac712b3a4" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\main.c" Guid="dcc035a9-65bd-4a72-8c48-8b4ee3328fa0" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\projectMain.h" Guid="0eca058f-7e60-4ab7-8540-f449c1c4795a" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\TopDesign\TopDesign.cysch" Guid="a6310e67-396f-4014-99a4-d25f3eee9681" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1544, 657" SelectedTabbedMdiWindow="6aae844a-72a3-462f-8194-e0fac712b3a4"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="5c2fc9fd-589c-4089-88c4-03b6b9774676" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\Roadster1.0.cydwr" Guid="6aae844a-72a3-462f-8194-e0fac712b3a4" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\main.c" Guid="dcc035a9-65bd-4a72-8c48-8b4ee3328fa0" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\projectMain.h" Guid="0eca058f-7e60-4ab7-8540-f449c1c4795a" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\TopDesign\TopDesign.cysch" Guid="a6310e67-396f-4014-99a4-d25f3eee9681" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\cyapicallbacks.h" Guid="099ca556-db20-4af0-9d3d-b98d3b75e090" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\Generated_Source\PSoC5\project.h" Guid="6ec829e7-6887-4a74-8be6-d50d2edd89aa" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\myUART.c" Guid="bf87016c-6ca3-48e9-9f84-8c86457a4a9c" /><DocumentWindow Key="C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\myUART.h" Guid="14a8dcc0-5c5f-4d48-957e-4278deeaf1cf" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

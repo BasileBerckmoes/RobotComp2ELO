@@ -12,6 +12,11 @@
 #include "project.h"
 char teller;
 
+uint8 valueX=0;
+uint8 valueY=0;
+
+uint8 motorStatus = 0;
+
 CY_ISR(dataBinnenPutty)
 {
     char charBinnen = puttyUart1_GetChar();
@@ -38,8 +43,17 @@ CY_ISR(bleAntwoord)
     //{
     //    bleUart1_PutChar('\n');
     //}
+}
+
+CY_ISR(getJoystickValues)
+{
+    valueX=JoyStickADC_GetResult16(0);
+    valueY= JoyStickADC_GetResult16(1);
+}
+
+CY_ISR(motorControl)
+{
     
-   
 }
 
 int main(void)
@@ -56,14 +70,21 @@ int main(void)
     Opamp_1_Start();
     puttyUart1_Start();
     bleUart1_Start();
+    
+    JoyStickADC_Start();
+    JoyStickADC_StartConvert();
+    
+    eocJoystickISR_StartEx(getJoystickValues);
+    motorControlISR_StartEx(motorControl);
+    
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     for(;;)
     {
         LCDD_Position(0u,0u);
-        LCDD_PrintString("fuck this");
+        //LCDD_PrintString("fuck this");
         LCDD_Position(1u,0u);
-        LCDD_PrintString("TIME FOR WEED!");
+        //LCDD_PrintString("TIME FOR WEED!");
         CyDelay(1000);
         LCDD_ClearDisplay();
         CyDelay(1000);
