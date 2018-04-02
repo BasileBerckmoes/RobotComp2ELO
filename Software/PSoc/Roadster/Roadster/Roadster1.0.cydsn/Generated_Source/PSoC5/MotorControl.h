@@ -227,8 +227,8 @@ void MotorControl_RestoreConfig(void) ;
 *         Initialization Values
 **************************************/
 #define MotorControl_INIT_PERIOD_VALUE          (255u)
-#define MotorControl_INIT_COMPARE_VALUE1        (10u)
-#define MotorControl_INIT_COMPARE_VALUE2        (10u)
+#define MotorControl_INIT_COMPARE_VALUE1        (0u)
+#define MotorControl_INIT_COMPARE_VALUE2        (0u)
 #define MotorControl_INIT_INTERRUPTS_MODE       (uint8)(((uint8)(0u <<   \
                                                     MotorControl_STATUS_TC_INT_EN_MASK_SHIFT)) | \
                                                     (uint8)((uint8)(0u <<  \

@@ -1,4 +1,4 @@
---------------- Rebuild Started: 04/01/2018 15:44:55 Project: Roadster1.0, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 04/02/2018 15:17:06 Project: Roadster1.0, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\main.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\myUART.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o"
@@ -65,14 +65,20 @@ Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleUart.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleUart_PM.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleUart_INT.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleUart_BOOT.o"
-Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleVDAC.o"
-Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleVDAC_PM.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleKey.o"
-Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleRxISR.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleState.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleUart_IntClock.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleBuffer.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleBuffer_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleVDAC.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleVDAC_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleRxISR.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\BleTxISR.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\timer_clock_1.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\SendBleDataISR.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\Roadster1.0.hex"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\Roadster1.0.map"
 Deleting file ".\Roadster1.0.cycdx"
 Deleting file ".\Roadster1.0.svd"
@@ -151,8 +157,8 @@ Info: apr.M0002: Analog signal "Net_613" is connected to one terminal only. (App
 Info: apr.M0002: Analog signal "Net_614" is connected to one terminal only. (App=cydsfit)
 Info: apr.M0002: Analog signal "Net_615" is connected to one terminal only. (App=cydsfit)
 Info: apr.M0002: Analog signal "Net_616" is connected to one terminal only. (App=cydsfit)
-Log: apr.M0058: The analog placement iterative improvement is 35% done. (App=cydsfit)
-Log: apr.M0058: The analog placement iterative improvement is 71% done. (App=cydsfit)
+Log: apr.M0058: The analog placement iterative improvement is 33% done. (App=cydsfit)
+Log: apr.M0058: The analog placement iterative improvement is 89% done. (App=cydsfit)
 Analog Routing...
 Analog Code Generation...
 Digital Placement...
@@ -163,36 +169,21 @@ Static timing analysis...
 API Generation...
 Dependency Generation...
 Cleanup...
-Unable to add item 'BleVDAC' to 'PSoC5'. 'A file of the given name already exists. Please enter a valid name.'
-Unable to add item 'BleVDAC' to 'PSoC5'. 'A file of the given name already exists. Please enter a valid name.'
-Unable to add item 'BleVDAC' to 'PSoC5'. 'A file of the given name already exists. Please enter a valid name.'
-Unable to add item 'BleRxISR' to 'PSoC5'. 'A file of the given name already exists. Please enter a valid name.'
-Unable to add item 'BleRxISR' to 'PSoC5'. 'A file of the given name already exists. Please enter a valid name.'
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
-main.c: In function 'main':
-main.c:67:5: warning: implicit declaration of function 'bleRxISR1_StartEx' [-Wimplicit-function-declaration]
-     bleRxISR1_StartEx(BleDataBinnen);
-     ^
-main.c: In function 'initFirmwire':
-main.c:130:5: warning: implicit declaration of function 'BleVdac_Start' [-Wimplicit-function-declaration]
-     BleVdac_Start();
-     ^
-main.c:131:5: warning: implicit declaration of function 'BleOpamp_Start' [-Wimplicit-function-declaration]
-     BleOpamp_Start();
-     ^
-main.c:132:5: warning: implicit declaration of function 'BleUart1_Start' [-Wimplicit-function-declaration]
-     BleUart1_Start();
-     ^
+main.c: In function 'IRSensoren':
+main.c:43:11: warning: unused variable 'tmpWaarden' [-Wunused-variable]
+     uint8 tmpWaarden = IRWaarden;
+           ^
 In file included from Generated_Source\PSoC5/project.h:57:0,
                  from main.c:14:
 main.c: In function 'printTextopLCD':
 Generated_Source\PSoC5/LCD.h:130:38: warning: statement with no effect [-Wunused-value]
  #define LCD_CLEAR_DISPLAY            (0x01u)
                                       ^
-main.c:173:5: note: in expansion of macro 'LCD_CLEAR_DISPLAY'
+main.c:219:5: note: in expansion of macro 'LCD_CLEAR_DISPLAY'
      LCD_CLEAR_DISPLAY; //Clear display
      ^
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/myUART.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\..\..\Ble\ProjectBle\Design01.cydsn\myUART.c -o .\CortexM3\ARM_GCC_541\Debug\myUART.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/myUART.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c myUART.c -o .\CortexM3\ARM_GCC_541\Debug\myUART.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/cyfitter_cfg.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\cyfitter_cfg.c -o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/cymetadata.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\cymetadata.c -o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/IR1.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\IR1.c -o .\CortexM3\ARM_GCC_541\Debug\IR1.o
@@ -256,24 +247,26 @@ arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleUart_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleUart_PM.c -o .\CortexM3\ARM_GCC_541\Debug\BleUart_PM.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleUart_INT.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleUart_INT.c -o .\CortexM3\ARM_GCC_541\Debug\BleUart_INT.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleUart_BOOT.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleUart_BOOT.c -o .\CortexM3\ARM_GCC_541\Debug\BleUart_BOOT.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleVDAC.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleVDAC.c -o .\CortexM3\ARM_GCC_541\Debug\BleVDAC.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleVDAC_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleVDAC_PM.c -o .\CortexM3\ARM_GCC_541\Debug\BleVDAC_PM.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleKey.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleKey.c -o .\CortexM3\ARM_GCC_541\Debug\BleKey.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleRxISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleRxISR.c -o .\CortexM3\ARM_GCC_541\Debug\BleRxISR.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleState.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleState.c -o .\CortexM3\ARM_GCC_541\Debug\BleState.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleUart_IntClock.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleUart_IntClock.c -o .\CortexM3\ARM_GCC_541\Debug\BleUart_IntClock.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleBuffer.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleBuffer.c -o .\CortexM3\ARM_GCC_541\Debug\BleBuffer.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleBuffer_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleBuffer_PM.c -o .\CortexM3\ARM_GCC_541\Debug\BleBuffer_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleVDAC.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleVDAC.c -o .\CortexM3\ARM_GCC_541\Debug\BleVDAC.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleVDAC_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleVDAC_PM.c -o .\CortexM3\ARM_GCC_541\Debug\BleVDAC_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleRxISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleRxISR.c -o .\CortexM3\ARM_GCC_541\Debug\BleRxISR.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/BleTxISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\BleTxISR.c -o .\CortexM3\ARM_GCC_541\Debug\BleTxISR.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/timer_clock_1.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\timer_clock_1.c -o .\CortexM3\ARM_GCC_541\Debug\timer_clock_1.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/sendBleDataTimer.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\sendBleDataTimer.c -o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/sendBleDataTimer_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\sendBleDataTimer_PM.c -o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/SendBleDataISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\SendBleDataISR.c -o .\CortexM3\ARM_GCC_541\Debug\SendBleDataISR.o
 arm-none-eabi-as.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=.\CortexM3\ARM_GCC_541\Debug/CyBootAsmGnu.lst -g -W -o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o Generated_Source\PSoC5\CyBootAsmGnu.s
-arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\Roadster1.0.a .\CortexM3\ARM_GCC_541\Debug\IR1.o .\CortexM3\ARM_GCC_541\Debug\IR2.o .\CortexM3\ARM_GCC_541\Debug\IR3.o .\CortexM3\ARM_GCC_541\Debug\IR4.o .\CortexM3\ARM_GCC_541\Debug\IR5.o .\CortexM3\ARM_GCC_541\Debug\IR6.o .\CortexM3\ARM_GCC_541\Debug\IR7.o .\CortexM3\ARM_GCC_541\Debug\IR8.o .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_PM.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_INT.o .\CortexM3\ARM_GCC_541\Debug\LED1.o .\CortexM3\ARM_GCC_541\Debug\LED2.o .\CortexM3\ARM_GCC_541\Debug\LED3.o .\CortexM3\ARM_GCC_541\Debug\LED4.o .\CortexM3\ARM_GCC_541\Debug\LED5.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_SAR.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_SAR_INT.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_SAR_PM.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_IntClock.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_TempBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_FinalBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_IRQ.o .\CortexM3\ARM_GCC_541\Debug\SW1.o .\CortexM3\ARM_GCC_541\Debug\SW2.o .\CortexM3\ARM_GCC_541\Debug\MotorControl.o .\CortexM3\ARM_GCC_541\Debug\MotorControl_PM.o .\CortexM3\ARM_GCC_541\Debug\Clock_1.o .\CortexM3\ARM_GCC_541\Debug\LCD.o .\CortexM3\ARM_GCC_541\Debug\LCD_PM.o .\CortexM3\ARM_GCC_541\Debug\LCD_CustChars.o .\CortexM3\ARM_GCC_541\Debug\LCD_LCDPort.o .\CortexM3\ARM_GCC_541\Debug\readIRSensors.o .\CortexM3\ARM_GCC_541\Debug\TimerUS.o .\CortexM3\ARM_GCC_541\Debug\TimerUS_PM.o .\CortexM3\ARM_GCC_541\Debug\isrUltraSonen.o .\CortexM3\ARM_GCC_541\Debug\TriggerReg.o .\CortexM3\ARM_GCC_541\Debug\TriggerReg_PM.o .\CortexM3\ARM_GCC_541\Debug\selectUS.o .\CortexM3\ARM_GCC_541\Debug\selectUS_PM.o .\CortexM3\ARM_GCC_541\Debug\statusEcho.o .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM3\ARM_GCC_541\Debug\ENA.o .\CortexM3\ARM_GCC_541\Debug\ENB.o .\CortexM3\ARM_GCC_541\Debug\IN1.o .\CortexM3\ARM_GCC_541\Debug\IN2.o .\CortexM3\ARM_GCC_541\Debug\IN3.o .\CortexM3\ARM_GCC_541\Debug\IN4.o .\CortexM3\ARM_GCC_541\Debug\Clock_3.o .\CortexM3\ARM_GCC_541\Debug\EnMotorISR.o .\CortexM3\ARM_GCC_541\Debug\BleUart.o .\CortexM3\ARM_GCC_541\Debug\BleUart_PM.o .\CortexM3\ARM_GCC_541\Debug\BleUart_INT.o .\CortexM3\ARM_GCC_541\Debug\BleUart_BOOT.o .\CortexM3\ARM_GCC_541\Debug\BleVDAC.o .\CortexM3\ARM_GCC_541\Debug\BleVDAC_PM.o .\CortexM3\ARM_GCC_541\Debug\BleKey.o .\CortexM3\ARM_GCC_541\Debug\BleRxISR.o .\CortexM3\ARM_GCC_541\Debug\BleState.o .\CortexM3\ARM_GCC_541\Debug\BleUart_IntClock.o .\CortexM3\ARM_GCC_541\Debug\BleBuffer.o .\CortexM3\ARM_GCC_541\Debug\BleBuffer_PM.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
+arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\Roadster1.0.a .\CortexM3\ARM_GCC_541\Debug\IR1.o .\CortexM3\ARM_GCC_541\Debug\IR2.o .\CortexM3\ARM_GCC_541\Debug\IR3.o .\CortexM3\ARM_GCC_541\Debug\IR4.o .\CortexM3\ARM_GCC_541\Debug\IR5.o .\CortexM3\ARM_GCC_541\Debug\IR6.o .\CortexM3\ARM_GCC_541\Debug\IR7.o .\CortexM3\ARM_GCC_541\Debug\IR8.o .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_PM.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_INT.o .\CortexM3\ARM_GCC_541\Debug\LED1.o .\CortexM3\ARM_GCC_541\Debug\LED2.o .\CortexM3\ARM_GCC_541\Debug\LED3.o .\CortexM3\ARM_GCC_541\Debug\LED4.o .\CortexM3\ARM_GCC_541\Debug\LED5.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_SAR.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_SAR_INT.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_SAR_PM.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_IntClock.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_TempBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_FinalBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\ADC_IR_IRQ.o .\CortexM3\ARM_GCC_541\Debug\SW1.o .\CortexM3\ARM_GCC_541\Debug\SW2.o .\CortexM3\ARM_GCC_541\Debug\MotorControl.o .\CortexM3\ARM_GCC_541\Debug\MotorControl_PM.o .\CortexM3\ARM_GCC_541\Debug\Clock_1.o .\CortexM3\ARM_GCC_541\Debug\LCD.o .\CortexM3\ARM_GCC_541\Debug\LCD_PM.o .\CortexM3\ARM_GCC_541\Debug\LCD_CustChars.o .\CortexM3\ARM_GCC_541\Debug\LCD_LCDPort.o .\CortexM3\ARM_GCC_541\Debug\readIRSensors.o .\CortexM3\ARM_GCC_541\Debug\TimerUS.o .\CortexM3\ARM_GCC_541\Debug\TimerUS_PM.o .\CortexM3\ARM_GCC_541\Debug\isrUltraSonen.o .\CortexM3\ARM_GCC_541\Debug\TriggerReg.o .\CortexM3\ARM_GCC_541\Debug\TriggerReg_PM.o .\CortexM3\ARM_GCC_541\Debug\selectUS.o .\CortexM3\ARM_GCC_541\Debug\selectUS_PM.o .\CortexM3\ARM_GCC_541\Debug\statusEcho.o .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM3\ARM_GCC_541\Debug\ENA.o .\CortexM3\ARM_GCC_541\Debug\ENB.o .\CortexM3\ARM_GCC_541\Debug\IN1.o .\CortexM3\ARM_GCC_541\Debug\IN2.o .\CortexM3\ARM_GCC_541\Debug\IN3.o .\CortexM3\ARM_GCC_541\Debug\IN4.o .\CortexM3\ARM_GCC_541\Debug\Clock_3.o .\CortexM3\ARM_GCC_541\Debug\EnMotorISR.o .\CortexM3\ARM_GCC_541\Debug\BleUart.o .\CortexM3\ARM_GCC_541\Debug\BleUart_PM.o .\CortexM3\ARM_GCC_541\Debug\BleUart_INT.o .\CortexM3\ARM_GCC_541\Debug\BleUart_BOOT.o .\CortexM3\ARM_GCC_541\Debug\BleKey.o .\CortexM3\ARM_GCC_541\Debug\BleState.o .\CortexM3\ARM_GCC_541\Debug\BleUart_IntClock.o .\CortexM3\ARM_GCC_541\Debug\BleBuffer.o .\CortexM3\ARM_GCC_541\Debug\BleBuffer_PM.o .\CortexM3\ARM_GCC_541\Debug\BleVDAC.o .\CortexM3\ARM_GCC_541\Debug\BleVDAC_PM.o .\CortexM3\ARM_GCC_541\Debug\BleRxISR.o .\CortexM3\ARM_GCC_541\Debug\BleTxISR.o .\CortexM3\ARM_GCC_541\Debug\timer_clock_1.o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer.o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer_PM.o .\CortexM3\ARM_GCC_541\Debug\SendBleDataISR.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
 arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_541\Debug\Roadster1.0.a
 arm-none-eabi-gcc.exe -Wl,--start-group -o C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn\CortexM3\ARM_GCC_541\Debug\Roadster1.0.elf .\CortexM3\ARM_GCC_541\Debug\main.o .\CortexM3\ARM_GCC_541\Debug\myUART.o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o .\CortexM3\ARM_GCC_541\Debug\Roadster1.0.a "C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_541\Debug/Roadster1.0.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
-.\CortexM3\ARM_GCC_541\Debug\main.o: In function `initFirmwire':
-C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn/main.c:130: undefined reference to `BleVdac_Start'
-C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn/main.c:131: undefined reference to `BleOpamp_Start'
-C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn/main.c:132: undefined reference to `BleUart1_Start'
-.\CortexM3\ARM_GCC_541\Debug\main.o: In function `main':
-C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn/main.c:67: undefined reference to `bleRxISR1_StartEx'
+.\CortexM3\ARM_GCC_541\Debug\main.o: In function `ProcessCommandMsg':
+C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn/main.c:286: undefined reference to `getCMDValue'
+C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Roadster\Roadster\Roadster1.0.cydsn/main.c:293: undefined reference to `getCMDValue'
 collect2.exe: error: ld returned 1 exit status
 The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
---------------- Rebuild Failed: 04/01/2018 15:45:37 ---------------
+--------------- Rebuild Failed: 04/02/2018 15:17:38 ---------------

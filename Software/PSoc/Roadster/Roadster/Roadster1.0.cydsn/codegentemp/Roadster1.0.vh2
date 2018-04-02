@@ -2,7 +2,7 @@
 --	Conversion of Roadster1.0.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Sun Apr 01 15:47:26 2018
+--	Mon Apr 02 16:17:32 2018
 --
 
 USE cypress.cypress.all;
@@ -201,7 +201,7 @@ TERMINAL Net_536 : bit;
 TERMINAL Net_535 : bit;
 TERMINAL \ADC_IR:V_single\ : bit;
 TERMINAL \ADC_IR:SAR:Net_248\ : bit;
-TERMINAL \ADC_IR:SAR:Net_233\ : bit;
+TERMINAL \ADC_IR:SAR:Net_235\ : bit;
 SIGNAL \ADC_IR:SAR:vp_ctl_0\ : bit;
 SIGNAL \ADC_IR:SAR:vp_ctl_2\ : bit;
 SIGNAL \ADC_IR:SAR:vn_ctl_1\ : bit;
@@ -1274,6 +1274,16 @@ SIGNAL tmpFB_0__BleState_net_0 : bit;
 SIGNAL tmpIO_0__BleState_net_0 : bit;
 TERMINAL tmpSIOVREF__BleState_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__BleState_net_0 : bit;
+SIGNAL Net_10 : bit;
+SIGNAL Net_12 : bit;
+SIGNAL \sendBleDataTimer:Net_260\ : bit;
+SIGNAL \sendBleDataTimer:Net_266\ : bit;
+SIGNAL \sendBleDataTimer:Net_51\ : bit;
+SIGNAL \sendBleDataTimer:Net_261\ : bit;
+SIGNAL \sendBleDataTimer:Net_57\ : bit;
+SIGNAL Net_1139 : bit;
+SIGNAL Net_1144 : bit;
+SIGNAL \sendBleDataTimer:Net_102\ : bit;
 SIGNAL \ADC_IR:AMuxHw_2_Decoder_old_id_5\\D\ : bit;
 SIGNAL \ADC_IR:AMuxHw_2_Decoder_old_id_4\\D\ : bit;
 SIGNAL \ADC_IR:AMuxHw_2_Decoder_old_id_3\\D\ : bit;
@@ -2367,7 +2377,7 @@ IR8:cy_psoc3_pins_v1_10
 	GENERIC MAP(sig_width=>1,
 		is_net_join=>'0')
 	PORT MAP(signal1=>\ADC_IR:SAR:Net_248\,
-		signal2=>\ADC_IR:SAR:Net_233\);
+		signal2=>\ADC_IR:SAR:Net_235\);
 \ADC_IR:SAR:ADC_SAR\:cy_psoc5_sar_v2_0
 	GENERIC MAP(cy_registers=>"")
 	PORT MAP(vplus=>\ADC_IR:Net_2803\,
@@ -2399,12 +2409,6 @@ IR8:cy_psoc3_pins_v1_10
 		signal2=>\ADC_IR:SAR:Net_149\);
 \ADC_IR:SAR:noconnect\:cy_analog_noconnect_v1_0
 	PORT MAP(noconnect=>\ADC_IR:SAR:Net_209\);
-\ADC_IR:SAR:vRef_1024\:cy_vref_v1_0
-	GENERIC MAP(guid=>"89B398AD-36A8-4627-9212-707F2986319E",
-		name=>"1.024V",
-		autoenable=>'1',
-		ignoresleep=>'0')
-	PORT MAP(vout=>\ADC_IR:SAR:Net_233\);
 \ADC_IR:SAR:cy_analog_virtualmux_4_connect\:cy_connect_v1_0
 	GENERIC MAP(sig_width=>1,
 		is_net_join=>'0')
@@ -2412,6 +2416,12 @@ IR8:cy_psoc3_pins_v1_10
 		signal2=>\ADC_IR:SAR:Net_149\);
 \ADC_IR:SAR:cy_analog_noconnect_1\:cy_analog_noconnect_v1_0
 	PORT MAP(noconnect=>\ADC_IR:SAR:Net_255\);
+\ADC_IR:SAR:vRef_Vdda_1\:cy_vref_v1_0
+	GENERIC MAP(guid=>"4720866E-BC14-478d-B8A0-3E44F38CADAC",
+		name=>"Vdda/2",
+		autoenable=>'1',
+		ignoresleep=>'0')
+	PORT MAP(vout=>\ADC_IR:SAR:Net_235\);
 \ADC_IR:SAR:noconnect_1\:cy_analog_noconnect_v1_0
 	PORT MAP(noconnect=>\ADC_IR:SAR:Net_368\);
 \ADC_IR:cy_analog_virtualmux_1_connect\:cy_connect_v1_0
@@ -2464,7 +2474,7 @@ IR8:cy_psoc3_pins_v1_10
 		id=>"da1bb027-4058-4951-880c-490089dfb333/9725d809-97e7-404e-b621-dfdbe78d0ca9",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"1000004000.016",
+		period=>"999992000.064",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>\ADC_IR:clock\,
@@ -3356,7 +3366,7 @@ ENB:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"973fa3b5-63d9-4cb5-a42b-b9c9c4643a42",
 		drive_mode=>"110",
 		ibuf_enabled=>"1",
-		init_dr_st=>"0",
+		init_dr_st=>"1",
 		input_sync=>"1",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",
@@ -3426,7 +3436,7 @@ ENA:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"22e839fb-669d-4df5-bbf9-6ed09f9b0d63",
 		drive_mode=>"110",
 		ibuf_enabled=>"1",
-		init_dr_st=>"0",
+		init_dr_st=>"1",
 		input_sync=>"1",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",
@@ -3701,7 +3711,7 @@ Clock_3:cy_clock_v1_0
 		id=>"50252b9a-3e87-486c-b62b-2dbdd3e5a45c",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"83333333.3333333",
+		period=>"100000000000",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_665,
@@ -3931,7 +3941,7 @@ EnMotorISR:cy_isr_v1_0
 		clock=>\BleUart:BUART:clock_op\,
 		status=>(zero, zero, zero, \BleUart:BUART:tx_fifo_notfull\,
 			\BleUart:BUART:tx_status_2\, \BleUart:BUART:tx_fifo_empty\, \BleUart:BUART:tx_status_0\),
-		interrupt=>\BleUart:BUART:tx_interrupt_out\);
+		interrupt=>Net_786);
 \BleUart:BUART:sRX:RxShifter:u0\:cy_psoc3_dp
 	GENERIC MAP(cy_dpconfig=>"0000000000000000000000000000000000000000000000000000001001000000000100000000000000010000001100000001000000000000000100100001000011111111000000001111111111111111101000000110001001000001111100000000000000001100",
 		d0_init=>"00000000",
@@ -4114,7 +4124,7 @@ BleTx:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"ed092b9b-d398-4703-be89-cebf998501f6",
 		drive_mode=>"110",
 		ibuf_enabled=>"1",
-		init_dr_st=>"1",
+		init_dr_st=>"0",
 		input_sync=>"1",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",
@@ -4324,6 +4334,34 @@ BleState:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__IR1_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__BleState_net_0);
+BleTxISR:cy_isr_v1_0
+	GENERIC MAP(int_type=>"00",
+		is_nmi=>'0')
+	PORT MAP(int_signal=>Net_786);
+timer_clock_1:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"d4492437-0dbd-4f27-8f24-689c0c55c251",
+		source_clock_id=>"",
+		divisor=>0,
+		period=>"10000000000",
+		is_direct=>'0',
+		is_digital=>'1')
+	PORT MAP(clock_out=>Net_10,
+		dig_domain_out=>open);
+\sendBleDataTimer:TimerHW\:cy_psoc3_timer_v1_0
+	GENERIC MAP(cy_registers=>"")
+	PORT MAP(clock=>Net_10,
+		kill=>zero,
+		enable=>tmpOE__IR1_net_0,
+		capture=>zero,
+		timer_reset=>zero,
+		tc=>Net_1144,
+		compare=>\sendBleDataTimer:Net_261\,
+		interrupt=>\sendBleDataTimer:Net_57\);
+SendBleDataISR:cy_isr_v1_0
+	GENERIC MAP(int_type=>"00",
+		is_nmi=>'0')
+	PORT MAP(int_signal=>Net_1144);
 \ADC_IR:AMuxHw_2_Decoder_old_id_5\:cy_dff
 	PORT MAP(d=>\ADC_IR:ch_addr_5\,
 		clk=>\ADC_IR:clock\,

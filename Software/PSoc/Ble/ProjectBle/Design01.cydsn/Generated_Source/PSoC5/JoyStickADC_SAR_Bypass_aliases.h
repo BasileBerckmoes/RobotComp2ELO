@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: JoyStickADC_SAR_ExtVref.h  
+* File Name: JoyStickADC_SAR_Bypass.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_JoyStickADC_SAR_ExtVref_ALIASES_H) /* Pins JoyStickADC_SAR_ExtVref_ALIASES_H */
-#define CY_PINS_JoyStickADC_SAR_ExtVref_ALIASES_H
+#if !defined(CY_PINS_JoyStickADC_SAR_Bypass_ALIASES_H) /* Pins JoyStickADC_SAR_Bypass_ALIASES_H */
+#define CY_PINS_JoyStickADC_SAR_Bypass_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define JoyStickADC_SAR_ExtVref_0			(JoyStickADC_SAR_ExtVref__0__PC)
-#define JoyStickADC_SAR_ExtVref_0_INTR	((uint16)((uint16)0x0001u << JoyStickADC_SAR_ExtVref__0__SHIFT))
+#define JoyStickADC_SAR_Bypass_0			(JoyStickADC_SAR_Bypass__0__PC)
+#define JoyStickADC_SAR_Bypass_0_INTR	((uint16)((uint16)0x0001u << JoyStickADC_SAR_Bypass__0__SHIFT))
 
-#define JoyStickADC_SAR_ExtVref_INTR_ALL	 ((uint16)(JoyStickADC_SAR_ExtVref_0_INTR))
+#define JoyStickADC_SAR_Bypass_INTR_ALL	 ((uint16)(JoyStickADC_SAR_Bypass_0_INTR))
 
-#endif /* End Pins JoyStickADC_SAR_ExtVref_ALIASES_H */
+#endif /* End Pins JoyStickADC_SAR_Bypass_ALIASES_H */
 
 
 /* [] END OF FILE */

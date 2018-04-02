@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: JoyStickADC_SAR_ExtVref.c  
+* File Name: LED.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "JoyStickADC_SAR_ExtVref.h"
+#include "LED.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 JoyStickADC_SAR_ExtVref__PORT == 15 && ((JoyStickADC_SAR_ExtVref__MASK & 0xC0) != 0))
+	 LED__PORT == 15 && ((LED__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: JoyStickADC_SAR_ExtVref_Write
+* Function Name: LED_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet JoyStickADC_SAR_ExtVref_SUT.c usage_JoyStickADC_SAR_ExtVref_Write
+*  \snippet LED_SUT.c usage_LED_Write
 *******************************************************************************/
-void JoyStickADC_SAR_ExtVref_Write(uint8 value)
+void LED_Write(uint8 value)
 {
-    uint8 staticBits = (JoyStickADC_SAR_ExtVref_DR & (uint8)(~JoyStickADC_SAR_ExtVref_MASK));
-    JoyStickADC_SAR_ExtVref_DR = staticBits | ((uint8)(value << JoyStickADC_SAR_ExtVref_SHIFT) & JoyStickADC_SAR_ExtVref_MASK);
+    uint8 staticBits = (LED_DR & (uint8)(~LED_MASK));
+    LED_DR = staticBits | ((uint8)(value << LED_SHIFT) & LED_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: JoyStickADC_SAR_ExtVref_SetDriveMode
+* Function Name: LED_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void JoyStickADC_SAR_ExtVref_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet JoyStickADC_SAR_ExtVref_SUT.c usage_JoyStickADC_SAR_ExtVref_SetDriveMode
+*  \snippet LED_SUT.c usage_LED_SetDriveMode
 *******************************************************************************/
-void JoyStickADC_SAR_ExtVref_SetDriveMode(uint8 mode)
+void LED_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(JoyStickADC_SAR_ExtVref_0, mode);
+	CyPins_SetPinDriveMode(LED_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: JoyStickADC_SAR_ExtVref_Read
+* Function Name: LED_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void JoyStickADC_SAR_ExtVref_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet JoyStickADC_SAR_ExtVref_SUT.c usage_JoyStickADC_SAR_ExtVref_Read  
+*  \snippet LED_SUT.c usage_LED_Read  
 *******************************************************************************/
-uint8 JoyStickADC_SAR_ExtVref_Read(void)
+uint8 LED_Read(void)
 {
-    return (JoyStickADC_SAR_ExtVref_PS & JoyStickADC_SAR_ExtVref_MASK) >> JoyStickADC_SAR_ExtVref_SHIFT;
+    return (LED_PS & LED_MASK) >> LED_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: JoyStickADC_SAR_ExtVref_ReadDataReg
+* Function Name: LED_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 JoyStickADC_SAR_ExtVref_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred JoyStickADC_SAR_ExtVref_Read() API because the 
-* JoyStickADC_SAR_ExtVref_ReadDataReg() reads the data register instead of the status 
+* preferred LED_Read() API because the 
+* LED_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 JoyStickADC_SAR_ExtVref_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet JoyStickADC_SAR_ExtVref_SUT.c usage_JoyStickADC_SAR_ExtVref_ReadDataReg 
+*  \snippet LED_SUT.c usage_LED_ReadDataReg 
 *******************************************************************************/
-uint8 JoyStickADC_SAR_ExtVref_ReadDataReg(void)
+uint8 LED_ReadDataReg(void)
 {
-    return (JoyStickADC_SAR_ExtVref_DR & JoyStickADC_SAR_ExtVref_MASK) >> JoyStickADC_SAR_ExtVref_SHIFT;
+    return (LED_DR & LED_MASK) >> LED_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(JoyStickADC_SAR_ExtVref_INTSTAT) 
+#if defined(LED_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: JoyStickADC_SAR_ExtVref_SetInterruptMode
+    * Function Name: LED_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 JoyStickADC_SAR_ExtVref_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use JoyStickADC_SAR_ExtVref_INTR_ALL to configure the
+    *  component. Or you may use LED_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - JoyStickADC_SAR_ExtVref_0_INTR       (First pin in the list)
-    *  - JoyStickADC_SAR_ExtVref_1_INTR       (Second pin in the list)
+    *  - LED_0_INTR       (First pin in the list)
+    *  - LED_1_INTR       (Second pin in the list)
     *  - ...
-    *  - JoyStickADC_SAR_ExtVref_INTR_ALL     (All pins in Pins component)
+    *  - LED_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 JoyStickADC_SAR_ExtVref_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet JoyStickADC_SAR_ExtVref_SUT.c usage_JoyStickADC_SAR_ExtVref_SetInterruptMode
+    *  \snippet LED_SUT.c usage_LED_SetInterruptMode
     *******************************************************************************/
-    void JoyStickADC_SAR_ExtVref_SetInterruptMode(uint16 position, uint16 mode)
+    void LED_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & JoyStickADC_SAR_ExtVref_0_INTR) != 0u) 
+		if((position & LED_0_INTR) != 0u) 
 		{ 
-			 JoyStickADC_SAR_ExtVref_0_INTTYPE_REG = (uint8)mode; 
+			 LED_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: JoyStickADC_SAR_ExtVref_ClearInterrupt
+    * Function Name: LED_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 JoyStickADC_SAR_ExtVref_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet JoyStickADC_SAR_ExtVref_SUT.c usage_JoyStickADC_SAR_ExtVref_ClearInterrupt
+    *  \snippet LED_SUT.c usage_LED_ClearInterrupt
     *******************************************************************************/
-    uint8 JoyStickADC_SAR_ExtVref_ClearInterrupt(void)
+    uint8 LED_ClearInterrupt(void)
     {
-        return (JoyStickADC_SAR_ExtVref_INTSTAT & JoyStickADC_SAR_ExtVref_MASK) >> JoyStickADC_SAR_ExtVref_SHIFT;
+        return (LED_INTSTAT & LED_MASK) >> LED_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 

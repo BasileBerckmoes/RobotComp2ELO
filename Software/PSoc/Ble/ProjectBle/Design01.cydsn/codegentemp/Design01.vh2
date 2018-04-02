@@ -2,7 +2,7 @@
 --	Conversion of Design01.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Sun Apr 01 15:10:13 2018
+--	Mon Apr 02 16:02:46 2018
 --
 
 USE cypress.cypress.all;
@@ -891,7 +891,7 @@ TERMINAL Net_64 : bit;
 TERMINAL Net_63 : bit;
 TERMINAL \JoyStickADC:V_single\ : bit;
 TERMINAL \JoyStickADC:SAR:Net_248\ : bit;
-TERMINAL \JoyStickADC:SAR:Net_368\ : bit;
+TERMINAL \JoyStickADC:SAR:Net_235\ : bit;
 SIGNAL \JoyStickADC:SAR:vp_ctl_0\ : bit;
 SIGNAL \JoyStickADC:SAR:vp_ctl_2\ : bit;
 SIGNAL \JoyStickADC:SAR:vn_ctl_1\ : bit;
@@ -921,15 +921,10 @@ SIGNAL \JoyStickADC:SAR:Net_207_2\ : bit;
 SIGNAL \JoyStickADC:SAR:Net_207_1\ : bit;
 SIGNAL \JoyStickADC:SAR:Net_207_0\ : bit;
 SIGNAL \JoyStickADC:Net_3830\ : bit;
-TERMINAL \JoyStickADC:SAR:Net_267\ : bit;
-TERMINAL \JoyStickADC:SAR:Net_149\ : bit;
 TERMINAL \JoyStickADC:SAR:Net_209\ : bit;
+TERMINAL \JoyStickADC:SAR:Net_149\ : bit;
 TERMINAL \JoyStickADC:SAR:Net_255\ : bit;
-SIGNAL \JoyStickADC:SAR:tmpOE__ExtVref_net_0\ : bit;
-SIGNAL \JoyStickADC:SAR:tmpFB_0__ExtVref_net_0\ : bit;
-SIGNAL \JoyStickADC:SAR:tmpIO_0__ExtVref_net_0\ : bit;
-TERMINAL \JoyStickADC:SAR:tmpSIOVREF__ExtVref_net_0\ : bit;
-SIGNAL \JoyStickADC:SAR:tmpINTERRUPT_0__ExtVref_net_0\ : bit;
+TERMINAL \JoyStickADC:SAR:Net_368\ : bit;
 SIGNAL \JoyStickADC:SAR:Net_221\ : bit;
 SIGNAL \JoyStickADC:SAR:Net_383\ : bit;
 SIGNAL \JoyStickADC:SAR:Net_385\ : bit;
@@ -1100,6 +1095,21 @@ SIGNAL Net_164 : bit;
 SIGNAL Net_167 : bit;
 SIGNAL Net_165 : bit;
 SIGNAL Net_166 : bit;
+SIGNAL tmpOE__LED_net_0 : bit;
+SIGNAL tmpFB_0__LED_net_0 : bit;
+SIGNAL tmpIO_0__LED_net_0 : bit;
+TERMINAL tmpSIOVREF__LED_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__LED_net_0 : bit;
+SIGNAL Net_10 : bit;
+SIGNAL Net_12 : bit;
+SIGNAL \sendBleDataTimer:Net_260\ : bit;
+SIGNAL \sendBleDataTimer:Net_266\ : bit;
+SIGNAL \sendBleDataTimer:Net_51\ : bit;
+SIGNAL \sendBleDataTimer:Net_261\ : bit;
+SIGNAL \sendBleDataTimer:Net_57\ : bit;
+SIGNAL Net_173 : bit;
+SIGNAL Net_178 : bit;
+SIGNAL \sendBleDataTimer:Net_102\ : bit;
 SIGNAL \bleUart1:BUART:reset_reg\\D\ : bit;
 SIGNAL \bleUart1:BUART:txn\\D\ : bit;
 SIGNAL \bleUart1:BUART:tx_state_1\\D\ : bit;
@@ -1697,7 +1707,7 @@ bleRx:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"a93bd6a1-47c6-48cf-9ff0-b0a0c112b4c0",
 		drive_mode=>"001",
 		ibuf_enabled=>"1",
-		init_dr_st=>"0",
+		init_dr_st=>"1",
 		input_sync=>"1",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",
@@ -2797,7 +2807,7 @@ rxBleISR:cy_isr_v1_0
 	GENERIC MAP(sig_width=>1,
 		is_net_join=>'0')
 	PORT MAP(signal1=>\JoyStickADC:SAR:Net_248\,
-		signal2=>\JoyStickADC:SAR:Net_368\);
+		signal2=>\JoyStickADC:SAR:Net_235\);
 \JoyStickADC:SAR:ADC_SAR\:cy_psoc5_sar_v2_0
 	GENERIC MAP(cy_registers=>"")
 	PORT MAP(vplus=>\JoyStickADC:Net_2803\,
@@ -2821,7 +2831,7 @@ rxBleISR:cy_isr_v1_0
 	GENERIC MAP(sig_width=>1,
 		is_net_join=>'0')
 	PORT MAP(signal1=>\JoyStickADC:SAR:Net_215\,
-		signal2=>\JoyStickADC:SAR:Net_267\);
+		signal2=>\JoyStickADC:SAR:Net_209\);
 \JoyStickADC:SAR:cy_analog_virtualmux_1_connect\:cy_connect_v1_0
 	GENERIC MAP(sig_width=>1,
 		is_net_join=>'0')
@@ -2836,76 +2846,12 @@ rxBleISR:cy_isr_v1_0
 		signal2=>\JoyStickADC:SAR:Net_149\);
 \JoyStickADC:SAR:cy_analog_noconnect_1\:cy_analog_noconnect_v1_0
 	PORT MAP(noconnect=>\JoyStickADC:SAR:Net_255\);
-\JoyStickADC:SAR:ExtVref\:cy_psoc3_pins_v1_10
-	GENERIC MAP(id=>"79f4182b-028d-43ca-a1e9-007a8e6fdffc/dea208d9-07b0-438b-a5e0-ac5d207f2658/7e0d1a6c-1235-4546-a71b-ea6e528924f8",
-		drive_mode=>"000",
-		ibuf_enabled=>"0",
-		init_dr_st=>"0",
-		input_sync=>"1",
-		input_clk_en=>'0',
-		input_sync_mode=>"0",
-		intr_mode=>"00",
-		invert_in_clock=>'0',
-		invert_in_clock_en=>'0',
-		invert_in_reset=>'0',
-		invert_out_clock=>'0',
-		invert_out_clock_en=>'0',
-		invert_out_reset=>'0',
-		io_voltage=>"",
-		layout_mode=>"CONTIGUOUS",
-		output_conn=>"0",
-		output_sync=>"0",
-		output_clk_en=>'0',
-		output_mode=>"0",
-		output_reset=>'0',
-		output_clock_mode=>"0",
-		oe_sync=>"0",
-		oe_conn=>"0",
-		oe_reset=>'0',
-		pin_aliases=>"",
-		pin_mode=>"A",
-		por_state=>4,
-		sio_group_cnt=>0,
-		sio_hifreq=>"00000000",
-		sio_hyst=>"1",
-		sio_ibuf=>"00000000",
-		sio_info=>"00",
-		sio_obuf=>"00000000",
-		sio_refsel=>"00000000",
-		sio_vtrip=>"00000000",
-		sio_vohsel=>"00000000",
-		slew_rate=>"0",
-		spanning=>'0',
-		sw_only=>'0',
-		vtrip=>"10",
-		width=>1,
-		port_alias_required=>'0',
-		port_alias_group=>"",
-		use_annotation=>"0",
-		pa_in_clock=>-1,
-		pa_in_clock_en=>-1,
-		pa_in_reset=>-1,
-		pa_out_clock=>-1,
-		pa_out_clock_en=>-1,
-		pa_out_reset=>-1,
-		ovt_needed=>"0",
-		ovt_slew_control=>"00",
-		ovt_hyst_trim=>"0",
-		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__bleRx_net_0),
-		y=>(zero),
-		fb=>(\JoyStickADC:SAR:tmpFB_0__ExtVref_net_0\),
-		analog=>\JoyStickADC:SAR:Net_267\,
-		io=>(\JoyStickADC:SAR:tmpIO_0__ExtVref_net_0\),
-		siovref=>(\JoyStickADC:SAR:tmpSIOVREF__ExtVref_net_0\),
-		annotation=>(open),
-		in_clock=>zero,
-		in_clock_en=>tmpOE__bleRx_net_0,
-		in_reset=>zero,
-		out_clock=>zero,
-		out_clock_en=>tmpOE__bleRx_net_0,
-		out_reset=>zero,
-		interrupt=>\JoyStickADC:SAR:tmpINTERRUPT_0__ExtVref_net_0\);
+\JoyStickADC:SAR:vRef_Vdda_1\:cy_vref_v1_0
+	GENERIC MAP(guid=>"4720866E-BC14-478d-B8A0-3E44F38CADAC",
+		name=>"Vdda/2",
+		autoenable=>'1',
+		ignoresleep=>'0')
+	PORT MAP(vout=>\JoyStickADC:SAR:Net_235\);
 \JoyStickADC:SAR:noconnect_1\:cy_analog_noconnect_v1_0
 	PORT MAP(noconnect=>\JoyStickADC:SAR:Net_368\);
 \JoyStickADC:cy_analog_virtualmux_1_connect\:cy_connect_v1_0
@@ -2958,7 +2904,7 @@ rxBleISR:cy_isr_v1_0
 		id=>"79f4182b-028d-43ca-a1e9-007a8e6fdffc/9725d809-97e7-404e-b621-dfdbe78d0ca9",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"535719642.910715",
+		period=>"1000004000.016",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>\JoyStickADC:clock\,
@@ -3151,7 +3097,7 @@ eocJoystickISR:cy_isr_v1_0
 	PORT MAP(int_signal=>Net_62);
 MotorEN:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"b3700180-16d0-4c28-9887-5269ef731f1d",
-		drive_mode=>"001",
+		drive_mode=>"011",
 		ibuf_enabled=>"1",
 		init_dr_st=>"0",
 		input_sync=>"0",
@@ -3238,6 +3184,100 @@ motorControlISR:cy_isr_v1_0
 	GENERIC MAP(int_type=>"00",
 		is_nmi=>'0')
 	PORT MAP(int_signal=>Net_164);
+LED:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"f0795e6b-e829-4075-9c7d-e8bf6603012b",
+		drive_mode=>"011",
+		ibuf_enabled=>"1",
+		init_dr_st=>"0",
+		input_sync=>"1",
+		input_clk_en=>'0',
+		input_sync_mode=>"0",
+		intr_mode=>"00",
+		invert_in_clock=>'0',
+		invert_in_clock_en=>'0',
+		invert_in_reset=>'0',
+		invert_out_clock=>'0',
+		invert_out_clock_en=>'0',
+		invert_out_reset=>'0',
+		io_voltage=>"",
+		layout_mode=>"CONTIGUOUS",
+		output_conn=>"0",
+		output_sync=>"0",
+		output_clk_en=>'0',
+		output_mode=>"0",
+		output_reset=>'0',
+		output_clock_mode=>"0",
+		oe_sync=>"0",
+		oe_conn=>"0",
+		oe_reset=>'0',
+		pin_aliases=>"",
+		pin_mode=>"O",
+		por_state=>4,
+		sio_group_cnt=>0,
+		sio_hifreq=>"00000000",
+		sio_hyst=>"1",
+		sio_ibuf=>"00000000",
+		sio_info=>"00",
+		sio_obuf=>"00000000",
+		sio_refsel=>"00000000",
+		sio_vtrip=>"00000000",
+		sio_vohsel=>"00000000",
+		slew_rate=>"0",
+		spanning=>'0',
+		sw_only=>'0',
+		vtrip=>"10",
+		width=>1,
+		port_alias_required=>'0',
+		port_alias_group=>"",
+		use_annotation=>"0",
+		pa_in_clock=>-1,
+		pa_in_clock_en=>-1,
+		pa_in_reset=>-1,
+		pa_out_clock=>-1,
+		pa_out_clock_en=>-1,
+		pa_out_reset=>-1,
+		ovt_needed=>"0",
+		ovt_slew_control=>"00",
+		ovt_hyst_trim=>"0",
+		input_buffer_sel=>"00")
+	PORT MAP(oe=>(tmpOE__bleRx_net_0),
+		y=>(zero),
+		fb=>(tmpFB_0__LED_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__LED_net_0),
+		siovref=>(tmpSIOVREF__LED_net_0),
+		annotation=>(open),
+		in_clock=>zero,
+		in_clock_en=>tmpOE__bleRx_net_0,
+		in_reset=>zero,
+		out_clock=>zero,
+		out_clock_en=>tmpOE__bleRx_net_0,
+		out_reset=>zero,
+		interrupt=>tmpINTERRUPT_0__LED_net_0);
+timer_clock:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"c0fb34bd-1044-4931-9788-16b01ce89812",
+		source_clock_id=>"",
+		divisor=>0,
+		period=>"10000000000",
+		is_direct=>'0',
+		is_digital=>'1')
+	PORT MAP(clock_out=>Net_10,
+		dig_domain_out=>open);
+\sendBleDataTimer:TimerHW\:cy_psoc3_timer_v1_0
+	GENERIC MAP(cy_registers=>"")
+	PORT MAP(clock=>Net_10,
+		kill=>zero,
+		enable=>tmpOE__bleRx_net_0,
+		capture=>zero,
+		timer_reset=>zero,
+		tc=>Net_178,
+		compare=>\sendBleDataTimer:Net_261\,
+		interrupt=>\sendBleDataTimer:Net_57\);
+sendBleDataISR:cy_isr_v1_0
+	GENERIC MAP(int_type=>"00",
+		is_nmi=>'0')
+	PORT MAP(int_signal=>Net_178);
 \bleUart1:BUART:reset_reg\:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\bleUart1:BUART:clock_op\,

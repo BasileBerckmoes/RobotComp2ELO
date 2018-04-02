@@ -167,10 +167,10 @@ extern volatile int16 JoyStickADC_SAR_shift;
 #define JoyStickADC_SAR_DEFAULT_RESOLUTION     (8u)   /* ADC resolution selected with parameters.*/
 #define JoyStickADC_SAR_DEFAULT_CONV_MODE      (0u)        /* Default conversion method */
 #define JoyStickADC_SAR_DEFAULT_INTERNAL_CLK   (0u)             /* Default clock selection */
-#define JoyStickADC_SAR_DEFAULT_REFERENCE      (2u)         /* Default reference */
-#define JoyStickADC_SAR_DEFAULT_RANGE          (0u)       /* ADC Input Range selection */
-#define JoyStickADC_SAR_CLOCK_FREQUENCY        (8842106u)   /* Clock frequency */
-#define JoyStickADC_SAR_NOMINAL_CLOCK_FREQ     (1846154)  /* Nominal Clock Frequency */
+#define JoyStickADC_SAR_DEFAULT_REFERENCE      (0u)         /* Default reference */
+#define JoyStickADC_SAR_DEFAULT_RANGE          (1u)       /* ADC Input Range selection */
+#define JoyStickADC_SAR_CLOCK_FREQUENCY        (7578948u)   /* Clock frequency */
+#define JoyStickADC_SAR_NOMINAL_CLOCK_FREQ     (1000000)  /* Nominal Clock Frequency */
 #define JoyStickADC_SAR_HIGH_POWER_PULSE       (1u)        /* Not zero when clock pulse > 50 ns */
 #define JoyStickADC_SAR_IRQ_REMOVE             (1u)                /* Removes internal interrupt */
 
@@ -182,7 +182,7 @@ extern volatile int16 JoyStickADC_SAR_shift;
                                      (CYDEV_VDDA / 2) : \
                                    (((JoyStickADC_SAR_DEFAULT_REFERENCE != (uint8)JoyStickADC_SAR__EXT_REF) && \
                                      (JoyStickADC_SAR_DEFAULT_RANGE == (uint8)JoyStickADC_SAR__VNEG_VDDA_2_DIFF)) ? \
-                                     CYDEV_VDDA : (1.024)))      /* ADC reference voltage. */
+                                     CYDEV_VDDA : (2.5)))      /* ADC reference voltage. */
 #define JoyStickADC_SAR_DEFAULT_REF_VOLTAGE_MV \
                                    (((JoyStickADC_SAR_DEFAULT_REFERENCE != (uint8)JoyStickADC_SAR__EXT_REF) && \
                                     ((JoyStickADC_SAR_DEFAULT_RANGE == (uint8)JoyStickADC_SAR__VSSA_TO_VDDA) || \
@@ -190,7 +190,7 @@ extern volatile int16 JoyStickADC_SAR_shift;
                                      (CYDEV_VDDA_MV / 2) : \
                                   (((JoyStickADC_SAR_DEFAULT_REFERENCE != (uint8)JoyStickADC_SAR__EXT_REF) && \
                                     (JoyStickADC_SAR_DEFAULT_RANGE == (uint8)JoyStickADC_SAR__VNEG_VDDA_2_DIFF)) ? \
-                                     CYDEV_VDDA_MV : (1024)))   /* ADC reference voltage in mV */
+                                     CYDEV_VDDA_MV : (2500)))   /* ADC reference voltage in mV */
 /* The power is set to normal power, 1/2, 1/4 power depend on the clock setting. */
 #define JoyStickADC_SAR_DEFAULT_POWER \
        ((JoyStickADC_SAR_NOMINAL_CLOCK_FREQ > (JoyStickADC_SAR_MAX_FREQUENCY / 4)) ? JoyStickADC_SAR__HIGHPOWER : \
@@ -198,7 +198,7 @@ extern volatile int16 JoyStickADC_SAR_shift;
                                                                                        JoyStickADC_SAR__MINPOWER))
 /* Constant for a global usage */
 /* Number of additional clocks for sampling data*/
-#define JoyStickADC_SAR_SAMPLE_PRECHARGE       (6u)
+#define JoyStickADC_SAR_SAMPLE_PRECHARGE       (4u)
 
 
 /***************************************

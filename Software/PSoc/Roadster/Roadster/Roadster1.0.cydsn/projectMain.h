@@ -20,7 +20,7 @@ void initFirmwire(void);
 /////////////////////////////////////////////////////
 //LCD
 void printBINopLCD(uint8 value, int row);
-void printTextopLCD(int testValue);
+void printTextopLCD(int testValue1, int testValue2);
 
 /////////////////////////////////////////////////////
 //US
@@ -33,5 +33,10 @@ int exponent(int grondgetal, int exponent);
 uint8 telTot(uint8 getal, uint8 min, uint8 max);
 void telProcedure(void);
 void berekenMediaan(uint16 array[]);
+void DecToHex(uint8 value);
+
+void ProcessCommandMsg(void);
+uint8 HexToDec(char hexVal[]);
+uint8 getCMDValue(char delimiter, char str[]);
 
 /* [] END OF FILE */

@@ -10,9 +10,9 @@
 */
 
     
-#include "myUART1.h"
+#include <myUART.h>
 
-
+#include <stdio.h> 
 // defines ==================================================================
 
 
@@ -29,9 +29,11 @@ char   *RxStrIndex = RB.RxStr;      // pointer to command string buffer (process
 CY_ISR(MyRxInt) //interrupt on Rx byte received
 {   
     //move all available characters from Rx queue to RxBuffer
-    while(BleUart_ReadRxStatus() & BleUart_RX_STS_FIFO_NOTEMPTY)
+    while(bleUart1_ReadRxStatus() & bleUart1_RX_STS_FIFO_NOTEMPTY)
 	{
-		*RxWriteIndex++ = BleUart_ReadRxData();
+        uint8 dataBinnen = bleUart1_ReadRxData();
+        puttyUart1_PutChar(dataBinnen); 
+		*RxWriteIndex++ = dataBinnen;
 		if (RxWriteIndex >= RxBuffer + RxBufferSize) RxWriteIndex = RxBuffer;      
 	}   
 }
@@ -46,9 +48,11 @@ uint8 IsCharReady(void)
 
 uint8 GetRxStr(void)
 {
+    //char strMsg1[64];
     uint8 RxStr_flag = 0;
     static uint8 Ch;//static?
-   
+    //sprintf(strMsg1,"character=%u\r\n", Ch); 
+    //puttyUart1_PutString(strMsg1);
 	Ch = *RxReadIndex++;       //read next char in buffer
     if (RxReadIndex >= RxBuffer + RxBufferSize) RxReadIndex = RxBuffer;
             

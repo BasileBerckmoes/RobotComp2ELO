@@ -12,11 +12,14 @@
 
 #include "projectMain.h"
 #include "project.h"
+#include <string.h>
+//#include <stdlib.h> //atoi
+#include <stdio.h> 
 #include <myUART.h>
 
 //INFRAROOD GLOBALS
 uint8 IRWaarden;
-uint8 IRDrempel = 190;
+uint8 IRDrempel = 100;
 
 //US GLOBALS
 uint8 selectUS = 0;
@@ -27,12 +30,17 @@ uint16 avgUS2[5];
 uint16 avgUS3[5];
 
 //MOTOR GLOBALS
-uint8 pwmMotor1 = 60;
-uint8 pwmMotor2 = 50;
+uint8 pwmMotor1 = 0;
+uint8 pwmMotor2 = 0;
+
+
+char hexaDecBuffer[2];
+char strMsg1[64];
 
 //Interupt "end of conversion" van SAR_ADC 
 CY_ISR(IRSensoren)
 {
+    uint8 tmpWaarden = IRWaarden;
     IRWaarden = 0;
    for(int i = 0; i < 8; i++)
    {
@@ -46,14 +54,31 @@ CY_ISR(IRSensoren)
   
 CY_ISR(SwitchMotorEN)
 {
-   ENA_Write(~ENA_Read());
-   ENB_Write(ENA_Read());
-   CyDelay(200);
+   //ENA_Write(~ENA_Read());
+    char strBuffer[10];
+   //ENB_Write(ENA_Read());
+     DecToHex(IRWaarden);
+    sprintf(strBuffer, "I/%s/\r", hexaDecBuffer); 
+    BleUart_PutString(strBuffer);
+    
+    DecToHex(ADC_IR_GetResult16(0));
+    sprintf(strBuffer,"T/%s/\r",hexaDecBuffer); 
+    BleUart_PutString(strBuffer);
+    
 }
 
-CY_ISR(BleDataBinnen)
+CY_ISR(sendBleData)
 {
-    LED5_Write(~LED5_Read());
+    char strBuffer[10];
+    LED1_Write(~LED1_Read());
+    
+    DecToHex(IRWaarden);
+    sprintf(strBuffer, "I/%s/\r", hexaDecBuffer); 
+    BleUart_PutString(strBuffer);
+    
+    DecToHex(ADC_IR_GetResult16(0));
+    sprintf(strBuffer, "T/%s/\r",hexaDecBuffer); 
+    BleUart_PutString(strBuffer);
 }
 
 int main(void)
@@ -65,7 +90,8 @@ int main(void)
     //Interrupts
     readIRSensors_StartEx(IRSensoren);
     EnMotorISR_StartEx(SwitchMotorEN);
-    BleRxISR_StartEx(BleDataBinnen);
+    BleRxISR_StartEx(MyRxInt);
+    SendBleDataISR_StartEx(sendBleData);
     
     LCD_Position(0u, 0u);
     LCD_PrintString("Druk om te starten");
@@ -73,19 +99,25 @@ int main(void)
     MotorControl_WriteCompare1(pwmMotor1);
     MotorControl_WriteCompare2(pwmMotor2);
     ENA_Write(0);
-    ENB_Write(ENA_Read());
+    ENB_Write(0);
+    
+    
 
-    
-   
-    
     while(SW1_Read() == 1) //Wait until press on SW1
     {
     }
     
     //telProcedure();
-    
+    LCD_ClearDisplay();
     for(;;)
     { 
+        if (IsCharReady())
+        {
+            if(GetRxStr())
+            {
+                ProcessCommandMsg();
+            }
+        }
         //US deel
         /////////////////////////////////////////////////////
         //Teller die door de mux loopt
@@ -105,8 +137,19 @@ int main(void)
          
         //LCD deel   
         /////////////////////////////////////////////////////
-        //print text en een test variable op de lcd
-        printTextopLCD(avgUS1[4]);
+//        BleUart_PutString("\r\n");
+//        BleUart_PutChar('S');
+//        BleUart_WriteTxData(ADC_IR_GetResult16(0));
+//        BleUart_PutString("\r\n");
+//        BleUart_PutChar('I');
+//        BleUart_WriteTxData(IRWaarden);
+//        BleUart_PutString("\r\n");
+//        LED1_Write(~LED1_Read());
+        
+        
+       // LCD_ClearDisplay();
+       // print text en een test variable op de lcd
+        printTextopLCD(pwmMotor1, pwmMotor2);
         //print de binaire waarde van de infrarood sensoren op de lcd
         printBINopLCD(IRWaarden, 1);
         
@@ -131,6 +174,8 @@ void initFirmwire()
     BleVDAC_Start();
     BleBuffer_Start();
     BleUart_Start();
+    sendBleDataTimer_Start();
+   
 }    
     
 uint16 readUSValue(void)
@@ -169,13 +214,15 @@ void berekenMediaan(uint16 array[])
     mediaan = tmpArray[3];
 }    
 //methode die een text en een testgetal op een 
-void printTextopLCD(int testValue)
+void printTextopLCD(int testValue1, int testValue2)
 {
     LCD_CLEAR_DISPLAY; //Clear display
     LCD_Position(0u,0u); //Put cursor top left
     LCD_PrintString("sensor: "); //print something
     LCD_Position(0u,9u); //Replace cursor
-    LCD_PrintDecUint16(testValue); //Print the value of first ultrasoonsensor
+    LCD_PrintDecUint16(testValue1); //Print the value of first ultrasoonsensor
+    LCD_Position(1u,9u); //Replace cursor
+    LCD_PrintDecUint16(testValue2);
 }
 
 //methode die van min tot max telt en de huidige tel waarde terug geeft
@@ -230,5 +277,93 @@ int exponent(int grondgetal, int exponent)
         tmpWaarde = tmpWaarde * grondgetal;
     }
     return tmpWaarde;
+}
+
+void ProcessCommandMsg(void){
+//    sprintf(strMsg1,"Commando bevat %d waarden\r", strlen(RB.valstr));
+//    puttyUart1_PutString(strMsg1);
+    //1ste waarde zijn de IR sensoren 2e waarde is een testgetal
+    if (RB.cmd == 'R')
+    {  
+        pwmMotor1 = getCMDValue('/', RB.valstr);
+        //sprintf(strMsg1,"IRWaarde=%u\n", IRWaarden); 
+        //puttyUart1_PutString(strMsg1);
+
+    } 
+    else if (RB.cmd == 'L')
+    {
+        pwmMotor2 = getCMDValue('/', RB.valstr);
+        //sprintf(strMsg1,"TestGetal=%u\n", TestGetal); 
+        //puttyUart1_PutString(strMsg1);
+    }
+    else if (RB.cmd == 'M')
+    {
+        
+        uint8 enable = getCMDValue('/', RB.valstr);
+        ENA_Write(enable);
+        ENB_Write(enable);
+        //sprintf(strMsg1,"TestGetal=%u\n", TestGetal); 
+        //puttyUart1_PutString(strMsg1);
+    }
+        
+}
+uint8 getCMDValue(char delimiter, char str[])
+{
+    for (uint i = 0; i < strlen(str); i++)
+        {
+            if (str[i] == delimiter && str[i+3] == delimiter)
+            {
+                hexaDecBuffer[0] = str[i+1];
+                hexaDecBuffer[1] = str[i+2];
+                //sprintf(strMsg1,"IRWaarde=%u ", IRWaarden); 
+                //puttyUart1_PutString(strMsg1);
+            }    
+        }
+        
+    return HexToDec(hexaDecBuffer);
+}
+void DecToHex(uint8 value)
+{
+    uint8 i = 1;
+    if (value == 0)
+    {
+        hexaDecBuffer[0] =  '0';
+        hexaDecBuffer[1] ='0';
+    }
+    while (value != 0)
+    {
+        uint8 temp = value % 16;
+        if (temp < 10)
+        {
+         hexaDecBuffer[i] = temp + 48;
+        i--;
+        } 
+        else 
+        {
+            hexaDecBuffer[i] = temp + 55;
+            i--;
+        }
+        value = value / 16;
+    }
+}
+
+uint8 HexToDec(char hexVal[])
+{
+    uint8 len = strlen(hexVal);
+    uint base = 1;
+    uint dec_val =0;
+    for (int i=len-1; i>=0; i--)
+    {
+        if (hexVal[i] >= '0' && hexVal[i] <='9')
+        {
+         dec_val += (hexVal[i] - 48) * base;
+         base = base*16;   
+        } else if (hexVal[i]>='A' && hexVal[i]<='F')
+        {
+            dec_val += (hexVal[i] - 55)*base;
+            base = base*16;
+        }
+    }
+    return dec_val;
 }
 
