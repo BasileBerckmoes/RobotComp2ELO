@@ -57,6 +57,12 @@ uint16 readUSValue(void);
 void schuifRegister(uint16 array[], uint16 newValue);
 
 /////////////////////////////////////////////////////
+//Race Logica
+void stuurMotorenBij(void);
+void PlaatsIRWaardenInArray(void);
+void AnalyseerData(uint8 data);
+
+/////////////////////////////////////////////////////
 //Varia
 int exponent(int grondgetal, int exponent);
 uint8 telTot(uint8 getal, uint8 min, uint8 max);

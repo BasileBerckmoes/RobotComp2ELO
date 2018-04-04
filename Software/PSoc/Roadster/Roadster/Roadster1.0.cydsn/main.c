@@ -40,7 +40,9 @@ void initFirmwire()
 	BleBuffer_Start();
 	BleUart_Start();
 	sendBleDataTimer_Start();
-
+    
+    pwmMotor1 = 255;
+    pwmMotor2 = 255;
 } 
 
 int main(void)
@@ -62,8 +64,8 @@ int main(void)
 	LCD_PrintString("Druk om te starten");
 	
     //schakel motoren uit 
-	MotorControl_WriteCompare1(pwmMotor1);
-	MotorControl_WriteCompare2(pwmMotor2);
+	MotorControl_WriteCompare1(0);
+	MotorControl_WriteCompare2(0);
 	ENA_Write(0);
 	ENB_Write(0);
 	
@@ -71,7 +73,10 @@ int main(void)
 	while(SW1_Read() == 1) //Wait until press on SW1
 	{
 	}
-	
+	MotorControl_WriteCompare1(pwmMotor1);
+	MotorControl_WriteCompare2(pwmMotor2);
+	ENA_Write(1);
+	ENB_Write(1);
     //start de 5 LED Procedure
 	//telProcedure();
     
@@ -120,6 +125,7 @@ int main(void)
 		
 		//motordeel
 		//===================================================================
+        AnalyseerData(IRWaarden);
         
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotor1);
