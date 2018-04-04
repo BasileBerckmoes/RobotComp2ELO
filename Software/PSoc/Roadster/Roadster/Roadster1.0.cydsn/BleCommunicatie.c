@@ -16,7 +16,7 @@
 //#include <stdlib.h> //atoi
 #include <stdio.h> 
 #include <myUART.h>
-
+ 
 //Timer gestuurde interupt zodat data om de zoveel tijd verstuurd wordt via bluetooth
 CY_ISR(sendBleData)
 {
@@ -28,15 +28,21 @@ CY_ISR(sendBleData)
 	
     //Zet IRWaarden om naar hexadecimaal stelsel
 	DecToHex(IRWaarden);
+     //LCD_Position(0u, 10u);
+    //char testBuffer[] = {str[i+1], 'b',str[i+2] };
+                    
     //Maak een string met hexaDecBuffer als parameter en sla die op in strBuffer
 	sprintf(strBuffer, "I/%s/\r", hexaDecBuffer); 
+    
+    //LCD_PrintString(strBuffer);
     //Verstuur de string naar de bluetooth module
 	BleUart_PutString(strBuffer);
 	
     //Zet een testgetal om naar hex stelsel
-	DecToHex(ADC_IR_GetResult16(0));
-	sprintf(strBuffer, "T/%s/\r",hexaDecBuffer); 
-	BleUart_PutString(strBuffer);
+    
+//	DecToHex(ADC_IR_GetResult16(0));
+//	sprintf(strBuffer, "T/%s/\r",hexaDecBuffer); 
+//	BleUart_PutString(strBuffer);
 }
 
 void ProcessCommandMsg(void)
@@ -47,11 +53,11 @@ void ProcessCommandMsg(void)
     
 	if (RB.cmd == 'R')
 	{  
-		pwmMotor1 = getCMDValue('/', RB.valstr);
+		pwmMotorLinks = getCMDValue('/', RB.valstr);
 	} 
 	else if (RB.cmd == 'L')
 	{
-		pwmMotor2 = getCMDValue('/', RB.valstr);
+		pwmMotorRechts = getCMDValue('/', RB.valstr);
 	}
 	else if (RB.cmd == 'M')
 	{
@@ -72,6 +78,7 @@ uint8 getCMDValue(char delimiter, char str[])
 			{
 				hexaDecBuffer[0] = str[i+1];
 				hexaDecBuffer[1] = str[i+2];
+                   
 			}    
 		}
 		

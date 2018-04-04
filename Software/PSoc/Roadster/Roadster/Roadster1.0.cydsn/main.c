@@ -30,7 +30,7 @@ void initFirmwire()
 	ADC_IR_Start();
 	ADC_IR_StartConvert();
 	
-	LCD_Start(); 
+	//LCD_Start(); 
 	
 	MotorControl_Start();
 	
@@ -41,8 +41,8 @@ void initFirmwire()
 	BleUart_Start();
 	sendBleDataTimer_Start();
     
-    pwmMotor1 = 255;
-    pwmMotor2 = 255;
+    pwmMotorLinks = 150;
+    pwmMotorRechts = 150;
 } 
 
 int main(void)
@@ -60,8 +60,8 @@ int main(void)
 	SendBleDataISR_StartEx(sendBleData);
 	
     //Print start text op lcd
-	LCD_Position(0u, 0u);
-	LCD_PrintString("Druk om te starten");
+	//LCD_Position(0u, 0u);
+	//LCD_PrintString("Druk om te starten");
 	
     //schakel motoren uit 
 	MotorControl_WriteCompare1(0);
@@ -73,15 +73,13 @@ int main(void)
 	while(SW1_Read() == 1) //Wait until press on SW1
 	{
 	}
-	MotorControl_WriteCompare1(pwmMotor1);
-	MotorControl_WriteCompare2(pwmMotor2);
-	ENA_Write(1);
-	ENB_Write(1);
+	MotorControl_WriteCompare1(pwmMotorLinks);
+	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
 	//telProcedure();
     
     //Clear lcd zodat nieuwe waarden er op passen 
-	LCD_ClearDisplay();
+	//LCD_ClearDisplay();
     
     //Loop
 	for(;;)
@@ -119,31 +117,31 @@ int main(void)
 		//===================================================================
 	   // LCD_ClearDisplay();
 	   // print text en een test variable op de lcd
-		printTextopLCD(pwmMotor1, pwmMotor2);
+		//printTextopLCD(pwmMotorLinks, pwmMotorRechts);
 		//print de binaire waarde van de infrarood sensoren op de lcd
-		printBINopLCD(IRWaarden, 1);
+		//printBINopLCD(IRWaarden, 1);
 		
 		//motordeel
 		//===================================================================
         AnalyseerData(IRWaarden);
         
         //Pas snelheid motoren aan
-		MotorControl_WriteCompare1(pwmMotor1);
-		MotorControl_WriteCompare2(pwmMotor2);
+		MotorControl_WriteCompare1(pwmMotorLinks);
+		MotorControl_WriteCompare2(pwmMotorRechts);
 	}
 }
 
 //methode die een text en een testgetal op een 
-void printTextopLCD(int testValue1, int testValue2)
-{
-	LCD_CLEAR_DISPLAY; //Clear display
-	LCD_Position(0u,0u); //Put cursor top left
-	LCD_PrintString("sensor: "); //print something
-	LCD_Position(0u,9u); //Replace cursor
-	LCD_PrintDecUint16(testValue1); //Print the value of first ultrasoonsensor
-	LCD_Position(1u,9u); //Replace cursor
-	LCD_PrintDecUint16(testValue2);
-}
+//void printTextopLCD(int testValue1, int testValue2)
+//{
+//	LCD_CLEAR_DISPLAY; //Clear display
+//	LCD_Position(0u,0u); //Put cursor top left
+//	LCD_PrintString("sensor: "); //print something
+//	LCD_Position(0u,9u); //Replace cursor
+//	LCD_PrintDecUint16(testValue1); //Print the value of first ultrasoonsensor
+//	LCD_Position(1u,9u); //Replace cursor
+//	LCD_PrintDecUint16(testValue2);
+//}
 
 //methode die van min tot max telt en de huidige tel waarde terug geeft
 uint8 telTot(uint8 getal, uint8 min, uint8 max)

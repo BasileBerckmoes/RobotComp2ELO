@@ -23,7 +23,7 @@ uint8 valueY=0;
 
 uint8 motorStatus = 0;
 
-uint8 IRWaarden = 0;
+uint8 IRWaarden;
 uint8 TestGetal = 0;
 
 char strMsg1[64];
@@ -89,20 +89,20 @@ CY_ISR(sendBleData)
 //        }else pwmr = 0;
 //    }
     
-    char strBuffer[10];
-    DecToHex(pwml);
-    sprintf(strBuffer, "PWML: /%u/\r", pwml); 
-    //puttyUart1_PutString(strBuffer);
-    sprintf(strBuffer, "L/%s/\r", hexaDecBuffer); 
-    bleUart1_PutString(strBuffer);
-    puttyUart1_PutString(strBuffer);
-    
-    DecToHex(pwmr);
-    sprintf(strBuffer, "PWMR: /%u/\r", pwmr); 
-    //puttyUart1_PutString(strBuffer);
-    sprintf(strBuffer, "R/%s/\r",hexaDecBuffer); 
-    bleUart1_PutString(strBuffer);
-    puttyUart1_PutString(strBuffer);
+//    char strBuffer[10];
+//    DecToHex(pwml);
+//    sprintf(strBuffer, "PWML: /%u/\r", pwml); 
+//    //puttyUart1_PutString(strBuffer);
+//    sprintf(strBuffer, "L/%s/\r", hexaDecBuffer); 
+//    bleUart1_PutString(strBuffer);
+//    puttyUart1_PutString(strBuffer);
+//    
+//    DecToHex(pwmr);
+//    sprintf(strBuffer, "PWMR: /%u/\r", pwmr); 
+//    //puttyUart1_PutString(strBuffer);
+//    sprintf(strBuffer, "R/%s/\r",hexaDecBuffer); 
+//    bleUart1_PutString(strBuffer);
+//    puttyUart1_PutString(strBuffer);
 }
 
 int main(void)
@@ -136,9 +136,10 @@ int main(void)
     for(;;)
     {
         
+        LCDD_ClearDisplay();
+        
         if (IsCharReady())
         {
-            
             
             if(GetRxStr())
             {
@@ -155,13 +156,13 @@ int main(void)
         LCDD_Position(0u,7u);
         LCDD_PrintDecUint16(valueY);
          LCDD_Position(0u,11u);
-        LCDD_PrintDecUint16(TestGetal);
+        LCDD_PrintDecUint16(IRWaarden);
         
-        LCDD_Position(1u,0u);
+       // LCDD_Position(1u,0u);
         printBINopLCD(IRWaarden, 1);
         //LCDD_PrintDecUint16();
-//        CyDelay(200);
-        LCDD_ClearDisplay();
+        //CyDelay(200);
+        
         
     }
 }
@@ -169,10 +170,14 @@ void ProcessCommandMsg(void){
 //    sprintf(strMsg1,"Commando bevat %d waarden\r", strlen(RB.valstr));
 //    puttyUart1_PutString(strMsg1);
     //1ste waarde zijn de IR sensoren 2e waarde is een testgetal
+    
+   
     if (RB.cmd == 'I')
     {  
+        
         IRWaarden = getCMDValue('/', RB.valstr);
-        sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
+         
+        //sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
         puttyUart1_PutString(strMsg1);
 
     } 
@@ -186,14 +191,19 @@ void ProcessCommandMsg(void){
 }
 uint8 getCMDValue(char delimiter, char str[])
 {
-    for (uint i = 0; i < strlen(str); i++)
+    for (uint8 i = 0; i < strlen(str); i++)
         {
-            if (str[i] == delimiter && str[i+3] == delimiter)
+            LCDD_Position(1u,11u);
+            char buffer[] = {str[i+3]};
+            LCDD_PrintString(buffer);
+            if (str[i] == delimiter /*&& str[i+3] == delimiter*/)
             {
+                
                 hexaDecBuffer[0] = str[i+1];
                 hexaDecBuffer[1] = str[i+2];
                 //sprintf(strMsg1,"IRWaarde=%u ", IRWaarden); 
                 //puttyUart1_PutString(strMsg1);
+                break;
             }    
         }
         

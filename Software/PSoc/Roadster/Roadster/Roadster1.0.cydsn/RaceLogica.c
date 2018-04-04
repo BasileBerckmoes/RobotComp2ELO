@@ -12,7 +12,7 @@
 #include "projectMain.h"
 #include "project.h"
 
-uint8 IRsensorGewicht[] = {170,200,230,255  ,255,230,200,170};
+uint8 IRsensorGewicht[] = {0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
 uint8 IRDigitaleWaarden[8];
 
 uint8 TweedeLijnGedetecteerd = 0;
@@ -32,17 +32,19 @@ void stuurMotorenBij(void)
 	{
         if (IRDigitaleWaarden[i] == 1)
         {
-            pwmMotor1 = IRsensorGewicht[i];
+            pwmMotorLinks = IRsensorGewicht[i];
             break;
         }
+        pwmMotorLinks = IRsensorGewicht[3];
     }
     for(int i = 7; i > 3; i--)
 	{
         if (IRDigitaleWaarden[i] == 1)
         {
-            pwmMotor2 = IRsensorGewicht[i];
-            break;
+            pwmMotorRechts = IRsensorGewicht[i];
+             break;
         }
+         pwmMotorRechts = IRsensorGewicht[3];
     }
     
 }
@@ -65,6 +67,11 @@ void PlaatsIRWaardenInArray(void)
 
 //uint8 CheckVoor2eLijn()
 //{
+//  uint8 flag = 0;
 //    
+//  for(int i = 0; i < 8; i++)
+//  {
+//    
+//  }  
 //}
 /* [] END OF FILE */

@@ -25,7 +25,7 @@ CY_ISR(IRSensoren)
 	        IRWaarden = IRWaarden | tmpWaarde;
 	    }   
     }
-    IRWaarden =~IRWaarden;
+    //IRWaarden =~IRWaarden;
 }
 
 uint16 readUSValue(void)

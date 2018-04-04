@@ -29,8 +29,8 @@ uint8 getCMDValue(char delimiter, char str[]);
 
 /////////////////////////////////////////////////////
 //Motor  
-uint8 pwmMotor1;
-uint8 pwmMotor2;
+uint8 pwmMotorLinks;
+uint8 pwmMotorRechts;
 
 /////////////////////////////////////////////////////
 //LCD
