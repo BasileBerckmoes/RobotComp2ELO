@@ -40,9 +40,9 @@ CY_ISR(sendBleData)
 	
     //Zet een testgetal om naar hex stelsel
     
-//	DecToHex(ADC_IR_GetResult16(0));
-//	sprintf(strBuffer, "T/%s/\r",hexaDecBuffer); 
-//	BleUart_PutString(strBuffer);
+	DecToHex(ADC_IR_GetResult16(0));
+	sprintf(strBuffer, "T/%s/\r",hexaDecBuffer); 
+	BleUart_PutString(strBuffer);
 }
 
 void ProcessCommandMsg(void)

@@ -60,7 +60,8 @@ CY_ISR(motorControl)
     LED_Write(~LED_Read());
     char strBuffer[10];
     DecToHex(LED_Read());
-    sprintf(strBuffer, "M/%s/\r", hexaDecBuffer); 
+    sprintf(strBuffer, "M/%s/\r", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen wordt
+                                                  // %s -> string die een hexadeximale bevat namelijk hexaDecBuffer bv 65 
     bleUart1_PutString(strBuffer);
     puttyUart1_PutString(strBuffer);
 }
@@ -135,15 +136,11 @@ int main(void)
 
     for(;;)
     {
-        
         LCDD_ClearDisplay();
-        
         if (IsCharReady())
         {
-            
             if(GetRxStr())
             {
-                
                 ProcessCommandMsg();
             }
         }
@@ -171,12 +168,10 @@ void ProcessCommandMsg(void){
 //    puttyUart1_PutString(strMsg1);
     //1ste waarde zijn de IR sensoren 2e waarde is een testgetal
     
-   
+    //voorbeeld I/FF/\r
     if (RB.cmd == 'I')
     {  
-        
         IRWaarden = getCMDValue('/', RB.valstr);
-         
         //sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
         puttyUart1_PutString(strMsg1);
 

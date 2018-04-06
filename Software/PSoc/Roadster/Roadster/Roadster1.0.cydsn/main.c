@@ -159,15 +159,15 @@ void printBINopLCD(uint8 value, int row)
 {
 	for(int i = 0; i < 8; i++)
 	{
-		LCD_Position(row,i);
+		//LCD_Position(row,i);
 		uint8 tmpWaarde =  exponent(2,i);
 		if ((value & tmpWaarde) == tmpWaarde)
 		{
-			LCD_PrintDecUint16(1);
+			//LCD_PrintDecUint16(1);
 		}
 			else 
 		{
-			LCD_PrintDecUint16(0);
+			//LCD_PrintDecUint16(0);
 		}  
 	 }  
 }
