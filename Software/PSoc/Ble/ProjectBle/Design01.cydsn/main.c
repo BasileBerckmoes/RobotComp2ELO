@@ -51,8 +51,8 @@ CY_ISR(bleAntwoord)
 
 CY_ISR(getJoystickValues)
 {
-    valueX=JoyStickADC_GetResult16(0);
-    valueY= JoyStickADC_GetResult16(1);
+    valueX=(JoyStickADC_GetResult16(0) - 127) * 2;
+    valueY= (JoyStickADC_GetResult16(1) - 124) * 2;
 }
 
 CY_ISR(motorControl)
@@ -71,6 +71,8 @@ CY_ISR(sendBleData)
     uint8 pwml = 0;
     uint8 pwmr = 0;
     
+    valueX = pwml;
+    valueY = pwmr;
     pwml = ((valueX)-127); 
     pwmr = pwml;
     
