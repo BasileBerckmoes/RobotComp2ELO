@@ -1,4 +1,4 @@
---------------- Rebuild Started: 04/01/2018 18:56:22 Project: Design01, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 04/09/2018 00:27:37 Project: Design01, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\main.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\myUART.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o"
@@ -29,7 +29,6 @@ Deleting file ".\CortexM3\ARM_GCC_541\Debug\bleUart1_IntClock.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\puttyUart1_IntClock.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\rxPuttyISR.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\rxBleISR.o"
-Deleting file ".\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\LCDD.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\LCDD_PM.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\LCDD_CustChars.o"
@@ -51,6 +50,10 @@ Deleting file ".\CortexM3\ARM_GCC_541\Debug\MotorEN.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\Clock_1.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\motorControlISR.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\LED.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\timer_clock.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\sendBleDataISR.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\Design01.hex"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\Design01.elf"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\Design01.map"
@@ -60,12 +63,12 @@ Deleting file ".\Design01.rpt"
 Deleting file ".\Design01_timing.html"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\.deps\SOURCE_C__ARM_GCC_GENERIC.P"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\.deps\SOURCE_ASM__ARM_GCC_GENERIC.P"
-cydsfit.exe -.appdatapath "C:\Users\BasileBerckmoes\AppData\Local\Cypress Semiconductor\PSoC Creator\4.2" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\Design01.cyprj -d CY8C5688LTI-LP086 -s C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+cydsfit.exe -.appdatapath "C:\Users\Jona\AppData\Local\Cypress Semiconductor\PSoC Creator\4.1" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\Jona\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\Design01.cyprj -d CY8C5688LTI-LP086 -s C:\Users\Jona\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 Elaborating Design...
 ADD: sdb.M0065: information: Analog terminal "vdac_ref" on ADC_SAR_SEQ_v2_10 is unconnected.
- * C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch (Signal: vdac_ref)
- * C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch (Shape_798)
- * C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch (Shape_885)
+ * C:\Users\Jona\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch (Signal: vdac_ref)
+ * C:\Users\Jona\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch (Shape_798)
+ * C:\Users\Jona\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\ADC_SAR_SEQ_v2_10\PSoC5\ADC_SAR_SEQ_v2_10.cysch (Shape_885)
 HDL Generation...
 Synthesis...
 Tech Mapping...
@@ -144,21 +147,6 @@ API Generation...
 Dependency Generation...
 Cleanup...
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
-main.c: In function 'main':
-main.c:105:9: warning: implicit declaration of function 'printBINopLCD' [-Wimplicit-function-declaration]
-         printBINopLCD(RB.valstr[0], 1);
-         ^
-main.c: At top level:
-main.c:121:6: warning: conflicting types for 'printBINopLCD'
- void printBINopLCD(uint8 value, int row)
-      ^
-main.c:105:9: note: previous implicit declaration of 'printBINopLCD' was here
-         printBINopLCD(RB.valstr[0], 1);
-         ^
-main.c: In function 'printBINopLCD':
-main.c:126:28: warning: implicit declaration of function 'exponent' [-Wimplicit-function-declaration]
-         uint8 tmpWaarde =  exponent(2,i);
-                            ^
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/myUART.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c myUART.c -o .\CortexM3\ARM_GCC_541\Debug\myUART.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/cyfitter_cfg.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\cyfitter_cfg.c -o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/cymetadata.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\cymetadata.c -o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o
@@ -187,7 +175,6 @@ arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/puttyUart1_IntClock.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\puttyUart1_IntClock.c -o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_IntClock.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/rxPuttyISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\rxPuttyISR.c -o .\CortexM3\ARM_GCC_541\Debug\rxPuttyISR.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/rxBleISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\rxBleISR.c -o .\CortexM3\ARM_GCC_541\Debug\rxBleISR.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/cy_em_eeprom.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\cy_em_eeprom.c -o .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/LCDD.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\LCDD.c -o .\CortexM3\ARM_GCC_541\Debug\LCDD.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/LCDD_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\LCDD_PM.c -o .\CortexM3\ARM_GCC_541\Debug\LCDD_PM.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/LCDD_CustChars.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\LCDD_CustChars.c -o .\CortexM3\ARM_GCC_541\Debug\LCDD_CustChars.o
@@ -209,15 +196,16 @@ arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/Clock_1.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\Clock_1.c -o .\CortexM3\ARM_GCC_541\Debug\Clock_1.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/motorControlISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\motorControlISR.c -o .\CortexM3\ARM_GCC_541\Debug\motorControlISR.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/LED.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\LED.c -o .\CortexM3\ARM_GCC_541\Debug\LED.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/timer_clock.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\timer_clock.c -o .\CortexM3\ARM_GCC_541\Debug\timer_clock.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/sendBleDataTimer.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\sendBleDataTimer.c -o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/sendBleDataTimer_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\sendBleDataTimer_PM.c -o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/sendBleDataISR.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\sendBleDataISR.c -o .\CortexM3\ARM_GCC_541\Debug\sendBleDataISR.o
 arm-none-eabi-as.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=.\CortexM3\ARM_GCC_541\Debug/CyBootAsmGnu.lst -g -W -o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o Generated_Source\PSoC5\CyBootAsmGnu.s
-arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\Design01.a .\CortexM3\ARM_GCC_541\Debug\Opamp_1.o .\CortexM3\ARM_GCC_541\Debug\Opamp_1_PM.o .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\VDAC.o .\CortexM3\ARM_GCC_541\Debug\VDAC_PM.o .\CortexM3\ARM_GCC_541\Debug\bleTx.o .\CortexM3\ARM_GCC_541\Debug\key.o .\CortexM3\ARM_GCC_541\Debug\bleUart1.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_PM.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_INT.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_BOOT.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_PM.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_INT.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_BOOT.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_IntClock.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_IntClock.o .\CortexM3\ARM_GCC_541\Debug\rxPuttyISR.o .\CortexM3\ARM_GCC_541\Debug\rxBleISR.o .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM3\ARM_GCC_541\Debug\LCDD.o .\CortexM3\ARM_GCC_541\Debug\LCDD_PM.o .\CortexM3\ARM_GCC_541\Debug\LCDD_CustChars.o .\CortexM3\ARM_GCC_541\Debug\LCDD_LCDPort.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_PM.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_INT.o .\CortexM3\ARM_GCC_541\Debug\pinX.o .\CortexM3\ARM_GCC_541\Debug\pinY.o .\CortexM3\ARM_GCC_541\Debug\eocJoystickISR.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_SAR.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_SAR_INT.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_SAR_PM.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_IntClock.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_TempBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_FinalBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_IRQ.o .\CortexM3\ARM_GCC_541\Debug\MotorEN.o .\CortexM3\ARM_GCC_541\Debug\Clock_1.o .\CortexM3\ARM_GCC_541\Debug\motorControlISR.o .\CortexM3\ARM_GCC_541\Debug\LED.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
+arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\Design01.a .\CortexM3\ARM_GCC_541\Debug\Opamp_1.o .\CortexM3\ARM_GCC_541\Debug\Opamp_1_PM.o .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\VDAC.o .\CortexM3\ARM_GCC_541\Debug\VDAC_PM.o .\CortexM3\ARM_GCC_541\Debug\bleTx.o .\CortexM3\ARM_GCC_541\Debug\key.o .\CortexM3\ARM_GCC_541\Debug\bleUart1.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_PM.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_INT.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_BOOT.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_PM.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_INT.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_BOOT.o .\CortexM3\ARM_GCC_541\Debug\bleUart1_IntClock.o .\CortexM3\ARM_GCC_541\Debug\puttyUart1_IntClock.o .\CortexM3\ARM_GCC_541\Debug\rxPuttyISR.o .\CortexM3\ARM_GCC_541\Debug\rxBleISR.o .\CortexM3\ARM_GCC_541\Debug\LCDD.o .\CortexM3\ARM_GCC_541\Debug\LCDD_PM.o .\CortexM3\ARM_GCC_541\Debug\LCDD_CustChars.o .\CortexM3\ARM_GCC_541\Debug\LCDD_LCDPort.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_PM.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_INT.o .\CortexM3\ARM_GCC_541\Debug\pinX.o .\CortexM3\ARM_GCC_541\Debug\pinY.o .\CortexM3\ARM_GCC_541\Debug\eocJoystickISR.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_SAR.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_SAR_INT.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_SAR_PM.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_IntClock.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_TempBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_FinalBuf_dma.o .\CortexM3\ARM_GCC_541\Debug\JoyStickADC_IRQ.o .\CortexM3\ARM_GCC_541\Debug\MotorEN.o .\CortexM3\ARM_GCC_541\Debug\Clock_1.o .\CortexM3\ARM_GCC_541\Debug\motorControlISR.o .\CortexM3\ARM_GCC_541\Debug\LED.o .\CortexM3\ARM_GCC_541\Debug\timer_clock.o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer.o .\CortexM3\ARM_GCC_541\Debug\sendBleDataTimer_PM.o .\CortexM3\ARM_GCC_541\Debug\sendBleDataISR.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
 arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_541\Debug\Design01.a
-arm-none-eabi-gcc.exe -Wl,--start-group -o C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\CortexM3\ARM_GCC_541\Debug\Design01.elf .\CortexM3\ARM_GCC_541\Debug\main.o .\CortexM3\ARM_GCC_541\Debug\myUART.o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o .\CortexM3\ARM_GCC_541\Debug\Design01.a "C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_541\Debug/Design01.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
-cyelftool.exe -C C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\CortexM3\ARM_GCC_541\Debug\Design01.elf --flash_row_size 256 --flash_size 262144 --flash_offset 0x00000000
-No ELF section .cychecksum found, creating one
-Application checksum calculated and stored in ELF section .cychecksum
-Checksum calculated and stored in ELF section .cymeta
-cyelftool.exe -S C:\Users\BasileBerckmoes\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\CortexM3\ARM_GCC_541\Debug\Design01.elf
-Flash used: 5358 of 262144 bytes (2,0%).
-SRAM used: 2737 of 65536 bytes (4,2%). Stack: 2048 bytes. Heap: 128 bytes.
---------------- Rebuild Succeeded: 04/01/2018 18:56:52 ---------------
+arm-none-eabi-gcc.exe -Wl,--start-group -o C:\Users\Jona\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\CortexM3\ARM_GCC_541\Debug\Design01.elf .\CortexM3\ARM_GCC_541\Debug\main.o .\CortexM3\ARM_GCC_541\Debug\myUART.o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o .\CortexM3\ARM_GCC_541\Debug\Design01.a "C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_541\Debug/Design01.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
+cyelftool.exe -C C:\Users\Jona\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\CortexM3\ARM_GCC_541\Debug\Design01.elf --flash_row_size 256 --flash_size 262144 --flash_offset 0x00000000
+cyelftool.exe -S C:\Users\Jona\Documents\GitHub\RobotComp2ELO\Software\PSoc\Ble\ProjectBle\Design01.cydsn\CortexM3\ARM_GCC_541\Debug\Design01.elf
+Flash used: 8448 of 262144 bytes (3,2%).
+SRAM used: 2825 of 65536 bytes (4,3%). Stack: 2048 bytes. Heap: 128 bytes.
+--------------- Rebuild Succeeded: 04/09/2018 00:28:32 ---------------

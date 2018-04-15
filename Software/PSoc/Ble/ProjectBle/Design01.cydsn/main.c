@@ -22,7 +22,6 @@ uint8 valueX=0;
 uint8 valueY=0;
 
 uint8 motorStatus = 0;
-
 uint8 IRWaarden;
 uint8 TestGetal = 0;
 
@@ -51,8 +50,8 @@ CY_ISR(bleAntwoord)
 
 CY_ISR(getJoystickValues)
 {
-    valueX=(JoyStickADC_GetResult16(0) - 127) * 2;
-    valueY= (JoyStickADC_GetResult16(1) - 124) * 2;
+    valueX=(JoyStickADC_GetResult16(0));
+    valueY= (JoyStickADC_GetResult16(1));
 }
 
 CY_ISR(motorControl)
@@ -60,6 +59,7 @@ CY_ISR(motorControl)
     LED_Write(~LED_Read());
     char strBuffer[10];
     DecToHex(LED_Read());
+    
     sprintf(strBuffer, "M/%s/\r", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen wordt
                                                   // %s -> string die een hexadeximale bevat namelijk hexaDecBuffer bv 65 
     bleUart1_PutString(strBuffer);
@@ -68,15 +68,46 @@ CY_ISR(motorControl)
 
 CY_ISR(sendBleData)
 {   
-    uint8 pwml = 0;
-    uint8 pwmr = 0;
+    uint8 pwml;
+    uint8 pwmr;
+    //---valueX = pwml;
+    //---valueY = pwmr;
+    //LCDD_Position(1u,8u);
+    //LCDD_PrintInt8(valueX);
+    //CyDelay(100);
+    //pwml = ((valueX)-127); 
+    //pwmr = pwml;
     
-    valueX = pwml;
-    valueY = pwmr;
-    pwml = ((valueX)-127); 
-    pwmr = pwml;
+    if((valueY > 120 && valueY < 130) && (valueX > 120 && valueX < 130)) {
+        pwml = 0;
+        pwmr = 0;
+    } else if (valueY > 127) {
+        if (valueX > 115 && valueX < 135) {
+            pwml = 80;//(valueY - 127) * 2 - 200;
+            pwmr = pwml;
+        } else if (valueX > 124 && valueX < 192) {
+            pwmr = 80;//255 - 200;
+            //pwmr = 45;//(valueX - 125) * 2 - 200;
+            pwml = 60;
+        } else if (valueX > 192) {
+            pwmr = 80;//255 - 200;
+            //pwmr = 45;//(valueX - 125) * 2 - 200;
+            pwml = 25;
+        }  else if (valueX < 124 && valueX > 64) {
+            pwml = 80;//255 - 200;
+            //else pwml = 45;//valueX * 2 - 200;
+            pwmr = 50;
+        }  else if (valueX < 64) {
+            pwml = 80;//255 - 200;
+            //else pwml = 45;//valueX * 2 - 200;
+            pwmr = 25;
+        }
+    }
     
-    
+    if (pwml > 110 || pwmr > 110) {
+        pwml = 0;
+        pwmr = 0;
+    }
 //    if (valueY < 124)
 //    {
 //        if (pwml > (~valueY))
@@ -92,20 +123,23 @@ CY_ISR(sendBleData)
 //        }else pwmr = 0;
 //    }
     
-//    char strBuffer[10];
-//    DecToHex(pwml);
-//    sprintf(strBuffer, "PWML: /%u/\r", pwml); 
-//    //puttyUart1_PutString(strBuffer);
-//    sprintf(strBuffer, "L/%s/\r", hexaDecBuffer); 
-//    bleUart1_PutString(strBuffer);
-//    puttyUart1_PutString(strBuffer);
-//    
-//    DecToHex(pwmr);
-//    sprintf(strBuffer, "PWMR: /%u/\r", pwmr); 
-//    //puttyUart1_PutString(strBuffer);
-//    sprintf(strBuffer, "R/%s/\r",hexaDecBuffer); 
-//    bleUart1_PutString(strBuffer);
-//    puttyUart1_PutString(strBuffer);
+    char strBuffer[10];
+    DecToHex(pwml);
+    LCDD_Position(1u,0u);
+    LCDD_PrintInt8(pwml);
+    CyDelay(200);
+    //sprintf(strBuffer, "PWML: /%u/\r", pwml); 
+    //puttyUart1_PutString(strBuffer);
+    sprintf(strBuffer, "L/%s/\r", hexaDecBuffer); 
+    bleUart1_PutString(strBuffer);
+    //puttyUart1_PutString(strBuffer);
+    
+    DecToHex(pwmr);
+    //sprintf(strBuffer, "PWMR: /%u/\r", pwmr); 
+    //puttyUart1_PutString(strBuffer);
+    sprintf(strBuffer, "R/%s/\r",hexaDecBuffer); 
+    bleUart1_PutString(strBuffer);
+    //puttyUart1_PutString(strBuffer);
 }
 
 int main(void)
@@ -117,8 +151,6 @@ int main(void)
     rxBleISR_StartEx(MyRxInt);
     
     LCDD_Start();
-    LCDD_Position(0u,0u);
-    LCDD_PrintString("hello");
     
     VDAC_Start();
     Opamp_1_Start();
@@ -154,17 +186,26 @@ int main(void)
         LCDD_PrintString("Y:");
         LCDD_Position(0u,7u);
         LCDD_PrintDecUint16(valueY);
-         LCDD_Position(0u,11u);
-        LCDD_PrintDecUint16(IRWaarden);
+        //---LCDD_Position(0u,11u);
+//        
+//        DecToHex(valueX);
+//        LCDD_Position(1u,0u);
+//        LCDD_PrintString(hexaDecBuffer);
+//        
+//        DecToHex(valueY);
+//        LCDD_Position(1u,7u);
+//        LCDD_PrintString(hexaDecBuffer);
+  
+        //---LCDD_PrintDecUint16(IRWaarden);
         
-       // LCDD_Position(1u,0u);
-        printBINopLCD(IRWaarden, 1);
-        //LCDD_PrintDecUint16();
-        //CyDelay(200);
+        // LCDD_Position(1u,0u);
+        //---printBINopLCD(IRWaarden, 1);
+        CyDelay(200);
         
         
     }
 }
+
 void ProcessCommandMsg(void){
 //    sprintf(strMsg1,"Commando bevat %d waarden\r", strlen(RB.valstr));
 //    puttyUart1_PutString(strMsg1);
@@ -186,6 +227,7 @@ void ProcessCommandMsg(void){
     }
         
 }
+
 uint8 getCMDValue(char delimiter, char str[])
 {
     for (uint8 i = 0; i < strlen(str); i++)

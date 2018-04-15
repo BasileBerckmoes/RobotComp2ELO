@@ -29,8 +29,8 @@ void initFirmwire()
 {
 	ADC_IR_Start();
 	ADC_IR_StartConvert();
-	
-	//LCD_Start(); 
+    
+	LCD_Start(); 
 	
 	MotorControl_Start();
 	
@@ -41,8 +41,8 @@ void initFirmwire()
 	BleUart_Start();
 	sendBleDataTimer_Start();
     
-    pwmMotorLinks = 150;
-    pwmMotorRechts = 150;
+    //pwmMotorLinks = 100; //150;//
+    //pwmMotorRechts = 100; //150;//
 } 
 
 int main(void)
@@ -70,13 +70,13 @@ int main(void)
 	ENB_Write(0);
 	
     //wacht om te starten tot knop SW1 is ingedrukt
-	while(SW1_Read() == 1) //Wait until press on SW1
-	{
-	}
+//---	while(SW1_Read() == 1) //Wait until press on SW1
+//---	{
+//---	}
 	MotorControl_WriteCompare1(pwmMotorLinks);
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
-	//telProcedure();
+	telProcedure();
     
     //Clear lcd zodat nieuwe waarden er op passen 
 	//LCD_ClearDisplay();
@@ -95,24 +95,21 @@ int main(void)
 			}
 		}
         
-        
 		//US deel
 		//===================================================================
 		//Teller die door de mux loopt
-		selectUS = telTot(selectUS, 0, 2); //PAS DIT AAN INDIEN NIET ALE US SENSOREN ZIJN AANGESLOTEN!!!!!
+		//selectUS = telTot(selectUS, 0, 2); //PAS DIT AAN INDIEN NIET ALE US SENSOREN ZIJN AANGESLOTEN!!!!!
 		//selectUS_Write(selectUS);
 		
 		//vraag afstand aan 1 van de 3 us sensoren
-	   // uint16 counterValue = readUSValue();
-		
+	    // uint16 counterValue = readUSValue();
 		//schuif uitkomst timer in juiste array
 		//if (selectUS == 0) schuifRegister(avgUS1, counterValue);
 		//else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
 		//else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
 		
 		//berekenen van de mediaan
-		
-		
+        
 		//LCD deel   
 		//===================================================================
 	   // LCD_ClearDisplay();
@@ -120,14 +117,22 @@ int main(void)
 		//printTextopLCD(pwmMotorLinks, pwmMotorRechts);
 		//print de binaire waarde van de infrarood sensoren op de lcd
 		//printBINopLCD(IRWaarden, 1);
-		
+        
+        //Motoren met joystick
+        //HexToDec(hexaDecBuffer);
+        LCD_Position(0u,0u);
+        LCD_PrintInt16(pwmMotorLinks);
+        LCD_Position(1u,0u);
+        LCD_PrintInt16(pwmMotorRechts);
+        
+	    CyDelay(10);
 		//motordeel
 		//===================================================================
-        AnalyseerData(IRWaarden);
+        //---AnalyseerData(IRWaarden);
         
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);
-		MotorControl_WriteCompare2(pwmMotorRechts);
+        MotorControl_WriteCompare2(pwmMotorRechts);
 	}
 }
 
