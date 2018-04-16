@@ -67,7 +67,9 @@ void AnalyseerData(uint8 data);
 int exponent(int grondgetal, int exponent);
 uint8 telTot(uint8 getal, uint8 min, uint8 max);
 void telProcedure(void);
+void looplicht(void);
 void berekenMediaan(uint16 array[]);
+uint8 boolSelect;
 
 
 

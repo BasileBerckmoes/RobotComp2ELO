@@ -11,10 +11,8 @@
 */
 #include "cytypes.h"
 
- //buffer to hold application settings
+//buffer to hold application settings
    
-    
-void ProcessCommandMsg(void);
 /////////////////////////////////////////////////////
 //Firmwire  
 void initFirmwire(void);
@@ -27,6 +25,24 @@ void printTextopLCD(int testValue);
 /////////////////////////////////////////////////////
 //US
 uint16 readUSValue(void);
+
+//Joystick
+uint8 valueX;
+uint8 valueY;
+
+//PWM
+uint8 pwml;
+uint8 pwmr;
+
+//Bluetooth communicatie
+CY_ISR_PROTO(sendBleData);  
+char hexaDecBuffer[2];
+void ProcessCommandMsg(void);
+char strMsg1[64];
+uint8 TestGetal;
+
+//IR
+uint8 IRWaarden;
 
 /////////////////////////////////////////////////////
 //Varia

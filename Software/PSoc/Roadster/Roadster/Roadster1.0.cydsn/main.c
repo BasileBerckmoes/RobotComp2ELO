@@ -70,9 +70,17 @@ int main(void)
 	ENB_Write(0);
 	
     //wacht om te starten tot knop SW1 is ingedrukt
-//---	while(SW1_Read() == 1) //Wait until press on SW1
-//---	{
-//---	}
+	while(SW1_Read() == 1) //Wait until press on SW1
+	{
+       looplicht();
+	}
+    
+    if(SW2_Read() == 1)
+    {
+        if(boolSelect == 0) boolSelect = 1;
+        else if (boolSelect == 1) boolSelect = 0;
+    }
+    
 	MotorControl_WriteCompare1(pwmMotorLinks);
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
@@ -119,7 +127,6 @@ int main(void)
 		//printBINopLCD(IRWaarden, 1);
         
         //Motoren met joystick
-        //HexToDec(hexaDecBuffer);
         LCD_Position(0u,0u);
         LCD_PrintInt16(pwmMotorLinks);
         LCD_Position(1u,0u);
@@ -128,7 +135,11 @@ int main(void)
 	    CyDelay(10);
 		//motordeel
 		//===================================================================
-        //---AnalyseerData(IRWaarden);
+        
+        if (boolSelect == 1) 
+        {
+            AnalyseerData(IRWaarden);
+            LED5_Write(~LED5_Read());
         
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);
@@ -190,6 +201,30 @@ void telProcedure(void)
 	CyDelay(1000);
 	LED5_Write(1);
 	CyDelay(1000);
+}
+
+void looplicht(void)
+{
+    LED1_Write(1);
+	CyDelay(1000);
+    LED1_Write(0);
+	CyDelay(1000);
+	LED2_Write(1);
+	CyDelay(1000);
+    LED2_Write(0);
+	CyDelay(1000);
+	LED3_Write(1);
+	CyDelay(1000);
+    LED3_Write(0);
+	CyDelay(1000);
+	LED4_Write(1);
+	CyDelay(1000);
+    LED4_Write(0);
+	CyDelay(1000);
+	LED5_Write(1);
+	CyDelay(1000);   
+    LED5_Write(0);
+	CyDelay(1000);  
 }
 
 //methode die een macht berekend
