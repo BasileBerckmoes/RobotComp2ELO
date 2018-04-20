@@ -1,6 +1,6 @@
 // ======================================================================
 // Roadster1.0.v generated from TopDesign.cysch
-// 04/12/2018 at 14:43
+// 04/19/2018 at 16:49
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1514,7 +1514,6 @@ module top ;
           wire  Net_669;
           wire  Net_668;
           wire  Net_667;
-          wire  Net_1161;
           wire  Net_1136;
           wire  Net_1135;
           wire  Net_1134;
@@ -1526,7 +1525,6 @@ module top ;
           wire  Net_1128;
           wire  Net_1127;
           wire  Net_692;
-          wire  Net_1148;
           wire  Net_651;
           wire [7:0] Net_647;
           wire  Net_646;
@@ -1564,8 +1562,6 @@ module top ;
           wire  Net_399;
           wire  Net_398;
           wire  Net_656;
-          wire  Net_1149;
-          wire  Net_1160;
     electrical  Net_617;
     electrical  Net_616;
     electrical  Net_615;
@@ -1658,7 +1654,6 @@ module top ;
           wire  Net_529;
           wire  Net_528;
           wire  Net_527;
-          wire  Net_1168;
           wire  Net_690;
           wire  Net_691;
           wire  Net_12;
@@ -2985,7 +2980,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		IN3
 		 (.oe(tmpOE__IN3_net),
-		  .y({Net_1160}),
+		  .y({Net_690}),
 		  .fb({tmpFB_0__IN3_net[0:0]}),
 		  .io({tmpIO_0__IN3_net[0:0]}),
 		  .siovref(tmpSIOVREF__IN3_net),
@@ -3027,7 +3022,7 @@ module top ;
 		  .oe_sync(1'b0),
 		  .output_clk_en(0),
 		  .output_clock_mode(1'b0),
-		  .output_conn(1'b1),
+		  .output_conn(1'b0),
 		  .output_mode(1'b0),
 		  .output_reset(0),
 		  .output_sync(1'b0),
@@ -3060,7 +3055,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		IN2
 		 (.oe(tmpOE__IN2_net),
-		  .y({Net_1149}),
+		  .y({1'b0}),
 		  .fb({tmpFB_0__IN2_net[0:0]}),
 		  .io({tmpIO_0__IN2_net[0:0]}),
 		  .siovref(tmpSIOVREF__IN2_net),
@@ -3329,7 +3324,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		IN1
 		 (.oe(tmpOE__IN1_net),
-		  .y({Net_1148}),
+		  .y({Net_691}),
 		  .fb({tmpFB_0__IN1_net[0:0]}),
 		  .io({tmpIO_0__IN1_net[0:0]}),
 		  .siovref(tmpSIOVREF__IN1_net),
@@ -3552,7 +3547,7 @@ module top ;
 		  .oe_sync(1'b0),
 		  .output_clk_en(0),
 		  .output_clock_mode(1'b0),
-		  .output_conn(1'b1),
+		  .output_conn(1'b0),
 		  .output_mode(1'b0),
 		  .output_reset(0),
 		  .output_sync(1'b0),
@@ -3585,7 +3580,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		IN4
 		 (.oe(tmpOE__IN4_net),
-		  .y({Net_1161}),
+		  .y({1'b0}),
 		  .fb({tmpFB_0__IN4_net[0:0]}),
 		  .io({tmpIO_0__IN4_net[0:0]}),
 		  .siovref(tmpSIOVREF__IN4_net),
@@ -4022,130 +4017,6 @@ module top ;
 		SendBleDataISR
 		 (.int_signal(Net_1144));
 
-
-    // -- De Mux start --
-    if (1)
-    begin : demux_2
-        reg  tmp__demux_2_0_reg;
-        reg  tmp__demux_2_1_reg;
-        always @(Net_691 or Net_1168)
-        begin
-            case (Net_1168)
-                1'b0:
-                begin
-                    tmp__demux_2_0_reg = Net_691;
-                    tmp__demux_2_1_reg = 1'b0;
-                end
-                1'b1:
-                begin
-                    tmp__demux_2_0_reg = 1'b0;
-                    tmp__demux_2_1_reg = Net_691;
-                end
-            endcase
-        end
-        assign Net_1148 = tmp__demux_2_0_reg;
-        assign Net_1149 = tmp__demux_2_1_reg;
-    end
-    // -- De Mux end --
-
-    // -- De Mux start --
-    if (1)
-    begin : demux_3
-        reg  tmp__demux_3_0_reg;
-        reg  tmp__demux_3_1_reg;
-        always @(Net_690 or Net_1168)
-        begin
-            case (Net_1168)
-                1'b0:
-                begin
-                    tmp__demux_3_0_reg = Net_690;
-                    tmp__demux_3_1_reg = 1'b0;
-                end
-                1'b1:
-                begin
-                    tmp__demux_3_0_reg = 1'b0;
-                    tmp__demux_3_1_reg = Net_690;
-                end
-            endcase
-        end
-        assign Net_1160 = tmp__demux_3_0_reg;
-        assign Net_1161 = tmp__demux_3_1_reg;
-    end
-    // -- De Mux end --
-
-	wire [0:0] tmpOE__Richting_net;
-	wire [0:0] tmpIO_0__Richting_net;
-	wire [0:0] tmpINTERRUPT_0__Richting_net;
-	electrical [0:0] tmpSIOVREF__Richting_net;
-
-	cy_psoc3_pins_v1_10
-		#(.id("a1fb15ec-3693-4325-9500-19b351f254ef"),
-		  .drive_mode(3'b001),
-		  .ibuf_enabled(1'b1),
-		  .init_dr_st(1'b0),
-		  .input_clk_en(0),
-		  .input_sync(1'b0),
-		  .input_sync_mode(1'b0),
-		  .intr_mode(2'b00),
-		  .invert_in_clock(0),
-		  .invert_in_clock_en(0),
-		  .invert_in_reset(0),
-		  .invert_out_clock(0),
-		  .invert_out_clock_en(0),
-		  .invert_out_reset(0),
-		  .io_voltage(""),
-		  .layout_mode("CONTIGUOUS"),
-		  .oe_conn(1'b0),
-		  .oe_reset(0),
-		  .oe_sync(1'b0),
-		  .output_clk_en(0),
-		  .output_clock_mode(1'b0),
-		  .output_conn(1'b0),
-		  .output_mode(1'b0),
-		  .output_reset(0),
-		  .output_sync(1'b0),
-		  .pa_in_clock(-1),
-		  .pa_in_clock_en(-1),
-		  .pa_in_reset(-1),
-		  .pa_out_clock(-1),
-		  .pa_out_clock_en(-1),
-		  .pa_out_reset(-1),
-		  .pin_aliases(""),
-		  .pin_mode("I"),
-		  .por_state(4),
-		  .sio_group_cnt(0),
-		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
-		  .slew_rate(1'b0),
-		  .spanning(0),
-		  .use_annotation(1'b0),
-		  .vtrip(2'b00),
-		  .width(1),
-		  .ovt_hyst_trim(1'b0),
-		  .ovt_needed(1'b0),
-		  .ovt_slew_control(2'b00),
-		  .input_buffer_sel(2'b00))
-		Richting
-		 (.oe(tmpOE__Richting_net),
-		  .y({1'b0}),
-		  .fb({Net_1168}),
-		  .io({tmpIO_0__Richting_net[0:0]}),
-		  .siovref(tmpSIOVREF__Richting_net),
-		  .interrupt({tmpINTERRUPT_0__Richting_net[0:0]}),
-		  .in_clock({1'b0}),
-		  .in_clock_en({1'b1}),
-		  .in_reset({1'b0}),
-		  .out_clock({1'b0}),
-		  .out_clock_en({1'b1}),
-		  .out_reset({1'b0}));
-
-	assign tmpOE__Richting_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 
 

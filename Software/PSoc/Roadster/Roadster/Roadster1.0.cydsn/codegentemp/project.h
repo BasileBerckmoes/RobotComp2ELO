@@ -85,8 +85,6 @@
 #include "timer_clock_1.h"
 #include "sendBleDataTimer.h"
 #include "SendBleDataISR.h"
-#include "Richting_aliases.h"
-#include "Richting.h"
 #include "ADC_IR_SAR.h"
 #include "ADC_IR_IntClock.h"
 #include "ADC_IR_TempBuf_dma.h"

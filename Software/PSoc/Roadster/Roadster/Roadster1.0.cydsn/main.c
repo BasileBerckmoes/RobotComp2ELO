@@ -66,25 +66,25 @@ int main(void)
     //schakel motoren uit 
 	MotorControl_WriteCompare1(0);
 	MotorControl_WriteCompare2(0);
-	ENA_Write(0);
-	ENB_Write(0);
+	ENA_Write(1);
+	ENB_Write(1);
 	
     //wacht om te starten tot knop SW1 is ingedrukt
 	while(SW1_Read() == 1) //Wait until press on SW1
 	{
-       looplicht();
+//       looplicht();
 	}
     
-    if(SW2_Read() == 1)
-    {
-        if(boolSelect == 0) boolSelect = 1;
-        else if (boolSelect == 1) boolSelect = 0;
-    }
+//    if(SW2_Read() == 1)
+//    {
+//        if(boolSelect == 0) boolSelect = 1;
+//        else if (boolSelect == 1) boolSelect = 0;
+//    }
     
 	MotorControl_WriteCompare1(pwmMotorLinks);
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
-	telProcedure();
+	//telProcedure();
     
     //Clear lcd zodat nieuwe waarden er op passen 
 	//LCD_ClearDisplay();
@@ -132,15 +132,12 @@ int main(void)
         LCD_Position(1u,0u);
         LCD_PrintInt16(pwmMotorRechts);
         
-	    CyDelay(10);
+	    //CyDelay(10);
 		//motordeel
 		//===================================================================
         
-        if (boolSelect == 1) 
-        {
-            AnalyseerData(IRWaarden);
-            LED5_Write(~LED5_Read());
-        
+        AnalyseerData(IRWaarden);
+      
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);
         MotorControl_WriteCompare2(pwmMotorRechts);
@@ -203,29 +200,29 @@ void telProcedure(void)
 	CyDelay(1000);
 }
 
-void looplicht(void)
-{
-    LED1_Write(1);
-	CyDelay(1000);
-    LED1_Write(0);
-	CyDelay(1000);
-	LED2_Write(1);
-	CyDelay(1000);
-    LED2_Write(0);
-	CyDelay(1000);
-	LED3_Write(1);
-	CyDelay(1000);
-    LED3_Write(0);
-	CyDelay(1000);
-	LED4_Write(1);
-	CyDelay(1000);
-    LED4_Write(0);
-	CyDelay(1000);
-	LED5_Write(1);
-	CyDelay(1000);   
-    LED5_Write(0);
-	CyDelay(1000);  
-}
+//void looplicht(void)
+//{
+//    LED1_Write(1);
+//	CyDelay(1000);
+//    LED1_Write(0);
+//	CyDelay(1000);
+//	LED2_Write(1);
+//	CyDelay(1000);
+//    LED2_Write(0);
+//	CyDelay(1000);
+//	LED3_Write(1);
+//	CyDelay(1000);
+//    LED3_Write(0);
+//	CyDelay(1000);
+//	LED4_Write(1);
+//	CyDelay(1000);
+//    LED4_Write(0);
+//	CyDelay(1000);
+//	LED5_Write(1);
+//	CyDelay(1000);   
+//    LED5_Write(0);
+//	CyDelay(1000);  
+//}
 
 //methode die een macht berekend
 int exponent(int grondgetal, int exponent)
