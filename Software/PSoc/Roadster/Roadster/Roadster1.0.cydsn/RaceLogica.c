@@ -12,7 +12,7 @@
 #include "projectMain.h"
 #include "project.h"
 
-uint8 IRsensorGewicht[] = {0,15,35,60,60,35,15,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
+uint8 IRsensorGewicht[] = {40,120,170,220,220,170,120,40};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
 uint8 IRDigitaleWaarden[8];
 
 uint8 TweedeLijnGedetecteerd = 0;
@@ -38,15 +38,7 @@ void stuurMotorenBij(void)
             else if (i == 2) pwmMotorRechts = 225;
             else if (i == 3) pwmMotorRechts = 255;//IRsensorGewicht[i];
             break;
-//            if (IRDigitaleWaarden[0] == 1) {
-//                pwmMotorRechts = 200;
-//                pwmMotorLinks = IRsensorGewicht[0];
-//            } else {
-//                pwmMotorLinks = IRsensorGewicht[i]; 
-//            }
-//            break;
         }
-        //pwmMotorLinks = 100; //IRsensorGewicht[3];
     }
     for(int i = 7; i > 3; i--)
 	{
@@ -56,14 +48,9 @@ void stuurMotorenBij(void)
             if (i == 7) pwmMotorLinks = 255;
             else if (i == 6) pwmMotorLinks = 240;
             else if (i == 5) pwmMotorLinks = 225;
-            else if (i == 4) pwmMotorLinks = 255;//IRsensorGewicht[i];
-            
-//            } else {
-//                pwmMotorRechts = IRsensorGewicht[i];
-//            }
+            else if (i == 4) pwmMotorLinks = 255;
             break;
         }
-        //pwmMotorRechts = 100;//IRsensorGewicht[4];
     }
     
 }

@@ -53,6 +53,7 @@ void ProcessCommandMsg(void)
     
 	if (RB.cmd == 'R')
 	{  
+         LED5_Write(~LED5_Read());
 		pwmMotorLinks = getCMDValue('/', RB.valstr);
 	} 
 	else if (RB.cmd == 'L')

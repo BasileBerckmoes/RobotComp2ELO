@@ -41,8 +41,8 @@ void initFirmwire()
 	BleUart_Start();
 	sendBleDataTimer_Start();
     
-    //pwmMotorLinks = 100; //150;//
-    //pwmMotorRechts = 100; //150;//
+    pwmMotorLinks = 0; 
+    pwmMotorRechts = 0; 
 } 
 
 int main(void)
@@ -66,8 +66,8 @@ int main(void)
     //schakel motoren uit 
 	MotorControl_WriteCompare1(0);
 	MotorControl_WriteCompare2(0);
-	ENA_Write(1);
-	ENB_Write(1);
+	ENA_Write(0);
+	ENB_Write(0);
 	
     //wacht om te starten tot knop SW1 is ingedrukt
 	while(SW1_Read() == 1) //Wait until press on SW1
@@ -136,7 +136,7 @@ int main(void)
 		//motordeel
 		//===================================================================
         
-        AnalyseerData(IRWaarden);
+        //--------AnalyseerData(IRWaarden);
       
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);

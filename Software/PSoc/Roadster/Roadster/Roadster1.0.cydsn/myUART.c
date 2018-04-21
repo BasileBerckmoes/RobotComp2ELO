@@ -31,6 +31,7 @@ CY_ISR(MyRxInt) //interrupt on Rx byte received
     //move all available characters from Rx queue to RxBuffer
     while(BleUart_ReadRxStatus() & BleUart_RX_STS_FIFO_NOTEMPTY)
 	{
+       
 		*RxWriteIndex++ = BleUart_ReadRxData();
 		if (RxWriteIndex >= RxBuffer + RxBufferSize) RxWriteIndex = RxBuffer;      
 	}   

@@ -29,7 +29,8 @@ CY_ISR(sendBleData)
             pwmr = 80;//255 - 200;
             //pwmr = 45;//(valueX - 125) * 2 - 200;
             pwml = 60;
-        } else if (valueX > 192) {
+        } 
+        else if (valueX > 192) {
             pwmr = 80;//255 - 200;
             //pwmr = 45;//(valueX - 125) * 2 - 200;
             pwml = 25;
@@ -50,15 +51,18 @@ CY_ISR(sendBleData)
     }
     
     char strBuffer[10];
+    
+////////    sprintf(strBuffer, "L/%u/\r\n", pwml);
+////////    puttyUart1_PutString(strBuffer);
+////////    sprintf(strBuffer, "R/%u/\r\n", pwmr);
+////////    puttyUart1_PutString(strBuffer);
+    
     DecToHex(pwml);
-    LCDD_Position(1u,0u);
-    LCDD_PrintInt8(pwml);
-    CyDelay(200);
-    sprintf(strBuffer, "L/%s/\r", hexaDecBuffer); 
+    sprintf(strBuffer, "L/%s/\r\n", hexaDecBuffer); 
     bleUart1_PutString(strBuffer);
     
     DecToHex(pwmr);
-    sprintf(strBuffer, "R/%s/\r",hexaDecBuffer); 
+    sprintf(strBuffer, "R/%s/\r\n",hexaDecBuffer); 
     bleUart1_PutString(strBuffer);
 }
 
@@ -67,15 +71,15 @@ void ProcessCommandMsg(void)
     if (RB.cmd == 'I')
     {  
         IRWaarden = getCMDValue('/', RB.valstr);
-        //sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
+        sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
         puttyUart1_PutString(strMsg1);
 
     } 
     else if (RB.cmd == 'T')
     {
         TestGetal = getCMDValue('/', RB.valstr);
-        sprintf(strMsg1,"TestGetal=%u\r", TestGetal); 
-        puttyUart1_PutString(strMsg1);
+        //sprintf(strMsg1,"TestGetal=%u\r\n", TestGetal); 
+//        puttyUart1_PutString(strMsg1);
     }
 }
 

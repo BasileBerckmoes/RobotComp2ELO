@@ -56,7 +56,7 @@ CY_ISR(motorControl)
     char strBuffer[10];
     DecToHex(LED_Read());
     
-    sprintf(strBuffer, "M/%s/\r", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen wordt
+    sprintf(strBuffer, "M/%s/\r\n", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen wordt
                                                   // %s -> string die een hexadeximale bevat namelijk hexaDecBuffer bv 65 
     bleUart1_PutString(strBuffer);
     puttyUart1_PutString(strBuffer);

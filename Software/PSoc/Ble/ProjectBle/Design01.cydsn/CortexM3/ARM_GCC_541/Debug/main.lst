@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
   28:main.c        **** CY_ISR(dataBinnenPutty)
   29:main.c        **** {
   28              		.loc 1 29 0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 2
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 2
 
 
   29              		.cfi_startproc
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
   41:main.c        **** CY_ISR(bleAntwoord)
   42:main.c        **** {
   43:main.c        ****     char charBinnen = bleUart1_GetChar();
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 3
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 3
 
 
   44:main.c        ****     puttyUart1_PutChar(charBinnen); 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  117              		.loc 1 43 0
  118 0002 FFF7FEFF 		bl	bleUart1_GetChar
  119              	.LVL8:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 4
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 4
 
 
   44:main.c        **** }
@@ -205,7 +205,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
   56:main.c        ****     char strBuffer[10];
   57:main.c        ****     DecToHex(LED_Read());
   58:main.c        ****     
-  59:main.c        ****     sprintf(strBuffer, "M/%s/\r", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen wor
+  59:main.c        ****     sprintf(strBuffer, "M/%s/\r\n", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen w
   60:main.c        ****                                                   // %s -> string die een hexadeximale bevat nameli
   61:main.c        ****     bleUart1_PutString(strBuffer);
   62:main.c        ****     puttyUart1_PutString(strBuffer);
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
   89:main.c        **** //            pwmr = 80;//255 - 200;
   90:main.c        **** //            //pwmr = 45;//(valueX - 125) * 2 - 200;
   91:main.c        **** //            pwml = 25;
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 5
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 5
 
 
   92:main.c        **** //        }  else if (valueX < 124 && valueX > 64) {
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  138              		@ args = 0, pretend = 0, frame = 0
  139              		@ frame_needed = 0, uses_anonymous_args = 0
  140 0000 08B5     		push	{r3, lr}
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 6
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 6
 
 
  141              		.cfi_def_cfa_offset 8
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  180              	.LVL18:
  158:main.c        ****     
  159:main.c        ****     JoyStickADC_Start();
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 7
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 7
 
 
  181              		.loc 1 159 0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  178:main.c        ****         LCDD_PrintString("X:");
  217              		.loc 1 178 0
  218 0060 1348     		ldr	r0, .L14+20
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 8
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 8
 
 
  219 0062 FFF7FEFF 		bl	LCDD_PrintString
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  252 0096 FFF7FEFF 		bl	CyDelay
  253              	.LVL35:
  200:main.c        ****         
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 9
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 9
 
 
  201:main.c        ****         
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  230:main.c        ****         {
  231:main.c        ****             LCDD_Position(1u,11u);
  232:main.c        ****             char buffer[] = {str[i+3]};
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 10
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 10
 
 
  233:main.c        ****             LCDD_PrintString(buffer);
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  297              	.LVL39:
  298              	.L18:
  268:main.c        ****     {
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 11
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 11
 
 
  269:main.c        ****         tmpWaarde = tmpWaarde * grondgetal;
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  345              	.LBB5:
  251:main.c        ****         uint8 tmpWaarde =  exponent(2,i);
  346              		.loc 1 251 0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 12
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 12
 
 
  347 000a E1B2     		uxtb	r1, r4
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  394              		.type	HexToDec, %function
  395              	HexToDec:
  396              	.LFB72:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 13
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 13
 
 
  273:main.c        **** 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  284:main.c        ****          base = base*16;   
  438              		.loc 1 284 0
  439 0024 2D01     		lsls	r5, r5, #4
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 14
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 14
 
 
  440              	.LVL61:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  483              	.LVL66:
  484 0000 F0B5     		push	{r4, r5, r6, r7, lr}
  485              		.cfi_def_cfa_offset 20
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 15
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 15
 
 
  486              		.cfi_offset 4, -20
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  229:main.c        ****         {
  533              		.loc 1 229 0
  534 0036 0134     		adds	r4, r4, #1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 16
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 16
 
 
  535              	.LVL73:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  581 0000 0146     		mov	r1, r0
  582 0002 18B9     		cbnz	r0, .L40
  298:main.c        ****     {
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 17
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 17
 
 
  299:main.c        ****         hexaDecBuffer[0] =  '0';
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  621 002a 013B     		subs	r3, r3, #1
  622              	.LVL87:
  623 002c DBB2     		uxtb	r3, r3
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 18
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 18
 
 
  624              	.LVL88:
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  670 0014 FFF7FEFF 		bl	DecToHex
  671              	.LVL93:
   59:main.c        ****                                                   // %s -> string die een hexadeximale bevat nameli
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 19
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 19
 
 
  672              		.loc 1 59 0
@@ -1131,14 +1131,14 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  716 0004 593A00   		.ascii	"Y:\000"
  717 0007 00       		.space	1
  718              	.LC2:
- 719 0008 4D2F2573 		.ascii	"M/%s/\015\000"
- 719      2F0D00
+ 719 0008 4D2F2573 		.ascii	"M/%s/\015\012\000"
+ 719      2F0D0A00 
  720              		.bss
  721              		.type	motorStatus, %object
  722              		.size	motorStatus, 1
  723              	motorStatus:
  724 0000 00       		.space	1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 20
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 20
 
 
  725              		.text
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  779 003d 13030000 		.4byte	.LASF3
  780 0041 03       		.uleb128 0x3
  781 0042 ED030000 		.4byte	.LASF9
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 21
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 21
 
 
  782 0046 02       		.byte	0x2
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  836 00ae 02       		.uleb128 0x2
  837 00af 08       		.byte	0x8
  838 00b0 04       		.byte	0x4
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 22
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 22
 
 
  839 00b1 68020000 		.4byte	.LASF16
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  893 0120 2B010000 		.4byte	0x12b
  894 0124 0B       		.uleb128 0xb
  895 0125 B5000000 		.4byte	0xb5
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 23
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 23
 
 
  896 0129 13       		.byte	0x13
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  950 0192 22000000 		.4byte	.LVL5
  951 0196 FA070000 		.4byte	0x7fa
  952 019a 13       		.uleb128 0x13
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 24
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 24
 
 
  953 019b 01       		.uleb128 0x1
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1007 0207 0A000000 		.4byte	.LVL9
  1008 020b EF070000 		.4byte	0x7ef
  1009 020f 00       		.byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 25
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 25
 
 
  1010 0210 16       		.uleb128 0x16
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1064 02a3 B1020000 		.4byte	0x2b1
  1065 02a7 13       		.uleb128 0x13
  1066 02a8 01       		.uleb128 0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 26
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 26
 
 
  1067 02a9 50       		.byte	0x50
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1121 031b 13       		.uleb128 0x13
  1122 031c 01       		.uleb128 0x1
  1123 031d 50       		.byte	0x50
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 27
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 27
 
 
  1124 031e 05       		.uleb128 0x5
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1178 0384 50       		.byte	0x50
  1179 0385 01       		.uleb128 0x1
  1180 0386 30       		.byte	0x30
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 28
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 28
 
 
  1181 0387 13       		.uleb128 0x13
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1235 03f8 0B01     		.2byte	0x10b
  1236 03fa 68000000 		.4byte	0x68
  1237 03fe 5B000000 		.4byte	.LLST3
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 29
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 29
 
 
  1238 0402 00       		.byte	0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1292 047b 02       		.uleb128 0x2
  1293 047c 74       		.byte	0x74
  1294 047d 00       		.sleb128 0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 30
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 30
 
 
  1295 047e 00       		.byte	0
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1349 04e3 F6000000 		.4byte	.LLST8
  1350 04e7 1C       		.uleb128 0x1c
  1351 04e8 6C656E00 		.ascii	"len\000"
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 31
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 31
 
 
  1352 04ec 01       		.byte	0x1
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1406 0566 1E       		.uleb128 0x1e
  1407 0567 73747200 		.ascii	"str\000"
  1408 056b 01       		.byte	0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 32
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 32
 
 
  1409 056c E3       		.byte	0xe3
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1463 05dc 13       		.uleb128 0x13
  1464 05dd 01       		.uleb128 0x1
  1465 05de 50       		.byte	0x50
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 33
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 33
 
 
  1466 05df 02       		.uleb128 0x2
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1520 0656 00       		.byte	0
  1521 0657 0F       		.uleb128 0xf
  1522 0658 3D030000 		.4byte	.LASF38
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 34
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 34
 
 
  1523 065c 01       		.byte	0x1
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1577 06d1 13       		.uleb128 0x13
  1578 06d2 01       		.uleb128 0x1
  1579 06d3 50       		.byte	0x50
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 35
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 35
 
 
  1580 06d4 02       		.uleb128 0x2
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1634 073e 74020000 		.4byte	.LASF44
  1635 0742 07       		.byte	0x7
  1636 0743 23       		.byte	0x23
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 36
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 36
 
 
  1637 0744 81000000 		.4byte	0x81
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1691 07b8 FE000000 		.4byte	0xfe
  1692 07bc 05       		.uleb128 0x5
  1693 07bd 03       		.byte	0x3
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 37
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 37
 
 
  1694 07be 00000000 		.4byte	RB
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1748 0836 26030000 		.4byte	.LASF58
  1749 083a 0D       		.byte	0xd
  1750 083b 38       		.byte	0x38
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 38
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 38
 
 
  1751 083c 2A       		.uleb128 0x2a
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1805 08b4 3A       		.byte	0x3a
  1806 08b5 2A       		.uleb128 0x2a
  1807 08b6 59030000 		.4byte	.LASF70
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 39
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 39
 
 
  1808 08ba 59030000 		.4byte	.LASF70
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1862 092f 00040000 		.4byte	.LASF81
  1863 0933 00040000 		.4byte	.LASF81
  1864 0937 09       		.byte	0x9
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 40
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 40
 
 
  1865 0938 8B       		.byte	0x8b
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1919 002d 00       		.byte	0
  1920 002e 0B       		.uleb128 0xb
  1921 002f 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 41
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 41
 
 
  1922 0030 3E       		.uleb128 0x3e
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  1976 0066 00       		.byte	0
  1977 0067 00       		.byte	0
  1978 0068 09       		.uleb128 0x9
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 42
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 42
 
 
  1979 0069 0D       		.uleb128 0xd
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2033 009f 3B       		.uleb128 0x3b
  2034 00a0 0B       		.uleb128 0xb
  2035 00a1 49       		.uleb128 0x49
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 43
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 43
 
 
  2036 00a2 13       		.uleb128 0x13
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2090 00db 01       		.uleb128 0x1
  2091 00dc 31       		.uleb128 0x31
  2092 00dd 13       		.uleb128 0x13
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 44
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 44
 
 
  2093 00de 00       		.byte	0
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2147 011b 0B       		.uleb128 0xb
  2148 011c 3B       		.uleb128 0x3b
  2149 011d 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 45
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 45
 
 
  2150 011e 27       		.uleb128 0x27
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2204 0157 49       		.uleb128 0x49
  2205 0158 13       		.uleb128 0x13
  2206 0159 02       		.uleb128 0x2
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 46
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 46
 
 
  2207 015a 17       		.uleb128 0x17
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2261 0190 00       		.byte	0
  2262 0191 1D       		.uleb128 0x1d
  2263 0192 05       		.uleb128 0x5
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 47
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 47
 
 
  2264 0193 00       		.byte	0
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2318 01c9 01       		.byte	0x1
  2319 01ca 55       		.uleb128 0x55
  2320 01cb 17       		.uleb128 0x17
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 48
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 48
 
 
  2321 01cc 01       		.uleb128 0x1
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2375 0203 13       		.uleb128 0x13
  2376 0204 00       		.byte	0
  2377 0205 00       		.byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 49
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 49
 
 
  2378 0206 25       		.uleb128 0x25
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2432 023d 3A       		.uleb128 0x3a
  2433 023e 0B       		.uleb128 0xb
  2434 023f 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 50
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 50
 
 
  2435 0240 0B       		.uleb128 0xb
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2489 0013 00000000 		.4byte	.LVL36
  2490 0017 06000000 		.4byte	.LVL38
  2491 001b 0100     		.2byte	0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 51
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 51
 
 
  2492 001d 50       		.byte	0x50
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2546 00a6 0A000000 		.4byte	.LVL45
  2547 00aa 38000000 		.4byte	.LFE70
  2548 00ae 0100     		.2byte	0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 52
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 52
 
 
  2549 00b0 55       		.byte	0x55
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2603 013e 31       		.byte	0x31
  2604 013f 9F       		.byte	0x9f
  2605 0140 12000000 		.4byte	.LVL59
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 53
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 53
 
 
  2606 0144 44000000 		.4byte	.LFE72
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2660 01cc F3       		.byte	0xf3
  2661 01cd 01       		.uleb128 0x1
  2662 01ce 51       		.byte	0x51
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 54
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 54
 
 
  2663 01cf 9F       		.byte	0x9f
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2717 025f 52       		.byte	0x52
  2718 0260 1A000000 		.4byte	.LVL82
  2719 0264 24000000 		.4byte	.LVL85
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 55
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 55
 
 
  2720 0268 0300     		.2byte	0x3
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2774              		.section	.debug_ranges,"",%progbits
  2775              	.Ldebug_ranges0:
  2776 0000 02000000 		.4byte	.LBB2
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 56
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 56
 
 
  2777 0004 04000000 		.4byte	.LBE2
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2819              	.LASF79:
  2820 0028 4C45445F 		.ascii	"LED_Write\000"
  2820      57726974 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 57
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 57
 
 
  2820      6500
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2846 00c9 7072696E 		.ascii	"printBINopLCD\000"
  2846      7442494E 
  2846      6F704C43 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 58
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 58
 
 
  2846      4400
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2872      53746172 
  2872      7400
  2873              	.LASF6:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 59
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 59
 
 
  2874 0172 6C6F6E67 		.ascii	"long long int\000"
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2895      7200
  2896              	.LASF55:
  2897 0247 626C6555 		.ascii	"bleUart1_GetChar\000"
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 60
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 60
 
 
  2897      61727431 
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2923      61746154 
  2923      696D6572 
  2923      5F537461 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 61
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 61
 
 
  2924              	.LASF39:
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2949      75666665 
  2949      7200
  2950              	.LASF87:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 62
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 62
 
 
  2951 0384 52785374 		.ascii	"RxStr\000"
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 1
  2975      72537461 
  2975      74757300 
  2976              	.LASF72:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cchI1j5f.s 			page 63
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccVs5Uim.s 			page 63
 
 
  2977 041f 50726F63 		.ascii	"ProcessCommandMsg\000"

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 1
 
 
    1              		.syntax unified
@@ -42,7 +42,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
   12:RaceLogica.c  **** #include "projectMain.h"
   13:RaceLogica.c  **** #include "project.h"
   14:RaceLogica.c  **** 
-  15:RaceLogica.c  **** uint8 IRsensorGewicht[] = {0,15,35,60,60,35,15,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170 
+  15:RaceLogica.c  **** uint8 IRsensorGewicht[] = {40,120,170,220,220,170,120,40};////{0,25,40,55  ,55,40,25,0}; ////{0,80,
   16:RaceLogica.c  **** uint8 IRDigitaleWaarden[8];
   17:RaceLogica.c  **** 
   18:RaceLogica.c  **** uint8 TweedeLijnGedetecteerd = 0;
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
   28:RaceLogica.c  **** 
   29:RaceLogica.c  **** void stuurMotorenBij(void)
   30:RaceLogica.c  **** { 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 2
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 2
 
 
   28              		.loc 1 30 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
   74              		.loc 1 38 0 is_stmt 0 discriminator 1
   75 002e E122     		movs	r2, #225
   76 0030 1B4B     		ldr	r3, .L16+12
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 3
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 3
 
 
   77              	.LVL6:
@@ -152,44 +152,36 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  102              	.LBE2:
  103              	.LBB3:
   40:RaceLogica.c  ****             break;
-  41:RaceLogica.c  **** //            if (IRDigitaleWaarden[0] == 1) {
-  42:RaceLogica.c  **** //                pwmMotorRechts = 200;
-  43:RaceLogica.c  **** //                pwmMotorLinks = IRsensorGewicht[0];
-  44:RaceLogica.c  **** //            } else {
-  45:RaceLogica.c  **** //                pwmMotorLinks = IRsensorGewicht[i]; 
-  46:RaceLogica.c  **** //            }
-  47:RaceLogica.c  **** //            break;
-  48:RaceLogica.c  ****         }
-  49:RaceLogica.c  ****         //pwmMotorLinks = 100; //IRsensorGewicht[3];
-  50:RaceLogica.c  ****     }
-  51:RaceLogica.c  ****     for(int i = 7; i > 3; i--)
- 104              		.loc 1 51 0 is_stmt 1
+  41:RaceLogica.c  ****         }
+  42:RaceLogica.c  ****     }
+  43:RaceLogica.c  ****     for(int i = 7; i > 3; i--)
+ 104              		.loc 1 43 0 is_stmt 1
  105 0048 0723     		movs	r3, #7
  106 004a 20E0     		b	.L9
  107              	.LVL12:
  108              	.L15:
-  52:RaceLogica.c  **** 	{
-  53:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1)
- 109              		.loc 1 53 0
+  44:RaceLogica.c  **** 	{
+  45:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1)
+ 109              		.loc 1 45 0
  110 004c 114A     		ldr	r2, .L16
  111 004e D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
  112 0050 012A     		cmp	r2, #1
  113 0052 1BD1     		bne	.L10
-  54:RaceLogica.c  ****         {
-  55:RaceLogica.c  ****             pwmMotorRechts = IRsensorGewicht[i];
- 114              		.loc 1 55 0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 4
-
-
+  46:RaceLogica.c  ****         {
+  47:RaceLogica.c  ****             pwmMotorRechts = IRsensorGewicht[i];
+ 114              		.loc 1 47 0
  115 0054 104A     		ldr	r2, .L16+4
  116 0056 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
  117 0058 114A     		ldr	r2, .L16+12
  118 005a 1170     		strb	r1, [r2]
-  56:RaceLogica.c  ****             if (i == 7) pwmMotorLinks = 255;
- 119              		.loc 1 56 0
+  48:RaceLogica.c  ****             if (i == 7) pwmMotorLinks = 255;
+ 119              		.loc 1 48 0
  120 005c 072B     		cmp	r3, #7
  121 005e 03D1     		bne	.L11
- 122              		.loc 1 56 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 4
+
+
+ 122              		.loc 1 48 0 is_stmt 0 discriminator 1
  123 0060 FF22     		movs	r2, #255
  124 0062 0E4B     		ldr	r3, .L16+8
  125              	.LVL13:
@@ -197,11 +189,11 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  127 0066 7047     		bx	lr
  128              	.LVL14:
  129              	.L11:
-  57:RaceLogica.c  ****             else if (i == 6) pwmMotorLinks = 240;
- 130              		.loc 1 57 0 is_stmt 1
+  49:RaceLogica.c  ****             else if (i == 6) pwmMotorLinks = 240;
+ 130              		.loc 1 49 0 is_stmt 1
  131 0068 062B     		cmp	r3, #6
  132 006a 03D1     		bne	.L13
- 133              		.loc 1 57 0 is_stmt 0 discriminator 1
+ 133              		.loc 1 49 0 is_stmt 0 discriminator 1
  134 006c F022     		movs	r2, #240
  135 006e 0B4B     		ldr	r3, .L16+8
  136              	.LVL15:
@@ -209,11 +201,11 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  138 0072 7047     		bx	lr
  139              	.LVL16:
  140              	.L13:
-  58:RaceLogica.c  ****             else if (i == 5) pwmMotorLinks = 225;
- 141              		.loc 1 58 0 is_stmt 1
+  50:RaceLogica.c  ****             else if (i == 5) pwmMotorLinks = 225;
+ 141              		.loc 1 50 0 is_stmt 1
  142 0074 052B     		cmp	r3, #5
  143 0076 03D1     		bne	.L14
- 144              		.loc 1 58 0 is_stmt 0 discriminator 1
+ 144              		.loc 1 50 0 is_stmt 0 discriminator 1
  145 0078 E122     		movs	r2, #225
  146 007a 084B     		ldr	r3, .L16+8
  147              	.LVL17:
@@ -221,11 +213,11 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  149 007e 7047     		bx	lr
  150              	.LVL18:
  151              	.L14:
-  59:RaceLogica.c  ****             else if (i == 4) pwmMotorLinks = 255;//IRsensorGewicht[i];
- 152              		.loc 1 59 0 is_stmt 1
+  51:RaceLogica.c  ****             else if (i == 4) pwmMotorLinks = 255;
+ 152              		.loc 1 51 0 is_stmt 1
  153 0080 042B     		cmp	r3, #4
  154 0082 06D1     		bne	.L1
- 155              		.loc 1 59 0 is_stmt 0 discriminator 1
+ 155              		.loc 1 51 0 is_stmt 0 discriminator 1
  156 0084 FF22     		movs	r2, #255
  157 0086 054B     		ldr	r3, .L16+8
  158              	.LVL19:
@@ -233,22 +225,22 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  160 008a 7047     		bx	lr
  161              	.LVL20:
  162              	.L10:
-  51:RaceLogica.c  **** 	{
- 163              		.loc 1 51 0 is_stmt 1 discriminator 2
+  43:RaceLogica.c  **** 	{
+ 163              		.loc 1 43 0 is_stmt 1 discriminator 2
  164 008c 013B     		subs	r3, r3, #1
  165              	.LVL21:
  166              	.L9:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 5
-
-
-  51:RaceLogica.c  **** 	{
- 167              		.loc 1 51 0 is_stmt 0 discriminator 1
+  43:RaceLogica.c  **** 	{
+ 167              		.loc 1 43 0 is_stmt 0 discriminator 1
  168 008e 032B     		cmp	r3, #3
  169 0090 DCDC     		bgt	.L15
  170              	.L1:
  171 0092 7047     		bx	lr
  172              	.L17:
  173              		.align	2
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 5
+
+
  174              	.L16:
  175 0094 00000000 		.word	IRDigitaleWaarden
  176 0098 00000000 		.word	.LANCHOR0
@@ -266,20 +258,15 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  188              		.type	PlaatsIRWaardenInArray, %function
  189              	PlaatsIRWaardenInArray:
  190              	.LFB65:
-  60:RaceLogica.c  ****             
-  61:RaceLogica.c  **** //            } else {
-  62:RaceLogica.c  **** //                pwmMotorRechts = IRsensorGewicht[i];
-  63:RaceLogica.c  **** //            }
-  64:RaceLogica.c  ****             break;
-  65:RaceLogica.c  ****         }
-  66:RaceLogica.c  ****         //pwmMotorRechts = 100;//IRsensorGewicht[4];
-  67:RaceLogica.c  ****     }
-  68:RaceLogica.c  ****     
-  69:RaceLogica.c  **** }
-  70:RaceLogica.c  **** 
-  71:RaceLogica.c  **** void PlaatsIRWaardenInArray(void)
-  72:RaceLogica.c  **** {
- 191              		.loc 1 72 0 is_stmt 1
+  52:RaceLogica.c  ****             break;
+  53:RaceLogica.c  ****         }
+  54:RaceLogica.c  ****     }
+  55:RaceLogica.c  ****     
+  56:RaceLogica.c  **** }
+  57:RaceLogica.c  **** 
+  58:RaceLogica.c  **** void PlaatsIRWaardenInArray(void)
+  59:RaceLogica.c  **** {
+ 191              		.loc 1 59 0 is_stmt 1
  192              		.cfi_startproc
  193              		@ args = 0, pretend = 0, frame = 0
  194              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -289,63 +276,63 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  198              		.cfi_offset 14, -4
  199              	.LVL22:
  200              	.LBB4:
-  73:RaceLogica.c  ****     for(int i = 0; i < 8; i++)
- 201              		.loc 1 73 0
+  60:RaceLogica.c  ****     for(int i = 0; i < 8; i++)
+ 201              		.loc 1 60 0
  202 0002 0024     		movs	r4, #0
  203 0004 11E0     		b	.L19
  204              	.LVL23:
  205              	.L22:
  206              	.LBB5:
-  74:RaceLogica.c  **** 	{
-  75:RaceLogica.c  **** 		uint8 tmpWaarde =  exponent(2,i);
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 6
-
-
- 207              		.loc 1 75 0
+  61:RaceLogica.c  **** 	{
+  62:RaceLogica.c  **** 		uint8 tmpWaarde =  exponent(2,i);
+ 207              		.loc 1 62 0
  208 0006 2146     		mov	r1, r4
  209 0008 0220     		movs	r0, #2
  210 000a FFF7FEFF 		bl	exponent
  211              	.LVL24:
  212 000e C0B2     		uxtb	r0, r0
  213              	.LVL25:
-  76:RaceLogica.c  **** 		if ((Data & tmpWaarde) == tmpWaarde)
- 214              		.loc 1 76 0
+  63:RaceLogica.c  **** 		if ((Data & tmpWaarde) == tmpWaarde)
+ 214              		.loc 1 63 0
  215 0010 074B     		ldr	r3, .L24
  216 0012 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  217 0014 30EA0303 		bics	r3, r0, r3
  218 0018 03D1     		bne	.L20
-  77:RaceLogica.c  **** 		{
-  78:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 1;
- 219              		.loc 1 78 0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 6
+
+
+  64:RaceLogica.c  **** 		{
+  65:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 1;
+ 219              		.loc 1 65 0
  220 001a 0122     		movs	r2, #1
  221 001c 054B     		ldr	r3, .L24+4
  222 001e 1A55     		strb	r2, [r3, r4]
  223 0020 02E0     		b	.L21
  224              	.L20:
-  79:RaceLogica.c  **** 		}
-  80:RaceLogica.c  **** 			else 
-  81:RaceLogica.c  **** 		{
-  82:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 0;
- 225              		.loc 1 82 0
+  66:RaceLogica.c  **** 		}
+  67:RaceLogica.c  **** 			else 
+  68:RaceLogica.c  **** 		{
+  69:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 0;
+ 225              		.loc 1 69 0
  226 0022 0022     		movs	r2, #0
  227 0024 034B     		ldr	r3, .L24+4
  228 0026 1A55     		strb	r2, [r3, r4]
  229              	.L21:
  230              	.LBE5:
-  73:RaceLogica.c  **** 	{
- 231              		.loc 1 73 0 discriminator 2
+  60:RaceLogica.c  **** 	{
+ 231              		.loc 1 60 0 discriminator 2
  232 0028 0134     		adds	r4, r4, #1
  233              	.LVL26:
  234              	.L19:
-  73:RaceLogica.c  **** 	{
- 235              		.loc 1 73 0 is_stmt 0 discriminator 1
+  60:RaceLogica.c  **** 	{
+ 235              		.loc 1 60 0 is_stmt 0 discriminator 1
  236 002a 072C     		cmp	r4, #7
  237 002c EBDD     		ble	.L22
  238              	.LBE4:
-  83:RaceLogica.c  **** 		}  
-  84:RaceLogica.c  **** 	 }  
-  85:RaceLogica.c  **** }
- 239              		.loc 1 85 0 is_stmt 1
+  70:RaceLogica.c  **** 		}  
+  71:RaceLogica.c  **** 	 }  
+  72:RaceLogica.c  **** }
+ 239              		.loc 1 72 0 is_stmt 1
  240 002e 10BD     		pop	{r4, pc}
  241              	.LVL27:
  242              	.L25:
@@ -358,9 +345,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  249              		.size	PlaatsIRWaardenInArray, .-PlaatsIRWaardenInArray
  250              		.section	.text.AnalyseerData,"ax",%progbits
  251              		.align	2
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 7
-
-
  252              		.global	AnalyseerData
  253              		.thumb
  254              		.thumb_func
@@ -374,6 +358,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  261              		@ frame_needed = 0, uses_anonymous_args = 0
  262              	.LVL28:
  263 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 7
+
+
  264              		.cfi_def_cfa_offset 8
  265              		.cfi_offset 3, -8
  266              		.cfi_offset 14, -4
@@ -418,22 +405,22 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  302              		.set	.LANCHOR0,. + 0
  303              		.type	IRsensorGewicht, %object
  304              		.size	IRsensorGewicht, 8
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 8
-
-
  305              	IRsensorGewicht:
- 306 0000 00       		.byte	0
- 307 0001 0F       		.byte	15
- 308 0002 23       		.byte	35
- 309 0003 3C       		.byte	60
- 310 0004 3C       		.byte	60
- 311 0005 23       		.byte	35
- 312 0006 0F       		.byte	15
- 313 0007 00       		.byte	0
+ 306 0000 28       		.byte	40
+ 307 0001 78       		.byte	120
+ 308 0002 AA       		.byte	-86
+ 309 0003 DC       		.byte	-36
+ 310 0004 DC       		.byte	-36
+ 311 0005 AA       		.byte	-86
+ 312 0006 78       		.byte	120
+ 313 0007 28       		.byte	40
  314              		.bss
  315              		.type	TweedeLijnGedetecteerd, %object
  316              		.size	TweedeLijnGedetecteerd, 1
  317              	TweedeLijnGedetecteerd:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 8
+
+
  318 0000 00       		.space	1
  319              		.text
  320              	.Letext0:
@@ -478,9 +465,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  359 0047 3F       		.byte	0x3f
  360 0048 4C000000 		.4byte	0x4c
  361 004c 02       		.uleb128 0x2
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 9
-
-
  362 004d 04       		.byte	0x4
  363 004e 05       		.byte	0x5
  364 004f A8020000 		.4byte	.LASF4
@@ -494,6 +478,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  372 005d 62020000 		.4byte	.LASF6
  373 0061 02       		.uleb128 0x2
  374 0062 08       		.byte	0x8
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 9
+
+
  375 0063 07       		.byte	0x7
  376 0064 28020000 		.4byte	.LASF7
  377 0068 04       		.uleb128 0x4
@@ -538,9 +525,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  416 00b5 02       		.uleb128 0x2
  417 00b6 04       		.byte	0x4
  418 00b7 07       		.byte	0x7
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 10
-
-
  419 00b8 59020000 		.4byte	.LASF17
  420 00bc 06       		.uleb128 0x6
  421 00bd 18020000 		.4byte	.LASF18
@@ -554,6 +538,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  429 00d1 07       		.uleb128 0x7
  430 00d2 00000000 		.4byte	.LBB2
  431 00d6 48000000 		.4byte	.LBE2-.LBB2
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 10
+
+
  432 00da EC000000 		.4byte	0xec
  433 00de 08       		.uleb128 0x8
  434 00df 6900     		.ascii	"i\000"
@@ -568,7 +555,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  443 00f5 08       		.uleb128 0x8
  444 00f6 6900     		.ascii	"i\000"
  445 00f8 01       		.byte	0x1
- 446 00f9 33       		.byte	0x33
+ 446 00f9 2B       		.byte	0x2b
  447 00fa 68000000 		.4byte	0x68
  448 00fe 4B000000 		.4byte	.LLST1
  449 0102 00       		.byte	0
@@ -576,7 +563,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  451 0104 06       		.uleb128 0x6
  452 0105 00000000 		.4byte	.LASF19
  453 0109 01       		.byte	0x1
- 454 010a 47       		.byte	0x47
+ 454 010a 3A       		.byte	0x3a
  455 010b 00000000 		.4byte	.LFB65
  456 010f 38000000 		.4byte	.LFE65-.LFB65
  457 0113 01       		.uleb128 0x1
@@ -588,7 +575,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  463 0122 08       		.uleb128 0x8
  464 0123 6900     		.ascii	"i\000"
  465 0125 01       		.byte	0x1
- 466 0126 49       		.byte	0x49
+ 466 0126 3C       		.byte	0x3c
  467 0127 68000000 		.4byte	0x68
  468 012b 96000000 		.4byte	.LLST2
  469 012f 09       		.uleb128 0x9
@@ -597,10 +584,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  472 0138 0A       		.uleb128 0xa
  473 0139 75020000 		.4byte	.LASF20
  474 013d 01       		.byte	0x1
- 475 013e 4B       		.byte	0x4b
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 11
-
-
+ 475 013e 3E       		.byte	0x3e
  476 013f 81000000 		.4byte	0x81
  477 0143 B5000000 		.4byte	.LLST3
  478 0147 0B       		.uleb128 0xb
@@ -614,6 +598,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  486 0155 0C       		.uleb128 0xc
  487 0156 01       		.uleb128 0x1
  488 0157 51       		.byte	0x51
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 11
+
+
  489 0158 02       		.uleb128 0x2
  490 0159 74       		.byte	0x74
  491 015a 00       		.sleb128 0
@@ -658,9 +645,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  530 01b1 05       		.uleb128 0x5
  531 01b2 03       		.byte	0x3
  532 01b3 00000000 		.4byte	hexaDecBuffer
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 12
-
-
  533 01b7 0F       		.uleb128 0xf
  534 01b8 A7000000 		.4byte	0xa7
  535 01bc C7010000 		.4byte	0x1c7
@@ -674,6 +658,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  543 01cd 15       		.byte	0x15
  544 01ce B7010000 		.4byte	0x1b7
  545 01d2 05       		.uleb128 0x5
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 12
+
+
  546 01d3 03       		.byte	0x3
  547 01d4 00000000 		.4byte	strMsg1
  548 01d8 11       		.uleb128 0x11
@@ -718,9 +705,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  587 0229 00000000 		.4byte	mediaan
  588 022d 11       		.uleb128 0x11
  589 022e 85000000 		.4byte	.LASF29
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 13
-
-
  590 0232 05       		.byte	0x5
  591 0233 32       		.byte	0x32
  592 0234 81000000 		.4byte	0x81
@@ -734,6 +718,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  600 0248 B5000000 		.4byte	0xb5
  601 024c 04       		.byte	0x4
  602 024d 00       		.byte	0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 13
+
+
  603 024e 11       		.uleb128 0x11
  604 024f 47010000 		.4byte	.LASF30
  605 0253 05       		.byte	0x5
@@ -778,9 +765,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  644 02a8 B3020000 		.4byte	0x2b3
  645 02ac 10       		.uleb128 0x10
  646 02ad B5000000 		.4byte	0xb5
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 14
-
-
  647 02b1 07       		.byte	0x7
  648 02b2 00       		.byte	0
  649 02b3 11       		.uleb128 0x11
@@ -794,6 +778,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  657 02c4 11       		.uleb128 0x11
  658 02c5 35010000 		.4byte	.LASF36
  659 02c9 01       		.byte	0x1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 14
+
+
  660 02ca 10       		.byte	0x10
  661 02cb A3020000 		.4byte	0x2a3
  662 02cf 05       		.uleb128 0x5
@@ -838,9 +825,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  701 000c 17       		.uleb128 0x17
  702 000d 11       		.uleb128 0x11
  703 000e 01       		.uleb128 0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 15
-
-
  704 000f 10       		.uleb128 0x10
  705 0010 17       		.uleb128 0x17
  706 0011 00       		.byte	0
@@ -854,6 +838,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  714 0019 0B       		.uleb128 0xb
  715 001a 03       		.uleb128 0x3
  716 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 15
+
+
  717 001c 00       		.byte	0
  718 001d 00       		.byte	0
  719 001e 03       		.uleb128 0x3
@@ -898,9 +885,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  758 0045 01       		.byte	0x1
  759 0046 3F       		.uleb128 0x3f
  760 0047 19       		.uleb128 0x19
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 16
-
-
  761 0048 03       		.uleb128 0x3
  762 0049 0E       		.uleb128 0xe
  763 004a 3A       		.uleb128 0x3a
@@ -914,6 +898,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  771 0052 12       		.uleb128 0x12
  772 0053 06       		.uleb128 0x6
  773 0054 40       		.uleb128 0x40
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 16
+
+
  774 0055 18       		.uleb128 0x18
  775 0056 9742     		.uleb128 0x2117
  776 0058 19       		.uleb128 0x19
@@ -958,9 +945,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  815 007f 00       		.byte	0
  816 0080 0A       		.uleb128 0xa
  817 0081 34       		.uleb128 0x34
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 17
-
-
  818 0082 00       		.byte	0
  819 0083 03       		.uleb128 0x3
  820 0084 0E       		.uleb128 0xe
@@ -974,6 +958,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  828 008c 17       		.uleb128 0x17
  829 008d 00       		.byte	0
  830 008e 00       		.byte	0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 17
+
+
  831 008f 0B       		.uleb128 0xb
  832 0090 898201   		.uleb128 0x4109
  833 0093 01       		.byte	0x1
@@ -1018,9 +1005,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  872 00bf 00       		.byte	0
  873 00c0 0F       		.uleb128 0xf
  874 00c1 01       		.uleb128 0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 18
-
-
  875 00c2 01       		.byte	0x1
  876 00c3 49       		.uleb128 0x49
  877 00c4 13       		.uleb128 0x13
@@ -1034,6 +1018,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  885 00cc 49       		.uleb128 0x49
  886 00cd 13       		.uleb128 0x13
  887 00ce 2F       		.uleb128 0x2f
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 18
+
+
  888 00cf 0B       		.uleb128 0xb
  889 00d0 00       		.byte	0
  890 00d1 00       		.byte	0
@@ -1078,9 +1065,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  929 00f8 13       		.uleb128 0x13
  930 00f9 00       		.byte	0
  931 00fa 00       		.byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 19
-
-
  932 00fb 14       		.uleb128 0x14
  933 00fc 2E       		.uleb128 0x2e
  934 00fd 00       		.byte	0
@@ -1094,6 +1078,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  942 0105 0E       		.uleb128 0xe
  943 0106 3A       		.uleb128 0x3a
  944 0107 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 19
+
+
  945 0108 3B       		.uleb128 0x3b
  946 0109 0B       		.uleb128 0xb
  947 010a 00       		.byte	0
@@ -1138,9 +1125,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  986 0057 4C000000 		.4byte	.LVL12
  987 005b 64000000 		.4byte	.LVL13
  988 005f 0100     		.2byte	0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 20
-
-
  989 0061 53       		.byte	0x53
  990 0062 68000000 		.4byte	.LVL14
  991 0066 70000000 		.4byte	.LVL15
@@ -1154,6 +1138,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  999 007c 88000000 		.4byte	.LVL19
  1000 0080 0100     		.2byte	0x1
  1001 0082 53       		.byte	0x53
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 20
+
+
  1002 0083 8C000000 		.4byte	.LVL20
  1003 0087 A4000000 		.4byte	.LFE64
  1004 008b 0100     		.2byte	0x1
@@ -1198,9 +1185,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1043 0004 0200     		.2byte	0x2
  1044 0006 00000000 		.4byte	.Ldebug_info0
  1045 000a 04       		.byte	0x4
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 21
-
-
  1046 000b 00       		.byte	0
  1047 000c 0000     		.2byte	0
  1048 000e 0000     		.2byte	0
@@ -1214,6 +1198,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1056 002c 00000000 		.4byte	0
  1057              		.section	.debug_ranges,"",%progbits
  1058              	.Ldebug_ranges0:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 21
+
+
  1059 0000 00000000 		.4byte	.LFB64
  1060 0004 A4000000 		.4byte	.LFE64
  1061 0008 00000000 		.4byte	.LFB65
@@ -1224,7 +1211,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1066 001c 00000000 		.4byte	0
  1067              		.section	.debug_line,"",%progbits
  1068              	.Ldebug_line0:
- 1069 0000 13020000 		.section	.debug_str,"MS",%progbits,1
+ 1069 0000 12020000 		.section	.debug_str,"MS",%progbits,1
  1069      02006301 
  1069      00000201 
  1069      FB0E0D00 
@@ -1258,9 +1245,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1081      4C6F6769 
  1081      63612E63 
  1081      00
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 22
-
-
  1082              	.LASF31:
  1083 005b 61766755 		.ascii	"avgUS2\000"
  1083      533200
@@ -1274,6 +1258,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1087      7300
  1088              	.LASF21:
  1089 0077 416E616C 		.ascii	"AnalyseerData\000"
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 22
+
+
  1089      79736565 
  1089      72446174 
  1089      6100
@@ -1318,9 +1305,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1105 0147 61766755 		.ascii	"avgUS1\000"
  1105      533100
  1106              	.LASF5:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 23
-
-
  1107 014e 6C6F6E67 		.ascii	"long unsigned int\000"
  1107      20756E73 
  1107      69676E65 
@@ -1334,6 +1318,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1109      6E7400
  1110              	.LASF34:
  1111 0173 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 23
+
+
  1111      52784275 
  1111      66666572 
  1111      00
@@ -1378,9 +1365,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1129      6F72656E 
  1129      42696A00 
  1130              	.LASF7:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 24
-
-
  1131 0228 6C6F6E67 		.ascii	"long long unsigned int\000"
  1131      206C6F6E 
  1131      6720756E 
@@ -1394,6 +1378,9 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1135      61726465 
  1135      6E00
  1136              	.LASF10:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccxnIpLE.s 			page 24
+
+
  1137 0251 696E7433 		.ascii	"int32_t\000"
  1137      325F7400 
  1138              	.LASF17:
@@ -1438,9 +1425,6 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 1
  1157      626C6500 
  1158              	.LASF0:
  1159 02bd 7369676E 		.ascii	"signed char\000"
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccuefWh7.s 			page 25
-
-
  1159      65642063 
  1159      68617200 
  1160              	.LASF33:
