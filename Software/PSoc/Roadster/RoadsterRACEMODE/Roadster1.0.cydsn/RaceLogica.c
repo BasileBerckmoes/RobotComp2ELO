@@ -18,13 +18,18 @@ uint8 IRDigitaleWaarden[8];
 uint8 TweedeLijnGedetecteerd = 0;
 
 uint8 Data;
+uint8 DataOrgineel;
 
 void AnalyseerData(uint8 data)
 {
-    Data = data;
-    PlaatsIRWaardenInArray();
+    DataOrgineel = data;
+    PlaatsIRWaardenInArray(DataOrgineel);
+    Data = CheckVoor2eLijn();
+    if (Data != DataOrgineel) PlaatsIRWaardenInArray(Data);
+    
     stuurMotorenBij();
 }
+
 
 void stuurMotorenBij(void)
 { 
@@ -55,12 +60,12 @@ void stuurMotorenBij(void)
     
 }
 
-void PlaatsIRWaardenInArray(void)
+void PlaatsIRWaardenInArray(uint8 value)
 {
     for(int i = 0; i < 8; i++)
 	{
 		uint8 tmpWaarde =  exponent(2,i);
-		if ((Data & tmpWaarde) == tmpWaarde)
+		if ((value & tmpWaarde) == tmpWaarde)
 		{
 			IRDigitaleWaarden[i]= 1;
 		}
@@ -71,13 +76,44 @@ void PlaatsIRWaardenInArray(void)
 	 }  
 }
 
-//uint8 CheckVoor2eLijn()
-//{
-//  uint8 flag = 0;
-//    
-//  for(int i = 0; i < 8; i++)
-//  {
-//    
-//  }  
-//}
+uint8 CheckVoor2eLijn()
+{
+    uint8 diksteLijn = 0;
+    uint8 teller = 0;
+    
+     uint8 laatsteWaarde = 0; 
+     uint8 aantalWaardeWisselingen = 0;  
+    
+        for(int i = 0; i < 8; i++)
+        {
+            if (laatsteWaarde != IRDigitaleWaarden[i])
+            {
+                aantalWaardeWisselingen++;
+                laatsteWaarde = IRDigitaleWaarden[i];
+            } 
+            if (IRDigitaleWaarden[i] == 1) teller++;
+            else {
+                if (teller > diksteLijn)
+                {
+                    diksteLijn = teller;
+                    teller = 0;
+                } 
+            }
+        }
+        
+        if (aantalWaardeWisselingen <= 3)
+        {
+            return Data;
+        }
+        else
+        {
+            uint8 compareValue = 1;
+            compareValue = compareValue << (diksteLijn-1);
+            for (uint8 i = 0; i < (8 - diksteLijn); i++)
+            {
+                if((compareValue & DataOrgineel) == compareValue) return compareValue;
+            }
+        }
+    return 0;
+}
 /* [] END OF FILE */

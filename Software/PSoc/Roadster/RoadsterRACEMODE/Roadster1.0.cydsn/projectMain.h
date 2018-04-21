@@ -15,17 +15,9 @@
 //Firmwire  
 void initFirmwire(void);
 
-/////////////////////////////////////////////////////
-//Bluetooth communicatie  
-//char hexaDecBuffer[2];
-char strMsg1[64];
 
 CY_ISR_PROTO(sendBleData);  
 
-void ProcessCommandMsg(void);
-uint8 HexToDec(char hexVal[]);
-void DecToHex(uint8 value ,char buffer[]);
-uint8 getCMDValue(char delimiter, char str[], char HexBuffer[]);
 
 /////////////////////////////////////////////////////
 //Motor  
@@ -59,8 +51,9 @@ void schuifRegister(uint16 array[], uint16 newValue);
 /////////////////////////////////////////////////////
 //Race Logica
 void stuurMotorenBij(void);
-void PlaatsIRWaardenInArray(void);
+void PlaatsIRWaardenInArray(uint8 value);
 void AnalyseerData(uint8 data);
+uint8 CheckVoor2eLijn(void);
 
 /////////////////////////////////////////////////////
 //Varia
