@@ -56,28 +56,31 @@ CY_ISR(sendBleData)
 ////////    puttyUart1_PutString(strBuffer);
 ////////    sprintf(strBuffer, "R/%u/\r\n", pwmr);
 ////////    puttyUart1_PutString(strBuffer);
-    
-    DecToHex(pwml);
-    sprintf(strBuffer, "L/%s/\r\n", hexaDecBuffer); 
+    char hexDecBuffer[2];
+    DecToHex(pwml, hexDecBuffer);
+    sprintf(strBuffer, "L/%s/\r\n", hexDecBuffer); 
     bleUart1_PutString(strBuffer);
+    puttyUart1_PutString(strBuffer);
     
-    DecToHex(pwmr);
-    sprintf(strBuffer, "R/%s/\r\n",hexaDecBuffer); 
+    DecToHex(pwmr, hexDecBuffer);
+    sprintf(strBuffer, "R/%s/\r\n",hexDecBuffer); 
     bleUart1_PutString(strBuffer);
+    puttyUart1_PutString(strBuffer);
 }
 
 void ProcessCommandMsg(void)
 {
+    char hexInputBuffer[2];
     if (RB.cmd == 'I')
     {  
-        IRWaarden = getCMDValue('/', RB.valstr);
+        IRWaarden = getCMDValue('/', RB.valstr, hexInputBuffer);
         sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
         puttyUart1_PutString(strMsg1);
 
     } 
     else if (RB.cmd == 'T')
     {
-        TestGetal = getCMDValue('/', RB.valstr);
+        TestGetal = getCMDValue('/', RB.valstr, hexInputBuffer);
         //sprintf(strMsg1,"TestGetal=%u\r\n", TestGetal); 
 //        puttyUart1_PutString(strMsg1);
     }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="Comparator" visible="true">
+
+    <register name="CTB_CTRL"
+        address="`$INSTANCE_NAME`_cy_psoc4_abuf__CTBM_CTB_CTRL" 
+        bitWidth="32" desc="Global CTB IP and power control">
+        <field name="DEEPSLEEP_ON" from="30" to="30" access="RW" desc="Selects component behavior in DeepSleep power mode">
+            <value name="DISABLE"   value="0" desc="CTB IP disabled off during DeepSleep power mode"/>
+            <value name="ENABLE"    value="1" desc="CTB IP remains enabled during DeepSleep power mode (if ENABLED=1)"/>
+        </field>
+        <field name="ENABLED" from="31" to="31" access="RW" desc="Selects component behavior in DeepSleep power mode">
+            <value name="DISABLE"   value="0" desc="CTB IP disabled (put analog in power down, open all switches)"/>
+            <value name="ENABLE"    value="1" desc="CTB IP enabledCTB IP enabled"/>
+        </field>
+	</register> 
+    
+    <register name="COMP_STAT"
+		address="`$INSTANCE_NAME`_cy_psoc4_abuf__COMP_STAT" 
+        bitWidth="32" desc="Comparator status">   
+        <field name="OA_COMP" from="16" to="16" access="R" desc="Current comparator status">
+        </field>
+	</register>  
+    
+    <register name="OA_RES_CTRL"
+		address="`$INSTANCE_NAME`_cy_psoc4_abuf__OA_RES_CTRL" bitWidth="32" desc="Comparator and resistor control">
+        <field name="OA_PWR_MODE" from="1" to="0" access="RW" desc="Selects speed for comparator">
+            <value name="OFF"  value="00" desc="Off"/>
+            <value name="SLOW"  value="01" desc="Slow speed"/>
+            <value name="MED"  value="10" desc="Medium speed"/>
+            <value name="FAST"  value="11" desc="Fast speed"/>
+        </field>
+        <field name="OA_HYST_EN" from="5" to="5" access="RW" desc="Selects hysteresis (10mV)">
+            <value name="DISABLE"   value="0" desc="Hysteresis disabled"/>
+            <value name="ENABLE"    value="1" desc="Hysteresis enabled"/>
+        </field>
+        <field name="OA_COMPINT" from="9" to="8" access="RW" desc="Selects comparator edge detect">
+            <value name="DISABLE"   value="00" desc="Disabled"/>
+            <value name="RISING"    value="01" desc="Rising edge"/>
+            <value name="FALLING"   value="10" desc="Falling edge"/>
+            <value name="BOTH"      value="11" desc="Both rising and falling edges"/>
+        </field>
+        <field name="OA_PUMP_EN" from="11" to="11" access="RW" desc="Selects pump">
+            <value name="DISABLE"   value="0" desc="Pump disabled"/>
+            <value name="ENABLE"    value="1" desc="Pump enabled"/>
+        </field>
+	</register>
+    
+    <register name="OA_COMP_TRIM"
+		address="`$INSTANCE_NAME`_cy_psoc4_abuf__OA_COMP_TRIM" bitWidth="32" desc="Comparator trim">
+	</register> 
+    
+    <register name="OA_OFFSET_TRIM"
+		address="`$INSTANCE_NAME`_cy_psoc4_abuf__OA_OFFSET_TRIM" bitWidth="32" desc="Comparator offset trim">
+	</register>
+        
+    <register name="OA_SLOPE_OFFSET_TRIM"
+		address="`$INSTANCE_NAME`_cy_psoc4_abuf__OA_SLOPE_OFFSET_TRIM" bitWidth="32" desc="Comparator slope offset drift trim">
+	</register>
+    
+    <register name="INTR"
+        address="`$INSTANCE_NAME`_cy_psoc4_abuf__INTR" 
+        bitWidth="32" desc="Interrupt request register">
+        <field name="COMP1" from="0" to="0" access="RW" desc="Comparator #1 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+        </field>
+        <field name="COMP2" from="1" to="1" access="RW" desc="Comparator #2 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+        </field>
+    </register> 
+
+    <register name="INTR_SET"
+        address="`$INSTANCE_NAME`_cy_psoc4_abuf__INTR_SET" 
+        bitWidth="32" desc="Interrupt request set register">
+        <field name="COMP1_SET" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+        </field>
+        <field name="COMP2_SET" from="1" to="1" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+        </field>
+    </register>
+    
+    <register name="INTR_MASK"
+        address="`$INSTANCE_NAME`_cy_psoc4_abuf__INTR_MASK" 
+        bitWidth="32" desc="Interrupt request mask">
+        <field name="COMP1_MASK" from="0" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+        </field>
+        <field name="COMP2_MASK" from="1" to="1" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+        </field>
+    </register> 
+
+    <register name="INTR_MASKED"
+        address="`$INSTANCE_NAME`_cy_psoc4_abuf__INTR_MASKED" 
+        bitWidth="32" desc="Interrupt request masked">
+        <field name="COMP1_MASKED" from="0" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+        </field>
+        <field name="COMP2_MASKED" from="1" to="1" access="R" desc="Logical and of corresponding request and mask bits.">
+        </field>
+    </register> 
+                
+  </block>
+</deviceData>

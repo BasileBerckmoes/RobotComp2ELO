@@ -36,7 +36,7 @@ uint8 pwmr;
 
 //Bluetooth communicatie
 CY_ISR_PROTO(sendBleData);  
-char hexaDecBuffer[2];
+//char hexaDecBuffer[2];
 void ProcessCommandMsg(void);
 char strMsg1[64];
 uint8 TestGetal;
@@ -52,7 +52,7 @@ uint8 telTot(uint8 getal, uint8 min, uint8 max);
 void telProcedure(void);
 void berekenMediaan(uint16 array[]);
 uint8 HexToDec(char hexVal[]);
-uint8 getCMDValue(char delimiter, char str[]);
-void DecToHex(uint8 value);
+uint8 getCMDValue(char delimiter, char str[], char HexBuffer[]);
+void DecToHex(uint8 value, char buffer[]);
 
 /* [] END OF FILE */

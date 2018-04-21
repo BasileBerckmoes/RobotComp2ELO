@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+    xmlns="http://cypress.com/xsd/cydevicedata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+    <block name="`$INSTANCE_NAME`" desc="" visible="true">
+
+        <block name="GROUP_CSDV2" desc="" visible="true">  
+
+            <register name="CONFIG" address="CYREG_CSD0_CONFIG" bitWidth="32" desc="Configuration and Control">
+                <field name="IREF_SEL" from="0" to="0" access="RW" desc="Select Iref supply.">
+                    <value name="IREF_SRSS" value="0" desc="select SRSS Iref (default)"/>
+                    <value name="IREF_PASS" value="1" desc="select PASS.AREF Iref, only available if PASS IP is on the chip."/>
+                </field>
+                <field name="FILTER_DELAY" from="8" to="4" access="RW" desc="This value determines the number of cycles that the digital filter makes the CSDCMP output ignored while the counter counts and IDAC is on. &#xA;When set to 0 the digital filter is off. When set to any other value the ignoring will last for FILTER_DELAY clk_csd cycles after the start of each measurement and from the first comparator trip to the end of each measurement.">
+                </field>
+                <field name="SHIELD_DELAY" from="11" to="10" access="RW" desc="Selects the delay by which csd_shield is delayed relative to csd_sense.">
+                    <value name="OFF" value="0" desc="Delay line is off, csd_shield=csd_sense"/>
+                    <value name="D5NS" value="1" desc="Introduces a 5ns delay (typ)"/>
+                    <value name="D10NS" value="10" desc="Introduces a 10ns delay (typ)"/>
+                    <value name="D20NS" value="11" desc="Introduces a 20ns delay (typ)"/>
+                </field>
+                <field name="SENSE_EN" from="12" to="12" access="RW" desc="Enables the sense modulator output. &#xA;0: all switches, static or dynamic, are open and IDAC in CSD mode is off&#xA;1: switches and IDAC can be closed/on as per MMIO setting and CSD sequencer.">
+                </field>
+                <field name="FULL_WAVE" from="17" to="17" access="RW" desc="Enables full wave cap sensing mode">
+                    <value name="HALFWAVE" value="0" desc="Half Wave mode (normal).&#xA;In this mode the comparator always trips in the same direction (positive or negative edge) and the same Vref, i.e. no polarity change."/>
+                    <value name="FULLWAVE" value="1" desc="Full Wave mode.&#xA;In this mode the comparator trips in opposite direction and with different Vref in each phase, i.e. the polarity flips."/>
+                </field>
+                <field name="MUTUAL_CAP" from="18" to="18" access="RW" desc="Enables mutual cap sensing mode">
+                    <value name="SELFCAP" value="0" desc="Self-cap mode (configure sense line as CSD_SENSE)"/>
+                    <value name="MUTUALCAP" value="1" desc="Mutual-cap mode (configure Tx line as CSD_SENSE, inverted Tx line as CSD_SHIELD and Rx Line as AMUXA). In this mode the polarity bit of the IDAC is controlled by csd_sense."/>
+                </field>
+                <field name="CSX_DUAL_CNT" from="19" to="19" access="RW" desc="Enable the use of two counters for MUTUAL cap sensing mode (CSX), do not use when MUTUAL_CAP=0">
+                    <value name="ONE" value="0" desc="Use one counter for both phases (source and sink)."/>
+                    <value name="TWO" value="1" desc="Use two counters, separate count for when csd_sense is high and when csd_sense is low."/>
+                </field>
+                <field name="DSI_COUNT_SEL" from="24" to="24" access="RW" desc="Select what to output  on the dsi_count bus.">
+                    <value name="CSD_RESULT" value="0" desc="depending on the dsi_count_val_sel input either output  RESULT_VAL1.VALUE (0) or RESULT_VAL2.VALUE (1) on the dsi_count bus. Note that dsi_count_val_sel is not synchronized, i.e. it controls the mux combinatorially."/>
+                    <value name="ADC_RESULT" value="1" desc="output ADC_RES.VIN_CNT on the dsi_count bus"/>
+                </field>
+                <field name="DSI_SAMPLE_EN" from="25" to="25" access="RW" desc="Enables the use of the dsi_sample_in input instead of the comparator output to strobe COUNTER.">
+                </field>
+                <field name="SAMPLE_SYNC" from="26" to="26" access="RW" desc="Enables double synchronizing of sample input from DSI (only relevant when DSI_SAMPLE_EN=1).">
+                </field>
+                <field name="DSI_SENSE_EN" from="27" to="27" access="RW" desc="Enables the use of the dsi_sense_in input instead of the internally generated modulation signal to drive csd_sense and csd_shield signals.">
+                </field>
+                <field name="LP_MODE" from="30" to="30" access="RW" desc="Select the power mode for the CSD components (REFGEN, AMBUF, CSDCMP, HSCMP):&#xA;0: High Power mode&#xA;1: Low Power mode">
+                </field>
+                <field name="ENABLE" from="31" to="31" access="RW" desc="Master enable of the CSDv2 IP.  Must be set to 1 for any CSDv2, ADC or IDAC operation to function.&#xA;When 0 all analog components will be off and all switches will be open.">
+                </field>
+            </register>
+            <register name="IDACA" address="CYREG_CSD0_IDACA" bitWidth="32" desc="IDACA Configuration">
+                <field name="VAL" from="6" to="0" access="RW" desc="Current value setting for this IDAC (7 bits).">
+                </field>
+                <field name="POL_DYN" from="7" to="7" access="RW" desc="Polarity is dynamic, this bit does not influence the logic in the SoftIP, it only goes to the HardIP.">
+                    <value name="STATIC" value="0" desc="Static polarity. Polarity is expected to be stable, so to save power this avoids the shunting of the unused polarity, at the expense of response time."/>
+                    <value name="DYNAMIC" value="1" desc="Dynamic polarity. Polarity is expected to change frequently (e.g. invert after every csd_sense phase), so to improve response time this keeps the shunt of the unused polarity on at the expense of power."/>
+                </field>
+                <field name="POLARITY" from="9" to="8" access="RW" desc="Selects the polarity of the IDAC (sensing operation). Normally the actual polarity depends on this bit, optionally mixed with DSI (see DSI_CTRL_EN) and if LEG1_MODE==CSD also mixed with the CSD configuration and operation. However in mutual cap mode with one IDAC (config.mutual_cap=1 &amp; config.csx_dual_idac=0) the polarity of the IDAC is controlled by csd_sense.">
+                    <value name="VSSA_SRC" value="0" desc="Normal: switch between Vssa and Cmod.  For non-CSD application, IDAC will source current."/>
+                    <value name="VDDA_SNK" value="1" desc="Inverted: switch between Vdda and Cmod. For non-CSD application, IDAC will sink current."/>
+                    <value name="SENSE" value="10" desc="The polarity of the IDAC will follow the csd_sense signal (POL_DYN bit should be set too). The intended usage is for CSX using a single IDAC."/>
+                    <value name="SENSE_INV" value="11" desc="The polarity of the IDAC will follow the inverted csd_sense signal (POL_DYN bit should be set too). The intended usage is for CSX using a single IDAC."/>
+                </field>
+                <field name="BAL_MODE" from="11" to="10" access="RW" desc="Balancing mode: only applies to legs configured as CSD.">
+                    <value name="FULL" value="0" desc="enabled from start of Phi2 until disabled by CSDCMP. Intended usage: legacy CSD for balancing over a full csd_sense period (non-overlap should be turned off)"/>
+                    <value name="PHI1" value="1" desc="enabled from start of Phi1 and disabled by CSDCMP or at end of Phi1. Enables dual IDAC CSX or Full-Wave, one for sourcing and the other for sinking."/>
+                    <value name="PHI2" value="10" desc="enabled from start of Phi2 and disabled by CSDCMP or at end of Phi2. Intended usage: CSD Low EMI or  dual IDAC CSX or Full-Wave."/>
+                    <value name="PHI1_2" value="11" desc="enabled from start of both Phi1 and Phi2 and disabled by CSDCMP or at end of Phi1 or Phi2 (if non-overlap enabled). Intended usage: single IDAC CSX, or Full-Wave."/>
+                </field>
+                <field name="LEG1_MODE" from="17" to="16" access="RW" desc="Controls the usage mode of LEG1 and the Polarity bit">
+                    <value name="GP_STATIC" value="0" desc="General Purpose static mode: LEG1 and POLARITY are controlled by MMIO and optionally mixed with DSI (see DSI_CTRL_EN). No shunting is used, this saves power when off but also any on/off switching will take longer."/>
+                    <value name="GP" value="1" desc="General Purpose dynamic mode: LEG1 and POLARITY are controlled by MMIO and optionally mixed with DSI (see DSI_CTRL_EN). Shunting is used, so on/off switching is faster, but power is wasted when the leg is disabled."/>
+                    <value name="CSD_STATIC" value="10" desc="CSD static mode: LEG1 can only be on when the CSD Sequencer is in the Sample_init or Sample_norm state. In those states LEG1 is controlled by LEG1_EN, csd_sense and the CSD configuration. Polarity is controlled by the CSD configuration and operation. In addition leg1 enable and polarity can optionally be mixed with DSI (see DSI_CTRL_EN). No shunting is used, this saves power when off but also any on/off switching will take longer."/>
+                    <value name="CSD" value="11" desc="CSD dynamic mode: LEG1 can only be on when the CSD Sequencer is in the Sample_init or Sample_norm state. In thoses states LEG1 is controlled by LEG1_EN, the CSD configuration, csd_sense and the flopped CSDCMP output (CSDCMP_OUT_FF). Polarity is controlled by the CSD configuration and operation. In addition leg1 enable and polarity can optionally be mixed with DSI (see DSI_CTRL_EN). Shunting is used, so on/off switching is faster, but power is wasted when the leg is disabled."/>
+                </field>
+                <field name="LEG2_MODE" from="19" to="18" access="RW" desc="Controls the usage mode of LEG2">
+                    <value name="GP_STATIC" value="0" desc="General Purpose static mode: LEG2 is controlled by MMIO and optionally mixed with DSI (see DSI_CTRL_EN).  No shunting is used, this saves power when off but also any on/off switching will take longer."/>
+                    <value name="GP" value="1" desc="General Purpose dynamic mode: LEG2 is controlled by MMIO and optionally mixed with DSI (see DSI_CTRL_EN). Shunting is used, so on/off switching is faster, but power is wasted when the leg is disabled."/>
+                    <value name="CSD_STATIC" value="10" desc="CSD static mode: LEG2 can only be on when the CSD Sequencer is in the Sample_init or Sample_norm state. In those states LEG2 is controlled by LEG2_EN, csd_sense and the CSD configuration. Polarity is controlled by the CSD configuration and operation. In addition leg2 enable and polarity can optionally be mixed with DSI (see DSI_CTRL_EN). No shunting is used, this saves power when off but also any on/off switching will take longer."/>
+                    <value name="CSD" value="11" desc="CSD dynamic mode: LEG2 can only be on when the CSD Sequencer is in the Sample_init or Sample_norm state. In those states LEG2 is controlled by LEG2_EN, the CSD configuration, csd_sense and the flopped CSDCMP output (CSDCMP_OUT_FF). In addition leg2 enable can optionally be mixed with DSI (see DSI_CTRL_EN). Shunting is used, so on/off switching is faster, but power is wasted when the leg is disabled."/>
+                </field>
+                <field name="DSI_CTRL_EN" from="21" to="21" access="RW" desc="Mix DSI inputs with MMIO controls or not (before getting mixed with CSD controls if enabled).&#xA;0: no DSI control &#xA;     IDACA_POLARITY = IDACA.POLARITY &#xA;     IDACA_LEG1_EN =  IDACA.LEG1_EN &#xA;     IDACA_LEG2_EN = IDACA.LEG2_EN   &#xA;1: Mix MMIO with DSI control&#xA;     IDACA_POLARITY = IDACA.POLARITY EXOR dsi_idaca_pol&#xA;     IDACA_LEG1_EN =  IDACA.LEG1_EN AND dsi_idaca_leg1_en &#xA;     IDACA_LEG2_EN = IDACA.LEG2_EN AND dsi_idaca_leg2_en">
+                </field>
+                <field name="RANGE" from="23" to="22" access="RW" desc="IDAC multiplier">
+                    <value name="IDAC_LO" value="0" desc="1 LSB =   37.5 nA"/>
+                    <value name="IDAC_MED" value="1" desc="1 LSB =  300 nA"/>
+                    <value name="IDAC_HI" value="10" desc="1 LSB = 2400 nA"/>
+                </field>
+                <field name="LEG1_EN" from="24" to="24" access="RW" desc="output enable for leg 1 to CSDBUSA">
+                </field>
+                <field name="LEG2_EN" from="25" to="25" access="RW" desc="output enable for leg 2 to CSDBUSA">
+                </field>
+            </register>
+            <register name="IDACB" address="CYREG_CSD0_IDACB" bitWidth="32" desc="IDACB Configuration">
+                <field name="VAL" from="6" to="0" access="RW" desc="Current value setting for this IDAC (7 bits).">
+                </field>
+                <field name="POL_DYN" from="7" to="7" access="RW" desc="Polarity is dynamic, this bit does not influence the logic in the SoftIP, it only goes to the HardIP.">
+                    <value name="STATIC" value="0" desc="Static polarity. Polarity is expected to be stable, so to save power this avoids the shunting of the unused polarity, at the expense of response time."/>
+                    <value name="DYNAMIC" value="1" desc="Dynamic polarity. Polarity is expected to change frequently (e.g. invert after every csd_sense phase), so to improve response time this keeps the shunt of the unused polarity on at the expense of power."/>
+                </field>
+                <field name="POLARITY" from="9" to="8" access="RW" desc="Selects the polarity of the IDAC (sensing operation). Normally the actual polarity depends on this bit, optionally mixed with DSI (see DSI_CTRL_EN) and if LEG1_EN==1 and LEG1_MODE==CSD also mixed with the CSD configuration and operation. In mutual cap mode however (see config.mutual_cap) the polarity of the IDAC is controlled by csd_sense. If LEG3_EN=1 (the other two legs must be off) then the ADC sequencer controls the IDACB polarity, optionally mixed with DSI.">
+                    <value name="VSSA_SRC" value="0" desc="Normal: switch between Vssa and Cmod.  For non-CSD application, IDAC will source current."/>
+                    <value name="VDDA_SNK" value="1" desc="Inverted: switch between Vdda and Cmod. For non-CSD application, IDAC will sink current."/>
+                    <value name="SENSE" value="10" desc="The polarity of the IDAC will follow the csd_sense signal (POL_DYN bit should be set too). The intended usage is for CSX using a single IDAC."/>
+                    <value name="SENSE_INV" value="11" desc="The polarity of the IDAC will follow the inverted csd_sense signal (POL_DYN bit should be set too). The intended usage is for CSX using a single IDAC."/>
+                </field>
+                <field name="BAL_MODE" from="11" to="10" access="RW" desc="same as corresponding IDACA Balancing mode">
+                    <value name="FULL" value="0" desc="same as corresponding IDACA Balancing mode"/>
+                    <value name="PHI1" value="1" desc="same as corresponding IDACA Balancing mode"/>
+                    <value name="PHI2" value="10" desc="same as corresponding IDACA Balancing mode"/>
+                    <value name="PHI1_2" value="11" desc="same as corresponding IDACA Balancing mode"/>
+                </field>
+                <field name="LEG1_MODE" from="17" to="16" access="RW" desc="Controls the usage mode of LEG1 and the Polarity bit">
+                    <value name="GP_STATIC" value="0" desc="same as corresponding IDACA.LEG1_MODE"/>
+                    <value name="GP" value="1" desc="same as corresponding IDACA.LEG1_MODE"/>
+                    <value name="CSD_STATIC" value="10" desc="same as corresponding IDACA.LEG1_MODE"/>
+                    <value name="CSD" value="11" desc="same as corresponding IDACA.LEG1_MODE"/>
+                </field>
+                <field name="LEG2_MODE" from="19" to="18" access="RW" desc="Controls the usage mode of LEG2">
+                    <value name="GP_STATIC" value="0" desc="same as corresponding IDACA.LEG2_MODE"/>
+                    <value name="GP" value="1" desc="same as corresponding IDACA.LEG2_MODE"/>
+                    <value name="CSD_STATIC" value="10" desc="same as corresponding IDACA.LEG2_MODE"/>
+                    <value name="CSD" value="11" desc="same as corresponding IDACA.LEG2_MODE"/>
+                </field>
+                <field name="DSI_CTRL_EN" from="21" to="21" access="RW" desc="Mix DSI inputs with MMIO controls or not (before getting mixed with CSD controls if enabled)&#xA;0: no DSI control&#xA;     IDACB_POLARITY = IDACB.POLARITY &#xA;     IDACB_LEG1_EN =  IDACB.LEG1_EN &#xA;     IDACB_LEG2_EN = IDACB.LEG2_EN   &#xA;     IDACB_LEG3_EN = IDACB.LEG3_EN   &#xA;1: Mix MMIO with DSI control&#xA;     IDACB_POLARITY = IDACB.POLARITY EXOR dsi_idacb_pol&#xA;     IDACB_LEG1_EN =  IDACB.LEG1_EN AND dsi_idacb_leg1_en &#xA;     IDACB_LEG2_EN = IDACB.LEG2_EN AND dsi_idacb_leg2_en  &#xA;     IDACB_LEG3_EN = IDACB.LEG3_EN AND dsi_idacb_leg3_en">
+                </field>
+                <field name="RANGE" from="23" to="22" access="RW" desc="IDAC multiplier">
+                    <value name="IDAC_LO" value="0" desc="1 LSB =   37.5 nA"/>
+                    <value name="IDAC_MED" value="1" desc="1 LSB =  300 nA"/>
+                    <value name="IDAC_HI" value="10" desc="1 LSB = 2400 nA"/>
+                </field>
+                <field name="LEG1_EN" from="24" to="24" access="RW" desc="output enable for leg 1 to CSDBUSB or CSDBUSA">
+                </field>
+                <field name="LEG2_EN" from="25" to="25" access="RW" desc="output enable for leg 2 to CSDBUSB or CSDBUSA">
+                </field>
+                <field name="LEG3_EN" from="26" to="26" access="RW" desc="output enable for leg3 to CSDBUSC, only allowed when RANGE = IDAC_LO. When this bit is set both other legs should be off.&#xA;Note that leg3 can only be used for ADC mode, not GP mode. Which means that leg3 can only be on when the ADC Sequencer is in the ADC_measure or Calib_measure state. In those states  leg3 is controlled by the ADC configuration and the HSCMP output. In addition this leg3 enable bit can optionally be mixed with DSI (see DSI_CTRL_EN).&#xA;When LEG3_EN=1 also the IDACB polarity is controlled by the ADC sequencer.">
+                </field>
+            </register>
+        </block>
+    </block>
+</deviceData>

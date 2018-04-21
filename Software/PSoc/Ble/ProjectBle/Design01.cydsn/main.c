@@ -52,11 +52,18 @@ CY_ISR(getJoystickValues)
 
 CY_ISR(motorControl)
 {
+   
     LED_Write(~LED_Read());
+//     uint8 status = 0;
+//    if (LED_Read() != 0)
+//    {
+//        status = 1;
+//    } 
     char strBuffer[10];
-    DecToHex(LED_Read());
-    
-    sprintf(strBuffer, "M/%s/\r\n", hexaDecBuffer); // strBuffer -> plaats waar string opgeslagen wordt
+    char motorHexBuffer[2];
+    DecToHex(LED_Read(), motorHexBuffer);
+    //puttyUart1_PutString(hexaDecBuffer);
+    sprintf(strBuffer, "M/%s/\r\n", motorHexBuffer); // strBuffer -> plaats waar string opgeslagen wordt
                                                   // %s -> string die een hexadeximale bevat namelijk hexaDecBuffer bv 65 
     bleUart1_PutString(strBuffer);
     puttyUart1_PutString(strBuffer);
@@ -224,7 +231,7 @@ int main(void)
 //        
 //}
 
-uint8 getCMDValue(char delimiter, char str[])
+uint8 getCMDValue(char delimiter, char str[], char HexBuffer[])
 {
     for (uint8 i = 0; i < strlen(str); i++)
         {
@@ -234,15 +241,15 @@ uint8 getCMDValue(char delimiter, char str[])
             if (str[i] == delimiter /*&& str[i+3] == delimiter*/)
             {
                 
-                hexaDecBuffer[0] = str[i+1];
-                hexaDecBuffer[1] = str[i+2];
+                HexBuffer[0] = str[i+1];
+                HexBuffer[1] = str[i+2];
                 //sprintf(strMsg1,"IRWaarde=%u ", IRWaarden); 
                 //puttyUart1_PutString(strMsg1);
                 break;
             }    
         }
         
-    return HexToDec(hexaDecBuffer);
+    return HexToDec(HexBuffer);
 }
 void printBINopLCD(uint8 value, int row)
 {
@@ -291,29 +298,35 @@ uint8 HexToDec(char hexVal[])
     return dec_val;
 }
 
-void DecToHex(uint8 value)
+void DecToHex(uint8 value, char buffer[])
 {
-    uint8 i = 1;
+    char strBuffer[20];
+    uint8 i = 2;
+    //sprintf(strBuffer, "input is: %u/\r\n", value);
+        //puttyUart1_PutString(strBuffer);
     if (value == 0)
     {
-        hexaDecBuffer[0] =  '0';
-        hexaDecBuffer[1] ='0';
-    }
-    while (value != 0)
+        buffer[0] =  '0';
+        buffer[1] ='0';
+        
+    } else {
+    
+    for (int i = 1; i >=0 ; i--)
     {
         uint8 temp = value % 16;
         if (temp < 10)
         {
-         hexaDecBuffer[i] = temp + 48;
-        i--;
+        buffer[i] = temp + 48;
+        //sprintf(strBuffer, "waarde is: %u/\r\n", buffer[i]);
+        //puttyUart1_PutString(strBuffer);
         } 
         else 
         {
-            hexaDecBuffer[i] = temp + 55;
-            i--;
+            buffer[i] = temp + 55;
         }
         value = value / 16;
     }
+   }
 }
 
 /* [] END OF FILE */

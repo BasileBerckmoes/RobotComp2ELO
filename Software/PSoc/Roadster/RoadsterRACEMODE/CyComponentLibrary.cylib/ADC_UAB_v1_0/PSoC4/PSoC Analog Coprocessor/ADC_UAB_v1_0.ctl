@@ -1,0 +1,1 @@
+attribute placement_force of \`$INSTANCE_NAME`:DCMTR\: label is "F(Decimator,1)";

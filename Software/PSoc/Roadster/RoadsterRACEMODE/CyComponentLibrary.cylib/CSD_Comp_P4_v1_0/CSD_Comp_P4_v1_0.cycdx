@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="CSD_Comp" visible="true">
+    <register name="CONFIG"
+	    address="`$INSTANCE_NAME`_cy_psoc4_csd_v2_comp__CSD_CONFIG" bitWidth="32" desc="CSD Configuration and control register">
+        <field name="SENSE_EN" from="12" to="12" access="RW" desc="Enables the sense modulator output">
+            <value name="ENABLE"   value="1" desc="Enable SENSE"/>
+            <value name="DISABLE"  value="0" desc="Disable SENSE"/>
+        </field>
+        <field name="LP_MODE" from="30" to="30" access="RW" desc="Select the power mode for the CSD components (REFGEN, AMBUF, CSDCMP, HSCMP).">
+            <value name="HIGH_POWER" value="0" desc="High Power mode"/>
+            <value name="LOW_POWER"  value="1" desc="Low Power mode"/>
+        </field>
+        <field name="ENABLE" from="31" to="31" access="RW" desc="Master enable of the CSD IP">
+            <value name="DISABLE" value="0" desc="Disable CSD IP"/>
+            <value name="ENABLE"  value="1" desc="Enable CSD IP"/>
+        </field>
+    </register>
+
+    <register name="STATUS"
+	    address="`$INSTANCE_NAME`_cy_psoc4_csd_v2_comp__CSD_STATUS" bitWidth="32" desc="Status register">
+        <field name="CSDCMP_OUT" from="3" to="3" access="R" desc="Output of CSD comparator.">
+        </field>
+    </register>
+
+    <register name="REFGEN"
+        address="`$INSTANCE_NAME`_cy_psoc4_csd_v2_comp__REFGEN" bitWidth="32" desc="Reference Generator configuration register">
+        <field name="REFGEN_EN" from="0" to="0" access="RW" desc="Reference Generator Enable">
+            <value name="DISABLE" value="0" desc="Disable Reference Generator"/>
+            <value name="ENABLE"  value="1" desc="Enable Reference Generator"/>
+        </field>
+        <field name="BYPASS" from="4" to="4" access="RW" desc="Bypass selected input reference unbuffered to Comparator reference input">
+        </field>
+        <field name="RES_EN" from="6" to="6" access="RW" desc="Resistor string enable.">
+            <value name="DISABLE" value="0" desc="Open switch on top of the resistor string"/>
+            <value name="ENABLE"  value="1" desc="Resistor string enable"/>
+        </field>
+        <field name="GAIN" from="12" to="8" access="RW" desc="Select resistor string tap for feedback, 0 = minimum Vout, 31 = maximum Vout (only works if the resistor string is enabled; RES_EN=1).">
+        </field>
+        <field name="VREFLO_SEL" from="20" to="16" access="RW" desc="Select resistor string tap for Vreflo, 0 = minimum Vout, 31 = maximum Vout (only works if the resistor string is enabled; RES_EN=1).">
+        </field>
+        <field name="VREFLO_INT" from="23" to="23" access="RW" desc="Ouput the resistor string tap either to Vreflo (0) or Vreflo_int (1).">
+        </field>
+    </register>
+    
+    <register name="CSDCMP"
+	    address="`$INSTANCE_NAME`_cy_psoc4_csd_v2_comp__CSDCMP" bitWidth="32" desc="CSD comparator configuration register">
+        <field name="CSDCMP_EN" from="0" to="0" access="RW" desc="CSD comparator Enable">
+            <value name="DISABLE" value="0" desc="Disable comparator, output is zero"/>
+            <value name="ENABLE"  value="1" desc="On, regular operation. Note that CONFIG.LP_MODE determines the power mode level"/>
+        </field>
+    </register>
+  </block>
+</deviceData>

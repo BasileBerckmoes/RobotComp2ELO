@@ -1,0 +1,1980 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1" xmlns="http://cypress.com/xsd/cydevicedata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+	<block name="`$INSTANCE_NAME`" desc="" visible="true">
+
+		<block name="`$INSTANCE_NAME`" desc="" visible="true">
+<!-- =============== Register definitions for SARv2 IP Block. ============== -->
+			<register name="CTRL" address="0x403a0000" bitWidth="32" desc="Analog control register.">
+
+<!-- **************************SAR_CTRL_REG fields ************************* -->
+<!-- Analog control register. -->
+<!-- *********************************************************************** -->
+				<field name="VREF_SEL" from="6" to="4" access="RW" desc="SARADC internal VREF selection.">
+
+<!-- VREF_SEL bitfield enumerated values -->
+					<value name="VREF0" value="0" desc="VREF0 from PRB (VREF buffer on)"/>
+					<value name="VREF1" value="1" desc="VREF1 from PRB (VREF buffer on)"/>
+					<value name="VREF2" value="10" desc="VREF2 from PRB (VREF buffer on)"/>
+					<value name="VREF_AROUTE" value="11" desc="VREF from AROUTE (VREF buffer on)"/>
+					<value name="VBGR" value="100" desc="1.024V from BandGap (VREF buffer on)"/>
+					<value name="VREF_EXT" value="101" desc="External precision Vref direct from a pin (low impedance path)."/>
+					<value name="VDDA_DIV_2" value="110" desc="Vdda/2  (VREF buffer on)"/>
+					<value name="VDDA" value="111" desc="Vdda."/>
+				</field>
+				<field name="VREF_BYP_CAP_EN" from="7" to="7" access="RW" desc="VREF bypass cap enable for when VREF buffer is on">
+				</field>
+				<field name="NEG_SEL" from="11" to="9" access="RW" desc="SARADC internal NEG selection for Single ended conversion">
+
+<!-- NEG_SEL bitfield enumerated values -->
+					<value name="VSSA_KELVIN" value="0" desc="NEG input of SARADC is connected to &quot;vssa_kelvin&quot;, gives more precision around zero. Note this opens both SARADC internal switches, therefore use this value to insert a break-before-make cycle on those switches when SWITCH_DISABLE is high."/>
+					<value name="ART_VSSA" value="1" desc="NEG input of SARADC is connected to VSSA in AROUTE close to the SARADC"/>
+					<value name="P1" value="10" desc="NEG input of SARADC is connected to P1 pin of SARMUX"/>
+					<value name="P3" value="11" desc="NEG input of SARADC is connected to P3 pin of SARMUX"/>
+					<value name="P5" value="100" desc="NEG input of SARADC is connected to P5 pin of SARMUX"/>
+					<value name="P7" value="101" desc="NEG input of SARADC is connected to P7 pin of SARMUX"/>
+					<value name="ACORE" value="110" desc="NEG input of SARADC is connected to an ACORE in AROUTE"/>
+					<value name="VREF" value="111" desc="NEG input of SARADC is shorted with VREF input of SARADC."/>
+				</field>
+				<field name="SAR_HW_CTRL_NEGVREF" from="13" to="13" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for VREF to NEG switch.">
+				</field>
+				<field name="PWR_CTRL_VREF" from="15" to="14" access="RW" desc="VREF buffer low power mode.">
+
+<!-- PWR_CTRL_VREF bitfield enumerated values -->
+					<value name="NORMAL_PWR" value="0" desc="normal power (default), bypass cap, max clk_sar is 18MHz."/>
+					<value name="HALF_PWR" value="1" desc="deprecated"/>
+					<value name="THIRD_PWR" value="10" desc="Invalid for PSoC4A, otherwise 2X power, no bypass cap, max clk_sar is 1.8MHz"/>
+					<value name="QUARTER_PWR" value="11" desc="deprecated"/>
+				</field>
+				<field name="SPARE" from="19" to="16" access="RW" desc="Spare controls, not yet designated, for late changes done with an ECO">
+				</field>
+				<field name="BOOSTPUMP_EN" from="20" to="20" access="RW" desc="SARADC internal pump: 0=disabled: pump output is VDDA, 1=enabled: pump output is boosted.">
+				</field>
+				<field name="REFBUF_EN" from="21" to="21" access="RW" desc="1 - Enable the SARREFBUF. This bit needs to be set when SAR is enabled and needs reference buffer.">
+				</field>
+				<field name="ICONT_LV" from="25" to="24" access="RW" desc="SARADC low power mode.">
+
+<!-- ICONT_LV bitfield enumerated values -->
+					<value name="NORMAL_PWR" value="0" desc="normal power (default), max clk_sar is 18MHz."/>
+					<value name="HALF_PWR" value="1" desc="1/2 power mode, max clk_sar is 9MHz."/>
+					<value name="MORE_PWR" value="10" desc="1.333 power mode, max clk_sar is 18MHz."/>
+					<value name="QUARTER_PWR" value="11" desc="1/4 power mode, max clk_sar is 4.5MHz."/>
+				</field>
+				<field name="DEEPSLEEP_ON" from="27" to="27" access="RW" desc="- 0: SARMUX IP disabled off during DeepSleep power mode&#xA;- 1: SARMUX IP remains enabled during DeepSleep power mode (if ENABLED=1)">
+				</field>
+				<field name="DSI_SYNC_CONFIG" from="28" to="28" access="RW" desc="- 0: bypass clock domain synchronisation of the DSI config signals.&#xA;- 1: synchronize the DSI config signals to peripheral clock domain.">
+				</field>
+				<field name="DSI_MODE" from="29" to="29" access="RW" desc="SAR sequencer takes configuration from DSI signals (note this also has the same effect as SWITCH_DISABLE==1)&#xA;- 0: Normal mode, SAR sequencer operates according to CHAN_EN enables and CHAN_CONFIG channel configurations&#xA;- 1: CHAN_EN, INJ_START_EN and channel configurations in CHAN_CONFIG and INJ_CHAN_CONFIG are ignored">
+				</field>
+				<field name="SWITCH_DISABLE" from="30" to="30" access="RW" desc="Disable SAR sequencer from enabling routing switches (note DSI and firmware can always close switches independent of this control)&#xA;- 0: Normal mode, SAR sequencer changes switches according to pin address in channel configurations&#xA;- 1: Switches disabled, SAR sequencer does not enable any switches, it is the responsibility of the firmware or UDBs (through DSI) to set the switches to route the signal to be converted through the SARMUX">
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="- 0: SAR IP disabled (put analog in power down and stop clocks), also can clear FW_TRIGGER and INJ_START_EN (if not tailgaiting) on write.&#xA;- 1: SAR IP enabled.">
+				</field>
+			</register>
+			<register name="SAMPLE_CTRL" address="0x403a0004" bitWidth="32" desc="Sample control register.">
+
+<!-- **********************SAR_SAMPLE_CTRL_REG fields ********************** -->
+<!-- Sample control register. -->
+<!-- *********************************************************************** -->
+				<field name="SUB_RESOLUTION" from="0" to="0" access="RW" desc="Conversion resolution for channels that have sub-resolution enabled (RESOLUTION=1) (otherwise resolution is 12-bit).">
+
+<!-- SUB_RESOLUTION bitfield enumerated values -->
+					<value name="8B" value="0" desc="8-bit."/>
+					<value name="10B" value="1" desc="10-bit."/>
+				</field>
+				<field name="LEFT_ALIGN" from="1" to="1" access="RW" desc="Left align data in data[15:0], default data is right aligned in data[11:0], with sign extension to 16 bits if the channel is differential.">
+				</field>
+				<field name="SINGLE_ENDED_SIGNED" from="2" to="2" access="RW" desc="Output data from a single ended conversion as a signed value">
+
+<!-- SINGLE_ENDED_SIGNED bitfield enumerated values -->
+					<value name="UNSIGNED" value="0" desc="Default: result data is unsigned (zero extended if needed)"/>
+					<value name="SIGNED" value="1" desc="result data is signed (sign extended if needed)"/>
+				</field>
+				<field name="DIFFERENTIAL_SIGNED" from="3" to="3" access="RW" desc="Output data from a differential conversion as a signed value when DIFFERENTIAL_EN or NEG_ADDR_EN is set to 1">
+
+<!-- DIFFERENTIAL_SIGNED bitfield enumerated values -->
+					<value name="UNSIGNED" value="0" desc="result data is unsigned (zero extended if needed)"/>
+					<value name="SIGNED" value="1" desc="Default: result data is signed (sign extended if needed)"/>
+				</field>
+				<field name="AVG_CNT" from="6" to="4" access="RW" desc="Averaging Count for channels that have averaging enabled (AVG_EN). A channel will be sampled (1&lt;&lt;(AVG_CNT+1)) = [2..256] times.&#xA;- In ACCUNDUMP mode  (1st order accumulate and dump filter) a channel will be sampled back to back, the average result is calculated and stored and then the next enabled channel is sampled. If shifting is not enabled (AVG_SHIFT=0) then the result is forced to shift right so that is fits in 16 bits, so right shift is done by max(0,AVG_CNT-3).&#xA;- In INTERLEAVED mode one sample is taken per triggered scan, only in the scan where the final averaging count is reached a valid average is calculated and stored in the RESULT register (by definition the same scan for all the channels that have averaging enabled). In all other scans the RESULT register for averaged channels will have an invalid result and the intermediate accumulated value is stored in the 16-bit WORK register. In this mode make sure that the averaging count is low enough to ensure that the intermediate value does not exceed 16-bits otherwise the MSBs will be lost. So for a 12-bit resolution the averaging count should be set to 16 or less (AVG_CNT=&lt;3).">
+				</field>
+				<field name="AVG_SHIFT" from="7" to="7" access="RW" desc="Averaging shifting: after averaging the result is shifted right to fit in the sample resolution. For averaging the sample resolution is the highest resolution allowed by wounding.">
+				</field>
+				<field name="AVG_MODE" from="8" to="8" access="RW" desc="Averaging mode,  in DSI mode this bit is ignored and only AccuNDump mode is available.">
+
+<!-- AVG_MODE bitfield enumerated values -->
+					<value name="ACCUNDUMP" value="0" desc="Accumulate and Dump (1st order accumulate and dump filter): a channel will be sampled back to back and averaged"/>
+					<value name="INTERLEAVED" value="1" desc="Interleaved: Each scan (trigger) one sample is taken per channel and averaged over several scans."/>
+				</field>
+				<field name="CONTINUOUS" from="16" to="16" access="RW" desc="- 0: Wait for next FW_TRIGGER (one shot) or hardware (DSI) trigger (e.g. from TPWM for periodic triggering) before scanning enabled channels.&#xA;- 1: Continuously scan enabled channels, ignore triggers.">
+				</field>
+				<field name="DSI_TRIGGER_EN" from="17" to="17" access="RW" desc="- 0: firmware trigger only: disable hardware (DSI) trigger.&#xA;- 1: enable hardware (DSI) trigger (e.g. from TCPWM, GPIO or UDB).">
+				</field>
+				<field name="DSI_TRIGGER_LEVEL" from="18" to="18" access="RW" desc="- 0: DSI trigger signal is a pulse input, a positive edge detected on the DSI trigger signal triggers a new scan.&#xA;- 1: DSI trigger signal is a level input, as long as the DSI trigger signal remains high the SAR will do continuous scans.">
+				</field>
+				<field name="DSI_SYNC_TRIGGER" from="19" to="19" access="RW" desc="- 0: bypass clock domain synchronisation of the DSI trigger signal.&#xA;- 1: synchronize the DSI trigger signal to the SAR clock domain, if needed an edge detect is done in the peripheral clock domain.">
+				</field>
+				<field name="UAB_SCAN_MODE" from="22" to="22" access="RW" desc="Select whether UABs are scheduled or unscheduled. When no UAB is scanned this selection is ignored.">
+
+<!-- UAB_SCAN_MODE bitfield enumerated values -->
+					<value name="UNSCHEDULED" value="0" desc="Unscheduled UABs: one or more of the UABs scanned by the SAR is not scheduled, for each channel that scans a UAB the SAR will wait for a positive edge on the trigger output of that UAB. Caveat: in this mode the length of SAR scan can be variable."/>
+					<value name="SCHEDULED" value="1" desc="Scheduled UABs: All UABs scanned by the SAR are assumed to be properly scheduled, i.e. their output is assumed to be valid when sampled by the SAR and the SAR does not wait. In this mode the length of the SAR scan is constant. &#xA;This mode requires that the SAR scans strictly periodically, i.e. the SAR has to either run continuously or has to be triggered by a periodic hardware trigger (TCPWM or UDB timer). It also requires that the end of the UAB valid phase is precisely aligned with the end of the SAR sample period (using UAB.STARTUP_DELAY). Normally this scheduling is done by Creator."/>
+				</field>
+				<field name="REPEAT_INVALID" from="23" to="23" access="RW" desc="For unscheduled UAB_SCAN_MODE only, do the following if an invalid sample is received:&#xA;- 0: use the last known valid sample for that channel and clear the NEWVALUE flag&#xA;- 1: repeat the conversions until a valid sample is received (caveat: could be never if the UAB valid window is incorrectly schedule w.r.t. SAR sampling)">
+				</field>
+				<field name="VALID_SEL" from="26" to="24" access="RW" desc="Static UAB Valid select&#xA;0=UAB0 half 0 Valid output&#xA;1=UAB0 half 1 Valid output&#xA;2=UAB1 half 0 Valid output&#xA;3=UAB1 half 1 Valid output&#xA;4=UAB2 half 0 Valid output&#xA;5=UAB2 half 1 Valid output&#xA;6=UAB3 half 0 Valid output&#xA;7=UAB3 half 1 Valid output">
+				</field>
+				<field name="VALID_SEL_EN" from="27" to="27" access="RW" desc="Enable static UAB Valid selection (override Hardware)">
+				</field>
+				<field name="VALID_IGNORE" from="28" to="28" access="RW" desc="Ignore UAB valid signal, including the dynamic/Hardware from AROUTE and the static Valid selection from the VALID_SEL fields above">
+				</field>
+				<field name="TRIGGER_OUT_EN" from="30" to="30" access="RW" desc="SAR output trigger enable (used for UAB synchronization). To ensure multiple UABs starting at the same trigger it is recommended to use this bit to temporarily disable the trigger output until all those UABs are set to run (UAB.SRAM_CTRL.RUN=1).">
+				</field>
+				<field name="EOS_DSI_OUT_EN" from="31" to="31" access="RW" desc="Enable to output EOS_INTR to DSI. When enabled each time EOS_INTR is set by the hardware also a pulse is send on the dsi_eos signal.">
+				</field>
+			</register>
+			<register name="SAMPLE_TIME01" address="0x403a0010" bitWidth="32" desc="Sample time specification ST0 and ST1">
+
+<!-- *********************SAR_SAMPLE_TIME01_REG fields ********************* -->
+<!-- Sample time specification ST0 and ST1 -->
+<!-- *********************************************************************** -->
+				<field name="SAMPLE_TIME0" from="9" to="0" access="RW" desc="Sample time0 (aperture) in ADC clock cycles. Note that actual sample time is half a clock less than specified here. The minimum sample time is 194ns, which is 3.5 cycles (4 in this field) with an 18MHz clock. Minimum legal value in this register is 2.">
+				</field>
+				<field name="SAMPLE_TIME1" from="25" to="16" access="RW" desc="Sample time1">
+				</field>
+			</register>
+			<register name="SAMPLE_TIME23" address="0x403a0014" bitWidth="32" desc="Sample time specification ST2 and ST3">
+
+<!-- *********************SAR_SAMPLE_TIME23_REG fields ********************* -->
+<!-- Sample time specification ST2 and ST3 -->
+<!-- *********************************************************************** -->
+				<field name="SAMPLE_TIME2" from="9" to="0" access="RW" desc="Sample time2">
+				</field>
+				<field name="SAMPLE_TIME3" from="25" to="16" access="RW" desc="Sample time3">
+				</field>
+			</register>
+			<register name="RANGE_THRES" address="0x403a0018" bitWidth="32" desc="Global range detect threshold register.">
+
+<!-- **********************SAR_RANGE_THRES_REG fields ********************** -->
+<!-- Global range detect threshold register. -->
+<!-- *********************************************************************** -->
+				<field name="RANGE_LOW" from="15" to="0" access="RW" desc="Low threshold for range detect.">
+				</field>
+				<field name="RANGE_HIGH" from="31" to="16" access="RW" desc="High threshold for range detect.">
+				</field>
+			</register>
+			<register name="RANGE_COND" address="0x403a001c" bitWidth="32" desc="Global range detect mode register.">
+
+<!-- ***********************SAR_RANGE_COND_REG fields ********************** -->
+<!-- Global range detect mode register. -->
+<!-- *********************************************************************** -->
+				<field name="RANGE_COND" from="31" to="30" access="RW" desc="Range condition select.">
+
+<!-- RANGE_COND bitfield enumerated values -->
+					<value name="BELOW" value="0" desc="result &lt; RANGE_LOW"/>
+					<value name="INSIDE" value="1" desc="RANGE_LOW &lt;= result &lt; RANGE_HIGH"/>
+					<value name="ABOVE" value="10" desc="RANGE_HIGH &lt;= result"/>
+					<value name="OUTSIDE" value="11" desc="result &lt; RANGE_LOW || RANGE_HIGH &lt;= result"/>
+				</field>
+			</register>
+			<register name="CHAN_EN" address="0x403a0020" bitWidth="32" desc="Enable bits for the channels">
+
+<!-- ************************SAR_CHAN_EN_REG fields ************************ -->
+<!-- Enable bits for the channels -->
+<!-- *********************************************************************** -->
+				<field name="CHAN_EN" from="15" to="0" access="RW" desc="Channel enable. &#xA;- 0: the corresponding channel is disabled.&#xA;- 1: the corresponding channel is enabled, it will be included in the next scan.">
+				</field>
+			</register>
+			<register name="START_CTRL" address="0x403a0024" bitWidth="32" desc="Start control register (firmware trigger).">
+
+<!-- ***********************SAR_START_CTRL_REG fields ********************** -->
+<!-- Start control register (firmware trigger). -->
+<!-- *********************************************************************** -->
+				<field name="FW_TRIGGER" from="0" to="0" access="RW" desc="When firmware writes a 1 here it will trigger the next scan of enabled channels, hardware clears this bit when the scan started with this trigger is completed. If scanning continuously the trigger is ignored and hardware clears this bit after the next scan is done. This bit is also cleared when the SAR is disabled.">
+				</field>
+			</register>
+			<register name="DFT_CTRL" address="0x403a0030" bitWidth="32" desc="DFT control register.">
+
+<!-- ************************SAR_DFT_CTRL_REG fields *********************** -->
+<!-- DFT control register. -->
+<!-- *********************************************************************** -->
+				<field name="DLY_INC" from="0" to="0" access="RW" desc="DFT control: Control for delay circuits on sampling phase, =1 doubes the non-overlap delay">
+				</field>
+				<field name="HIZ" from="1" to="1" access="RW" desc="DFT control for getting higher input impedance, must be 1 (0 is deprecated)">
+				</field>
+				<field name="DFT_INC" from="19" to="16" access="RW" desc="DFT control for preamp inputs">
+				</field>
+				<field name="DFT_OUTC" from="22" to="20" access="RW" desc="DFT control for preamp outputs">
+				</field>
+				<field name="SEL_CSEL_DFT" from="27" to="24" access="RW" desc="Usage 1: DFT bits for DAC array&#xA;Usage 2: For [0]=1 (when dcen=0): Delay timing for latch enable increased by 20%&#xA;[1]=1: comparator preamp power level increased by 25%">
+				</field>
+				<field name="EN_CSEL_DFT" from="28" to="28" access="RW" desc="Mux select signal for DAC control">
+				</field>
+				<field name="DCEN" from="29" to="29" access="RW" desc="Delay Control Enable for latch.&#xA;- 0: doubles the latch enable time.&#xA;- 1: normal latch enable time.">
+				</field>
+				<field name="ADFT_OVERRIDE" from="31" to="31" access="RW" desc="During deepsleep/ hibernate mode keep SARMUX active, i.e. do not open all switches (disconnect), to be used for ADFT">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG0" address="0x403a0080" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG0_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG1" address="0x403a0084" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG1_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG2" address="0x403a0088" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG2_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG3" address="0x403a008c" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG3_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG4" address="0x403a0090" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG4_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG5" address="0x403a0094" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG5_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG6" address="0x403a0098" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG6_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG7" address="0x403a009c" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG7_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG8" address="0x403a00a0" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG8_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG9" address="0x403a00a4" bitWidth="32" desc="Channel configuration register.">
+
+<!-- **********************SAR_CHAN_CONFIG9_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG10" address="0x403a00a8" bitWidth="32" desc="Channel configuration register.">
+
+<!-- *********************SAR_CHAN_CONFIG10_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG11" address="0x403a00ac" bitWidth="32" desc="Channel configuration register.">
+
+<!-- *********************SAR_CHAN_CONFIG11_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG12" address="0x403a00b0" bitWidth="32" desc="Channel configuration register.">
+
+<!-- *********************SAR_CHAN_CONFIG12_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG13" address="0x403a00b4" bitWidth="32" desc="Channel configuration register.">
+
+<!-- *********************SAR_CHAN_CONFIG13_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG14" address="0x403a00b8" bitWidth="32" desc="Channel configuration register.">
+
+<!-- *********************SAR_CHAN_CONFIG14_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_CONFIG15" address="0x403a00bc" bitWidth="32" desc="Channel configuration register.">
+
+<!-- *********************SAR_CHAN_CONFIG15_REG fields ********************* -->
+<!-- Channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="POS_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this channel (connected to Vplus)">
+				</field>
+				<field name="POS_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel (connected to Vplus)">
+
+<!-- POS_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port (VPORT0)"/>
+				</field>
+				<field name="DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.  If differential is enabled then POS_PIN_ADDR[0] is ignored and considered to be 0, i.e. POS_PIN_ADDR points to the even pin of a pin pair. For differential the even pin of the pair is connected to Vplus and the odd pin of the pair is connected to Vminus. POS_PORT_ADDR is used to identify the port that contains the pins.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (POS_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.  When AVG_EN is set this bit is ignored and always a 12-bit resolution (or highest resolution allowed by wounding) is used for this channel.">
+
+<!-- RESOLUTION bitfield enumerated values -->
+					<value name="MAXRES" value="0" desc="The maximum resolution is used for this channel (maximum resolution depends on wounding)."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="NEG_PIN_ADDR" from="18" to="16" access="RW" desc="Address of the neg pin to be sampled by this channel.">
+				</field>
+				<field name="NEG_PORT_ADDR" from="22" to="20" access="RW" desc="Address of the neg port that contains the pin to be sampled by this channel.">
+
+<!-- NEG_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="AROUTE_VIRT2" value="101" desc="AROUTE virtual port2 (VPORT2)"/>
+					<value name="AROUTE_VIRT1" value="110" desc="AROUTE virtual port1 (VPORT1)"/>
+					<value name="RESERVED1" value="111" desc="Unused fields"/>
+				</field>
+				<field name="NEG_ADDR_EN" from="24" to="24" access="RW" desc="1 - The NEG_PIN_ADDR and NEG_PORT_ADDR determines what drives the Vminus pin. This is a variation of differential mode with no even-odd pair limitation                                                                                                                                0 -  The NEG_SEL determines what drives the Vminus pin.">
+				</field>
+				<field name="DSI_OUT_EN" from="31" to="31" access="RW" desc="DSI data output enable for this channel.&#xA;- 0: the conversion result for this channel is only stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set.&#xA;- 1: the conversion result for this channel is stored in the channel data register and the corresponding CHAN_DATA_VALID bit is set. The same data (same formating), together with the channel number, is sent out on the DSI communication channel for processing in UDBs.">
+				</field>
+			</register>
+			<register name="CHAN_WORK0" address="0x403a0100" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK0_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK1" address="0x403a0104" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK1_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK2" address="0x403a0108" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK2_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK3" address="0x403a010c" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK3_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK4" address="0x403a0110" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK4_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK5" address="0x403a0114" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK5_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK6" address="0x403a0118" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK6_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK7" address="0x403a011c" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK7_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK8" address="0x403a0120" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK8_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK9" address="0x403a0124" bitWidth="32" desc="Channel working data register">
+
+<!-- ***********************SAR_CHAN_WORK9_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK10" address="0x403a0128" bitWidth="32" desc="Channel working data register">
+
+<!-- **********************SAR_CHAN_WORK10_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK11" address="0x403a012c" bitWidth="32" desc="Channel working data register">
+
+<!-- **********************SAR_CHAN_WORK11_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK12" address="0x403a0130" bitWidth="32" desc="Channel working data register">
+
+<!-- **********************SAR_CHAN_WORK12_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK13" address="0x403a0134" bitWidth="32" desc="Channel working data register">
+
+<!-- **********************SAR_CHAN_WORK13_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK14" address="0x403a0138" bitWidth="32" desc="Channel working data register">
+
+<!-- **********************SAR_CHAN_WORK14_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK15" address="0x403a013c" bitWidth="32" desc="Channel working data register">
+
+<!-- **********************SAR_CHAN_WORK15_REG fields ********************** -->
+<!-- Channel working data register -->
+<!-- *********************************************************************** -->
+				<field name="WORK" from="15" to="0" access="R" desc="SAR conversion working data of the channel. The data is written here right after sampling this channel.">
+				</field>
+				<field name="CHAN_WORK_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_NEWVALUE register">
+				</field>
+				<field name="CHAN_WORK_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_WORK_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT0" address="0x403a0180" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT0_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT1" address="0x403a0184" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT1_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT2" address="0x403a0188" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT2_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT3" address="0x403a018c" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT3_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT4" address="0x403a0190" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT4_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="HAN_RESULT5" address="0x403a0194" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT5_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT6" address="0x403a0198" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT6_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT7" address="0x403a019c" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT7_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT8" address="0x403a01a0" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT8_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT9" address="0x403a01a4" bitWidth="32" desc="Channel result data register">
+
+<!-- **********************SAR_CHAN_RESULT9_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT10" address="0x403a01a8" bitWidth="32" desc="Channel result data register">
+
+<!-- *********************SAR_CHAN_RESULT10_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT11" address="0x403a01ac" bitWidth="32" desc="Channel result data register">
+
+<!-- *********************SAR_CHAN_RESULT11_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT12" address="0x403a01b0" bitWidth="32" desc="Channel result data register">
+
+<!-- *********************SAR_CHAN_RESULT12_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT13" address="0x403a01b4" bitWidth="32" desc="Channel result data register">
+
+<!-- *********************SAR_CHAN_RESULT13_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT14" address="0x403a01b8" bitWidth="32" desc="Channel result data register">
+
+<!-- *********************SAR_CHAN_RESULT14_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_RESULT15" address="0x403a01bc" bitWidth="32" desc="Channel result data register">
+
+<!-- *********************SAR_CHAN_RESULT15_REG fields ********************* -->
+<!-- Channel result data register -->
+<!-- *********************************************************************** -->
+				<field name="RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="CHAN_RESULT_NEWVALUE_MIR" from="27" to="27" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_NEWVALUE register">
+				</field>
+				<field name="SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_UPDATED_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_CHAN_RESULT_UPDATED register">
+				</field>
+			</register>
+			<register name="CHAN_WORK_UPDATED" address="0x403a0200" bitWidth="32" desc="Channel working data register 'updated' bits">
+
+<!-- *******************SAR_CHAN_WORK_UPDATED_REG fields ******************* -->
+<!-- Channel working data register 'updated' bits -->
+<!-- *********************************************************************** -->
+				<field name="CHAN_WORK_UPDATED" from="15" to="0" access="R" desc="If set the corresponding WORK register was updated, i.e. was already sampled during the current scan and, in case of Interleaved averaging, reached the averaging count. If this bit is low then either the channel is not enabled or the averaging count is not yet reached for Interleaved averaging.">
+				</field>
+			</register>
+			<register name="CHAN_RESULT_UPDATED" address="0x403a0204" bitWidth="32" desc="Channel result data register 'updated' bits">
+
+<!-- ******************SAR_CHAN_RESULT_UPDATED_REG fields ****************** -->
+<!-- Channel result data register 'updated' bits -->
+<!-- *********************************************************************** -->
+				<field name="CHAN_RESULT_UPDATED" from="15" to="0" access="R" desc="If set the corresponding RESULT register was updated, i.e. was sampled during the previous scan and, in case of Interleaved averaging, reached the averaging count. If this bit is low then either the channel is not enabled or the averaging count is not yet reached for Interleaved averaging.">
+				</field>
+			</register>
+			<register name="CHAN_WORK_NEWVALUE" address="0x403a0208" bitWidth="32" desc="Channel working data register 'new value' bits">
+
+<!-- *******************SAR_CHAN_WORK_NEWVALUE_REG fields ****************** -->
+<!-- Channel working data register 'new value' bits -->
+<!-- *********************************************************************** -->
+				<field name="CHAN_WORK_NEWVALUE" from="15" to="0" access="R" desc="If set the corresponding WORK data received a new value, i.e. was already sampled during the current scan and data was valid.&#xA;In case of  a UAB this New Value bit reflects the value of UAB.valid output, for anything else the data is always valid.&#xA;In case of averaging this New Value bit is an OR of all the valid bits received by each conversion.">
+				</field>
+			</register>
+			<register name="CHAN_RESULT_NEWVALUE" address="0x403a020c" bitWidth="32" desc="Channel result data register 'new value' bits">
+
+<!-- ******************SAR_CHAN_RESULT_NEWVALUE_REG fields ***************** -->
+<!-- Channel result data register 'new value' bits -->
+<!-- *********************************************************************** -->
+				<field name="CHAN_RESULT_NEWVALUE" from="15" to="0" access="R" desc="If set the corresponding RESULT data received a new value, i.e. was sampled during the last scan and data was valid.&#xA;In case of  a UAB this New Value bit reflects the value of UAB.valid output, for anything else the data is always valid.&#xA;In case of averaging this New Value bit is an OR of all the valid bits received by each conversion.">
+				</field>
+			</register>
+			<register name="INTR" address="0x403a0210" bitWidth="32" desc="Interrupt request register.">
+
+<!-- **************************SAR_INTR_REG fields ************************* -->
+<!-- Interrupt request register. -->
+<!-- *********************************************************************** -->
+				<field name="EOS_INTR" from="0" to="0" access="RW" desc="End Of Scan Interrupt: hardware sets this interrupt after completing a scan of all the enabled channels. Write with '1' to clear bit.">
+				</field>
+				<field name="OVERFLOW_INTR" from="1" to="1" access="RW" desc="Overflow Interrupt: hardware sets this interrupt when it sets a new EOS_INTR while that bit was not yet cleared by the firmware. Write with '1' to clear bit.">
+				</field>
+				<field name="FW_COLLISION_INTR" from="2" to="2" access="RW" desc="Firmware Collision Interrupt: hardware sets this interrupt when FW_TRIGGER is asserted while the SAR is BUSY. Raising this interrupt is delayed to when the scan caused by the FW_TRIGGER has been completed, i.e. not when the preceeding scan with which this trigger collided is completed. When this interrupt is set it implies that the channels were sampled later than was intended (jitter). Write with '1' to clear bit.">
+				</field>
+				<field name="DSI_COLLISION_INTR" from="3" to="3" access="RW" desc="DSI Collision Interrupt: hardware sets this interrupt when the DSI trigger signal is asserted while the SAR is BUSY. Raising this interrupt is delayed to when the scan caused by the DSI trigger has been completed, i.e. not when the preceeding scan with which this trigger collided is completed. When this interrupt is set it implies that the channels were sampled later than was intended (jitter). Write with '1' to clear bit.">
+				</field>
+				<field name="INJ_EOC_INTR" from="4" to="4" access="RW" desc="Injection End of Conversion Interrupt: hardware sets this interrupt after completing the conversion for the injection channel (irrespective of if tailgating was used). Write with '1' to clear bit.">
+				</field>
+				<field name="INJ_SATURATE_INTR" from="5" to="5" access="RW" desc="Injection Saturation Interrupt: hardware sets this interrupt if an injection conversion result (before averaging) is either 0x000 or 0xFFF (for 12-bit resolution), this is an indication that the ADC likely saturated. Write with '1' to clear bit.">
+				</field>
+				<field name="INJ_RANGE_INTR" from="6" to="6" access="RW" desc="Injection Range detect Interrupt: hardware sets this interrupt if the injection conversion result (after averaging) met the condition specified by the SAR_RANGE registers. Write with '1' to clear bit.">
+				</field>
+				<field name="INJ_COLLISION_INTR" from="7" to="7" access="RW" desc="Injection Collision Interrupt: hardware sets this interrupt when the injection trigger signal is asserted (INJ_START_EN==1 &amp;&amp; INJ_TAILGATING==0) while the SAR is BUSY. Raising this interrupt is delayed to when the sampling of the injection channel has been completed, i.e. not when the preceeding scan with which this trigger collided is completed. When this interrupt is set it implies that the injection channel was sampled later than was intended. Write with '1' to clear bit.">
+				</field>
+			</register>
+			<register name="INTR_SET" address="0x403a0214" bitWidth="32" desc="Interrupt set request register">
+
+<!-- ************************SAR_INTR_SET_REG fields *********************** -->
+<!-- Interrupt set request register -->
+<!-- *********************************************************************** -->
+				<field name="EOS_SET" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="OVERFLOW_SET" from="1" to="1" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="FW_COLLISION_SET" from="2" to="2" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="DSI_COLLISION_SET" from="3" to="3" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_EOC_SET" from="4" to="4" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_SATURATE_SET" from="5" to="5" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_RANGE_SET" from="6" to="6" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_COLLISION_SET" from="7" to="7" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="INTR_MASK" address="0x403a0218" bitWidth="32" desc="Interrupt mask register.">
+
+<!-- ***********************SAR_INTR_MASK_REG fields *********************** -->
+<!-- Interrupt mask register. -->
+<!-- *********************************************************************** -->
+				<field name="EOS_MASK" from="0" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="OVERFLOW_MASK" from="1" to="1" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="FW_COLLISION_MASK" from="2" to="2" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="DSI_COLLISION_MASK" from="3" to="3" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_EOC_MASK" from="4" to="4" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_SATURATE_MASK" from="5" to="5" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_RANGE_MASK" from="6" to="6" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="INJ_COLLISION_MASK" from="7" to="7" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="INTR_MASKED" address="0x403a021c" bitWidth="32" desc="Interrupt masked request register">
+
+<!-- **********************SAR_INTR_MASKED_REG fields ********************** -->
+<!-- Interrupt masked request register -->
+<!-- *********************************************************************** -->
+				<field name="EOS_MASKED" from="0" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="OVERFLOW_MASKED" from="1" to="1" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="FW_COLLISION_MASKED" from="2" to="2" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="DSI_COLLISION_MASKED" from="3" to="3" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="INJ_EOC_MASKED" from="4" to="4" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="INJ_SATURATE_MASKED" from="5" to="5" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="INJ_RANGE_MASKED" from="6" to="6" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="INJ_COLLISION_MASKED" from="7" to="7" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+			</register>
+			<register name="SATURATE_INTR" address="0x403a0220" bitWidth="32" desc="Saturate interrupt request register.">
+
+<!-- *********************SAR_SATURATE_INTR_REG fields ********************* -->
+<!-- Saturate interrupt request register. -->
+<!-- *********************************************************************** -->
+				<field name="SATURATE_INTR" from="15" to="0" access="RW" desc="Saturate Interrupt: hardware sets this interrupt for each channel if a conversion result (before averaging) of that channel is either 0x000 or 0xFFF (for 12-bit resolution), this is an indication that the ADC likely saturated. Write with '1' to clear bit.">
+				</field>
+			</register>
+			<register name="SATURATE_INTR_SET" address="0x403a0224" bitWidth="32" desc="Saturate interrupt set request register">
+
+<!-- *******************SAR_SATURATE_INTR_SET_REG fields ******************* -->
+<!-- Saturate interrupt set request register -->
+<!-- *********************************************************************** -->
+				<field name="SATURATE_SET" from="15" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="SATURATE_INTR_MASK" address="0x403a0228" bitWidth="32" desc="Saturate interrupt mask register.">
+
+<!-- *******************SAR_SATURATE_INTR_MASK_REG fields ****************** -->
+<!-- Saturate interrupt mask register. -->
+<!-- *********************************************************************** -->
+				<field name="SATURATE_MASK" from="15" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="SATURATE_INTR_MASKED" address="0x403a022c" bitWidth="32" desc="Saturate interrupt masked request register">
+
+<!-- ******************SAR_SATURATE_INTR_MASKED_REG fields ***************** -->
+<!-- Saturate interrupt masked request register -->
+<!-- *********************************************************************** -->
+				<field name="SATURATE_MASKED" from="15" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+			</register>
+			<register name="RANGE_INTR" address="0x403a0230" bitWidth="32" desc="Range detect interrupt request register.">
+
+<!-- ***********************SAR_RANGE_INTR_REG fields ********************** -->
+<!-- Range detect interrupt request register. -->
+<!-- *********************************************************************** -->
+				<field name="RANGE_INTR" from="15" to="0" access="RW" desc="Range detect Interrupt: hardware sets this interrupt for each channel if the conversion result (after averaging) of that channel met the condition specified by the SAR_RANGE registers. Write with '1' to clear bit.">
+				</field>
+			</register>
+			<register name="RANGE_INTR_SET" address="0x403a0234" bitWidth="32" desc="Range detect interrupt set request register">
+
+<!-- *********************SAR_RANGE_INTR_SET_REG fields ******************** -->
+<!-- Range detect interrupt set request register -->
+<!-- *********************************************************************** -->
+				<field name="RANGE_SET" from="15" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="RANGE_INTR_MASK" address="0x403a0238" bitWidth="32" desc="Range detect interrupt mask register.">
+
+<!-- ********************SAR_RANGE_INTR_MASK_REG fields ******************** -->
+<!-- Range detect interrupt mask register. -->
+<!-- *********************************************************************** -->
+				<field name="RANGE_MASK" from="15" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="RANGE_INTR_MASKED" address="0x403a023c" bitWidth="32" desc="Range interrupt masked request register">
+
+<!-- *******************SAR_RANGE_INTR_MASKED_REG fields ******************* -->
+<!-- Range interrupt masked request register -->
+<!-- *********************************************************************** -->
+				<field name="RANGE_MASKED" from="15" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+			</register>
+			<register name="INTR_CAUSE" address="0x403a0240" bitWidth="32" desc="Interrupt cause register">
+
+<!-- ***********************SAR_INTR_CAUSE_REG fields ********************** -->
+<!-- Interrupt cause register -->
+<!-- *********************************************************************** -->
+				<field name="EOS_MASKED_MIR" from="0" to="0" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="OVERFLOW_MASKED_MIR" from="1" to="1" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="FW_COLLISION_MASKED_MIR" from="2" to="2" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="DSI_COLLISION_MASKED_MIR" from="3" to="3" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="INJ_EOC_MASKED_MIR" from="4" to="4" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="INJ_SATURATE_MASKED_MIR" from="5" to="5" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="INJ_RANGE_MASKED_MIR" from="6" to="6" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="INJ_COLLISION_MASKED_MIR" from="7" to="7" access="R" desc="Mirror copy of corresponding bit in SAR_INTR_MASKED">
+				</field>
+				<field name="SATURATE_MASKED_RED" from="30" to="30" access="R" desc="Reduction OR of all SAR_SATURATION_INTR_MASKED bits">
+				</field>
+				<field name="RANGE_MASKED_RED" from="31" to="31" access="R" desc="Reduction OR of all SAR_RANGE_INTR_MASKED bits">
+				</field>
+			</register>
+			<register name="INJ_CHAN_CONFIG" address="0x403a0280" bitWidth="32" desc="Injection channel configuration register.">
+
+<!-- ********************SAR_INJ_CHAN_CONFIG_REG fields ******************** -->
+<!-- Injection channel configuration register. -->
+<!-- *********************************************************************** -->
+				<field name="INJ_PIN_ADDR" from="2" to="0" access="RW" desc="Address of the pin to be sampled by this injection channel. If differential is enabled then INJ_PIN_ADDR[0] is ignored and considered to be 0, i.e. INJ_PIN_ADDR points to the even pin of a pin pair.">
+				</field>
+				<field name="INJ_PORT_ADDR" from="6" to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel.">
+
+<!-- INJ_PORT_ADDR bitfield enumerated values -->
+					<value name="SARMUX" value="0" desc="SARMUX pins."/>
+					<value name="CTB0" value="1" desc="CTB0"/>
+					<value name="CTB1" value="10" desc="CTB1"/>
+					<value name="CTB2" value="11" desc="CTB2"/>
+					<value name="CTB3" value="100" desc="CTB3"/>
+					<value name="AROUTE_VIRT" value="110" desc="AROUTE virtual port"/>
+					<value name="SARMUX_VIRT" value="111" desc="SARMUX virtual port"/>
+				</field>
+				<field name="INJ_DIFFERENTIAL_EN" from="8" to="8" access="RW" desc="Differential enable for this channel.&#xA;- 0: The voltage on the addressed pin is measured (Single-ended) and the resulting value is stored in the corresponding data register.&#xA;- 1: The differential voltage on the addressed pin pair is measured and the resulting value is stored in the corresponding data register. (INJ_PIN_ADDR[0] is ignored).">
+				</field>
+				<field name="INJ_RESOLUTION" from="9" to="9" access="RW" desc="Resolution for this channel.">
+
+<!-- INJ_RESOLUTION bitfield enumerated values -->
+					<value name="12B" value="0" desc="12-bit resolution is used for this channel."/>
+					<value name="SUBRES" value="1" desc="The resolution specified by SUB_RESOLUTION in the SAR_SAMPLE_CTRL register is used for this channel."/>
+				</field>
+				<field name="INJ_AVG_EN" from="10" to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s)">
+				</field>
+				<field name="INJ_SAMPLE_TIME_SEL" from="13" to="12" access="RW" desc="Injection sample time select: select which of the 4 global sample times to use for this channel">
+				</field>
+				<field name="INJ_TAILGATING" from="30" to="30" access="RW" desc="Injection channel tailgating.&#xA;- 0: no tailgating for this channel, SAR is immediately triggered when the INJ_START_EN bit is set.&#xA;- 1: injection channel tailgating. The addressed pin is sampled after the next trigger and after all enabled channels have been scanned.">
+				</field>
+				<field name="INJ_START_EN" from="31" to="31" access="RW" desc="Set by firmware to enable the injection channel. If INJ_TAILGATING is not set this bit also functions as trigger for this channel. Cleared by hardware after this channel has been sampled (i.e. this channel is always one shot even if CONTINUOUS is set). Also cleared if the SAR is disabled.">
+				</field>
+			</register>
+			<register name="INJ_RESULT" address="0x403a0290" bitWidth="32" desc="Injection channel result register">
+
+<!-- ***********************SAR_INJ_RESULT_REG fields ********************** -->
+<!-- Injection channel result register -->
+<!-- *********************************************************************** -->
+				<field name="INJ_RESULT" from="15" to="0" access="R" desc="SAR conversion result of the channel.">
+				</field>
+				<field name="INJ_NEWVALUE" from="27" to="27" access="R" desc="The data in this register received a new value (only relevant for UAB, this bit shows the value of the UAB valid bit)">
+				</field>
+				<field name="INJ_COLLISION_INTR_MIR" from="28" to="28" access="R" desc="mirror bit of corresponding bit in SAR_INTR register">
+				</field>
+				<field name="INJ_SATURATE_INTR_MIR" from="29" to="29" access="R" desc="mirror bit of corresponding bit in SAR_INTR register">
+				</field>
+				<field name="INJ_RANGE_INTR_MIR" from="30" to="30" access="R" desc="mirror bit of corresponding bit in SAR_INTR register">
+				</field>
+				<field name="INJ_EOC_INTR_MIR" from="31" to="31" access="R" desc="mirror bit of corresponding bit in SAR_INTR register">
+				</field>
+			</register>
+			<register name="STATUS" address="0x403a02a0" bitWidth="32" desc="Current status of internal SAR registers (mostly for debug)">
+
+<!-- *************************SAR_STATUS_REG fields ************************ -->
+<!-- Current status of internal SAR registers (mostly for debug) -->
+<!-- *********************************************************************** -->
+				<field name="CUR_CHAN" from="4" to="0" access="R" desc="current channel being sampled (channel 16 indicates the injection channel), only valid if BUSY.">
+				</field>
+				<field name="SW_VREF_NEG" from="30" to="30" access="R" desc="the current switch status, including DSI and sequencer controls, of the switch in the SARADC that shorts NEG with VREF input (see NEG_SEL).">
+				</field>
+				<field name="BUSY" from="31" to="31" access="R" desc="If high then the SAR is busy with a conversion. This bit is always high when CONTINUOUS is set. Firmware should wait for this bit to be low before putting the SAR in power down.">
+				</field>
+			</register>
+			<register name="AVG_STAT" address="0x403a02a4" bitWidth="32" desc="Current averaging status (for debug)">
+
+<!-- ************************SAR_AVG_STAT_REG fields *********************** -->
+<!-- Current averaging status (for debug) -->
+<!-- *********************************************************************** -->
+				<field name="CUR_AVG_ACCU" from="19" to="0" access="R" desc="the current value of the averaging accumulator">
+				</field>
+				<field name="INTRLV_BUSY" from="23" to="23" access="R" desc="If high then the SAR is in the middle of Interleaved averaging spanning several scans. While this bit is high the Firmware should not make any changes to the configuration registers otherwise some results may be incorrect. Note that the CUR_AVG_CNT status register below gives an indication how many more scans need to be done to complete the Interleaved averaging.&#xA;This bit can be cleared by changing the averaging mode to ACCUNDUMP or by disabling the SAR.">
+				</field>
+				<field name="CUR_AVG_CNT" from="31" to="24" access="R" desc="the current value of the averaging counter. Note that the value shown is updated after the sampling time and therefore runs ahead of the accumulator update.">
+				</field>
+			</register>
+			<register name="MUX_SWITCH0" address="0x403a0300" bitWidth="32" desc="SARMUX Firmware switch controls">
+
+<!-- **********************SAR_MUX_SWITCH0_REG fields ********************** -->
+<!-- SARMUX Firmware switch controls -->
+<!-- *********************************************************************** -->
+				<field name="MUX_FW_P0_VPLUS" from="0" to="0" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P0 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P1_VPLUS" from="1" to="1" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P1 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P2_VPLUS" from="2" to="2" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P2 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P3_VPLUS" from="3" to="3" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P3 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P4_VPLUS" from="4" to="4" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P4 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P5_VPLUS" from="5" to="5" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P5 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P6_VPLUS" from="6" to="6" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P6 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P7_VPLUS" from="7" to="7" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P7 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P0_VMINUS" from="8" to="8" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P0 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P1_VMINUS" from="9" to="9" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P1 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P2_VMINUS" from="10" to="10" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P2 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P3_VMINUS" from="11" to="11" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P3 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P4_VMINUS" from="12" to="12" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P4 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P5_VMINUS" from="13" to="13" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P5 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P6_VMINUS" from="14" to="14" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P6 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P7_VMINUS" from="15" to="15" access="RW" desc="Firmware control: 0=open, 1=close switch between pin P7 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_VSSA_VMINUS" from="16" to="16" access="RW" desc="Firmware control: 0=open, 1=close switch between vssa_kelvin and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_TEMP_VPLUS" from="17" to="17" access="RW" desc="Firmware control: 0=open, 1=close switch between temperature sensor and vplus signal, also powers on the temperature sensor. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_AMUXBUSA_VPLUS" from="18" to="18" access="RW" desc="Firmware control: 0=open, 1=close switch between amuxbusa and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_AMUXBUSB_VPLUS" from="19" to="19" access="RW" desc="Firmware control: 0=open, 1=close switch between amuxbusb and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_AMUXBUSA_VMINUS" from="20" to="20" access="RW" desc="Firmware control: 0=open, 1=close switch between amuxbusa and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_AMUXBUSB_VMINUS" from="21" to="21" access="RW" desc="Firmware control: 0=open, 1=close switch between amuxbusb and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_SARBUS0_VPLUS" from="22" to="22" access="RW" desc="Firmware control: 0=open, 1=close switch between sarbus0 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_SARBUS1_VPLUS" from="23" to="23" access="RW" desc="Firmware control: 0=open, 1=close switch between sarbus1 and vplus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_SARBUS0_VMINUS" from="24" to="24" access="RW" desc="Firmware control: 0=open, 1=close switch between sarbus0 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_SARBUS1_VMINUS" from="25" to="25" access="RW" desc="Firmware control: 0=open, 1=close switch between sarbus1 and vminus signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P4_COREIO0" from="26" to="26" access="RW" desc="Firmware control: 0=open, 1=close switch between P4 and coreio0 signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P5_COREIO1" from="27" to="27" access="RW" desc="Firmware control: 0=open, 1=close switch between P5 and coreio1 signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P6_COREIO2" from="28" to="28" access="RW" desc="Firmware control: 0=open, 1=close switch between P6 and coreio2 signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P7_COREIO3" from="29" to="29" access="RW" desc="Firmware control: 0=open, 1=close switch between P7 and coreio3 signal. Write with '1' to set bit.">
+				</field>
+			</register>
+			<register name="MUX_SWITCH_CLEAR0" address="0x403a0304" bitWidth="32" desc="SARMUX Firmware switch control clear">
+
+<!-- *******************SAR_MUX_SWITCH_CLEAR0_REG fields ******************* -->
+<!-- SARMUX Firmware switch control clear -->
+<!-- *********************************************************************** -->
+				<field name="MUX_FW_P0_VPLUS" from="0" to="0" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P1_VPLUS" from="1" to="1" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P2_VPLUS" from="2" to="2" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P3_VPLUS" from="3" to="3" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P4_VPLUS" from="4" to="4" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P5_VPLUS" from="5" to="5" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P6_VPLUS" from="6" to="6" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P7_VPLUS" from="7" to="7" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P0_VMINUS" from="8" to="8" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P1_VMINUS" from="9" to="9" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P2_VMINUS" from="10" to="10" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P3_VMINUS" from="11" to="11" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P4_VMINUS" from="12" to="12" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P5_VMINUS" from="13" to="13" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P6_VMINUS" from="14" to="14" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P7_VMINUS" from="15" to="15" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_VSSA_VMINUS" from="16" to="16" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_TEMP_VPLUS" from="17" to="17" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSA_VPLUS" from="18" to="18" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSB_VPLUS" from="19" to="19" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSA_VMINUS" from="20" to="20" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSB_VMINUS" from="21" to="21" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS0_VPLUS" from="22" to="22" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS1_VPLUS" from="23" to="23" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS0_VMINUS" from="24" to="24" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS1_VMINUS" from="25" to="25" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P4_COREIO0" from="26" to="26" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P5_COREIO1" from="27" to="27" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P6_COREIO2" from="28" to="28" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P7_COREIO3" from="29" to="29" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH0">
+				</field>
+			</register>
+			<register name="MUX_SWITCH1" address="0x403a0308" bitWidth="32" desc="SARMUX Firmware switch controls">
+
+<!-- **********************SAR_MUX_SWITCH1_REG fields ********************** -->
+<!-- SARMUX Firmware switch controls -->
+<!-- *********************************************************************** -->
+				<field name="MUX_FW_P4_DFT_INP" from="0" to="0" access="RW" desc="Firmware control: 0=open, 1=close switch between P4 pin and dft_inp signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_P5_DFT_INM" from="1" to="1" access="RW" desc="Firmware control: 0=open, 1=close switch between P5 pin and dft_inm signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_ADFT0_SARBUS0" from="2" to="2" access="RW" desc="Firmware control: 0=open, 1=close switch between adft0 signal and sarbus0 signal. Write with '1' to set bit.">
+				</field>
+				<field name="MUX_FW_ADFT1_SARBUS1" from="3" to="3" access="RW" desc="Firmware control: 0=open, 1=close switch between adft1 signal and sarbus1 signal. Write with '1' to set bit.">
+				</field>
+			</register>
+			<register name="MUX_SWITCH_CLEAR1" address="0x403a030c" bitWidth="32" desc="SARMUX Firmware switch control clear">
+
+<!-- *******************SAR_MUX_SWITCH_CLEAR1_REG fields ******************* -->
+<!-- SARMUX Firmware switch control clear -->
+<!-- *********************************************************************** -->
+				<field name="MUX_FW_P4_DFT_INP" from="0" to="0" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH1">
+				</field>
+				<field name="MUX_FW_P5_DFT_INM" from="1" to="1" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH1">
+				</field>
+				<field name="MUX_FW_ADFT0_SARBUS0" from="2" to="2" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH1">
+				</field>
+				<field name="MUX_FW_ADFT1_SARBUS1" from="3" to="3" access="RW" desc="Write '1' to clear corresponding bit in MUX_SWITCH1">
+				</field>
+			</register>
+			<register name="MUX_SWITCH_HW_CTRL" address="0x403a0340" bitWidth="32" desc="SARMUX switch hardware control">
+
+<!-- *******************SAR_MUX_SWITCH_HW_CTRL_REG fields ****************** -->
+<!-- SARMUX switch hardware control -->
+<!-- *********************************************************************** -->
+				<field name="MUX_HW_CTRL_P0" from="0" to="0" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P0 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P1" from="1" to="1" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P1 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P2" from="2" to="2" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P2 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P3" from="3" to="3" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P3 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P4" from="4" to="4" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P4 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P5" from="5" to="5" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P5 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P6" from="6" to="6" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P6 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_P7" from="7" to="7" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for pin P7 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_VSSA" from="16" to="16" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for vssa switch.">
+				</field>
+				<field name="MUX_HW_CTRL_TEMP" from="17" to="17" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for temp switch.">
+				</field>
+				<field name="MUX_HW_CTRL_AMUXBUSA" from="18" to="18" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for amuxbusa switches.">
+				</field>
+				<field name="MUX_HW_CTRL_AMUXBUSB" from="19" to="19" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for amuxbusb switches.">
+				</field>
+				<field name="MUX_HW_CTRL_SARBUS0" from="22" to="22" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for sarbus0 switches.">
+				</field>
+				<field name="MUX_HW_CTRL_SARBUS1" from="23" to="23" access="RW" desc="Hardware control: 0=only firmware control, 1=hardware control masked by firmware setting for sarbus1 switches.">
+				</field>
+			</register>
+			<register name="MUX_SWITCH_STATUS" address="0x403a0348" bitWidth="32" desc="SARMUX switch status">
+
+<!-- *******************SAR_MUX_SWITCH_STATUS_REG fields ******************* -->
+<!-- SARMUX switch status -->
+<!-- *********************************************************************** -->
+				<field name="MUX_FW_P0_VPLUS" from="0" to="0" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P1_VPLUS" from="1" to="1" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P2_VPLUS" from="2" to="2" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P3_VPLUS" from="3" to="3" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P4_VPLUS" from="4" to="4" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P5_VPLUS" from="5" to="5" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P6_VPLUS" from="6" to="6" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P7_VPLUS" from="7" to="7" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P0_VMINUS" from="8" to="8" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P1_VMINUS" from="9" to="9" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P2_VMINUS" from="10" to="10" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P3_VMINUS" from="11" to="11" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P4_VMINUS" from="12" to="12" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P5_VMINUS" from="13" to="13" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P6_VMINUS" from="14" to="14" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_P7_VMINUS" from="15" to="15" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_VSSA_VMINUS" from="16" to="16" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_TEMP_VPLUS" from="17" to="17" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSA_VPLUS" from="18" to="18" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSB_VPLUS" from="19" to="19" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSA_VMINUS" from="20" to="20" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_AMUXBUSB_VMINUS" from="21" to="21" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS0_VPLUS" from="22" to="22" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS1_VPLUS" from="23" to="23" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS0_VMINUS" from="24" to="24" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+				<field name="MUX_FW_SARBUS1_VMINUS" from="25" to="25" access="R" desc="switch status of corresponding bit in MUX_SWITCH0">
+				</field>
+			</register>
+			<register name="PUMP_CTRL" address="0x403a0380" bitWidth="32" desc="Switch pump control">
+
+<!-- ***********************SAR_PUMP_CTRL_REG fields *********************** -->
+<!-- Switch pump control -->
+<!-- *********************************************************************** -->
+				<field name="CLOCK_SEL" from="0" to="0" access="RW" desc="Clock select: 0=external clock, 1=internal clock (deprecated).">
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="0=disabled: pump output is VDDA_PUMP, 1=enabled: pump output is boosted.">
+				</field>
+			</register>
+			<register name="ANA_TRIM" address="0x403a0f00" bitWidth="32" desc="Analog trim register.">
+
+<!-- ************************SAR_ANA_TRIM_REG fields *********************** -->
+<!-- Analog trim register. -->
+<!-- *********************************************************************** -->
+				<field name="CAP_TRIM" from="2" to="0" access="RW" desc="Attenuation cap trimming">
+				</field>
+				<field name="TRIMUNIT" from="3" to="3" access="RW" desc="Attenuation cap trimming">
+				</field>
+			</register>
+			<register name="WOUNDING" address="0x403a0f04" bitWidth="32" desc="SAR wounding register">
+
+<!-- ************************SAR_WOUNDING_REG fields *********************** -->
+<!-- SAR wounding register -->
+<!-- *********************************************************************** -->
+				<field name="WOUND_RESOLUTION" from="1" to="0" access="RW" desc="Maximum SAR resolution allowed">
+
+<!-- WOUND_RESOLUTION bitfield enumerated values -->
+					<value name="12BIT" value="0" desc="unwounded: up to full 12-bit SAR resolution allowed"/>
+					<value name="10BIT" value="1" desc="wounded: max resolution upto 10-bit SAR resolution allowed"/>
+					<value name="8BIT" value="10" desc="wounded: only 8-bit SAR resolution allowed"/>
+					<value name="8BIT_TOO" value="11" desc="wounded: only 8-bit SAR resolution allowed"/>
+				</field>
+			</register>
+		</block>
+
+	</block>
+
+</deviceData>

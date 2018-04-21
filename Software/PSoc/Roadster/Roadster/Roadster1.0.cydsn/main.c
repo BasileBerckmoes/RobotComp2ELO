@@ -57,7 +57,7 @@ int main(void)
 	readIRSensors_StartEx(IRSensoren);
 	EnMotorISR_StartEx(SwitchMotorEN);
 	BleRxISR_StartEx(MyRxInt);
-	SendBleDataISR_StartEx(sendBleData);
+	//SendBleDataISR_StartEx(sendBleData);
 	
     //Print start text op lcd
 	//LCD_Position(0u, 0u);
@@ -84,7 +84,9 @@ int main(void)
 	MotorControl_WriteCompare1(pwmMotorLinks);
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
-	//telProcedure();
+	telProcedure();
+    ENA_Write(1);
+	ENB_Write(1);
     
     //Clear lcd zodat nieuwe waarden er op passen 
 	//LCD_ClearDisplay();
@@ -98,6 +100,7 @@ int main(void)
             //Zet de string in een buffer variable
 			if(GetRxStr())
 			{
+                
                 //Verwerk de string
 				ProcessCommandMsg();
 			}
@@ -136,7 +139,7 @@ int main(void)
 		//motordeel
 		//===================================================================
         
-        //--------AnalyseerData(IRWaarden);
+        AnalyseerData(IRWaarden);
       
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);

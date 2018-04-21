@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="Registers associated with the CSD hardware block" visible="true">
+    
+    <register name="CONFIG"
+        address="CYREG_CSD_CONFIG"
+        bitWidth="32" desc="Configuration and control of the CSD hardware">
+        
+        <field name="BYPASS_SEL" from="2" to="2" access="RW" desc="Selects whether to use CSD1 clock for modulation directly, or use PRS/Divide-by-2 modulation (default).">
+            <value name="PRS_OR_DIV2" value="0" desc="Select divide-by-2 or pseudo-random sequence as sense output (see PRS_SELECT)"/>
+            <value name="DIRECT_CLOCK" value="1" desc="Selects clk_csd1 as direct clock output (1:1)"/>
+        </field>
+        
+        <field name="FILTER_ENABLE" from="3" to="3" access="RW" desc="Enables the digital filter on the CSD comparator.">
+            <value name="FILTER_OFF" value="0" desc="Filter is OFF and has no effect"/>
+             <value name="FILTER_ON" value="1" desc="Filter is ON.  The digital filter disables the IDAC and sample counter regardless of comparator state for 1 clk_csd2 cycle after the start of each measurement and from the first comparator trip to the end of each measurement."/>
+        </field>
+        
+        <field name="PRS_CLEAR" from="5" to="5" access="RW" desc="When set, forces the pseudo-random generator to it's initial state.  Note that it may take some time for this setting to take effect depending on the clock frequency used for clk_csd1. Hardware clears this bit at the same time PRS is cleared.">
+        </field>
+        
+        <field name="PRS_SELECT" from="6" to="6" access="RW" desc="Selects between PRS or simple divide by 2 sense modulation.">
+            <value name="DIV2" value="0" desc="Select simple divide-by-2 of clk_csd1 as output."/>
+            <value name="PRS" value="1" desc="Select PRS sequencer output, and start the sequencer."/>
+        </field>
+        
+        <field name="PPRS_12_8" from="7" to="7" access="RW" desc="Selects between 8 or 12b PRS sequence">
+            <value name="8b" value="0" desc="8-bit PRS sequence (G(x)=X^8+X^4+X^3+X^2+1, period= 255)"/>
+            <value name="12b" value="1" desc="12-bit PRS sequence (G(x)=X^12+X^9+X^3+X^2+1, period=4095)"/>
+        </field>
+        
+        <field name="SHIELD_DELAY" from="10" to="9" access="RW" desc="Selects the delay by which csd_shield is delayed relative to csd_sense.">
+            <value name="OFF" value="00" desc="Delay line is off, csd_shield=csd_sense"/>
+            <value name="50 ns" value="10" desc="Introduces a 50-100ns delay"/>
+            <value name="10 ns" value="11" desc="Introduces a 10-20ns delay"/>
+        </field>
+        
+        <field name="SENSE_COMP_BW" from="11" to="11" access="RW" desc="Selects bandwidth for sensing comparator">
+            <value name="LOW" value="0" desc="Lower Bandwidth"/>
+            <value name="HIGH" value="1" desc="Higher Bandwidth (default)"/>
+        </field>
+        
+        <field name="SENSE_EN" from="12" to="12" access="RW" desc="Enables the sense modulator output.  Also turns on the IDAC compensation current as selected by CSD_IDAC.">
+            <value name="DISABLE" value="0" desc=""/>
+            <value name="ENABLE" value="1" desc=""/>
+        </field>
+        
+        <field name="REFBUF_EN" from="13" to="13" access="RW" desc="Enables the reference buffer/comparator circuits for charging Cmod/Csh_tank using the mode selected in COMP_MODE.">
+            <value name="DISABLE" value="0" desc=""/>
+            <value name="ENABLE" value="1" desc=""/>
+        </field>
+        
+        <field name="COMP_MODE" from="14" to="14" access="RW" desc="Selects between charging of the Cmod/Csh_tank capacitor using the GPIO digital output buffer or the CSD reference buffer.  Note that using the GPIO requires proper configuraiton of the GPIO pin.">
+            <value name="CHARBE_BUF" value="0" desc="Use CSD Reference Buffer to charge capacitor.   Capacitor must be connected to AMUXBUS-A/B (see REBUF_OUTSEL) and selected using COMP_PIN."/>
+            <value name="CHARGE_IO" value="1" desc="Use GPIO Driver to charge capacitor.   Capacitor must be  selected using COMP_PIN, and GPIO must be in AMUXB mode."/>
+        </field>
+        
+        <field name="COMP_PIN" from="15" to="15" access="RW" desc="Connects either the Cmod or Csh_tank sense return line to the reference buffer comparator.  This switch must be set to the same pin that is being charged up by the reference buffer (through the AMUXBUS settings in GPIO).">
+            <value name="CHANNEL 1" value="0" desc="Use the sense line designated as 'Channel 1'; this is normally used to conenct Cmod."/>
+            <value name="CHANNEL 2" value="1" desc="Use the sense line designated as 'Channel 2'; this is normally used to connect Csh_tank."/>
+        </field>
+        
+        <field name="POLARITY" from="16" to="16" access="RW" desc="Selects the polarity of the sensing operation.  When using the IDAC's for other-than-CSD purposes, this bit controls the IDAC1 polarity only.  The IDAC register below provides the same functionality through POLARITY1_MIR bit.">
+            <value name="CSD switch to Gnd / IDAC1 sourcing" value="0" desc="Normal: switch between Vssio and Cmod.   For non-CSD application, IDAC1 will source current."/>
+            <value name="CSD switch Vddio / IDAC1 sinking" value="1" desc="Inverted: switch between Vddio and Cmod.  For non-CSD application, IDAC1 will sink current."/>
+        </field>
+        
+        <field name="POLARITY2" from="17" to="17" access="RW" desc="For normal CSD operations this field is not used.  When using the IDAC's for other-than-CSD purposes, this bit controls the IDAC2 polarity only.  The IDAC register below provides the same functionality through POLARITY2_MIR bit.">
+            <value name="CSD switch to Gnd / IDAC2 sourcing" value="0" desc="Normal: switch between Vssio and Cmod.   For non-CSD application, IDAC2 will source current."/>
+            <value name="CSD switch Vddio / IDAC2 sinking" value="1" desc="Inverted: switch between Vddio and Cmod.  For non-CSD application, IDAC2 will sink current."/>
+        </field>
+        
+        <field name="SENSE_COMP_EN" from="19" to="19" access="RW" desc="Turns on the sense comparator circuit.  Must be done some time before enable SENSE_EN">
+            <value name="DISABLE" value="0" desc="Sense comparator is powered off"/>
+            <value name="ENABLE" value="1" desc="Sense comparator is powered on"/>
+        </field>
+        
+        <field name="REFBUF_OUTSEL" from="21" to="21" access="RW" desc="Selects which AMUXBUS the reference buffer connects to.">
+            <value name="AMUXA" value="0" desc="Connect to AMUXBUS-A (not normally used)."/>
+            <value name="AMUXB" value="1" desc="Connect to AMUXBUS-B (normally used for all CSD operations)."/>
+        </field>
+        
+        <field name="SENSE_INSELF" from="22" to="22" access="RW" desc="Selects how to connect the sensing comparator to the Cmod capacitor.">
+            <value name="SENSE_CHANNEL1" value="0" desc="Use the Channel 1 sense line to conenct to Cmod."/>
+            <value name="SENSE_AMUXA" value="1" desc="Use the AMUXBUS-A bus to connect to Cmod."/>
+        </field>
+        
+        <field name="REFBUF_DR" from="24" to="23" access="RW" desc="Current drive strength for reference buffer.">
+            <value name="OFF" value="0" desc="Current drive mode OFF"/>
+            <value name="DRV_1" value="1" desc="Lowest current drive mode"/>
+            <value name="DRV_2" value="10" desc="Mid current drive mode"/>
+            <value name="DRV_3" value="11" desc="Highest current drive mode"/>
+        </field>
+        
+        <field name="DDFTSEL" from="28" to="26" access="RW" desc="Changes the dsi_sample_out signal from its normal function (sample_out) to a selection of other DDFT signals.">
+            <value name="NORMAL" value="0" desc="Normal functionality."/>
+            <value name="CSD_SENSE" value="1" desc="dsi_sample_out= csd_sense"/>
+            <value name="CSD_SHIELD" value="10" desc="dsi_sample_out= csd_shield"/>
+            <value name="CLK_SAMPLE" value="11" desc="dsi_sample_out= clk_sample"/>
+            <value name="COMP_OUT" value="100" desc="dsi_sample_out= comp_out"/>
+        </field>
+        
+        <field name="ADFTEN" from="29" to="29" access="RW" desc="When selected, convert IDAC1/2 outputs from current to voltage before sending to AMUXBUS-A/B.  IDAC1/2 output currents and connectivity are determined by other CSD_CONFIG/CSD_IDAC settings same as in normal mode.">
+        </field>
+        
+        <field name="DDFTCOMP" from="30" to="30" access="RW" desc="Changes comp_out signal for DFT purpose only.  This signal can be routed to pins or other destinations using DDFTSEL">
+            <value name="REFBUFCOMP" value="0" desc="Normal function: comp_out is reference buffer comparator output."/>
+            <value name="SENSECOMP" value="1" desc="DFT override function: comp_out is sensing comparator output (unflopped)."/>
+        </field>
+        
+        <field name="ENABLE" from="31" to="31" access="RW" desc="Master enable of the CSD IP.  Must be set to 1 for any CSD operation to function.">
+            <value name="DISABLE" value="0" desc="CSD Block is disabled"/>
+            <value name="ENABLE" value="1" desc="CSD Block is enabled"/>
+        </field>
+    
+    </register>
+    
+    <register name="IDAC"
+        address="CYREG_CSD_IDAC"
+        bitWidth="32" desc="Configuration and control of the 2 IDACs">
+        
+        <field name="IDAC1" from="7" to="0" access="RW" desc="IDAC1 (8 bit) output current setting">
+        </field>
+        
+        <field name="IDAC1_MODE" from="9" to="8" access="RW" desc="Controls the usage mode of IDAC1">
+            <value name="OFF" value="0" desc="IDAC1 is not used."/>
+            <value name="FIXED" value="1" desc="IDAC1 is active whenever CSD_CONFIG.SENSE_EN is asserted."/>
+            <value name="VARIABLE" value="10" desc="IDAC1 is switched on and off depending on the result of the comparator."/>
+            <value name="NON_CSD" value="11" desc="IDAC1 is connected to AMUXBUS-A for non CSD use"/>
+        </field>
+        
+        <field name="IDAC1_RANGE" from="10" to="10" access="RW" desc="Current multiplier setting for IDAC1">
+            <value name="4X" value="0" desc="Use 4X gain setting. 1.2 uA / bit, 306 uA max"/>
+            <value name="8X" value="1" desc="Use 8X gain setting. 2.4 uA / bit, 612 uA max"/>
+        </field>
+        
+        <field name="POLARITY1_MIR" from="12" to="12" access="RW" desc="Mirror bit for POLARITY bit in CONFIG register.  Selects the polarity of the sensing operation.  When using the IDAC's for other-than-CSD purposes, this bit controls the IDAC1 polarity only.  The IDAC register below provides the same functionality through POLARITY1_MIR bit.">
+            <value name="CSD switch to Gnd / IDAC1 sourcing" value="0" desc="Normal: switch between Vssio and Cmod.   For non-CSD application, IDAC1 will source current."/>
+            <value name="CSD switch Vddio / IDAC1 sinking" value="1" desc="Inverted: switch between Vddio and Cmod.  For non-CSD application, IDAC1 will sink current."/>
+        </field>
+        
+        <field name="IDAC2" from="22" to="16" access="RW" desc="IDAC2 (7 bit) output current setting">
+        </field>
+        
+        <field name="IDAC2_MODE" from="25" to="24" access="RW" desc="Controls the usage mode of IDAC2">
+            <value name="OFF" value="0" desc="IDAC2 is not used."/>
+            <value name="FIXED" value="1" desc="IDAC2 is active whenever CSD_CONFIG.SENSE_EN is asserted."/>
+            <value name="VARIABLE" value="10" desc="IDAC2 is switched on and off depending on the result of the comparator."/>
+            <value name="NON_CSD" value="11" desc="IDAC2 is connected to AMUXBUS-B for non CSD use"/>
+        </field>
+        
+        <field name="IDAC2_RANGE" from="26" to="26" access="RW" desc="Current multiplier setting for IDAC2">
+            <value name="4X" value="0" desc="Use 4X gain setting. 1.2 uA / bit, 152.4 uA max"/>
+            <value name="8X" value="1" desc="Use 8X gain setting. 2.4 uA / bit, 304.8 uA max"/>
+        </field>
+        
+        <field name="POLARITY2_MIR" from="28" to="28" access="RW" desc="Mirror bit for POLARITY2 bit in CONFIG register.  For normal CSD operations this field is not used.  When using the IDAC's for other-than-CSD purposes, this bit controls the IDAC2 polarity only.  The IDAC register below provides the same functionality through POLARITY2_MIR bit.">
+            <value name="CSD switch to Gnd / IDAC2 sourcing" value="0" desc="Normal: switch between Vssio and Cmod.   For non-CSD application, IDAC2 will source current."/>
+            <value name="CSD switch Vddio / IDAC2 sinking" value="1" desc="Inverted: switch between Vddio and Cmod.  For non-CSD application, IDAC2 will sink current."/>
+        </field>
+        
+        <field name="FEEDBACK_MODE" from="30" to="30" access="RW" desc="This bit controls whether, during CSD operation, the IDAC is controlled from the sampling flip-flop or directly from the comparator.">
+            <value name="FLOP" value="0" desc="Use feedback from sampling flip-flop (used in most modes)."/>
+            <value name="COMPARATOR" value="1" desc="Use feedback from comparator directly (used in single Cmod mutual cap sensing only)"/>
+        </field>
+    
+    </register>
+    
+    <register name="COUNTER"
+        address="CYREG_CSD_COUNTER"
+        bitWidth="32" desc="This register is used to configure the period of the sampling window as well as initiate sampling of the currently selected capacitive sensor and read out the result">
+        
+        <field name="COUNTER" from="15" to="0" access="RW" desc="This field increments whenever the comparator is sampled and the sample is 1.  Firmware typically writes 0 to this field whenever a new sense operation is initiated by writing a non-0 value to PERIOD.">
+        </field>
+        
+        <field name="PERIOD" from="31" to="16" access="RW" desc="The remaining period (in clk_csd1 cycles) during which COUNTER will count the comparator output count.  Firmware will write this field to the desired period, after which it will start counting down to 0.  Upon completion of the sense operation, this field will be 0.  Writing a non-0 value to this register initiates a sensing operation.  It is assumed that the modulation is properly configured, all pins are properly selected and configured and that sense currents are flowing before this field is written.">
+        </field>
+    
+    </register>
+    
+    <register name="STATUS"
+        address="CYREG_CSD_STATUS"
+        bitWidth="32" desc="Allows observation of key signals in the CSD block">
+        
+        <field name="CSD_CHARGE" from="0" to="0" access="R" desc="Qualified, and possible inverted value of COMP_OUT that is used to drive GPIO's charging Cmod or Csh_tank.">
+        </field>
+        
+        <field name="CSD_SENSE" from="1" to="1" access="R" desc="Signal used to drive the Cs switches.">
+        </field>
+        
+        <field name="COMP_OUT" from="2" to="2" access="R" desc="Output of reference buffer comparator used to charge up Cmod or Csh_tank.">
+            <value name="C_LT_VREF" value="0" desc="Ctank less than Vref"/>
+            <value name="C_GT_VREF" value="1" desc="Ctank greater than Vref"/>
+        </field>
+        
+        <field name="SAMPLE" from="3" to="3" access="R" desc="Output of main sensing comparator.">
+            <value name="LOW" value="0" desc="Comp output is 0"/>
+            <value name="HIGH" value="1" desc="Comp output is 1"/>
+        </field>
+    
+    </register>
+    
+    <register name="INTR"
+        address="CYREG_CSD_INTR"
+        bitWidth="32" desc="Interrupt Request Register">
+        
+        <field name="CSD" from="0" to="0" access="RW" desc="The CSD IRQ bit is set.  Firmware must clear this bit by writing a '1' to it as part of the interrupt handler.">
+        </field>
+    
+    </register>
+    
+    <register name="INTR_SET"
+        address="CYREG_CSD_INTR_SET"
+        bitWidth="32" desc="This register asserts an interrupt - used for s/w debugging.">
+        
+        <field name="CSD" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+        </field>
+    
+    </register>
+    
+    <register name="TRIM1"
+        address="CYREG_CSD_TRIM1"
+        bitWidth="32" desc="Trim bits for IDAC source trimming">
+        
+        <field name="IDAC1_SRC_TRIM" from="3" to="0" access="RW" desc="IDAC1 trim bits for gain control in current source mode">
+        </field>
+        
+        <field name="IDAC2_SRC_TRIM" from="7" to="4" access="RW" desc="IDAC2 trim bits for gain control in current source mode">
+        </field>
+    
+    </register>
+    
+    <register name="TRIM2"
+        address="CYREG_CSD_TRIM2"
+        bitWidth="32" desc="Trim bits for IDAC sink trimming">
+        
+        <field name="IDAC1_SNK_TRIM" from="3" to="0" access="RW" desc="IDAC1 trim bits for gain control in current sink mode">
+        </field>
+        
+        <field name="IDAC2_SNK_TRIM" from="7" to="4" access="RW" desc="IDAC2 trim bits for gain control in current sink mode">
+        </field>
+    
+    </register>
+    
+  </block>
+</deviceData>
