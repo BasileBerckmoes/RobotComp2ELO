@@ -36,6 +36,8 @@ uint8 IRDrempel;
 
 CY_ISR_PROTO(IRSensoren); 
 
+
+uint8 TestGetal;
 /////////////////////////////////////////////////////
 //US
 uint16 mediaan;

@@ -12,7 +12,7 @@
 #include "projectMain.h"
 #include "project.h"
 
-uint8 IRsensorGewicht[] = {0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
+uint8 IRsensorGewicht[] = {0,190,235,255,255,235,190,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
 uint8 IRDigitaleWaarden[8];
 
 uint8 TweedeLijnGedetecteerd = 0;
@@ -24,8 +24,10 @@ void AnalyseerData(uint8 data)
 {
     DataOrgineel = data;
     PlaatsIRWaardenInArray(DataOrgineel);
-    Data = CheckVoor2eLijn();
-    if (Data != DataOrgineel) PlaatsIRWaardenInArray(Data);
+    //Data = CheckVoor2eLijn();
+    //printBINopLCD(DataOrgineel, 0);
+    //printBINopLCD(Data, 1);
+    //if (Data != DataOrgineel) PlaatsIRWaardenInArray(Data);
     
     stuurMotorenBij();
 }
@@ -33,7 +35,7 @@ void AnalyseerData(uint8 data)
 
 void stuurMotorenBij(void)
 { 
-    for(int i = 0; i < 4; i++) //linkse kant van de sensoren afgaan
+    for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
 	{
         if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
         {
@@ -45,7 +47,7 @@ void stuurMotorenBij(void)
             break;
         }
     }
-    for(int i = 7; i > 3; i--)
+    for(int i = 4; i <= 7; i++)
 	{
         if (IRDigitaleWaarden[i] == 1)
         {
@@ -82,7 +84,7 @@ uint8 CheckVoor2eLijn()
     uint8 teller = 0;
     
      uint8 laatsteWaarde = 0; 
-     uint8 aantalWaardeWisselingen = 0;  
+     uint8 aantalWaardeWisselingen = 1;  
     
         for(int i = 0; i < 8; i++)
         {
@@ -101,6 +103,10 @@ uint8 CheckVoor2eLijn()
             }
         }
         
+        LCD_Position(0u,10u);
+        LCD_PrintInt16(aantalWaardeWisselingen);  
+         LCD_Position(1u,10u);
+        LCD_PrintInt16(diksteLijn);  
         if (aantalWaardeWisselingen <= 3)
         {
             return Data;
@@ -108,10 +114,17 @@ uint8 CheckVoor2eLijn()
         else
         {
             uint8 compareValue = 1;
-            compareValue = compareValue << (diksteLijn-1);
+            
+            for (int i = 0; i < diksteLijn; i++)
+            {
+                compareValue = compareValue | exponent(2,i);
+            }
             for (uint8 i = 0; i < (8 - diksteLijn); i++)
             {
+                uint8 test = compareValue & DataOrgineel;
+                
                 if((compareValue & DataOrgineel) == compareValue) return compareValue;
+                compareValue = (compareValue << 1);
             }
         }
     return 0;

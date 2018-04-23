@@ -19,9 +19,15 @@
 
 
 
-CY_ISR(SwitchMotorEN)
-{
-}
+//CY_ISR(TestIRFilter)
+//{
+//    LCD_ClearDisplay();
+//    uint8 testGetal = 0b01001100;
+//    AnalyseerData(testGetal);
+//    
+//    //printBINopLCD(TestGetal, 1);
+//    
+//}
 
 
 //Start alle firmwire blokken
@@ -51,7 +57,7 @@ int main(void)
 	
 	//Interrupts
 	readIRSensors_StartEx(IRSensoren);
-	EnMotorISR_StartEx(SwitchMotorEN);
+	//______EnMotorISR_StartEx(TestIRFilter);
 	
     //schakel motoren uit 
 	MotorControl_WriteCompare1(0);
@@ -94,10 +100,10 @@ int main(void)
         
         
         //Motoren met joystick
-        LCD_Position(0u,0u);
-        LCD_PrintInt16(pwmMotorLinks);
-        LCD_Position(1u,0u);
-        LCD_PrintInt16(pwmMotorRechts);
+        //LCD_Position(0u,0u);
+        //LCD_PrintInt16(pwmMotorLinks);
+        //LCD_Position(1u,0u);
+        //LCD_PrintInt16(pwmMotorRechts);
         
 	    //CyDelay(10);
 		//motordeel
@@ -128,15 +134,15 @@ void printBINopLCD(uint8 value, int row)
 {
 	for(int i = 0; i < 8; i++)
 	{
-		//LCD_Position(row,i);
+		LCD_Position(row,i);
 		uint8 tmpWaarde =  exponent(2,i);
 		if ((value & tmpWaarde) == tmpWaarde)
 		{
-			//LCD_PrintDecUint16(1);
+			LCD_PrintDecUint16(1);
 		}
 			else 
 		{
-			//LCD_PrintDecUint16(0);
+			LCD_PrintDecUint16(0);
 		}  
 	 }  
 }
