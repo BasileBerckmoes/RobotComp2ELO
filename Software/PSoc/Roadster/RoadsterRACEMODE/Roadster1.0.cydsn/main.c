@@ -150,7 +150,8 @@ void printBINopLCD(uint8 value, int row)
 //methode met delays om af te tellen
 void telProcedure(void)
 {
-    CyDelay(1000);
+    //Teller is totaal 4000ms maar in praktijk +/- 5000ms
+    //CyDelay(1000);
 	LED1_Write(1);
 	CyDelay(1000);
 	LED2_Write(1);
