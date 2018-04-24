@@ -12,7 +12,7 @@
 #include "projectMain.h"
 #include "project.h"
 
-uint8 IRsensorGewicht[] = {0,190,235,255,255,235,190,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
+uint8 IRsensorGewicht[] = {0,100,220,255,255,220,100,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
 uint8 IRDigitaleWaarden[8];
 
 uint8 TweedeLijnGedetecteerd = 0;
@@ -22,9 +22,11 @@ uint8 DataOrgineel;
 
 void AnalyseerData(uint8 data)
 {
+    if ((data & 11000000) == 11000000 ) data = 0b10000000;
+    else if ((data & 00000011) == 00000011 ) data = 0b00000001;
     DataOrgineel = data;
     PlaatsIRWaardenInArray(DataOrgineel);
-    //Data = CheckVoor2eLijn();
+    Data = CheckVoor2eLijn();
     //printBINopLCD(DataOrgineel, 0);
     //printBINopLCD(Data, 1);
     //if (Data != DataOrgineel) PlaatsIRWaardenInArray(Data);
@@ -32,6 +34,25 @@ void AnalyseerData(uint8 data)
     stuurMotorenBij();
 }
 
+uint8 bepaalLijnDikte()
+{
+    uint8 teller = 0;
+    uint8 diksteLijn = 0;
+    for(int i = 0; i < 8; i++)
+    {
+        if (IRDigitaleWaarden[i] == 1) teller++;
+        else {
+            if (teller > diksteLijn)
+            {
+                diksteLijn = teller;
+                teller = 0;
+            } 
+        }
+     }
+        
+     if (teller > diksteLijn)diksteLijn = teller;
+     return diksteLijn;
+}
 
 void stuurMotorenBij(void)
 { 
@@ -47,6 +68,7 @@ void stuurMotorenBij(void)
             break;
         }
     }
+    
     for(int i = 4; i <= 7; i++)
 	{
         if (IRDigitaleWaarden[i] == 1)
@@ -59,7 +81,6 @@ void stuurMotorenBij(void)
             break;
         }
     }
-    
 }
 
 void PlaatsIRWaardenInArray(uint8 value)
