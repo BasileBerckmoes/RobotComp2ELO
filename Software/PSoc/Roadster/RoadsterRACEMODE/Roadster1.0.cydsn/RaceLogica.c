@@ -22,7 +22,7 @@ uint8 DataOrgineel;
 
 void AnalyseerData(uint8 data)
 {
-    if ((data & 11000000) == 11000000 ) data = 0b10000000;
+    if (((data & 11000000) == 11000000) ) data = 0b10000000;
     else if ((data & 00000011) == 00000011 ) data = 0b00000001;
     DataOrgineel = data;
     PlaatsIRWaardenInArray(DataOrgineel);
@@ -144,10 +144,10 @@ uint8 CheckVoor2eLijn()
             }
         }
         
-        LCD_Position(0u,10u);
-        LCD_PrintInt16(aantalWaardeWisselingen);  
-         LCD_Position(1u,10u);
-        LCD_PrintInt16(diksteLijn);  
+//        LCD_Position(0u,10u);
+//        LCD_PrintInt16(aantalWaardeWisselingen);  
+//         LCD_Position(1u,10u);
+//        LCD_PrintInt16(diksteLijn);  
         if (aantalWaardeWisselingen <= 3)
         {
             return Data;

@@ -75,8 +75,8 @@ int main(void)
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
 	telProcedure();
-    ENA_Write(1);
-	ENB_Write(1);
+    ENA_Write(0);
+	ENB_Write(0);
     
     //Clear lcd zodat nieuwe waarden er op passen 
     
@@ -111,6 +111,12 @@ int main(void)
         
         AnalyseerData(IRWaarden);
       
+        printBINopLCD(IRWaarden,0);
+        
+        LCD_Position(1u,0u);
+        LCD_PrintInt16(pwmMotorLinks);  
+        LCD_Position(1u,10u);
+        LCD_PrintInt16(pwmMotorRechts);  
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);
         MotorControl_WriteCompare2(pwmMotorRechts);
