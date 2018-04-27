@@ -30,7 +30,10 @@ void AnalyseerData(uint8 data)
     else if ((data & 00000011) == 00000011 /*|| ((data & 00000111) == 00000111) || ((data & 00001111) == 00001111) || ((data & 00011111) == 00011111)*/)  data = 0b00000001;
     Data = data;
     PlaatsIRWaardenInArray(Data);
-    stuurMotorenBij();
+    if (richting == 255) stuurMotorenBijLNR();
+    else if (richting == 0) stuurMotorenBijRNL();
+
+   
 }
 
 uint8 bepaalLijnDikte()
@@ -54,10 +57,70 @@ uint8 bepaalLijnDikte()
      return diksteLijn;
 }
 
-void stuurMotorenBij(void)
+void stuurMotorenBijRNL(void)
 { 
+    
+     for(int i = 7; i > 3; i--)// for(int i = 4; i <= 7; i++)
+	{
+        if (IRDigitaleWaarden[i] == 1)
+        {
+            antiSlipTeller = 0;
+            if (i == 7) laatsteKant = 200;
+            else laatsteKant = 0;
+            
+            pwmMotorRechts = IRsensorGewicht[i];
+            
+            if (i == 7) pwmMotorLinks = 255;
+            else if (i == 6) pwmMotorLinks = 240;
+            else if (i == 5) pwmMotorLinks = 225;
+            else if (i == 4) pwmMotorLinks = 255;
+            return;
+        }
+    }
     //Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
     /*for(int i = 0; i < 4; i++)*/ for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
+	{
+        if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
+        {
+            antiSlipTeller = 0;
+            if (i == 0) laatsteKant = 100;
+            else laatsteKant = 0;
+            
+            pwmMotorLinks = IRsensorGewicht[i];
+           
+            if (i == 0) pwmMotorRechts = 255;
+            else if (i == 1) pwmMotorRechts = 240;
+            else if (i == 2) pwmMotorRechts = 225;
+            else if (i == 3) pwmMotorRechts = 255;//IRsensorGewicht[i];
+            return;
+        }
+    }
+    //Zet tweede for loop in commentaar indien de robot met de klok mee rijd
+   
+        
+    if (antiSlipTeller < UINT16_MAX && laatsteKant != 0)
+    {
+        antiSlipTeller++;
+    }   
+    if ( antiSlipTeller > 300 && laatsteKant != 0)
+    {
+        if (laatsteKant == 100)
+        {
+            if (pwmMotorLinks < 255) pwmMotorLinks = pwmMotorLinks + 2;
+        }
+        
+        
+        else if (laatsteKant == 200) 
+        {
+            if (pwmMotorRechts < 255) pwmMotorRechts = pwmMotorRechts + 2;
+        }
+    }
+}
+
+void stuurMotorenBijLNR(void)
+{ 
+    //Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
+    for(int i = 0; i < 4; i++) //for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
 	{
         if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
         {
@@ -111,6 +174,8 @@ void stuurMotorenBij(void)
         }
     }
 }
+
+
 
 void PlaatsIRWaardenInArray(uint8 value)
 {

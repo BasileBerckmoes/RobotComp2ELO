@@ -1,5 +1,5 @@
 -- Project:   Roadster1.0
--- Generated: 04/27/2018 15:31:37
+-- Generated: 04/27/2018 15:38:40
 -- PSoC Creator  4.1 Update 1
 
 ENTITY \Roadster1.0\ IS
@@ -75,6 +75,7 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     SIGNAL LED3(0)__PA : bit;
     SIGNAL LED4(0)__PA : bit;
     SIGNAL LED5(0)__PA : bit;
+    SIGNAL Net_1270 : bit;
     SIGNAL Net_13 : bit;
     SIGNAL Net_242 : bit;
     ATTRIBUTE udbclken_assigned OF Net_242 : SIGNAL IS "True";
@@ -95,7 +96,6 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     ATTRIBUTE udbclken_assigned OF Net_665 : SIGNAL IS "True";
     ATTRIBUTE global_signal OF Net_665 : SIGNAL IS true;
     SIGNAL Net_665_local : bit;
-    SIGNAL Net_669 : bit;
     SIGNAL Net_690 : bit;
     SIGNAL Net_691 : bit;
     SIGNAL SW1(0)__PA : bit;
@@ -216,8 +216,6 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     ATTRIBUTE global_signal OF \ADC_IR:clock\ : SIGNAL IS true;
     SIGNAL \ADC_IR:clock_local\ : bit;
     SIGNAL \ADC_IR:nrq\ : bit;
-    SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_0\ : bit;
-    SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_1\ : bit;
     SIGNAL \\\LCD:LCDPort(0)\\__PA\ : bit;
     SIGNAL \\\LCD:LCDPort(1)\\__PA\ : bit;
     SIGNAL \\\LCD:LCDPort(2)\\__PA\ : bit;
@@ -436,9 +434,7 @@ ARCHITECTURE __DEFAULT__ OF \Roadster1.0\ IS
     ATTRIBUTE lib_model OF \MotorControl:PWMUDB:status_1\ : LABEL IS "macrocell86";
     ATTRIBUTE lib_model OF Net_691 : LABEL IS "macrocell87";
     ATTRIBUTE lib_model OF Net_690 : LABEL IS "macrocell88";
-    ATTRIBUTE lib_model OF \Debouncer_1:DEBOUNCER[0]:d_sync_0\ : LABEL IS "macrocell89";
-    ATTRIBUTE lib_model OF \Debouncer_1:DEBOUNCER[0]:d_sync_1\ : LABEL IS "macrocell90";
-    ATTRIBUTE lib_model OF Net_669 : LABEL IS "macrocell91";
+    ATTRIBUTE lib_model OF Net_1270 : LABEL IS "macrocell89";
     COMPONENT clockblockcell
         PORT (
             dclk_0 : OUT std_ulogic;
@@ -3907,12 +3903,12 @@ BEGIN
             f1_blk_stat_comb => \MotorControl:PWMUDB:status_3\,
             busclk => ClockBlock_BUS_CLK);
 
-    isr_1:interrupt
+    DraaiRichtingISR:interrupt
         GENERIC MAP(
-            int_type => "10",
+            int_type => "00",
             is_nmi => 0)
         PORT MAP(
-            interrupt => Net_669,
+            interrupt => Net_1270,
             clock => ClockBlock_BUS_CLK);
 
     \ADC_IR:AMuxHw_2_Decoder_old_id_5\:macrocell
@@ -5190,38 +5186,15 @@ BEGIN
             main_0 => \MotorControl:PWMUDB:runmode_enable\,
             main_1 => \MotorControl:PWMUDB:cmp2_less\);
 
-    \Debouncer_1:DEBOUNCER[0]:d_sync_0\:macrocell
+    Net_1270:macrocell
         GENERIC MAP(
             eqn_main => "(main_0)",
             regmode => 1,
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            q => \Debouncer_1:DEBOUNCER[0]:d_sync_0\,
+            q => Net_1270,
             clock_0 => Net_665,
             main_0 => Net_664);
-
-    \Debouncer_1:DEBOUNCER[0]:d_sync_1\:macrocell
-        GENERIC MAP(
-            eqn_main => "(main_0)",
-            regmode => 1,
-            clk_inv => '0',
-            clken_mode => 1)
-        PORT MAP(
-            q => \Debouncer_1:DEBOUNCER[0]:d_sync_1\,
-            clock_0 => Net_665,
-            main_0 => \Debouncer_1:DEBOUNCER[0]:d_sync_0\);
-
-    Net_669:macrocell
-        GENERIC MAP(
-            eqn_main => "(main_0 * !main_1)",
-            regmode => 1,
-            clk_inv => '0',
-            clken_mode => 1)
-        PORT MAP(
-            q => Net_669,
-            clock_0 => Net_665,
-            main_0 => \Debouncer_1:DEBOUNCER[0]:d_sync_0\,
-            main_1 => \Debouncer_1:DEBOUNCER[0]:d_sync_1\);
 
 END __DEFAULT__;

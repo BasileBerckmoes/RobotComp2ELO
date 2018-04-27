@@ -2,7 +2,7 @@
 --	Conversion of Roadster1.0.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Fri Apr 27 15:31:31 2018
+--	Fri Apr 27 15:38:34 2018
 --
 
 USE cypress.cypress.all;
@@ -937,7 +937,7 @@ SIGNAL Net_665 : bit;
 SIGNAL \Debouncer_1:op_clk\ : bit;
 SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_0\ : bit;
 SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_1\ : bit;
-SIGNAL Net_666 : bit;
+SIGNAL Net_1270 : bit;
 SIGNAL Net_669 : bit;
 SIGNAL Net_667 : bit;
 SIGNAL Net_668 : bit;
@@ -1304,7 +1304,7 @@ Net_402 <= ((not selectUltraS_1 and selectUltraS_0 and Net_400)
 
 \MotorControl:PWMUDB:pwm2_i\ <= ((\MotorControl:PWMUDB:runmode_enable\ and \MotorControl:PWMUDB:cmp2_less\));
 
-Net_669D <= ((not \Debouncer_1:DEBOUNCER[0]:d_sync_1\ and \Debouncer_1:DEBOUNCER[0]:d_sync_0\));
+Net_669D <= ((not \Debouncer_1:DEBOUNCER[0]:d_sync_1\ and Net_1270));
 
 IR1:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"290cd184-7ecf-467d-b68f-9768d5471bca",
@@ -3670,10 +3670,10 @@ Clock_3:cy_clock_v1_0
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_665,
 		dig_domain_out=>open);
-isr_1:cy_isr_v1_0
-	GENERIC MAP(int_type=>"10",
+DraaiRichtingISR:cy_isr_v1_0
+	GENERIC MAP(int_type=>"00",
 		is_nmi=>'0')
-	PORT MAP(int_signal=>Net_669);
+	PORT MAP(int_signal=>Net_1270);
 \ADC_IR:AMuxHw_2_Decoder_old_id_5\:cy_dff
 	PORT MAP(d=>\ADC_IR:ch_addr_5\,
 		clk=>\ADC_IR:clock\,
@@ -4053,9 +4053,9 @@ isr_1:cy_isr_v1_0
 \Debouncer_1:DEBOUNCER[0]:d_sync_0\:cy_dff
 	PORT MAP(d=>Net_664,
 		clk=>\Debouncer_1:op_clk\,
-		q=>\Debouncer_1:DEBOUNCER[0]:d_sync_0\);
+		q=>Net_1270);
 \Debouncer_1:DEBOUNCER[0]:d_sync_1\:cy_dff
-	PORT MAP(d=>\Debouncer_1:DEBOUNCER[0]:d_sync_0\,
+	PORT MAP(d=>Net_1270,
 		clk=>\Debouncer_1:op_clk\,
 		q=>\Debouncer_1:DEBOUNCER[0]:d_sync_1\);
 Net_669:cy_dff

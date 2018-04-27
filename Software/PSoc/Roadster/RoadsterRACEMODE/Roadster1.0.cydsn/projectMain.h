@@ -53,7 +53,8 @@ void schuifRegister(uint16 array[], uint16 newValue);
 
 /////////////////////////////////////////////////////
 //Race Logica
-void stuurMotorenBij(void);
+void stuurMotorenBijLNR(void);
+void stuurMotorenBijRNL(void);
 void PlaatsIRWaardenInArray(uint8 value);
 void AnalyseerData(uint8 data);
 uint8 CheckVoor2eLijn(void);

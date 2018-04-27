@@ -1,6 +1,6 @@
 // ======================================================================
 // Roadster1.0.v generated from TopDesign.cysch
-// 04/27/2018 at 15:31
+// 04/27/2018 at 15:38
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1240,6 +1240,7 @@ module top ;
           wire  Net_669;
           wire  Net_668;
           wire  Net_667;
+          wire  Net_1270;
           wire  Net_1136;
           wire  Net_1135;
           wire  Net_1134;
@@ -1384,7 +1385,6 @@ module top ;
           wire  Net_691;
           wire  Net_662;
           wire  Net_242;
-          wire  Net_666;
           wire  Net_664;
           wire  Net_665;
           wire  Net_417;
@@ -3763,7 +3763,7 @@ module top ;
     Debouncer_v1_0 Debouncer_1 (
         .d(Net_664),
         .clock(Net_665),
-        .q(Net_666),
+        .q(Net_1270),
         .neg(Net_667),
         .either(Net_668),
         .pos(Net_669));
@@ -3786,9 +3786,9 @@ module top ;
 
 
 	cy_isr_v1_0
-		#(.int_type(2'b10))
-		isr_1
-		 (.int_signal(Net_669));
+		#(.int_type(2'b00))
+		DraaiRichtingISR
+		 (.int_signal(Net_1270));
 
 
 

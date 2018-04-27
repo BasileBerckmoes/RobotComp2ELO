@@ -32,8 +32,18 @@
 CY_ISR(AndereDraaiRichting)
 {
     richting = ~richting;
-    if (richting == 0) LED1_Write(1);
-    else if (richting == 255) LED4_Write(1);
+    if (richting == 0)
+    {
+        LED2_Write(1);
+        LED4_Write(0);
+    }
+    
+    else if (richting == 255)
+    {
+       LED4_Write(1);
+       LED2_Write(0);
+       
+    }
 }
 
 
@@ -63,11 +73,11 @@ int main(void)
 
 	initFirmwire();
 	richting = 0;
-    LED1_Write(1);
+    LED2_Write(1);
 	//Interrupts
 	readIRSensors_StartEx(IRSensoren);
     
-    //pasRijRichtingAan_StartEx(AndereDraaiRichting);
+    DraaiRichtingISR_StartEx(AndereDraaiRichting);
     
     
     //schakel motoren uit 
@@ -109,8 +119,6 @@ int main(void)
 		
 		//berekenen van de mediaan
         
-        
-        //Motoren met joystick
         //LCD_Position(0u,0u);
         //LCD_PrintInt16(pwmMotorLinks);
         //LCD_Position(1u,0u);
@@ -178,6 +186,11 @@ void telProcedure(void)
 	LED4_Write(1);
 	CyDelay(1000);
 	LED5_Write(1);
+    
+    LED4_Write(0);
+    LED3_Write(0);
+    LED2_Write(0);
+    LED1_Write(0);
 	
 }
 
