@@ -1,6 +1,0 @@
-#ifndef INCLUDED_CYDISABLEDSHEETS_H
-#define INCLUDED_CYDISABLEDSHEETS_H
-
-#define Bluetooth__DISABLED 1u /* Bluetooth */
-
-#endif /* INCLUDED_CYDISABLEDSHEETS_H */
