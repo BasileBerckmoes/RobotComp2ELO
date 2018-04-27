@@ -23,6 +23,7 @@ CY_ISR_PROTO(sendBleData);
 //Motor  
 uint8 pwmMotorLinks;
 uint8 pwmMotorRechts;
+uint8 richting; // 0 = met de klok mee, 255 = tegen de klok in
 
 /////////////////////////////////////////////////////
 //LCD
@@ -35,7 +36,7 @@ uint8 IRWaarden;
 uint8 IRDrempel;
 
 CY_ISR_PROTO(IRSensoren); 
-
+CY_ISR_PROTO(AndereDraaiRichting);
 
 uint8 TestGetal;
 /////////////////////////////////////////////////////

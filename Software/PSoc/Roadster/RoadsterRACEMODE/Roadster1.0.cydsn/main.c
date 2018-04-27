@@ -29,6 +29,13 @@
 //    
 //}
 
+CY_ISR(AndereDraaiRichting)
+{
+    richting = ~richting;
+    if (richting == 0) LED1_Write(1);
+    else if (richting == 255) LED4_Write(1);
+}
+
 
 //Start alle firmwire blokken
 void initFirmwire()
@@ -47,6 +54,7 @@ void initFirmwire()
     pwmMotorRechts = 0; 
 } 
 
+
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
@@ -54,11 +62,14 @@ int main(void)
     IRDrempel = 100;
 
 	initFirmwire();
-	
+	richting = 0;
+    LED1_Write(1);
 	//Interrupts
 	readIRSensors_StartEx(IRSensoren);
-	//______EnMotorISR_StartEx(TestIRFilter);
-	
+    
+    //pasRijRichtingAan_StartEx(AndereDraaiRichting);
+    
+    
     //schakel motoren uit 
 	MotorControl_WriteCompare1(0);
 	MotorControl_WriteCompare2(0);
@@ -68,15 +79,15 @@ int main(void)
    
 	while(SW1_Read() == 1) 
 	{
-
+      
 	} 
     
 	MotorControl_WriteCompare1(pwmMotorLinks);
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
 	telProcedure();
-    ENA_Write(0);
-	ENB_Write(0);
+    ENA_Write(1);
+	ENB_Write(1);
     
     //Clear lcd zodat nieuwe waarden er op passen 
     
