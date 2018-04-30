@@ -30,10 +30,28 @@ void AnalyseerData(uint8 data)
     else if ((data & 00000011) == 00000011 /*|| ((data & 00000111) == 00000111) || ((data & 00001111) == 00001111) || ((data & 00011111) == 00011111)*/)  data = 0b00000001;
     Data = data;
     PlaatsIRWaardenInArray(Data);
-    if (richting == 255) stuurMotorenBijLNR();
-    else if (richting == 0) stuurMotorenBijRNL();
+    
+    LinksVsRechts();
+    //if (richting == 255) stuurMotorenBijLNR();
+    //else if (richting == 0) stuurMotorenBijRNL();
 
    
+}
+
+void LinksVsRechts()
+{
+    uint8 links = 0;
+    uint8 rechts = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        if(IRDigitaleWaarden[i] == 1)
+        {
+            if (i >= 0 &&  i <= 3) links++; 
+            else if (i >= 4 && i <= 7)rechts++;
+        }
+    }
+    if (links > rechts) stuurMotorenBijLNR();
+    else if (rechts >= links) stuurMotorenBijRNL();
 }
 
 uint8 bepaalLijnDikte()

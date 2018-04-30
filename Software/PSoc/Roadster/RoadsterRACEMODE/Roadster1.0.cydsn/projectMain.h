@@ -58,6 +58,7 @@ void stuurMotorenBijRNL(void);
 void PlaatsIRWaardenInArray(uint8 value);
 void AnalyseerData(uint8 data);
 uint8 CheckVoor2eLijn(void);
+void LinksVsRechts();
 
 /////////////////////////////////////////////////////
 //Varia
