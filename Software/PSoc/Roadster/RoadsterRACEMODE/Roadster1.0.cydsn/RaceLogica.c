@@ -12,7 +12,7 @@
 #include "projectMain.h"
 #include "project.h"
 
-uint8 IRsensorGewicht[] = {0,100,220,255,255,220,100,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
+uint8 IRsensorGewicht[] = {0,180,220,255,255,220,180,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
 uint8 IRDigitaleWaarden[8];
 
 uint8 indexLijn = 0;
@@ -83,7 +83,7 @@ void stuurMotorenBijRNL(void)
         if (IRDigitaleWaarden[i] == 1)
         {
             antiSlipTeller = 0;
-            if (i == 7) laatsteKant = 200;
+            if (i == 7) laatsteKant = 100;
             else laatsteKant = 0;
             
             pwmMotorRechts = IRsensorGewicht[i];
