@@ -40,7 +40,7 @@ uint16 readUSValue(void)
 	return TimerUS_ReadCounter();
 }
 
-void schuifRegister(uint16 array[], uint16 newValue)
+void schuifRegister(uint8 array[], uint16 newValue)
 {
 	for(int i = 3; i >= 0; i--)
 	{

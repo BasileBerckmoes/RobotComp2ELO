@@ -29,6 +29,12 @@
 //    
 //}
 
+uint8 AVGLinks[5] = {255,255,255,255,255};
+uint8 AVGRechts[5] = {255,255,255,255,255};
+
+uint8 tmpLinks;
+uint8 tmpRechts;
+
 CY_ISR(AndereDraaiRichting)
 {
     richting = ~richting;
@@ -137,8 +143,21 @@ int main(void)
         LCD_Position(1u,10u);
         LCD_PrintInt16(pwmMotorRechts);  
         //Pas snelheid motoren aan
-		MotorControl_WriteCompare1(pwmMotorLinks);
-        MotorControl_WriteCompare2(pwmMotorRechts);
+        
+        //schuifRegister(AVGLinks, pwmMotorLinks);
+        //schuifRegister(AVGRechts, pwmMotorRechts);
+        
+        
+        //int links = (AVGLinks[0] + AVGLinks[1] + AVGLinks[2] + AVGLinks[3] + AVGLinks[4])/5;
+        //int rechts = (AVGRechts[0] + AVGRechts[1] + AVGRechts[2] + AVGRechts[3] + AVGRechts[4])/5;
+        
+        uint16 links = tmpLinks + pwmMotorLinks;
+        uint16 rechts = tmpRechts + pwmMotorRechts;
+		MotorControl_WriteCompare1(links / 2);
+        MotorControl_WriteCompare2(rechts / 2);
+        
+        tmpLinks = pwmMotorLinks;
+        tmpRechts = pwmMotorRechts;
 	}
 }
 

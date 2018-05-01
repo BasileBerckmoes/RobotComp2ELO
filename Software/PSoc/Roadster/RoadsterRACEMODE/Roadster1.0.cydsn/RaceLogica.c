@@ -12,7 +12,7 @@
 #include "projectMain.h"
 #include "project.h"
 
-uint8 IRsensorGewicht[] = {0,100,220,255,255,220,100,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
+uint8 IRsensorGewicht[] = {0,150,230,255,255,230,150,0};//{0,180,235,255,235,210,180,0};////{0,25,40,55  ,55,40,25,0}; ////{0,80,120,170  ,170,120,80,0};//{0,80,120,200  ,200,120,80,0};
 uint8 IRDigitaleWaarden[8];
 
 uint8 indexLijn = 0;
@@ -31,11 +31,75 @@ void AnalyseerData(uint8 data)
     Data = data;
     PlaatsIRWaardenInArray(Data);
     
-    LinksVsRechts();
+    stuurMotorenBijOG();
+    //LinksVsRechts();
     //if (richting == 255) stuurMotorenBijLNR();
     //else if (richting == 0) stuurMotorenBijRNL();
 
    
+}
+
+void stuurMotorenBijOG(void)
+{ 
+    
+     
+    //Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
+    for(int i = 0; i < 4; i++)// for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
+	{
+        if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
+        {
+            antiSlipTeller = 0;
+            if (i == 0) laatsteKant = 100;
+            else laatsteKant = 0;
+            
+            pwmMotorLinks = IRsensorGewicht[i];
+           
+            if (i == 0) pwmMotorRechts = 255;
+            else if (i == 1) pwmMotorRechts = 180;//240;
+            else if (i == 2) pwmMotorRechts = 215;//225;
+            else if (i == 3) pwmMotorRechts = 255;//255;//IRsensorGewicht[i];
+            return;
+        }
+    }
+    
+    for(int i = 7; i > 3; i--)// for(int i = 4; i <= 7; i++)
+	{
+        if (IRDigitaleWaarden[i] == 1)
+        {
+            antiSlipTeller = 0;
+            if (i == 7) laatsteKant = 200;
+            else laatsteKant = 0;
+            
+            pwmMotorRechts = IRsensorGewicht[i];
+            
+            if (i == 7) pwmMotorLinks = 255;
+            else if (i == 6) pwmMotorLinks = 180;//240;
+            else if (i == 5) pwmMotorLinks = 215;//225;
+            else if (i == 4) pwmMotorLinks = 255;//255;
+            return;
+        }
+    }
+    //Zet tweede for loop in commentaar indien de robot met de klok mee rijd
+   
+        
+    if (antiSlipTeller < UINT16_MAX && laatsteKant != 0)
+    {
+        antiSlipTeller++;
+    }   
+    
+    if ( antiSlipTeller > 500 && laatsteKant != 0)
+    {
+        if (laatsteKant == 100)
+        {
+            if (pwmMotorLinks < 180) pwmMotorLinks = pwmMotorLinks + 10;
+        }
+        
+        
+        else if (laatsteKant == 200) 
+        {
+            if (pwmMotorRechts < 180) pwmMotorRechts = pwmMotorRechts + 10;
+        }
+    }
 }
 
 void LinksVsRechts()
