@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<ArrayOfDescriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Descriptor xsi:type="Interface_Descriptor">
+    <bInterfaceClass>0x01</bInterfaceClass>
+    <bInterfaceSubClass>0x01</bInterfaceSubClass>
+    <bAlternateSetting>0x00</bAlternateSetting>
+    <bInterfaceNumber>0x00</bInterfaceNumber>
+    <bNumEndpoints>0x01</bNumEndpoints>
+    <bInterfaceProtocol>0x00</bInterfaceProtocol>
+    <iInterface>Cypress Digital Audio</iInterface>
+    <InterfaceDisplayName>MacPCAudioControlIn</InterfaceDisplayName>
+  </Descriptor>
+  <Descriptor xsi:type="ACHeader_Descriptor">
+    <bDescriptorSubtype>HEADER</bDescriptorSubtype>
+    <bcdADC>0x0100</bcdADC>
+    <wTotalLength>0x0026</wTotalLength>
+    <bInCollection>0x01</bInCollection>
+    <baInterfaceNr>0x01</baInterfaceNr>
+  </Descriptor>
+  <Descriptor xsi:type="ACInputTerminal_Descriptor">
+    <bDescriptorSubtype>INPUT_TERMINAL</bDescriptorSubtype>
+    <bTerminalID>0x04</bTerminalID>
+    <wTerminalType>0x0201</wTerminalType>
+    <bAssocTerminal>0x00</bAssocTerminal>
+    <bNrChannels>0x02</bNrChannels>
+    <wChannelConfig>0x0003</wChannelConfig>
+    <iTerminal>Microphone</iTerminal>
+  </Descriptor>
+  <Descriptor xsi:type="ACOutputTerminalDescriptor_Descriptor">
+    <bDescriptorSubtype>OUTPUT_TERMINAL</bDescriptorSubtype>
+    <bTerminalID>0x05</bTerminalID>
+    <wTerminalType>0x0101</wTerminalType>
+    <bAssocTerminal>0x00</bAssocTerminal>
+    <bSourceID>0x06</bSourceID>
+    <iTerminal>USB Streaming</iTerminal>
+  </Descriptor>
+  <Descriptor xsi:type="ACFeatureUnit_Descriptor">
+    <bDescriptorSubtype>FEATURE_UNIT</bDescriptorSubtype>
+    <bUnitID>0x06</bUnitID>
+    <bSourceID>0x04</bSourceID>
+    <bControlSize>0x01</bControlSize>
+    <bmaControls>0x03</bmaControls>
+  </Descriptor>
+  <Descriptor xsi:type="AudioEndpoint_Descriptor">
+    <bInterval>0x1E</bInterval>
+    <bEndpointAddress>0x86</bEndpointAddress>
+    <bmAttributes>0x03</bmAttributes>
+    <wMaxPacketSize>0x0002</wMaxPacketSize>
+    <bRefresh>0x00</bRefresh>
+    <bSynchAddress>0x00</bSynchAddress>
+  </Descriptor>
+  <Descriptor xsi:type="Interface_Descriptor">
+    <bInterfaceClass>0x01</bInterfaceClass>
+    <bInterfaceSubClass>0x02</bInterfaceSubClass>
+    <bAlternateSetting>0x00</bAlternateSetting>
+    <bInterfaceNumber>0x01</bInterfaceNumber>
+    <bNumEndpoints>0x00</bNumEndpoints>
+    <bInterfaceProtocol>0x00</bInterfaceProtocol>
+    <iInterface>Cypress Digital Audio</iInterface>
+    <InterfaceDisplayName>MacPCAudioStreamingIn</InterfaceDisplayName>
+  </Descriptor>
+  <Descriptor xsi:type="Interface_Descriptor">
+    <bInterfaceClass>0x01</bInterfaceClass>
+    <bInterfaceSubClass>0x02</bInterfaceSubClass>
+    <bAlternateSetting>0x01</bAlternateSetting>
+    <bInterfaceNumber>0x01</bInterfaceNumber>
+    <bNumEndpoints>0x01</bNumEndpoints>
+    <bInterfaceProtocol>0x00</bInterfaceProtocol>
+    <iInterface>Active 24 bit</iInterface>
+    <InterfaceDisplayName>MacPCAudioStreamingIn</InterfaceDisplayName>
+  </Descriptor>
+  <Descriptor xsi:type="ASGeneral_Descriptor">
+    <bDescriptorSubtype>AS_GENERAL</bDescriptorSubtype>
+    <bTerminalLink>0x05</bTerminalLink>
+    <bDelay>0x01</bDelay>
+    <wFormatTag>0x0001</wFormatTag>
+  </Descriptor>
+  <Descriptor xsi:type="CyASFormatType1_Descriptor">
+    <bDescriptorSubtype>FORMAT_TYPE</bDescriptorSubtype>
+    <bFormatType>FORMAT_TYPE_UNDEFINED</bFormatType>
+    <bNrChannels>0x02</bNrChannels>
+    <bSubframeSize>0x03</bSubframeSize>
+    <bBitResolution>0x18</bBitResolution>
+    <bSamFreqType>0x03</bSamFreqType>
+    <tLowerSamFreq>0x000000</tLowerSamFreq>
+    <tUpperSamFreq>0x000000</tUpperSamFreq>
+    <tSamFreq>0x007D00, 0x00AC44, 0x00BB80</tSamFreq>
+  </Descriptor>
+  <Descriptor xsi:type="AudioEndpoint_Descriptor">
+    <bInterval>0x01</bInterval>
+    <bEndpointAddress>0x82</bEndpointAddress>
+    <bmAttributes>0x0D</bmAttributes>
+    <wMaxPacketSize>0x0120</wMaxPacketSize>
+    <bRefresh>0x00</bRefresh>
+    <bSynchAddress>0x00</bSynchAddress>
+  </Descriptor>
+  <Descriptor xsi:type="ASEndpoint_Descriptor">
+    <bDescriptorSubtype>EP_GENERAL</bDescriptorSubtype>
+    <bmAttributes>0x01</bmAttributes>
+    <bLockDelayUnits>0x01</bLockDelayUnits>
+    <wLockDelay>0x0001</wLockDelay>
+  </Descriptor>
+</ArrayOfDescriptor>

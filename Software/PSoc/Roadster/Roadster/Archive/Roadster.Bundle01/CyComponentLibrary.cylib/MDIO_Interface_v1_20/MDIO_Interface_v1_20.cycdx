@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="" visible="true">
+
+    <block name="AddressAnalyzer" desc="" visible="`$OperationMode` == 1">
+      <register name="ADDR_COMP_A1"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_AddrComp_u0__A1_REG"
+        bitWidth="16" desc="Last received address">
+      </register>
+      
+      <register name="ADDR_COMP_A0"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_AddrComp_u0__A0_REG"
+        bitWidth="16" desc="Current address/Register offset">
+      </register>
+      
+      <register name="ADDR_CALC_A1"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_AddrCalc_u0__A1_REG"
+        bitWidth="16" desc="Register Info INC/Register offset">
+      </register>
+      
+      <register name="ADDR_CALC_A0"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_AddrCalc_u0__A0_REG"
+        bitWidth="16" desc="Address of the register page info/16 bits (LSB/MSB) address">
+      </register>
+
+      <register name="REG_MASK"
+        address="`$INSTANCE_NAME`_bMDIO_MdioDp_u0__D1_REG"
+        bitWidth="16" desc="Register writable bit mask">
+      </register>
+      
+      <register name="PAGE_WIDTH"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_DataWidthCfg__CONTROL_REG"
+        bitWidth="8" desc="Bitmap that specifies whether the register page has 8-bit or 16-bit data width">      
+      </register>
+ 
+      <register name="PAGE_MEMORY_TYPE"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_MemTypeCfg__CONTROL_REG"
+        bitWidth="8" desc="Bitmap that specifies whether the register page is located in Flash or SRAM">
+      </register>
+
+      <register name="REG_ATTRIBUTE"
+        address="`$INSTANCE_NAME`_bMDIO_Advanced_CfgReg__CONTROL_REG"
+        bitWidth="8" desc="Bitmap that specifies the register attributes">  
+      </register>
+    </block>
+
+  </block>
+</deviceData>

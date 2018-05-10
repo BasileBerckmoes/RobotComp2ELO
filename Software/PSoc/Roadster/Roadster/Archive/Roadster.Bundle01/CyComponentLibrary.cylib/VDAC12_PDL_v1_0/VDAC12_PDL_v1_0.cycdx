@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1" xmlns="http://cypress.com/xsd/cydevicedata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+	<block name="`$INSTANCE_NAME`" desc="" visible="true">
+
+		<block name="CTDAC" desc="" visible="true">
+<!-- =============== Register definitions for CTDAC IP Block. ============== -->
+			<register name="CTDAC_CTRL" address="0x00040000" bitWidth="32" desc="Global CTDAC control">
+
+<!-- *********************CTDAC0_CTDAC_CTRL_REG fields ********************* -->
+<!-- Global CTDAC control -->
+<!-- *********************************************************************** -->
+				<field name="DEGLITCH_CNT" from="5" to="0" access="RW" desc="To prevent glitches after VALUE changes from propagating, the output switch can be opened for DEGLITCH_CNT+1 clk_ctdac clock cycles.">
+				</field>
+				<field name="DEGLITCH_CO6" from="8" to="8" access="RW" desc="Force CTDAC.CO6 switch open after each VALUE change for the set number of clock cycles.">
+				</field>
+				<field name="DEGLITCH_COS" from="9" to="9" access="RW" desc="Force CTB.COS switch open after each VALUE change for the set number of clock cycles.">
+				</field>
+				<field name="OUT_EN" from="22" to="22" access="RW" desc="Output enable, intended to be used during the Hold phase of the Sample and Hold when power cycling :&#xA;0: output disabled, the output is either: &#xA;       - Tri-state (DISABLED_MODE=0) &#xA;       - or Vssa (DISABLED_MODE=1 &amp;&amp; CTDAC_RANGE=0)  &#xA;       - or Vref (DISABLED_MODE=1 &amp;&amp; CTDAC_RANGE=1) &#xA;1: output enabled, CTDAC output drives the programmed VALUE">
+				</field>
+				<field name="CTDAC_RANGE" from="23" to="23" access="RW" desc="By closing the bottom switch in the R2R network the output is lifted by one LSB, effectively adding 1&#xA;0: Range is [0, 4095] * Vref / 4096 &#xA;1: Range is [1, 4096] * Vref / 4096">
+				</field>
+				<field name="CTDAC_MODE" from="25" to="24" access="RW" desc="DAC mode, this determines the Value decoding">
+
+<!-- CTDAC_MODE bitfield enumerated values -->
+					<value name="UNSIGNED12" value="0" desc="Unsigned 12-bit VDAC, i.e. no value decoding."/>
+					<value name="VIRT_SIGNED12" value="1" desc="Virtual signed 12-bits' VDAC. Value decoding: &#xA;add 0x800 to the 12-bit Value (=invert MSB), to convert the lowest signed number 0x800 to the lowest unsigned number 0x000. This is the same as the SAR handles 12-bit 'virtual' signed numbers."/>
+					<value name="RESERVED2" value="10" desc=""/>
+					<value name="RESERVED3" value="11" desc=""/>
+				</field>
+				<field name="DISABLED_MODE" from="27" to="27" access="RW" desc="Select the output value when the output is disabled (OUT_EN=0) (for risk mitigation)&#xA;0: Tri-state CTDAC output when disabled&#xA;1: output Vssa or Vref when disabled (see OUT_EN description)">
+				</field>
+				<field name="DSI_STROBE_EN" from="28" to="28" access="RW" desc="DSI strobe input Enable. This enables CTDAC updates to be further throttled by DSI.&#xA;0: Ignore DSI strobe input&#xA;1: Only do a CTDAC update if alllowed by the DSI stobe (throttle), see below for level or edge">
+				</field>
+				<field name="DSI_STROBE_LEVEL" from="29" to="29" access="RW" desc="Select level or edge detect for DSI strobe&#xA;- 0: DSI strobe signal is a pulse input, after a positive edge is detected on the DSI strobe signal the next DAC value update is done on the next CTDAC clock&#xA;- 1: DSI strobe signal is a level input, as long as the DSI strobe signal remains high the CTDAC will do a next DAC value update on each CTDAC clock.">
+				</field>
+				<field name="DEEPSLEEP_ON" from="30" to="30" access="RW" desc="- 0: CTDAC IP disabled off during DeepSleep power mode&#xA;- 1: CTDAC IP remains enabled during DeepSleep power mode (if ENABLED=1)">
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="0: CTDAC IP disabled (put analog in power down, open all switches)&#xA;1: CTDAC IP enabled">
+				</field>
+			</register>
+			<register name="INTR" address="0x00040020" bitWidth="32" desc="Interrupt request register">
+
+<!-- ************************CTDAC0_INTR_REG fields ************************ -->
+<!-- Interrupt request register -->
+<!-- *********************************************************************** -->
+				<field name="VDAC_EMPTY" from="0" to="0" access="RW" desc="VDAC Interrupt: hardware sets this interrupt when VDAC next value field is empty, i.e. was copied to the current VALUE. Write with '1' to clear bit.">
+				</field>
+			</register>
+			<register name="INTR_SET" address="0x00040024" bitWidth="32" desc="Interrupt request set register">
+
+<!-- **********************CTDAC0_INTR_SET_REG fields ********************** -->
+<!-- Interrupt request set register -->
+<!-- *********************************************************************** -->
+				<field name="VDAC_EMPTY_SET" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="INTR_MASK" address="0x00040028" bitWidth="32" desc="Interrupt request mask">
+
+<!-- **********************CTDAC0_INTR_MASK_REG fields ********************* -->
+<!-- Interrupt request mask -->
+<!-- *********************************************************************** -->
+				<field name="VDAC_EMPTY_MASK" from="0" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="INTR_MASKED" address="0x0004002C" bitWidth="32" desc="Interrupt request masked">
+
+<!-- *********************CTDAC0_INTR_MASKED_REG fields ******************** -->
+<!-- Interrupt request masked -->
+<!-- *********************************************************************** -->
+				<field name="VDAC_EMPTY_MASKED" from="0" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+			</register>
+			<register name="CTDAC_SW" address="0x000400B0" bitWidth="32" desc="CTDAC switch control">
+
+<!-- **********************CTDAC0_CTDAC_SW_REG fields ********************** -->
+<!-- CTDAC switch control -->
+<!-- *********************************************************************** -->
+				<field name="CTDD_CVD" from="0" to="0" access="RW" desc="VDDA supply to ctdrefdrive">
+				</field>
+				<field name="CTDO_CO6" from="8" to="8" access="RW" desc="ctdvout to P6 pin. Note this switch will temporarily be opened for deglitching if DEGLITCH_CO6 is set">
+				</field>
+			</register>
+			<register name="CTDAC_SW_CLEAR" address="0x000400B4" bitWidth="32" desc="CTDAC switch control clear">
+
+<!-- *******************CTDAC0_CTDAC_SW_CLEAR_REG fields ******************* -->
+<!-- CTDAC switch control clear -->
+<!-- *********************************************************************** -->
+				<field name="CTDD_CVD" from="0" to="0" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDO_CO6" from="8" to="8" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+			</register>
+			<register name="CTDAC_VAL" address="0x00040100" bitWidth="32" desc="DAC Value">
+
+<!-- **********************CTDAC0_CTDAC_VAL_REG fields ********************* -->
+<!-- DAC Value -->
+<!-- *********************************************************************** -->
+				<field name="VALUE" from="11" to="0" access="RW" desc="Value, in CTDAC_MODE 1 this value is decoded">
+				</field>
+			</register>
+			<register name="CTDAC_VAL_NXT" address="0x00040104" bitWidth="32" desc="Next DAC value (double buffering)">
+
+<!-- ********************CTDAC0_CTDAC_VAL_NXT_REG fields ******************* -->
+<!-- Next DAC value (double buffering) -->
+<!-- *********************************************************************** -->
+				<field name="VALUE" from="11" to="0" access="RW" desc="Next value for CTDAC_VAL.VALUE">
+				</field>
+			</register>
+		</block>
+
+	</block>
+
+</deviceData>

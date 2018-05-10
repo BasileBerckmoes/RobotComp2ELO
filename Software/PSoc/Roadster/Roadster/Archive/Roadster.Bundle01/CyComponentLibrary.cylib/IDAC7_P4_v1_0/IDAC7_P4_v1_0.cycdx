@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="IDAC7" visible="true">
+    <register name="CSDv2"
+	    address="`$INSTANCE_NAME`_cy_psoc4_idac__CONFIG" bitWidth="32" desc=" CSDv2 register">
+        <field name="SENSE_EN" from="12" to="12" access="RW" desc="Enables the sense modulator output">
+            <value name="ENABLE"   value="1" desc="Enable SENSE"/>
+            <value name="DISABLE"  value="0" desc="Disable SENSE"/>
+        </field>
+        <field name="ENABLE" from="31" to="31" access="RW" desc="Master enable of the CSDv2 IP">
+            <value name="ENABLE"   value="1" desc="Enable CSDv2 IP"/>
+            <value name="DISABLE"  value="0" desc="Disable CSDv2 IP"/>
+        </field>
+    </register> 
+
+    <register name="IDAC"
+        address="`$INSTANCE_NAME`_cy_psoc4_idac__IDAC" bitWidth="32" desc="CSDv2 IDAC register">
+        <field name="CURR_VAL" from="6" to="0" access="RW" desc="Current value setting for this IDAC (7 bits)">
+        </field>
+        <field name="POL_DYN" from="7" to="7" access="RW" desc="Polarity is dynamic, this bit does not influence the logic in the SoftIP, it only goes to the HardIP">
+            <value name="STATIC"   value="0" desc="Static polarity"/>
+            <value name="DYNAMIC"  value="1" desc="Dynamic polarity"/>
+        </field>
+        <field name="POLARITY" from="9" to="8" access="RW" desc="Selects the polarity of the IDAC (sensing operation)">
+            <value name="VSSA_SRC"  value="00" desc="Normal: switch between Vssa and Cmod"/>
+            <value name="VDDA_SNK"  value="01" desc="Inverted: switch between Vdda and Cmod"/>
+            <value name="SENSE"  value="10" desc="The polarity of the IDAC will follow the csd_sense signal (POL_DYN bit should be set too)"/>
+            <value name="SENSE_INV"  value="11" desc="The polarity of the IDAC will follow the inverted csd_sense signal (POL_DYN bit should be set too)"/>
+        </field>
+        <field name="BAL_MODE" from="11" to="10" access="RW" desc="Balancing mode: only applies to legs configured as CSD">
+            <value name="FULL"  value="00" desc="enabled from start of Phi2 until disabled by CSDCMP"/>
+            <value name="PHI1"  value="01" desc="enabled from start of Phi1 and disabled by CSDCMP or at end of Phi1"/>
+            <value name="PHI2"  value="10" desc="enabled from start of Phi2 and disabled by CSDCMP or at end of Phi2"/>
+            <value name="PHI1_2"  value="11" desc="enabled from start of both Phi1 and Phi2 and disabled by CSDCMP or at end of Phi1 or Phi2 (if non-overlap enabled"/>
+        </field>
+        <field name="LEG1_MODE" from="17" to="16" access="RW" desc="Controls the usage mode of LEG1 and the Polarity bit">
+            <value name="GP_STATIC"  value="00" desc="General Purpose static mode"/>
+            <value name="GP"  value="01" desc="General Purpose dynamic mod"/>
+            <value name="CSD_STATIC"  value="10" desc="CSD static mode"/>
+            <value name="CSD"  value="11" desc="CSD dynamic mode"/>
+        </field>
+        <field name="LEG2_MODE" from="19" to="18" access="RW" desc="Controls the usage mode of LEG2 and the Polarity bit">
+            <value name="GP_STATIC"  value="00" desc="General Purpose static mode"/>
+            <value name="GP"  value="01" desc="General Purpose dynamic mod"/>
+            <value name="CSD_STATIC"  value="10" desc="CSD static mode"/>
+            <value name="CSD"  value="11" desc="CSD dynamic mode"/>
+        </field>
+        <field name="DSI_CTRL_EN" from="21" to="21" access="RW" desc="Mix DSI inputs with MMIO controls or not">
+            <value name="ENABLE"   value="1" desc="Enable"/>
+            <value name="DISABLE"  value="0" desc="Disable"/>
+        </field>
+        <field name="RANGE" from="23" to="22" access="RW" desc="IDAC multiplier ">
+            <value name="IDAC_LO"  value="00" desc="1 LSB =   37.5 nA"/>
+            <value name="IDAC_MED"  value="01" desc="1 LSB =  300 nA"/>
+            <value name="IDAC_HI"  value="10" desc="1 LSB = 2400 nA"/>
+        </field>
+        <field name="LEG1_EN" from="24" to="24" access="RW" desc="output enable for leg 1">
+            <value name="ENABLE"   value="1" desc="Enable"/>
+            <value name="DISABLE"  value="0" desc="Disable"/>
+        </field>
+        <field name="LEG2_EN" from="25" to="25" access="RW" desc="output enable for leg 2">
+            <value name="ENABLE"   value="1" desc="Enable"/>
+            <value name="DISABLE"  value="0" desc="Disable"/>
+        </field>
+    </register> 
+  </block>
+</deviceData>

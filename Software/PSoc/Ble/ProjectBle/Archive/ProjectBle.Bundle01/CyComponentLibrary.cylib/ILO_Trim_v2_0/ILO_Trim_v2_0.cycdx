@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="" visible="true">
+      <block name="`$INSTANCE_NAME`_UDB" desc="" visible="!`$FixedFunctionUsed`">
+              <register name="COUNTER" address="`$INSTANCE_NAME`_bILO_Timer_CounterDP_u0__A0_REG" bitWidth="32" desc="Current counter value" />   
+              <register name="CAPTURE" address="`$INSTANCE_NAME`_bILO_Timer_CounterDP_u0__A1_REG" bitWidth="32" desc="Period value" />   
+      </block>
+  </block> 
+</deviceData>

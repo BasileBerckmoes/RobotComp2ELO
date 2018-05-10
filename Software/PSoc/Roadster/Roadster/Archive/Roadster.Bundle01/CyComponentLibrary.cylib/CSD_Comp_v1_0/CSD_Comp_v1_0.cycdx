@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="CSD Comparator" visible="true">
+    <register name="CONFIG"
+        address="`$INSTANCE_NAME`_CSD_Comp__CSD_CONFIG" 
+        bitWidth="32" desc="Configuration register: CONFIG">
+        <field name="SENSE_COMP_BW" from="11" to="11" access="RW" desc="Selects speed for sensing comparator">
+            <value name="SLOW"  value="0" desc="Slow speed"/>
+            <value name="FAST"  value="1" desc="Fast speed"/>
+        </field>
+        <field name="SENSE_COMP_EN" from="19" to="19" access="RW" desc="Turns on the sense comparator circuit">
+            <value name="DISABLE"   value="0" desc="Disable of the Sense comparator"/>
+            <value name="ENABLE"    value="1" desc="Enable of the Sense comparator"/>
+        </field>
+        <field name="SENSE_INSEL" from="22" to="22" access="R" desc="Selects how to connect the sensing comparator to the Cmod capacitor">
+            <value name="SENSE_CHANNEL1"    value="0" desc="Use the Channel 1 sense line to conenct to Cmod"/>
+            <value name="SENSE_AMUXA"       value="1" desc="Use the AMUXBUS-A bus to connect to Cmod"/>
+        </field>
+        <field name="DDFTSEL"  from="28" to="26" access="R" desc="Changes comp_out signal for DFT purpose only.">
+            <value name="NORMAL"        value="000" desc="Normal functionality"/>
+            <value name="CSD_SENSE"     value="001" desc="dsi_sample_out= csd_sense"/>
+            <value name="CSD_SHIELD"    value="010" desc="dsi_sample_out= csd_shield"/>
+            <value name="CLK_SAMPLE"    value="011" desc="dsi_sample_out= clk_sample"/>
+            <value name="COMP_OUT"      value="100" desc="dsi_sample_out= comp_out"/>
+        </field>
+        <field name="DDFTCOMP"  from="30" to="30" access="R" desc="Changes comp_out signal for DFT purpose only.">
+            <value name="REFBUFCOMP"    value="0" desc="comp_out is reference buffer comparator output."/>
+            <value name="SENSECOMP"     value="1" desc="comp_out is sensing comparator output (unflopped)"/>
+        </field>
+        <field name="ENABLE"    from="31" to="31" access="RW" desc="Enable of the CSD IP">
+            <value name="DISABLE"   value="0" desc="Disable of the CSD IP"/>
+            <value name="ENABLE"    value="1" desc="Enable of the CSD IP"/>
+        </field>
+	</register> 
+    
+    <register name="STATUS"
+        address="`$INSTANCE_NAME`_CSD_Comp__CSD_STATUS" 
+        bitWidth="4" desc="Status register: STATUS">
+        <field name="SAMPLE" from="3"  to="3" access="R" desc="Flopped output of the Sense comparator">
+        </field>
+	</register> 
+    
+  </block>
+</deviceData>

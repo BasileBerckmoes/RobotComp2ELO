@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 1
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 1
 
 
    1              		.syntax unified
@@ -57,1434 +57,1202 @@ ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 1
   34              		.cfi_offset 14, -4
   35 0002 85B0     		sub	sp, sp, #20
   36              		.cfi_def_cfa_offset 24
-  21:BleCommunicatie.c ****     if((valueY > 120 && valueY < 130) && (valueX > 120 && valueX < 130)) {
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 2
+  21:BleCommunicatie.c ****     char strBuffer[10];
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 2
 
 
-  37              		.loc 1 21 0
-  38 0004 3D4B     		ldr	r3, .L11
+  22:BleCommunicatie.c ****     
+  23:BleCommunicatie.c ****     //char hexDecBuffer[2];
+  24:BleCommunicatie.c ****     //DecToHex(pwml, hexDecBuffer);
+  25:BleCommunicatie.c ****     sprintf(strBuffer, "X/%X/\r\n", valueX); 
+  37              		.loc 1 25 0
+  38 0004 0D4B     		ldr	r3, .L3
   39 0006 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
-  40 0008 A2F17903 		sub	r3, r2, #121
-  41 000c DBB2     		uxtb	r3, r3
-  42 000e 082B     		cmp	r3, #8
-  43 0010 0BD8     		bhi	.L2
-  44              		.loc 1 21 0 is_stmt 0 discriminator 1
-  45 0012 3B4B     		ldr	r3, .L11+4
-  46 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-  47 0016 793B     		subs	r3, r3, #121
-  48 0018 DBB2     		uxtb	r3, r3
-  49 001a 082B     		cmp	r3, #8
-  50 001c 05D8     		bhi	.L2
-  22:BleCommunicatie.c ****         pwml = 0;
-  51              		.loc 1 22 0 is_stmt 1
-  52 001e 0023     		movs	r3, #0
-  53 0020 384A     		ldr	r2, .L11+8
-  54 0022 1370     		strb	r3, [r2]
-  23:BleCommunicatie.c ****         pwmr = 0;
-  55              		.loc 1 23 0
-  56 0024 384A     		ldr	r2, .L11+12
-  57 0026 1370     		strb	r3, [r2]
-  58 0028 38E0     		b	.L3
-  59              	.L2:
-  24:BleCommunicatie.c ****     } else if (valueY > 127) {
-  60              		.loc 1 24 0
-  61 002a 12F0800F 		tst	r2, #128
-  62 002e 35D0     		beq	.L3
-  25:BleCommunicatie.c ****         if (valueX > 115 && valueX < 135) {
-  63              		.loc 1 25 0
-  64 0030 334B     		ldr	r3, .L11+4
-  65 0032 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
-  66 0034 A2F17403 		sub	r3, r2, #116
-  67 0038 DBB2     		uxtb	r3, r3
-  68 003a 122B     		cmp	r3, #18
-  69 003c 05D8     		bhi	.L4
-  26:BleCommunicatie.c ****             pwml = 80;//(valueY - 127) * 2 - 200;
-  70              		.loc 1 26 0
-  71 003e 5023     		movs	r3, #80
-  72 0040 304A     		ldr	r2, .L11+8
-  73 0042 1370     		strb	r3, [r2]
-  27:BleCommunicatie.c ****             pwmr = pwml;
-  74              		.loc 1 27 0
-  75 0044 304A     		ldr	r2, .L11+12
-  76 0046 1370     		strb	r3, [r2]
-  77 0048 28E0     		b	.L3
-  78              	.L4:
-  28:BleCommunicatie.c ****         } else if (valueX > 124 && valueX < 192) {
-  79              		.loc 1 28 0
-  80 004a A2F17D03 		sub	r3, r2, #125
-  81 004e DBB2     		uxtb	r3, r3
-  82 0050 422B     		cmp	r3, #66
-  83 0052 06D8     		bhi	.L5
-  29:BleCommunicatie.c ****             pwmr = 80;//255 - 200;
-  84              		.loc 1 29 0
-  85 0054 5022     		movs	r2, #80
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 3
+  40 0008 0D49     		ldr	r1, .L3+4
+  41 000a 01A8     		add	r0, sp, #4
+  42 000c FFF7FEFF 		bl	sprintf
+  43              	.LVL0:
+  26:BleCommunicatie.c ****     bleUart1_PutString(strBuffer);
+  44              		.loc 1 26 0
+  45 0010 01A8     		add	r0, sp, #4
+  46 0012 FFF7FEFF 		bl	bleUart1_PutString
+  47              	.LVL1:
+  27:BleCommunicatie.c ****     puttyUart1_PutString(strBuffer);
+  48              		.loc 1 27 0
+  49 0016 01A8     		add	r0, sp, #4
+  50 0018 FFF7FEFF 		bl	puttyUart1_PutString
+  51              	.LVL2:
+  28:BleCommunicatie.c ****     
+  29:BleCommunicatie.c ****     //DecToHex(pwmr, hexDecBuffer);
+  30:BleCommunicatie.c ****     sprintf(strBuffer, "Y/%X/\r\n",valueY); 
+  52              		.loc 1 30 0
+  53 001c 094B     		ldr	r3, .L3+8
+  54 001e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  55 0020 0949     		ldr	r1, .L3+12
+  56 0022 01A8     		add	r0, sp, #4
+  57 0024 FFF7FEFF 		bl	sprintf
+  58              	.LVL3:
+  31:BleCommunicatie.c ****     bleUart1_PutString(strBuffer);
+  59              		.loc 1 31 0
+  60 0028 01A8     		add	r0, sp, #4
+  61 002a FFF7FEFF 		bl	bleUart1_PutString
+  62              	.LVL4:
+  32:BleCommunicatie.c ****     puttyUart1_PutString(strBuffer);
+  63              		.loc 1 32 0
+  64 002e 01A8     		add	r0, sp, #4
+  65 0030 FFF7FEFF 		bl	puttyUart1_PutString
+  66              	.LVL5:
+  33:BleCommunicatie.c **** }
+  67              		.loc 1 33 0
+  68 0034 05B0     		add	sp, sp, #20
+  69              		.cfi_def_cfa_offset 4
+  70              		@ sp needed
+  71 0036 5DF804FB 		ldr	pc, [sp], #4
+  72              	.L4:
+  73 003a 00BF     		.align	2
+  74              	.L3:
+  75 003c 00000000 		.word	valueX
+  76 0040 00000000 		.word	.LC0
+  77 0044 00000000 		.word	valueY
+  78 0048 08000000 		.word	.LC1
+  79              		.cfi_endproc
+  80              	.LFE64:
+  81              		.size	sendBleData, .-sendBleData
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 3
 
 
-  86 0056 2C4B     		ldr	r3, .L11+12
-  87 0058 1A70     		strb	r2, [r3]
-  30:BleCommunicatie.c ****             //pwmr = 45;//(valueX - 125) * 2 - 200;
-  31:BleCommunicatie.c ****             pwml = 60;
-  88              		.loc 1 31 0
-  89 005a 3C22     		movs	r2, #60
-  90 005c 294B     		ldr	r3, .L11+8
-  91 005e 1A70     		strb	r2, [r3]
-  92 0060 1CE0     		b	.L3
-  93              	.L5:
-  32:BleCommunicatie.c ****         } 
-  33:BleCommunicatie.c ****         else if (valueX > 192) {
-  94              		.loc 1 33 0
-  95 0062 C02A     		cmp	r2, #192
-  96 0064 06D9     		bls	.L6
-  34:BleCommunicatie.c ****             pwmr = 80;//255 - 200;
-  97              		.loc 1 34 0
-  98 0066 5022     		movs	r2, #80
-  99 0068 274B     		ldr	r3, .L11+12
- 100 006a 1A70     		strb	r2, [r3]
-  35:BleCommunicatie.c ****             //pwmr = 45;//(valueX - 125) * 2 - 200;
-  36:BleCommunicatie.c ****             pwml = 25;
- 101              		.loc 1 36 0
- 102 006c 1922     		movs	r2, #25
- 103 006e 254B     		ldr	r3, .L11+8
- 104 0070 1A70     		strb	r2, [r3]
- 105 0072 13E0     		b	.L3
- 106              	.L6:
-  37:BleCommunicatie.c ****         }  else if (valueX < 124 && valueX > 64) {
- 107              		.loc 1 37 0
- 108 0074 A2F14103 		sub	r3, r2, #65
- 109 0078 DBB2     		uxtb	r3, r3
- 110 007a 3A2B     		cmp	r3, #58
- 111 007c 06D8     		bhi	.L7
-  38:BleCommunicatie.c ****             pwml = 80;//255 - 200;
- 112              		.loc 1 38 0
- 113 007e 5022     		movs	r2, #80
- 114 0080 204B     		ldr	r3, .L11+8
- 115 0082 1A70     		strb	r2, [r3]
-  39:BleCommunicatie.c ****             //else pwml = 45;//valueX * 2 - 200;
-  40:BleCommunicatie.c ****             pwmr = 50;
- 116              		.loc 1 40 0
- 117 0084 3222     		movs	r2, #50
- 118 0086 204B     		ldr	r3, .L11+12
- 119 0088 1A70     		strb	r2, [r3]
- 120 008a 07E0     		b	.L3
- 121              	.L7:
-  41:BleCommunicatie.c ****         }  else if (valueX < 64) {
- 122              		.loc 1 41 0
- 123 008c 3F2A     		cmp	r2, #63
- 124 008e 05D8     		bhi	.L3
-  42:BleCommunicatie.c ****             pwml = 80;//255 - 200;
- 125              		.loc 1 42 0
- 126 0090 5022     		movs	r2, #80
- 127 0092 1C4B     		ldr	r3, .L11+8
- 128 0094 1A70     		strb	r2, [r3]
-  43:BleCommunicatie.c ****             //else pwml = 45;//valueX * 2 - 200;
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 4
+  82              		.section	.text.ProcessCommandMsg,"ax",%progbits
+  83              		.align	2
+  84              		.global	ProcessCommandMsg
+  85              		.thumb
+  86              		.thumb_func
+  87              		.type	ProcessCommandMsg, %function
+  88              	ProcessCommandMsg:
+  89              	.LFB65:
+  34:BleCommunicatie.c **** 
+  35:BleCommunicatie.c **** void ProcessCommandMsg(void)
+  36:BleCommunicatie.c **** {
+  90              		.loc 1 36 0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 8
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94 0000 10B5     		push	{r4, lr}
+  95              		.cfi_def_cfa_offset 8
+  96              		.cfi_offset 4, -8
+  97              		.cfi_offset 14, -4
+  98 0002 82B0     		sub	sp, sp, #8
+  99              		.cfi_def_cfa_offset 16
+  37:BleCommunicatie.c ****     char hexInputBuffer[2];
+  38:BleCommunicatie.c ****     if (RB.cmd == 'I')
+ 100              		.loc 1 38 0
+ 101 0004 0F4B     		ldr	r3, .L9
+ 102 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 103 0008 492B     		cmp	r3, #73
+ 104 000a 10D1     		bne	.L6
+  39:BleCommunicatie.c ****     {  
+  40:BleCommunicatie.c ****         IRWaarden = getCMDValue('/', RB.valstr, hexInputBuffer);
+ 105              		.loc 1 40 0
+ 106 000c 01AA     		add	r2, sp, #4
+ 107 000e 0E49     		ldr	r1, .L9+4
+ 108 0010 2F20     		movs	r0, #47
+ 109 0012 FFF7FEFF 		bl	getCMDValue
+ 110              	.LVL6:
+ 111 0016 0246     		mov	r2, r0
+ 112 0018 0C4B     		ldr	r3, .L9+8
+ 113 001a 1870     		strb	r0, [r3]
+  41:BleCommunicatie.c ****         sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
+ 114              		.loc 1 41 0
+ 115 001c 0C4C     		ldr	r4, .L9+12
+ 116 001e 0D49     		ldr	r1, .L9+16
+ 117 0020 2046     		mov	r0, r4
+ 118 0022 FFF7FEFF 		bl	sprintf
+ 119              	.LVL7:
+  42:BleCommunicatie.c ****         puttyUart1_PutString(strMsg1);
+ 120              		.loc 1 42 0
+ 121 0026 2046     		mov	r0, r4
+ 122 0028 FFF7FEFF 		bl	puttyUart1_PutString
+ 123              	.LVL8:
+ 124 002c 08E0     		b	.L5
+ 125              	.L6:
+  43:BleCommunicatie.c **** 
+  44:BleCommunicatie.c ****     } 
+  45:BleCommunicatie.c ****     else if (RB.cmd == 'T')
+ 126              		.loc 1 45 0
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 4
 
 
-  44:BleCommunicatie.c ****             pwmr = 25;
- 129              		.loc 1 44 0
- 130 0096 1922     		movs	r2, #25
- 131 0098 1B4B     		ldr	r3, .L11+12
- 132 009a 1A70     		strb	r2, [r3]
- 133              	.L3:
-  45:BleCommunicatie.c ****         }
-  46:BleCommunicatie.c ****     }
-  47:BleCommunicatie.c ****     
-  48:BleCommunicatie.c ****     if (pwml > 110 || pwmr > 110) {
- 134              		.loc 1 48 0
- 135 009c 194B     		ldr	r3, .L11+8
- 136 009e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 137 00a0 6E2B     		cmp	r3, #110
- 138 00a2 03D8     		bhi	.L8
- 139              		.loc 1 48 0 is_stmt 0 discriminator 1
- 140 00a4 184B     		ldr	r3, .L11+12
- 141 00a6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 142 00a8 6E2B     		cmp	r3, #110
- 143 00aa 04D9     		bls	.L9
- 144              	.L8:
-  49:BleCommunicatie.c ****         pwml = 0;
- 145              		.loc 1 49 0 is_stmt 1
- 146 00ac 0023     		movs	r3, #0
- 147 00ae 154A     		ldr	r2, .L11+8
- 148 00b0 1370     		strb	r3, [r2]
-  50:BleCommunicatie.c ****         pwmr = 0;
- 149              		.loc 1 50 0
- 150 00b2 154A     		ldr	r2, .L11+12
- 151 00b4 1370     		strb	r3, [r2]
- 152              	.L9:
-  51:BleCommunicatie.c ****     }
-  52:BleCommunicatie.c ****     
-  53:BleCommunicatie.c ****     char strBuffer[10];
-  54:BleCommunicatie.c ****     
-  55:BleCommunicatie.c **** ////////    sprintf(strBuffer, "L/%u/\r\n", pwml);
-  56:BleCommunicatie.c **** ////////    puttyUart1_PutString(strBuffer);
-  57:BleCommunicatie.c **** ////////    sprintf(strBuffer, "R/%u/\r\n", pwmr);
-  58:BleCommunicatie.c **** ////////    puttyUart1_PutString(strBuffer);
-  59:BleCommunicatie.c ****     char hexDecBuffer[2];
-  60:BleCommunicatie.c ****     DecToHex(pwml, hexDecBuffer);
- 153              		.loc 1 60 0
- 154 00b6 6946     		mov	r1, sp
- 155 00b8 124B     		ldr	r3, .L11+8
- 156 00ba 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 157 00bc FFF7FEFF 		bl	DecToHex
- 158              	.LVL0:
-  61:BleCommunicatie.c ****     sprintf(strBuffer, "L/%s/\r\n", hexDecBuffer); 
- 159              		.loc 1 61 0
- 160 00c0 6A46     		mov	r2, sp
- 161 00c2 1249     		ldr	r1, .L11+16
- 162 00c4 01A8     		add	r0, sp, #4
- 163 00c6 FFF7FEFF 		bl	sprintf
- 164              	.LVL1:
-  62:BleCommunicatie.c ****     bleUart1_PutString(strBuffer);
- 165              		.loc 1 62 0
- 166 00ca 01A8     		add	r0, sp, #4
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 5
+ 127 002e 542B     		cmp	r3, #84
+ 128 0030 06D1     		bne	.L5
+  46:BleCommunicatie.c ****     {
+  47:BleCommunicatie.c ****         TestGetal = getCMDValue('/', RB.valstr, hexInputBuffer);
+ 129              		.loc 1 47 0
+ 130 0032 01AA     		add	r2, sp, #4
+ 131 0034 0449     		ldr	r1, .L9+4
+ 132 0036 2F20     		movs	r0, #47
+ 133 0038 FFF7FEFF 		bl	getCMDValue
+ 134              	.LVL9:
+ 135 003c 064B     		ldr	r3, .L9+20
+ 136 003e 1870     		strb	r0, [r3]
+ 137              	.L5:
+  48:BleCommunicatie.c ****         //sprintf(strMsg1,"TestGetal=%u\r\n", TestGetal); 
+  49:BleCommunicatie.c **** //        puttyUart1_PutString(strMsg1);
+  50:BleCommunicatie.c ****     }
+  51:BleCommunicatie.c **** }
+ 138              		.loc 1 51 0
+ 139 0040 02B0     		add	sp, sp, #8
+ 140              		.cfi_def_cfa_offset 8
+ 141              		@ sp needed
+ 142 0042 10BD     		pop	{r4, pc}
+ 143              	.L10:
+ 144              		.align	2
+ 145              	.L9:
+ 146 0044 00000000 		.word	RB
+ 147 0048 01000000 		.word	RB+1
+ 148 004c 00000000 		.word	IRWaarden
+ 149 0050 00000000 		.word	strMsg1
+ 150 0054 10000000 		.word	.LC2
+ 151 0058 00000000 		.word	TestGetal
+ 152              		.cfi_endproc
+ 153              	.LFE65:
+ 154              		.size	ProcessCommandMsg, .-ProcessCommandMsg
+ 155              		.comm	RB,20,4
+ 156              		.comm	IRWaarden,1,1
+ 157              		.comm	TestGetal,1,1
+ 158              		.comm	strMsg1,64,4
+ 159              		.comm	pwmr,1,1
+ 160              		.comm	pwml,1,1
+ 161              		.comm	valueY,1,1
+ 162              		.comm	valueX,1,1
+ 163              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 164              		.align	2
+ 165              	.LC0:
+ 166 0000 582F2558 		.ascii	"X/%X/\015\012\000"
+ 166      2F0D0A00 
+ 167              	.LC1:
+ 168 0008 592F2558 		.ascii	"Y/%X/\015\012\000"
+ 168      2F0D0A00 
+ 169              	.LC2:
+ 170 0010 49525761 		.ascii	"IRWaarde=%u\015\000"
+ 170      61726465 
+ 170      3D25750D 
+ 170      00
+ 171              		.text
+ 172              	.Letext0:
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 5
 
 
- 167 00cc FFF7FEFF 		bl	bleUart1_PutString
- 168              	.LVL2:
-  63:BleCommunicatie.c ****     puttyUart1_PutString(strBuffer);
- 169              		.loc 1 63 0
- 170 00d0 01A8     		add	r0, sp, #4
- 171 00d2 FFF7FEFF 		bl	puttyUart1_PutString
- 172              	.LVL3:
-  64:BleCommunicatie.c ****     
-  65:BleCommunicatie.c ****     DecToHex(pwmr, hexDecBuffer);
- 173              		.loc 1 65 0
- 174 00d6 6946     		mov	r1, sp
- 175 00d8 0B4B     		ldr	r3, .L11+12
- 176 00da 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 177 00dc FFF7FEFF 		bl	DecToHex
- 178              	.LVL4:
-  66:BleCommunicatie.c ****     sprintf(strBuffer, "R/%s/\r\n",hexDecBuffer); 
- 179              		.loc 1 66 0
- 180 00e0 6A46     		mov	r2, sp
- 181 00e2 0B49     		ldr	r1, .L11+20
- 182 00e4 01A8     		add	r0, sp, #4
- 183 00e6 FFF7FEFF 		bl	sprintf
- 184              	.LVL5:
-  67:BleCommunicatie.c ****     bleUart1_PutString(strBuffer);
- 185              		.loc 1 67 0
- 186 00ea 01A8     		add	r0, sp, #4
- 187 00ec FFF7FEFF 		bl	bleUart1_PutString
- 188              	.LVL6:
-  68:BleCommunicatie.c ****     puttyUart1_PutString(strBuffer);
- 189              		.loc 1 68 0
- 190 00f0 01A8     		add	r0, sp, #4
- 191 00f2 FFF7FEFF 		bl	puttyUart1_PutString
- 192              	.LVL7:
-  69:BleCommunicatie.c **** }
- 193              		.loc 1 69 0
- 194 00f6 05B0     		add	sp, sp, #20
- 195              		.cfi_def_cfa_offset 4
- 196              		@ sp needed
- 197 00f8 5DF804FB 		ldr	pc, [sp], #4
- 198              	.L12:
- 199              		.align	2
- 200              	.L11:
- 201 00fc 00000000 		.word	valueY
- 202 0100 00000000 		.word	valueX
- 203 0104 00000000 		.word	pwml
- 204 0108 00000000 		.word	pwmr
- 205 010c 00000000 		.word	.LC0
- 206 0110 08000000 		.word	.LC1
- 207              		.cfi_endproc
- 208              	.LFE64:
- 209              		.size	sendBleData, .-sendBleData
- 210              		.section	.text.ProcessCommandMsg,"ax",%progbits
- 211              		.align	2
- 212              		.global	ProcessCommandMsg
- 213              		.thumb
- 214              		.thumb_func
- 215              		.type	ProcessCommandMsg, %function
- 216              	ProcessCommandMsg:
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 6
+ 173              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 174              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 175              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 176              		.file 5 "projectMain.h"
+ 177              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 178              		.file 7 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 179              		.file 8 "Generated_Source\\PSoC5/bleUart1.h"
+ 180              		.file 9 "Generated_Source\\PSoC5/puttyUart1.h"
+ 181              		.file 10 "myUART.h"
+ 182              		.section	.debug_info,"",%progbits
+ 183              	.Ldebug_info0:
+ 184 0000 40030000 		.4byte	0x340
+ 185 0004 0400     		.2byte	0x4
+ 186 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 187 000a 04       		.byte	0x4
+ 188 000b 01       		.uleb128 0x1
+ 189 000c 59000000 		.4byte	.LASF34
+ 190 0010 0C       		.byte	0xc
+ 191 0011 14000000 		.4byte	.LASF35
+ 192 0015 E9010000 		.4byte	.LASF36
+ 193 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 194 001d 00000000 		.4byte	0
+ 195 0021 00000000 		.4byte	.Ldebug_line0
+ 196 0025 02       		.uleb128 0x2
+ 197 0026 01       		.byte	0x1
+ 198 0027 06       		.byte	0x6
+ 199 0028 6D020000 		.4byte	.LASF0
+ 200 002c 02       		.uleb128 0x2
+ 201 002d 01       		.byte	0x1
+ 202 002e 08       		.byte	0x8
+ 203 002f 28010000 		.4byte	.LASF1
+ 204 0033 02       		.uleb128 0x2
+ 205 0034 02       		.byte	0x2
+ 206 0035 05       		.byte	0x5
+ 207 0036 D9010000 		.4byte	.LASF2
+ 208 003a 02       		.uleb128 0x2
+ 209 003b 02       		.byte	0x2
+ 210 003c 07       		.byte	0x7
+ 211 003d F9000000 		.4byte	.LASF3
+ 212 0041 03       		.uleb128 0x3
+ 213 0042 26000000 		.4byte	.LASF9
+ 214 0046 02       		.byte	0x2
+ 215 0047 3F       		.byte	0x3f
+ 216 0048 4C000000 		.4byte	0x4c
+ 217 004c 02       		.uleb128 0x2
+ 218 004d 04       		.byte	0x4
+ 219 004e 05       		.byte	0x5
+ 220 004f 53020000 		.4byte	.LASF4
+ 221 0053 02       		.uleb128 0x2
+ 222 0054 04       		.byte	0x4
+ 223 0055 07       		.byte	0x7
+ 224 0056 E7000000 		.4byte	.LASF5
+ 225 005a 02       		.uleb128 0x2
+ 226 005b 08       		.byte	0x8
+ 227 005c 05       		.byte	0x5
+ 228 005d B3010000 		.4byte	.LASF6
+ 229 0061 02       		.uleb128 0x2
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 6
 
 
- 217              	.LFB65:
-  70:BleCommunicatie.c **** 
-  71:BleCommunicatie.c **** void ProcessCommandMsg(void)
-  72:BleCommunicatie.c **** {
- 218              		.loc 1 72 0
- 219              		.cfi_startproc
- 220              		@ args = 0, pretend = 0, frame = 8
- 221              		@ frame_needed = 0, uses_anonymous_args = 0
- 222 0000 10B5     		push	{r4, lr}
- 223              		.cfi_def_cfa_offset 8
- 224              		.cfi_offset 4, -8
- 225              		.cfi_offset 14, -4
- 226 0002 82B0     		sub	sp, sp, #8
- 227              		.cfi_def_cfa_offset 16
-  73:BleCommunicatie.c ****     char hexInputBuffer[2];
-  74:BleCommunicatie.c ****     if (RB.cmd == 'I')
- 228              		.loc 1 74 0
- 229 0004 0F4B     		ldr	r3, .L17
- 230 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 231 0008 492B     		cmp	r3, #73
- 232 000a 10D1     		bne	.L14
-  75:BleCommunicatie.c ****     {  
-  76:BleCommunicatie.c ****         IRWaarden = getCMDValue('/', RB.valstr, hexInputBuffer);
- 233              		.loc 1 76 0
- 234 000c 01AA     		add	r2, sp, #4
- 235 000e 0E49     		ldr	r1, .L17+4
- 236 0010 2F20     		movs	r0, #47
- 237 0012 FFF7FEFF 		bl	getCMDValue
- 238              	.LVL8:
- 239 0016 0246     		mov	r2, r0
- 240 0018 0C4B     		ldr	r3, .L17+8
- 241 001a 1870     		strb	r0, [r3]
-  77:BleCommunicatie.c ****         sprintf(strMsg1,"IRWaarde=%u\r", IRWaarden); 
- 242              		.loc 1 77 0
- 243 001c 0C4C     		ldr	r4, .L17+12
- 244 001e 0D49     		ldr	r1, .L17+16
- 245 0020 2046     		mov	r0, r4
- 246 0022 FFF7FEFF 		bl	sprintf
- 247              	.LVL9:
-  78:BleCommunicatie.c ****         puttyUart1_PutString(strMsg1);
- 248              		.loc 1 78 0
- 249 0026 2046     		mov	r0, r4
- 250 0028 FFF7FEFF 		bl	puttyUart1_PutString
- 251              	.LVL10:
- 252 002c 08E0     		b	.L13
- 253              	.L14:
-  79:BleCommunicatie.c **** 
-  80:BleCommunicatie.c ****     } 
-  81:BleCommunicatie.c ****     else if (RB.cmd == 'T')
- 254              		.loc 1 81 0
- 255 002e 542B     		cmp	r3, #84
- 256 0030 06D1     		bne	.L13
-  82:BleCommunicatie.c ****     {
-  83:BleCommunicatie.c ****         TestGetal = getCMDValue('/', RB.valstr, hexInputBuffer);
- 257              		.loc 1 83 0
- 258 0032 01AA     		add	r2, sp, #4
- 259 0034 0449     		ldr	r1, .L17+4
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 7
+ 230 0062 08       		.byte	0x8
+ 231 0063 07       		.byte	0x7
+ 232 0064 58010000 		.4byte	.LASF7
+ 233 0068 04       		.uleb128 0x4
+ 234 0069 04       		.byte	0x4
+ 235 006a 05       		.byte	0x5
+ 236 006b 696E7400 		.ascii	"int\000"
+ 237 006f 02       		.uleb128 0x2
+ 238 0070 04       		.byte	0x4
+ 239 0071 07       		.byte	0x7
+ 240 0072 4B010000 		.4byte	.LASF8
+ 241 0076 03       		.uleb128 0x3
+ 242 0077 81010000 		.4byte	.LASF10
+ 243 007b 03       		.byte	0x3
+ 244 007c 2C       		.byte	0x2c
+ 245 007d 41000000 		.4byte	0x41
+ 246 0081 05       		.uleb128 0x5
+ 247 0082 E3010000 		.4byte	.LASF11
+ 248 0086 04       		.byte	0x4
+ 249 0087 E401     		.2byte	0x1e4
+ 250 0089 2C000000 		.4byte	0x2c
+ 251 008d 02       		.uleb128 0x2
+ 252 008e 04       		.byte	0x4
+ 253 008f 04       		.byte	0x4
+ 254 0090 4C000000 		.4byte	.LASF12
+ 255 0094 02       		.uleb128 0x2
+ 256 0095 08       		.byte	0x8
+ 257 0096 04       		.byte	0x4
+ 258 0097 36010000 		.4byte	.LASF13
+ 259 009b 02       		.uleb128 0x2
+ 260 009c 01       		.byte	0x1
+ 261 009d 08       		.byte	0x8
+ 262 009e C1010000 		.4byte	.LASF14
+ 263 00a2 02       		.uleb128 0x2
+ 264 00a3 08       		.byte	0x8
+ 265 00a4 04       		.byte	0x4
+ 266 00a5 61020000 		.4byte	.LASF15
+ 267 00a9 02       		.uleb128 0x2
+ 268 00aa 04       		.byte	0x4
+ 269 00ab 07       		.byte	0x7
+ 270 00ac AA010000 		.4byte	.LASF16
+ 271 00b0 06       		.uleb128 0x6
+ 272 00b1 14       		.byte	0x14
+ 273 00b2 0A       		.byte	0xa
+ 274 00b3 23       		.byte	0x23
+ 275 00b4 D1000000 		.4byte	0xd1
+ 276 00b8 07       		.uleb128 0x7
+ 277 00b9 636D6400 		.ascii	"cmd\000"
+ 278 00bd 0A       		.byte	0xa
+ 279 00be 24       		.byte	0x24
+ 280 00bf 9B000000 		.4byte	0x9b
+ 281 00c3 00       		.byte	0
+ 282 00c4 08       		.uleb128 0x8
+ 283 00c5 52000000 		.4byte	.LASF17
+ 284 00c9 0A       		.byte	0xa
+ 285 00ca 25       		.byte	0x25
+ 286 00cb D1000000 		.4byte	0xd1
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 7
 
 
- 260 0036 2F20     		movs	r0, #47
- 261 0038 FFF7FEFF 		bl	getCMDValue
- 262              	.LVL11:
- 263 003c 064B     		ldr	r3, .L17+20
- 264 003e 1870     		strb	r0, [r3]
- 265              	.L13:
-  84:BleCommunicatie.c ****         //sprintf(strMsg1,"TestGetal=%u\r\n", TestGetal); 
-  85:BleCommunicatie.c **** //        puttyUart1_PutString(strMsg1);
-  86:BleCommunicatie.c ****     }
-  87:BleCommunicatie.c **** }
- 266              		.loc 1 87 0
- 267 0040 02B0     		add	sp, sp, #8
- 268              		.cfi_def_cfa_offset 8
- 269              		@ sp needed
- 270 0042 10BD     		pop	{r4, pc}
- 271              	.L18:
- 272              		.align	2
- 273              	.L17:
- 274 0044 00000000 		.word	RB
- 275 0048 01000000 		.word	RB+1
- 276 004c 00000000 		.word	IRWaarden
- 277 0050 00000000 		.word	strMsg1
- 278 0054 10000000 		.word	.LC2
- 279 0058 00000000 		.word	TestGetal
- 280              		.cfi_endproc
- 281              	.LFE65:
- 282              		.size	ProcessCommandMsg, .-ProcessCommandMsg
- 283              		.comm	RB,20,4
- 284              		.comm	IRWaarden,1,1
- 285              		.comm	TestGetal,1,1
- 286              		.comm	strMsg1,64,4
- 287              		.comm	pwmr,1,1
- 288              		.comm	pwml,1,1
- 289              		.comm	valueY,1,1
- 290              		.comm	valueX,1,1
- 291              		.section	.rodata.str1.4,"aMS",%progbits,1
- 292              		.align	2
- 293              	.LC0:
- 294 0000 4C2F2573 		.ascii	"L/%s/\015\012\000"
- 294      2F0D0A00 
- 295              	.LC1:
- 296 0008 522F2573 		.ascii	"R/%s/\015\012\000"
- 296      2F0D0A00 
- 297              	.LC2:
- 298 0010 49525761 		.ascii	"IRWaarde=%u\015\000"
- 298      61726465 
- 298      3D25750D 
- 298      00
- 299              		.text
- 300              	.Letext0:
- 301              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 302              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 303              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
- 304              		.file 5 "projectMain.h"
- 305              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
- 306              		.file 7 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 307              		.file 8 "Generated_Source\\PSoC5/bleUart1.h"
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 8
+ 287 00cf 01       		.byte	0x1
+ 288 00d0 00       		.byte	0
+ 289 00d1 09       		.uleb128 0x9
+ 290 00d2 9B000000 		.4byte	0x9b
+ 291 00d6 E1000000 		.4byte	0xe1
+ 292 00da 0A       		.uleb128 0xa
+ 293 00db A9000000 		.4byte	0xa9
+ 294 00df 12       		.byte	0x12
+ 295 00e0 00       		.byte	0
+ 296 00e1 0B       		.uleb128 0xb
+ 297 00e2 42000000 		.4byte	.LASF37
+ 298 00e6 14       		.byte	0x14
+ 299 00e7 0A       		.byte	0xa
+ 300 00e8 21       		.byte	0x21
+ 301 00e9 FE000000 		.4byte	0xfe
+ 302 00ed 0C       		.uleb128 0xc
+ 303 00ee 3C000000 		.4byte	.LASF38
+ 304 00f2 0A       		.byte	0xa
+ 305 00f3 22       		.byte	0x22
+ 306 00f4 FE000000 		.4byte	0xfe
+ 307 00f8 0D       		.uleb128 0xd
+ 308 00f9 B0000000 		.4byte	0xb0
+ 309 00fd 00       		.byte	0
+ 310 00fe 09       		.uleb128 0x9
+ 311 00ff 9B000000 		.4byte	0x9b
+ 312 0103 0E010000 		.4byte	0x10e
+ 313 0107 0A       		.uleb128 0xa
+ 314 0108 A9000000 		.4byte	0xa9
+ 315 010c 13       		.byte	0x13
+ 316 010d 00       		.byte	0
+ 317 010e 0E       		.uleb128 0xe
+ 318 010f 30000000 		.4byte	.LASF18
+ 319 0113 01       		.byte	0x1
+ 320 0114 13       		.byte	0x13
+ 321 0115 00000000 		.4byte	.LFB64
+ 322 0119 4C000000 		.4byte	.LFE64-.LFB64
+ 323 011d 01       		.uleb128 0x1
+ 324 011e 9C       		.byte	0x9c
+ 325 011f B8010000 		.4byte	0x1b8
+ 326 0123 0F       		.uleb128 0xf
+ 327 0124 0A000000 		.4byte	.LASF20
+ 328 0128 01       		.byte	0x1
+ 329 0129 15       		.byte	0x15
+ 330 012a B8010000 		.4byte	0x1b8
+ 331 012e 02       		.uleb128 0x2
+ 332 012f 91       		.byte	0x91
+ 333 0130 6C       		.sleb128 -20
+ 334 0131 10       		.uleb128 0x10
+ 335 0132 10000000 		.4byte	.LVL0
+ 336 0136 17030000 		.4byte	0x317
+ 337 013a 4E010000 		.4byte	0x14e
+ 338 013e 11       		.uleb128 0x11
+ 339 013f 01       		.uleb128 0x1
+ 340 0140 50       		.byte	0x50
+ 341 0141 02       		.uleb128 0x2
+ 342 0142 91       		.byte	0x91
+ 343 0143 6C       		.sleb128 -20
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 8
 
 
- 308              		.file 9 "Generated_Source\\PSoC5/puttyUart1.h"
- 309              		.file 10 "myUART.h"
- 310              		.section	.debug_info,"",%progbits
- 311              	.Ldebug_info0:
- 312 0000 8D030000 		.4byte	0x38d
- 313 0004 0400     		.2byte	0x4
- 314 0006 00000000 		.4byte	.Ldebug_abbrev0
- 315 000a 04       		.byte	0x4
- 316 000b 01       		.uleb128 0x1
- 317 000c 6F000000 		.4byte	.LASF36
- 318 0010 0C       		.byte	0xc
- 319 0011 14000000 		.4byte	.LASF37
- 320 0015 FF010000 		.4byte	.LASF38
- 321 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 322 001d 00000000 		.4byte	0
- 323 0021 00000000 		.4byte	.Ldebug_line0
- 324 0025 02       		.uleb128 0x2
- 325 0026 01       		.byte	0x1
- 326 0027 06       		.byte	0x6
- 327 0028 83020000 		.4byte	.LASF0
- 328 002c 02       		.uleb128 0x2
- 329 002d 01       		.byte	0x1
- 330 002e 08       		.byte	0x8
- 331 002f 3E010000 		.4byte	.LASF1
- 332 0033 02       		.uleb128 0x2
- 333 0034 02       		.byte	0x2
- 334 0035 05       		.byte	0x5
- 335 0036 EF010000 		.4byte	.LASF2
- 336 003a 02       		.uleb128 0x2
- 337 003b 02       		.byte	0x2
- 338 003c 07       		.byte	0x7
- 339 003d 0F010000 		.4byte	.LASF3
- 340 0041 03       		.uleb128 0x3
- 341 0042 2F000000 		.4byte	.LASF9
- 342 0046 02       		.byte	0x2
- 343 0047 3F       		.byte	0x3f
- 344 0048 4C000000 		.4byte	0x4c
- 345 004c 02       		.uleb128 0x2
- 346 004d 04       		.byte	0x4
- 347 004e 05       		.byte	0x5
- 348 004f 69020000 		.4byte	.LASF4
- 349 0053 02       		.uleb128 0x2
- 350 0054 04       		.byte	0x4
- 351 0055 07       		.byte	0x7
- 352 0056 FD000000 		.4byte	.LASF5
- 353 005a 02       		.uleb128 0x2
- 354 005b 08       		.byte	0x8
- 355 005c 05       		.byte	0x5
- 356 005d C9010000 		.4byte	.LASF6
- 357 0061 02       		.uleb128 0x2
- 358 0062 08       		.byte	0x8
- 359 0063 07       		.byte	0x7
- 360 0064 6E010000 		.4byte	.LASF7
- 361 0068 04       		.uleb128 0x4
- 362 0069 04       		.byte	0x4
- 363 006a 05       		.byte	0x5
- 364 006b 696E7400 		.ascii	"int\000"
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 9
+ 344 0144 11       		.uleb128 0x11
+ 345 0145 01       		.uleb128 0x1
+ 346 0146 51       		.byte	0x51
+ 347 0147 05       		.uleb128 0x5
+ 348 0148 03       		.byte	0x3
+ 349 0149 00000000 		.4byte	.LC0
+ 350 014d 00       		.byte	0
+ 351 014e 10       		.uleb128 0x10
+ 352 014f 16000000 		.4byte	.LVL1
+ 353 0153 22030000 		.4byte	0x322
+ 354 0157 62010000 		.4byte	0x162
+ 355 015b 11       		.uleb128 0x11
+ 356 015c 01       		.uleb128 0x1
+ 357 015d 50       		.byte	0x50
+ 358 015e 02       		.uleb128 0x2
+ 359 015f 91       		.byte	0x91
+ 360 0160 6C       		.sleb128 -20
+ 361 0161 00       		.byte	0
+ 362 0162 10       		.uleb128 0x10
+ 363 0163 1C000000 		.4byte	.LVL2
+ 364 0167 2D030000 		.4byte	0x32d
+ 365 016b 76010000 		.4byte	0x176
+ 366 016f 11       		.uleb128 0x11
+ 367 0170 01       		.uleb128 0x1
+ 368 0171 50       		.byte	0x50
+ 369 0172 02       		.uleb128 0x2
+ 370 0173 91       		.byte	0x91
+ 371 0174 6C       		.sleb128 -20
+ 372 0175 00       		.byte	0
+ 373 0176 10       		.uleb128 0x10
+ 374 0177 28000000 		.4byte	.LVL3
+ 375 017b 17030000 		.4byte	0x317
+ 376 017f 93010000 		.4byte	0x193
+ 377 0183 11       		.uleb128 0x11
+ 378 0184 01       		.uleb128 0x1
+ 379 0185 50       		.byte	0x50
+ 380 0186 02       		.uleb128 0x2
+ 381 0187 91       		.byte	0x91
+ 382 0188 6C       		.sleb128 -20
+ 383 0189 11       		.uleb128 0x11
+ 384 018a 01       		.uleb128 0x1
+ 385 018b 51       		.byte	0x51
+ 386 018c 05       		.uleb128 0x5
+ 387 018d 03       		.byte	0x3
+ 388 018e 08000000 		.4byte	.LC1
+ 389 0192 00       		.byte	0
+ 390 0193 10       		.uleb128 0x10
+ 391 0194 2E000000 		.4byte	.LVL4
+ 392 0198 22030000 		.4byte	0x322
+ 393 019c A7010000 		.4byte	0x1a7
+ 394 01a0 11       		.uleb128 0x11
+ 395 01a1 01       		.uleb128 0x1
+ 396 01a2 50       		.byte	0x50
+ 397 01a3 02       		.uleb128 0x2
+ 398 01a4 91       		.byte	0x91
+ 399 01a5 6C       		.sleb128 -20
+ 400 01a6 00       		.byte	0
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 9
 
 
- 365 006f 02       		.uleb128 0x2
- 366 0070 04       		.byte	0x4
- 367 0071 07       		.byte	0x7
- 368 0072 61010000 		.4byte	.LASF8
- 369 0076 03       		.uleb128 0x3
- 370 0077 97010000 		.4byte	.LASF10
- 371 007b 03       		.byte	0x3
- 372 007c 2C       		.byte	0x2c
- 373 007d 41000000 		.4byte	0x41
- 374 0081 05       		.uleb128 0x5
- 375 0082 F9010000 		.4byte	.LASF11
- 376 0086 04       		.byte	0x4
- 377 0087 9201     		.2byte	0x192
- 378 0089 2C000000 		.4byte	0x2c
- 379 008d 02       		.uleb128 0x2
- 380 008e 04       		.byte	0x4
- 381 008f 04       		.byte	0x4
- 382 0090 62000000 		.4byte	.LASF12
- 383 0094 02       		.uleb128 0x2
- 384 0095 08       		.byte	0x8
- 385 0096 04       		.byte	0x4
- 386 0097 4C010000 		.4byte	.LASF13
- 387 009b 02       		.uleb128 0x2
- 388 009c 01       		.byte	0x1
- 389 009d 08       		.byte	0x8
- 390 009e D7010000 		.4byte	.LASF14
- 391 00a2 02       		.uleb128 0x2
- 392 00a3 08       		.byte	0x8
- 393 00a4 04       		.byte	0x4
- 394 00a5 77020000 		.4byte	.LASF15
- 395 00a9 02       		.uleb128 0x2
- 396 00aa 04       		.byte	0x4
- 397 00ab 07       		.byte	0x7
- 398 00ac C0010000 		.4byte	.LASF16
- 399 00b0 06       		.uleb128 0x6
- 400 00b1 14       		.byte	0x14
- 401 00b2 0A       		.byte	0xa
- 402 00b3 23       		.byte	0x23
- 403 00b4 D1000000 		.4byte	0xd1
- 404 00b8 07       		.uleb128 0x7
- 405 00b9 636D6400 		.ascii	"cmd\000"
- 406 00bd 0A       		.byte	0xa
- 407 00be 24       		.byte	0x24
- 408 00bf 9B000000 		.4byte	0x9b
- 409 00c3 00       		.byte	0
- 410 00c4 08       		.uleb128 0x8
- 411 00c5 68000000 		.4byte	.LASF17
- 412 00c9 0A       		.byte	0xa
- 413 00ca 25       		.byte	0x25
- 414 00cb D1000000 		.4byte	0xd1
- 415 00cf 01       		.byte	0x1
- 416 00d0 00       		.byte	0
- 417 00d1 09       		.uleb128 0x9
- 418 00d2 9B000000 		.4byte	0x9b
- 419 00d6 E1000000 		.4byte	0xe1
- 420 00da 0A       		.uleb128 0xa
- 421 00db A9000000 		.4byte	0xa9
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 10
+ 401 01a7 12       		.uleb128 0x12
+ 402 01a8 34000000 		.4byte	.LVL5
+ 403 01ac 2D030000 		.4byte	0x32d
+ 404 01b0 11       		.uleb128 0x11
+ 405 01b1 01       		.uleb128 0x1
+ 406 01b2 50       		.byte	0x50
+ 407 01b3 02       		.uleb128 0x2
+ 408 01b4 91       		.byte	0x91
+ 409 01b5 6C       		.sleb128 -20
+ 410 01b6 00       		.byte	0
+ 411 01b7 00       		.byte	0
+ 412 01b8 09       		.uleb128 0x9
+ 413 01b9 9B000000 		.4byte	0x9b
+ 414 01bd C8010000 		.4byte	0x1c8
+ 415 01c1 0A       		.uleb128 0xa
+ 416 01c2 A9000000 		.4byte	0xa9
+ 417 01c6 09       		.byte	0x9
+ 418 01c7 00       		.byte	0
+ 419 01c8 0E       		.uleb128 0xe
+ 420 01c9 81020000 		.4byte	.LASF19
+ 421 01cd 01       		.byte	0x1
+ 422 01ce 23       		.byte	0x23
+ 423 01cf 00000000 		.4byte	.LFB65
+ 424 01d3 5C000000 		.4byte	.LFE65-.LFB65
+ 425 01d7 01       		.uleb128 0x1
+ 426 01d8 9C       		.byte	0x9c
+ 427 01d9 5F020000 		.4byte	0x25f
+ 428 01dd 0F       		.uleb128 0xf
+ 429 01de 0C010000 		.4byte	.LASF21
+ 430 01e2 01       		.byte	0x1
+ 431 01e3 25       		.byte	0x25
+ 432 01e4 5F020000 		.4byte	0x25f
+ 433 01e8 02       		.uleb128 0x2
+ 434 01e9 91       		.byte	0x91
+ 435 01ea 74       		.sleb128 -12
+ 436 01eb 10       		.uleb128 0x10
+ 437 01ec 16000000 		.4byte	.LVL6
+ 438 01f0 38030000 		.4byte	0x338
+ 439 01f4 0E020000 		.4byte	0x20e
+ 440 01f8 11       		.uleb128 0x11
+ 441 01f9 01       		.uleb128 0x1
+ 442 01fa 50       		.byte	0x50
+ 443 01fb 02       		.uleb128 0x2
+ 444 01fc 08       		.byte	0x8
+ 445 01fd 2F       		.byte	0x2f
+ 446 01fe 11       		.uleb128 0x11
+ 447 01ff 01       		.uleb128 0x1
+ 448 0200 51       		.byte	0x51
+ 449 0201 05       		.uleb128 0x5
+ 450 0202 03       		.byte	0x3
+ 451 0203 01000000 		.4byte	RB+1
+ 452 0207 11       		.uleb128 0x11
+ 453 0208 01       		.uleb128 0x1
+ 454 0209 52       		.byte	0x52
+ 455 020a 02       		.uleb128 0x2
+ 456 020b 91       		.byte	0x91
+ 457 020c 74       		.sleb128 -12
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 10
 
 
- 422 00df 12       		.byte	0x12
- 423 00e0 00       		.byte	0
- 424 00e1 0B       		.uleb128 0xb
- 425 00e2 58000000 		.4byte	.LASF39
- 426 00e6 14       		.byte	0x14
- 427 00e7 0A       		.byte	0xa
- 428 00e8 21       		.byte	0x21
- 429 00e9 FE000000 		.4byte	0xfe
- 430 00ed 0C       		.uleb128 0xc
- 431 00ee 52000000 		.4byte	.LASF40
- 432 00f2 0A       		.byte	0xa
- 433 00f3 22       		.byte	0x22
- 434 00f4 FE000000 		.4byte	0xfe
- 435 00f8 0D       		.uleb128 0xd
- 436 00f9 B0000000 		.4byte	0xb0
- 437 00fd 00       		.byte	0
- 438 00fe 09       		.uleb128 0x9
- 439 00ff 9B000000 		.4byte	0x9b
- 440 0103 0E010000 		.4byte	0x10e
- 441 0107 0A       		.uleb128 0xa
- 442 0108 A9000000 		.4byte	0xa9
- 443 010c 13       		.byte	0x13
- 444 010d 00       		.byte	0
- 445 010e 0E       		.uleb128 0xe
- 446 010f 46000000 		.4byte	.LASF20
- 447 0113 01       		.byte	0x1
- 448 0114 13       		.byte	0x13
- 449 0115 00000000 		.4byte	.LFB64
- 450 0119 14010000 		.4byte	.LFE64-.LFB64
- 451 011d 01       		.uleb128 0x1
- 452 011e 9C       		.byte	0x9c
- 453 011f FA010000 		.4byte	0x1fa
- 454 0123 0F       		.uleb128 0xf
- 455 0124 0A000000 		.4byte	.LASF18
- 456 0128 01       		.byte	0x1
- 457 0129 35       		.byte	0x35
- 458 012a FA010000 		.4byte	0x1fa
- 459 012e 02       		.uleb128 0x2
- 460 012f 91       		.byte	0x91
- 461 0130 6C       		.sleb128 -20
- 462 0131 0F       		.uleb128 0xf
- 463 0132 39000000 		.4byte	.LASF19
- 464 0136 01       		.byte	0x1
- 465 0137 3B       		.byte	0x3b
- 466 0138 0A020000 		.4byte	0x20a
- 467 013c 02       		.uleb128 0x2
- 468 013d 91       		.byte	0x91
- 469 013e 68       		.sleb128 -24
- 470 013f 10       		.uleb128 0x10
- 471 0140 C0000000 		.4byte	.LVL0
- 472 0144 59030000 		.4byte	0x359
- 473 0148 53010000 		.4byte	0x153
- 474 014c 11       		.uleb128 0x11
- 475 014d 01       		.uleb128 0x1
- 476 014e 51       		.byte	0x51
- 477 014f 02       		.uleb128 0x2
- 478 0150 7D       		.byte	0x7d
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 11
+ 458 020d 00       		.byte	0
+ 459 020e 10       		.uleb128 0x10
+ 460 020f 26000000 		.4byte	.LVL7
+ 461 0213 17030000 		.4byte	0x317
+ 462 0217 2B020000 		.4byte	0x22b
+ 463 021b 11       		.uleb128 0x11
+ 464 021c 01       		.uleb128 0x1
+ 465 021d 50       		.byte	0x50
+ 466 021e 02       		.uleb128 0x2
+ 467 021f 74       		.byte	0x74
+ 468 0220 00       		.sleb128 0
+ 469 0221 11       		.uleb128 0x11
+ 470 0222 01       		.uleb128 0x1
+ 471 0223 51       		.byte	0x51
+ 472 0224 05       		.uleb128 0x5
+ 473 0225 03       		.byte	0x3
+ 474 0226 10000000 		.4byte	.LC2
+ 475 022a 00       		.byte	0
+ 476 022b 10       		.uleb128 0x10
+ 477 022c 2C000000 		.4byte	.LVL8
+ 478 0230 2D030000 		.4byte	0x32d
+ 479 0234 3F020000 		.4byte	0x23f
+ 480 0238 11       		.uleb128 0x11
+ 481 0239 01       		.uleb128 0x1
+ 482 023a 50       		.byte	0x50
+ 483 023b 02       		.uleb128 0x2
+ 484 023c 74       		.byte	0x74
+ 485 023d 00       		.sleb128 0
+ 486 023e 00       		.byte	0
+ 487 023f 12       		.uleb128 0x12
+ 488 0240 3C000000 		.4byte	.LVL9
+ 489 0244 38030000 		.4byte	0x338
+ 490 0248 11       		.uleb128 0x11
+ 491 0249 01       		.uleb128 0x1
+ 492 024a 50       		.byte	0x50
+ 493 024b 02       		.uleb128 0x2
+ 494 024c 08       		.byte	0x8
+ 495 024d 2F       		.byte	0x2f
+ 496 024e 11       		.uleb128 0x11
+ 497 024f 01       		.uleb128 0x1
+ 498 0250 51       		.byte	0x51
+ 499 0251 05       		.uleb128 0x5
+ 500 0252 03       		.byte	0x3
+ 501 0253 01000000 		.4byte	RB+1
+ 502 0257 11       		.uleb128 0x11
+ 503 0258 01       		.uleb128 0x1
+ 504 0259 52       		.byte	0x52
+ 505 025a 02       		.uleb128 0x2
+ 506 025b 91       		.byte	0x91
+ 507 025c 74       		.sleb128 -12
+ 508 025d 00       		.byte	0
+ 509 025e 00       		.byte	0
+ 510 025f 09       		.uleb128 0x9
+ 511 0260 9B000000 		.4byte	0x9b
+ 512 0264 6F020000 		.4byte	0x26f
+ 513 0268 0A       		.uleb128 0xa
+ 514 0269 A9000000 		.4byte	0xa9
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 11
 
 
- 479 0151 00       		.sleb128 0
- 480 0152 00       		.byte	0
- 481 0153 10       		.uleb128 0x10
- 482 0154 CA000000 		.4byte	.LVL1
- 483 0158 64030000 		.4byte	0x364
- 484 015c 76010000 		.4byte	0x176
- 485 0160 11       		.uleb128 0x11
- 486 0161 01       		.uleb128 0x1
- 487 0162 50       		.byte	0x50
- 488 0163 02       		.uleb128 0x2
- 489 0164 91       		.byte	0x91
- 490 0165 6C       		.sleb128 -20
- 491 0166 11       		.uleb128 0x11
- 492 0167 01       		.uleb128 0x1
- 493 0168 51       		.byte	0x51
- 494 0169 05       		.uleb128 0x5
- 495 016a 03       		.byte	0x3
- 496 016b 00000000 		.4byte	.LC0
- 497 016f 11       		.uleb128 0x11
- 498 0170 01       		.uleb128 0x1
- 499 0171 52       		.byte	0x52
- 500 0172 02       		.uleb128 0x2
- 501 0173 7D       		.byte	0x7d
- 502 0174 00       		.sleb128 0
- 503 0175 00       		.byte	0
- 504 0176 10       		.uleb128 0x10
- 505 0177 D0000000 		.4byte	.LVL2
- 506 017b 6F030000 		.4byte	0x36f
- 507 017f 8A010000 		.4byte	0x18a
- 508 0183 11       		.uleb128 0x11
- 509 0184 01       		.uleb128 0x1
- 510 0185 50       		.byte	0x50
- 511 0186 02       		.uleb128 0x2
- 512 0187 91       		.byte	0x91
- 513 0188 6C       		.sleb128 -20
- 514 0189 00       		.byte	0
- 515 018a 10       		.uleb128 0x10
- 516 018b D6000000 		.4byte	.LVL3
- 517 018f 7A030000 		.4byte	0x37a
- 518 0193 9E010000 		.4byte	0x19e
- 519 0197 11       		.uleb128 0x11
- 520 0198 01       		.uleb128 0x1
- 521 0199 50       		.byte	0x50
- 522 019a 02       		.uleb128 0x2
- 523 019b 91       		.byte	0x91
- 524 019c 6C       		.sleb128 -20
- 525 019d 00       		.byte	0
- 526 019e 10       		.uleb128 0x10
- 527 019f E0000000 		.4byte	.LVL4
- 528 01a3 59030000 		.4byte	0x359
- 529 01a7 B2010000 		.4byte	0x1b2
- 530 01ab 11       		.uleb128 0x11
- 531 01ac 01       		.uleb128 0x1
- 532 01ad 51       		.byte	0x51
- 533 01ae 02       		.uleb128 0x2
- 534 01af 7D       		.byte	0x7d
- 535 01b0 00       		.sleb128 0
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 12
+ 515 026d 01       		.byte	0x1
+ 516 026e 00       		.byte	0
+ 517 026f 13       		.uleb128 0x13
+ 518 0270 3D010000 		.4byte	.LASF22
+ 519 0274 05       		.byte	0x5
+ 520 0275 1E       		.byte	0x1e
+ 521 0276 81000000 		.4byte	0x81
+ 522 027a 05       		.uleb128 0x5
+ 523 027b 03       		.byte	0x3
+ 524 027c 00000000 		.4byte	valueX
+ 525 0280 13       		.uleb128 0x13
+ 526 0281 44010000 		.4byte	.LASF23
+ 527 0285 05       		.byte	0x5
+ 528 0286 1F       		.byte	0x1f
+ 529 0287 81000000 		.4byte	0x81
+ 530 028b 05       		.uleb128 0x5
+ 531 028c 03       		.byte	0x3
+ 532 028d 00000000 		.4byte	valueY
+ 533 0291 13       		.uleb128 0x13
+ 534 0292 4E020000 		.4byte	.LASF24
+ 535 0296 05       		.byte	0x5
+ 536 0297 22       		.byte	0x22
+ 537 0298 81000000 		.4byte	0x81
+ 538 029c 05       		.uleb128 0x5
+ 539 029d 03       		.byte	0x3
+ 540 029e 00000000 		.4byte	pwml
+ 541 02a2 13       		.uleb128 0x13
+ 542 02a3 5C020000 		.4byte	.LASF25
+ 543 02a7 05       		.byte	0x5
+ 544 02a8 23       		.byte	0x23
+ 545 02a9 81000000 		.4byte	0x81
+ 546 02ad 05       		.uleb128 0x5
+ 547 02ae 03       		.byte	0x3
+ 548 02af 00000000 		.4byte	pwmr
+ 549 02b3 09       		.uleb128 0x9
+ 550 02b4 9B000000 		.4byte	0x9b
+ 551 02b8 C3020000 		.4byte	0x2c3
+ 552 02bc 0A       		.uleb128 0xa
+ 553 02bd A9000000 		.4byte	0xa9
+ 554 02c1 3F       		.byte	0x3f
+ 555 02c2 00       		.byte	0
+ 556 02c3 13       		.uleb128 0x13
+ 557 02c4 6F010000 		.4byte	.LASF26
+ 558 02c8 05       		.byte	0x5
+ 559 02c9 29       		.byte	0x29
+ 560 02ca B3020000 		.4byte	0x2b3
+ 561 02ce 05       		.uleb128 0x5
+ 562 02cf 03       		.byte	0x3
+ 563 02d0 00000000 		.4byte	strMsg1
+ 564 02d4 13       		.uleb128 0x13
+ 565 02d5 00000000 		.4byte	.LASF27
+ 566 02d9 05       		.byte	0x5
+ 567 02da 2A       		.byte	0x2a
+ 568 02db 81000000 		.4byte	0x81
+ 569 02df 05       		.uleb128 0x5
+ 570 02e0 03       		.byte	0x3
+ 571 02e1 00000000 		.4byte	TestGetal
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 12
 
 
- 536 01b1 00       		.byte	0
- 537 01b2 10       		.uleb128 0x10
- 538 01b3 EA000000 		.4byte	.LVL5
- 539 01b7 64030000 		.4byte	0x364
- 540 01bb D5010000 		.4byte	0x1d5
- 541 01bf 11       		.uleb128 0x11
- 542 01c0 01       		.uleb128 0x1
- 543 01c1 50       		.byte	0x50
- 544 01c2 02       		.uleb128 0x2
- 545 01c3 91       		.byte	0x91
- 546 01c4 6C       		.sleb128 -20
- 547 01c5 11       		.uleb128 0x11
- 548 01c6 01       		.uleb128 0x1
- 549 01c7 51       		.byte	0x51
- 550 01c8 05       		.uleb128 0x5
- 551 01c9 03       		.byte	0x3
- 552 01ca 08000000 		.4byte	.LC1
- 553 01ce 11       		.uleb128 0x11
- 554 01cf 01       		.uleb128 0x1
- 555 01d0 52       		.byte	0x52
- 556 01d1 02       		.uleb128 0x2
- 557 01d2 7D       		.byte	0x7d
- 558 01d3 00       		.sleb128 0
- 559 01d4 00       		.byte	0
- 560 01d5 10       		.uleb128 0x10
- 561 01d6 F0000000 		.4byte	.LVL6
- 562 01da 6F030000 		.4byte	0x36f
- 563 01de E9010000 		.4byte	0x1e9
- 564 01e2 11       		.uleb128 0x11
- 565 01e3 01       		.uleb128 0x1
- 566 01e4 50       		.byte	0x50
- 567 01e5 02       		.uleb128 0x2
- 568 01e6 91       		.byte	0x91
- 569 01e7 6C       		.sleb128 -20
- 570 01e8 00       		.byte	0
- 571 01e9 12       		.uleb128 0x12
- 572 01ea F6000000 		.4byte	.LVL7
- 573 01ee 7A030000 		.4byte	0x37a
- 574 01f2 11       		.uleb128 0x11
- 575 01f3 01       		.uleb128 0x1
- 576 01f4 50       		.byte	0x50
- 577 01f5 02       		.uleb128 0x2
- 578 01f6 91       		.byte	0x91
- 579 01f7 6C       		.sleb128 -20
- 580 01f8 00       		.byte	0
- 581 01f9 00       		.byte	0
- 582 01fa 09       		.uleb128 0x9
- 583 01fb 9B000000 		.4byte	0x9b
- 584 01ff 0A020000 		.4byte	0x20a
- 585 0203 0A       		.uleb128 0xa
- 586 0204 A9000000 		.4byte	0xa9
- 587 0208 09       		.byte	0x9
- 588 0209 00       		.byte	0
- 589 020a 09       		.uleb128 0x9
- 590 020b 9B000000 		.4byte	0x9b
- 591 020f 1A020000 		.4byte	0x21a
- 592 0213 0A       		.uleb128 0xa
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 13
+ 572 02e5 13       		.uleb128 0x13
+ 573 02e6 77010000 		.4byte	.LASF28
+ 574 02ea 05       		.byte	0x5
+ 575 02eb 2D       		.byte	0x2d
+ 576 02ec 81000000 		.4byte	0x81
+ 577 02f0 05       		.uleb128 0x5
+ 578 02f1 03       		.byte	0x3
+ 579 02f2 00000000 		.4byte	IRWaarden
+ 580 02f6 14       		.uleb128 0x14
+ 581 02f7 1B010000 		.4byte	.LASF29
+ 582 02fb 06       		.byte	0x6
+ 583 02fc 1207     		.2byte	0x712
+ 584 02fe 02030000 		.4byte	0x302
+ 585 0302 15       		.uleb128 0x15
+ 586 0303 76000000 		.4byte	0x76
+ 587 0307 16       		.uleb128 0x16
+ 588 0308 524200   		.ascii	"RB\000"
+ 589 030b 0A       		.byte	0xa
+ 590 030c 27       		.byte	0x27
+ 591 030d E1000000 		.4byte	0xe1
+ 592 0311 05       		.uleb128 0x5
+ 593 0312 03       		.byte	0x3
+ 594 0313 00000000 		.4byte	RB
+ 595 0317 17       		.uleb128 0x17
+ 596 0318 79020000 		.4byte	.LASF30
+ 597 031c 79020000 		.4byte	.LASF30
+ 598 0320 07       		.byte	0x7
+ 599 0321 E7       		.byte	0xe7
+ 600 0322 17       		.uleb128 0x17
+ 601 0323 C6010000 		.4byte	.LASF31
+ 602 0327 C6010000 		.4byte	.LASF31
+ 603 032b 08       		.byte	0x8
+ 604 032c 8B       		.byte	0x8b
+ 605 032d 17       		.uleb128 0x17
+ 606 032e 95010000 		.4byte	.LASF32
+ 607 0332 95010000 		.4byte	.LASF32
+ 608 0336 09       		.byte	0x9
+ 609 0337 8B       		.byte	0x8b
+ 610 0338 17       		.uleb128 0x17
+ 611 0339 89010000 		.4byte	.LASF33
+ 612 033d 89010000 		.4byte	.LASF33
+ 613 0341 05       		.byte	0x5
+ 614 0342 37       		.byte	0x37
+ 615 0343 00       		.byte	0
+ 616              		.section	.debug_abbrev,"",%progbits
+ 617              	.Ldebug_abbrev0:
+ 618 0000 01       		.uleb128 0x1
+ 619 0001 11       		.uleb128 0x11
+ 620 0002 01       		.byte	0x1
+ 621 0003 25       		.uleb128 0x25
+ 622 0004 0E       		.uleb128 0xe
+ 623 0005 13       		.uleb128 0x13
+ 624 0006 0B       		.uleb128 0xb
+ 625 0007 03       		.uleb128 0x3
+ 626 0008 0E       		.uleb128 0xe
+ 627 0009 1B       		.uleb128 0x1b
+ 628 000a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 13
 
 
- 593 0214 A9000000 		.4byte	0xa9
- 594 0218 01       		.byte	0x1
- 595 0219 00       		.byte	0
- 596 021a 0E       		.uleb128 0xe
- 597 021b 97020000 		.4byte	.LASF21
- 598 021f 01       		.byte	0x1
- 599 0220 47       		.byte	0x47
- 600 0221 00000000 		.4byte	.LFB65
- 601 0225 5C000000 		.4byte	.LFE65-.LFB65
- 602 0229 01       		.uleb128 0x1
- 603 022a 9C       		.byte	0x9c
- 604 022b B1020000 		.4byte	0x2b1
- 605 022f 0F       		.uleb128 0xf
- 606 0230 22010000 		.4byte	.LASF22
- 607 0234 01       		.byte	0x1
- 608 0235 49       		.byte	0x49
- 609 0236 0A020000 		.4byte	0x20a
- 610 023a 02       		.uleb128 0x2
- 611 023b 91       		.byte	0x91
- 612 023c 74       		.sleb128 -12
- 613 023d 10       		.uleb128 0x10
- 614 023e 16000000 		.4byte	.LVL8
- 615 0242 85030000 		.4byte	0x385
- 616 0246 60020000 		.4byte	0x260
- 617 024a 11       		.uleb128 0x11
- 618 024b 01       		.uleb128 0x1
- 619 024c 50       		.byte	0x50
- 620 024d 02       		.uleb128 0x2
- 621 024e 08       		.byte	0x8
- 622 024f 2F       		.byte	0x2f
- 623 0250 11       		.uleb128 0x11
- 624 0251 01       		.uleb128 0x1
- 625 0252 51       		.byte	0x51
- 626 0253 05       		.uleb128 0x5
- 627 0254 03       		.byte	0x3
- 628 0255 01000000 		.4byte	RB+1
- 629 0259 11       		.uleb128 0x11
- 630 025a 01       		.uleb128 0x1
- 631 025b 52       		.byte	0x52
- 632 025c 02       		.uleb128 0x2
- 633 025d 91       		.byte	0x91
- 634 025e 74       		.sleb128 -12
- 635 025f 00       		.byte	0
- 636 0260 10       		.uleb128 0x10
- 637 0261 26000000 		.4byte	.LVL9
- 638 0265 64030000 		.4byte	0x364
- 639 0269 7D020000 		.4byte	0x27d
- 640 026d 11       		.uleb128 0x11
- 641 026e 01       		.uleb128 0x1
- 642 026f 50       		.byte	0x50
- 643 0270 02       		.uleb128 0x2
- 644 0271 74       		.byte	0x74
- 645 0272 00       		.sleb128 0
- 646 0273 11       		.uleb128 0x11
- 647 0274 01       		.uleb128 0x1
- 648 0275 51       		.byte	0x51
- 649 0276 05       		.uleb128 0x5
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 14
+ 629 000b 55       		.uleb128 0x55
+ 630 000c 17       		.uleb128 0x17
+ 631 000d 11       		.uleb128 0x11
+ 632 000e 01       		.uleb128 0x1
+ 633 000f 10       		.uleb128 0x10
+ 634 0010 17       		.uleb128 0x17
+ 635 0011 00       		.byte	0
+ 636 0012 00       		.byte	0
+ 637 0013 02       		.uleb128 0x2
+ 638 0014 24       		.uleb128 0x24
+ 639 0015 00       		.byte	0
+ 640 0016 0B       		.uleb128 0xb
+ 641 0017 0B       		.uleb128 0xb
+ 642 0018 3E       		.uleb128 0x3e
+ 643 0019 0B       		.uleb128 0xb
+ 644 001a 03       		.uleb128 0x3
+ 645 001b 0E       		.uleb128 0xe
+ 646 001c 00       		.byte	0
+ 647 001d 00       		.byte	0
+ 648 001e 03       		.uleb128 0x3
+ 649 001f 16       		.uleb128 0x16
+ 650 0020 00       		.byte	0
+ 651 0021 03       		.uleb128 0x3
+ 652 0022 0E       		.uleb128 0xe
+ 653 0023 3A       		.uleb128 0x3a
+ 654 0024 0B       		.uleb128 0xb
+ 655 0025 3B       		.uleb128 0x3b
+ 656 0026 0B       		.uleb128 0xb
+ 657 0027 49       		.uleb128 0x49
+ 658 0028 13       		.uleb128 0x13
+ 659 0029 00       		.byte	0
+ 660 002a 00       		.byte	0
+ 661 002b 04       		.uleb128 0x4
+ 662 002c 24       		.uleb128 0x24
+ 663 002d 00       		.byte	0
+ 664 002e 0B       		.uleb128 0xb
+ 665 002f 0B       		.uleb128 0xb
+ 666 0030 3E       		.uleb128 0x3e
+ 667 0031 0B       		.uleb128 0xb
+ 668 0032 03       		.uleb128 0x3
+ 669 0033 08       		.uleb128 0x8
+ 670 0034 00       		.byte	0
+ 671 0035 00       		.byte	0
+ 672 0036 05       		.uleb128 0x5
+ 673 0037 16       		.uleb128 0x16
+ 674 0038 00       		.byte	0
+ 675 0039 03       		.uleb128 0x3
+ 676 003a 0E       		.uleb128 0xe
+ 677 003b 3A       		.uleb128 0x3a
+ 678 003c 0B       		.uleb128 0xb
+ 679 003d 3B       		.uleb128 0x3b
+ 680 003e 05       		.uleb128 0x5
+ 681 003f 49       		.uleb128 0x49
+ 682 0040 13       		.uleb128 0x13
+ 683 0041 00       		.byte	0
+ 684 0042 00       		.byte	0
+ 685 0043 06       		.uleb128 0x6
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 14
 
 
- 650 0277 03       		.byte	0x3
- 651 0278 10000000 		.4byte	.LC2
- 652 027c 00       		.byte	0
- 653 027d 10       		.uleb128 0x10
- 654 027e 2C000000 		.4byte	.LVL10
- 655 0282 7A030000 		.4byte	0x37a
- 656 0286 91020000 		.4byte	0x291
- 657 028a 11       		.uleb128 0x11
- 658 028b 01       		.uleb128 0x1
- 659 028c 50       		.byte	0x50
- 660 028d 02       		.uleb128 0x2
- 661 028e 74       		.byte	0x74
- 662 028f 00       		.sleb128 0
- 663 0290 00       		.byte	0
- 664 0291 12       		.uleb128 0x12
- 665 0292 3C000000 		.4byte	.LVL11
- 666 0296 85030000 		.4byte	0x385
- 667 029a 11       		.uleb128 0x11
- 668 029b 01       		.uleb128 0x1
- 669 029c 50       		.byte	0x50
- 670 029d 02       		.uleb128 0x2
- 671 029e 08       		.byte	0x8
- 672 029f 2F       		.byte	0x2f
- 673 02a0 11       		.uleb128 0x11
- 674 02a1 01       		.uleb128 0x1
- 675 02a2 51       		.byte	0x51
- 676 02a3 05       		.uleb128 0x5
- 677 02a4 03       		.byte	0x3
- 678 02a5 01000000 		.4byte	RB+1
- 679 02a9 11       		.uleb128 0x11
- 680 02aa 01       		.uleb128 0x1
- 681 02ab 52       		.byte	0x52
- 682 02ac 02       		.uleb128 0x2
- 683 02ad 91       		.byte	0x91
- 684 02ae 74       		.sleb128 -12
- 685 02af 00       		.byte	0
- 686 02b0 00       		.byte	0
- 687 02b1 13       		.uleb128 0x13
- 688 02b2 53010000 		.4byte	.LASF23
- 689 02b6 05       		.byte	0x5
- 690 02b7 1E       		.byte	0x1e
- 691 02b8 81000000 		.4byte	0x81
- 692 02bc 05       		.uleb128 0x5
- 693 02bd 03       		.byte	0x3
- 694 02be 00000000 		.4byte	valueX
- 695 02c2 13       		.uleb128 0x13
- 696 02c3 5A010000 		.4byte	.LASF24
- 697 02c7 05       		.byte	0x5
- 698 02c8 1F       		.byte	0x1f
- 699 02c9 81000000 		.4byte	0x81
- 700 02cd 05       		.uleb128 0x5
- 701 02ce 03       		.byte	0x3
- 702 02cf 00000000 		.4byte	valueY
- 703 02d3 13       		.uleb128 0x13
- 704 02d4 64020000 		.4byte	.LASF25
- 705 02d8 05       		.byte	0x5
- 706 02d9 22       		.byte	0x22
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 15
+ 686 0044 13       		.uleb128 0x13
+ 687 0045 01       		.byte	0x1
+ 688 0046 0B       		.uleb128 0xb
+ 689 0047 0B       		.uleb128 0xb
+ 690 0048 3A       		.uleb128 0x3a
+ 691 0049 0B       		.uleb128 0xb
+ 692 004a 3B       		.uleb128 0x3b
+ 693 004b 0B       		.uleb128 0xb
+ 694 004c 01       		.uleb128 0x1
+ 695 004d 13       		.uleb128 0x13
+ 696 004e 00       		.byte	0
+ 697 004f 00       		.byte	0
+ 698 0050 07       		.uleb128 0x7
+ 699 0051 0D       		.uleb128 0xd
+ 700 0052 00       		.byte	0
+ 701 0053 03       		.uleb128 0x3
+ 702 0054 08       		.uleb128 0x8
+ 703 0055 3A       		.uleb128 0x3a
+ 704 0056 0B       		.uleb128 0xb
+ 705 0057 3B       		.uleb128 0x3b
+ 706 0058 0B       		.uleb128 0xb
+ 707 0059 49       		.uleb128 0x49
+ 708 005a 13       		.uleb128 0x13
+ 709 005b 38       		.uleb128 0x38
+ 710 005c 0B       		.uleb128 0xb
+ 711 005d 00       		.byte	0
+ 712 005e 00       		.byte	0
+ 713 005f 08       		.uleb128 0x8
+ 714 0060 0D       		.uleb128 0xd
+ 715 0061 00       		.byte	0
+ 716 0062 03       		.uleb128 0x3
+ 717 0063 0E       		.uleb128 0xe
+ 718 0064 3A       		.uleb128 0x3a
+ 719 0065 0B       		.uleb128 0xb
+ 720 0066 3B       		.uleb128 0x3b
+ 721 0067 0B       		.uleb128 0xb
+ 722 0068 49       		.uleb128 0x49
+ 723 0069 13       		.uleb128 0x13
+ 724 006a 38       		.uleb128 0x38
+ 725 006b 0B       		.uleb128 0xb
+ 726 006c 00       		.byte	0
+ 727 006d 00       		.byte	0
+ 728 006e 09       		.uleb128 0x9
+ 729 006f 01       		.uleb128 0x1
+ 730 0070 01       		.byte	0x1
+ 731 0071 49       		.uleb128 0x49
+ 732 0072 13       		.uleb128 0x13
+ 733 0073 01       		.uleb128 0x1
+ 734 0074 13       		.uleb128 0x13
+ 735 0075 00       		.byte	0
+ 736 0076 00       		.byte	0
+ 737 0077 0A       		.uleb128 0xa
+ 738 0078 21       		.uleb128 0x21
+ 739 0079 00       		.byte	0
+ 740 007a 49       		.uleb128 0x49
+ 741 007b 13       		.uleb128 0x13
+ 742 007c 2F       		.uleb128 0x2f
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 15
 
 
- 707 02da 81000000 		.4byte	0x81
- 708 02de 05       		.uleb128 0x5
- 709 02df 03       		.byte	0x3
- 710 02e0 00000000 		.4byte	pwml
- 711 02e4 13       		.uleb128 0x13
- 712 02e5 72020000 		.4byte	.LASF26
- 713 02e9 05       		.byte	0x5
- 714 02ea 23       		.byte	0x23
- 715 02eb 81000000 		.4byte	0x81
- 716 02ef 05       		.uleb128 0x5
- 717 02f0 03       		.byte	0x3
- 718 02f1 00000000 		.4byte	pwmr
- 719 02f5 09       		.uleb128 0x9
- 720 02f6 9B000000 		.4byte	0x9b
- 721 02fa 05030000 		.4byte	0x305
- 722 02fe 0A       		.uleb128 0xa
- 723 02ff A9000000 		.4byte	0xa9
- 724 0303 3F       		.byte	0x3f
- 725 0304 00       		.byte	0
- 726 0305 13       		.uleb128 0x13
- 727 0306 85010000 		.4byte	.LASF27
- 728 030a 05       		.byte	0x5
- 729 030b 29       		.byte	0x29
- 730 030c F5020000 		.4byte	0x2f5
- 731 0310 05       		.uleb128 0x5
- 732 0311 03       		.byte	0x3
- 733 0312 00000000 		.4byte	strMsg1
- 734 0316 13       		.uleb128 0x13
- 735 0317 00000000 		.4byte	.LASF28
- 736 031b 05       		.byte	0x5
- 737 031c 2A       		.byte	0x2a
- 738 031d 81000000 		.4byte	0x81
- 739 0321 05       		.uleb128 0x5
- 740 0322 03       		.byte	0x3
- 741 0323 00000000 		.4byte	TestGetal
- 742 0327 13       		.uleb128 0x13
- 743 0328 8D010000 		.4byte	.LASF29
- 744 032c 05       		.byte	0x5
- 745 032d 2D       		.byte	0x2d
- 746 032e 81000000 		.4byte	0x81
- 747 0332 05       		.uleb128 0x5
- 748 0333 03       		.byte	0x3
- 749 0334 00000000 		.4byte	IRWaarden
- 750 0338 14       		.uleb128 0x14
- 751 0339 31010000 		.4byte	.LASF30
- 752 033d 06       		.byte	0x6
- 753 033e 1207     		.2byte	0x712
- 754 0340 44030000 		.4byte	0x344
- 755 0344 15       		.uleb128 0x15
- 756 0345 76000000 		.4byte	0x76
- 757 0349 16       		.uleb128 0x16
- 758 034a 524200   		.ascii	"RB\000"
- 759 034d 0A       		.byte	0xa
- 760 034e 27       		.byte	0x27
- 761 034f E1000000 		.4byte	0xe1
- 762 0353 05       		.uleb128 0x5
- 763 0354 03       		.byte	0x3
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 16
+ 743 007d 0B       		.uleb128 0xb
+ 744 007e 00       		.byte	0
+ 745 007f 00       		.byte	0
+ 746 0080 0B       		.uleb128 0xb
+ 747 0081 17       		.uleb128 0x17
+ 748 0082 01       		.byte	0x1
+ 749 0083 03       		.uleb128 0x3
+ 750 0084 0E       		.uleb128 0xe
+ 751 0085 0B       		.uleb128 0xb
+ 752 0086 0B       		.uleb128 0xb
+ 753 0087 3A       		.uleb128 0x3a
+ 754 0088 0B       		.uleb128 0xb
+ 755 0089 3B       		.uleb128 0x3b
+ 756 008a 0B       		.uleb128 0xb
+ 757 008b 01       		.uleb128 0x1
+ 758 008c 13       		.uleb128 0x13
+ 759 008d 00       		.byte	0
+ 760 008e 00       		.byte	0
+ 761 008f 0C       		.uleb128 0xc
+ 762 0090 0D       		.uleb128 0xd
+ 763 0091 00       		.byte	0
+ 764 0092 03       		.uleb128 0x3
+ 765 0093 0E       		.uleb128 0xe
+ 766 0094 3A       		.uleb128 0x3a
+ 767 0095 0B       		.uleb128 0xb
+ 768 0096 3B       		.uleb128 0x3b
+ 769 0097 0B       		.uleb128 0xb
+ 770 0098 49       		.uleb128 0x49
+ 771 0099 13       		.uleb128 0x13
+ 772 009a 00       		.byte	0
+ 773 009b 00       		.byte	0
+ 774 009c 0D       		.uleb128 0xd
+ 775 009d 0D       		.uleb128 0xd
+ 776 009e 00       		.byte	0
+ 777 009f 49       		.uleb128 0x49
+ 778 00a0 13       		.uleb128 0x13
+ 779 00a1 00       		.byte	0
+ 780 00a2 00       		.byte	0
+ 781 00a3 0E       		.uleb128 0xe
+ 782 00a4 2E       		.uleb128 0x2e
+ 783 00a5 01       		.byte	0x1
+ 784 00a6 3F       		.uleb128 0x3f
+ 785 00a7 19       		.uleb128 0x19
+ 786 00a8 03       		.uleb128 0x3
+ 787 00a9 0E       		.uleb128 0xe
+ 788 00aa 3A       		.uleb128 0x3a
+ 789 00ab 0B       		.uleb128 0xb
+ 790 00ac 3B       		.uleb128 0x3b
+ 791 00ad 0B       		.uleb128 0xb
+ 792 00ae 27       		.uleb128 0x27
+ 793 00af 19       		.uleb128 0x19
+ 794 00b0 11       		.uleb128 0x11
+ 795 00b1 01       		.uleb128 0x1
+ 796 00b2 12       		.uleb128 0x12
+ 797 00b3 06       		.uleb128 0x6
+ 798 00b4 40       		.uleb128 0x40
+ 799 00b5 18       		.uleb128 0x18
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 16
 
 
- 764 0355 00000000 		.4byte	RB
- 765 0359 17       		.uleb128 0x17
- 766 035a 26000000 		.4byte	.LASF31
- 767 035e 26000000 		.4byte	.LASF31
- 768 0362 05       		.byte	0x5
- 769 0363 38       		.byte	0x38
- 770 0364 17       		.uleb128 0x17
- 771 0365 8F020000 		.4byte	.LASF32
- 772 0369 8F020000 		.4byte	.LASF32
- 773 036d 07       		.byte	0x7
- 774 036e E7       		.byte	0xe7
- 775 036f 17       		.uleb128 0x17
- 776 0370 DC010000 		.4byte	.LASF33
- 777 0374 DC010000 		.4byte	.LASF33
- 778 0378 08       		.byte	0x8
- 779 0379 8B       		.byte	0x8b
- 780 037a 17       		.uleb128 0x17
- 781 037b AB010000 		.4byte	.LASF34
- 782 037f AB010000 		.4byte	.LASF34
- 783 0383 09       		.byte	0x9
- 784 0384 8B       		.byte	0x8b
- 785 0385 17       		.uleb128 0x17
- 786 0386 9F010000 		.4byte	.LASF35
- 787 038a 9F010000 		.4byte	.LASF35
- 788 038e 05       		.byte	0x5
- 789 038f 37       		.byte	0x37
- 790 0390 00       		.byte	0
- 791              		.section	.debug_abbrev,"",%progbits
- 792              	.Ldebug_abbrev0:
- 793 0000 01       		.uleb128 0x1
- 794 0001 11       		.uleb128 0x11
- 795 0002 01       		.byte	0x1
- 796 0003 25       		.uleb128 0x25
- 797 0004 0E       		.uleb128 0xe
- 798 0005 13       		.uleb128 0x13
- 799 0006 0B       		.uleb128 0xb
- 800 0007 03       		.uleb128 0x3
- 801 0008 0E       		.uleb128 0xe
- 802 0009 1B       		.uleb128 0x1b
- 803 000a 0E       		.uleb128 0xe
- 804 000b 55       		.uleb128 0x55
- 805 000c 17       		.uleb128 0x17
- 806 000d 11       		.uleb128 0x11
- 807 000e 01       		.uleb128 0x1
- 808 000f 10       		.uleb128 0x10
- 809 0010 17       		.uleb128 0x17
- 810 0011 00       		.byte	0
- 811 0012 00       		.byte	0
- 812 0013 02       		.uleb128 0x2
- 813 0014 24       		.uleb128 0x24
- 814 0015 00       		.byte	0
- 815 0016 0B       		.uleb128 0xb
- 816 0017 0B       		.uleb128 0xb
- 817 0018 3E       		.uleb128 0x3e
- 818 0019 0B       		.uleb128 0xb
- 819 001a 03       		.uleb128 0x3
- 820 001b 0E       		.uleb128 0xe
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 17
+ 800 00b6 9742     		.uleb128 0x2117
+ 801 00b8 19       		.uleb128 0x19
+ 802 00b9 01       		.uleb128 0x1
+ 803 00ba 13       		.uleb128 0x13
+ 804 00bb 00       		.byte	0
+ 805 00bc 00       		.byte	0
+ 806 00bd 0F       		.uleb128 0xf
+ 807 00be 34       		.uleb128 0x34
+ 808 00bf 00       		.byte	0
+ 809 00c0 03       		.uleb128 0x3
+ 810 00c1 0E       		.uleb128 0xe
+ 811 00c2 3A       		.uleb128 0x3a
+ 812 00c3 0B       		.uleb128 0xb
+ 813 00c4 3B       		.uleb128 0x3b
+ 814 00c5 0B       		.uleb128 0xb
+ 815 00c6 49       		.uleb128 0x49
+ 816 00c7 13       		.uleb128 0x13
+ 817 00c8 02       		.uleb128 0x2
+ 818 00c9 18       		.uleb128 0x18
+ 819 00ca 00       		.byte	0
+ 820 00cb 00       		.byte	0
+ 821 00cc 10       		.uleb128 0x10
+ 822 00cd 898201   		.uleb128 0x4109
+ 823 00d0 01       		.byte	0x1
+ 824 00d1 11       		.uleb128 0x11
+ 825 00d2 01       		.uleb128 0x1
+ 826 00d3 31       		.uleb128 0x31
+ 827 00d4 13       		.uleb128 0x13
+ 828 00d5 01       		.uleb128 0x1
+ 829 00d6 13       		.uleb128 0x13
+ 830 00d7 00       		.byte	0
+ 831 00d8 00       		.byte	0
+ 832 00d9 11       		.uleb128 0x11
+ 833 00da 8A8201   		.uleb128 0x410a
+ 834 00dd 00       		.byte	0
+ 835 00de 02       		.uleb128 0x2
+ 836 00df 18       		.uleb128 0x18
+ 837 00e0 9142     		.uleb128 0x2111
+ 838 00e2 18       		.uleb128 0x18
+ 839 00e3 00       		.byte	0
+ 840 00e4 00       		.byte	0
+ 841 00e5 12       		.uleb128 0x12
+ 842 00e6 898201   		.uleb128 0x4109
+ 843 00e9 01       		.byte	0x1
+ 844 00ea 11       		.uleb128 0x11
+ 845 00eb 01       		.uleb128 0x1
+ 846 00ec 31       		.uleb128 0x31
+ 847 00ed 13       		.uleb128 0x13
+ 848 00ee 00       		.byte	0
+ 849 00ef 00       		.byte	0
+ 850 00f0 13       		.uleb128 0x13
+ 851 00f1 34       		.uleb128 0x34
+ 852 00f2 00       		.byte	0
+ 853 00f3 03       		.uleb128 0x3
+ 854 00f4 0E       		.uleb128 0xe
+ 855 00f5 3A       		.uleb128 0x3a
+ 856 00f6 0B       		.uleb128 0xb
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 17
 
 
- 821 001c 00       		.byte	0
- 822 001d 00       		.byte	0
- 823 001e 03       		.uleb128 0x3
- 824 001f 16       		.uleb128 0x16
- 825 0020 00       		.byte	0
- 826 0021 03       		.uleb128 0x3
- 827 0022 0E       		.uleb128 0xe
- 828 0023 3A       		.uleb128 0x3a
- 829 0024 0B       		.uleb128 0xb
- 830 0025 3B       		.uleb128 0x3b
- 831 0026 0B       		.uleb128 0xb
- 832 0027 49       		.uleb128 0x49
- 833 0028 13       		.uleb128 0x13
- 834 0029 00       		.byte	0
- 835 002a 00       		.byte	0
- 836 002b 04       		.uleb128 0x4
- 837 002c 24       		.uleb128 0x24
- 838 002d 00       		.byte	0
- 839 002e 0B       		.uleb128 0xb
- 840 002f 0B       		.uleb128 0xb
- 841 0030 3E       		.uleb128 0x3e
- 842 0031 0B       		.uleb128 0xb
- 843 0032 03       		.uleb128 0x3
- 844 0033 08       		.uleb128 0x8
- 845 0034 00       		.byte	0
- 846 0035 00       		.byte	0
- 847 0036 05       		.uleb128 0x5
- 848 0037 16       		.uleb128 0x16
- 849 0038 00       		.byte	0
- 850 0039 03       		.uleb128 0x3
- 851 003a 0E       		.uleb128 0xe
- 852 003b 3A       		.uleb128 0x3a
- 853 003c 0B       		.uleb128 0xb
- 854 003d 3B       		.uleb128 0x3b
- 855 003e 05       		.uleb128 0x5
- 856 003f 49       		.uleb128 0x49
- 857 0040 13       		.uleb128 0x13
- 858 0041 00       		.byte	0
- 859 0042 00       		.byte	0
- 860 0043 06       		.uleb128 0x6
- 861 0044 13       		.uleb128 0x13
- 862 0045 01       		.byte	0x1
- 863 0046 0B       		.uleb128 0xb
- 864 0047 0B       		.uleb128 0xb
- 865 0048 3A       		.uleb128 0x3a
- 866 0049 0B       		.uleb128 0xb
- 867 004a 3B       		.uleb128 0x3b
- 868 004b 0B       		.uleb128 0xb
- 869 004c 01       		.uleb128 0x1
- 870 004d 13       		.uleb128 0x13
- 871 004e 00       		.byte	0
- 872 004f 00       		.byte	0
- 873 0050 07       		.uleb128 0x7
- 874 0051 0D       		.uleb128 0xd
- 875 0052 00       		.byte	0
- 876 0053 03       		.uleb128 0x3
- 877 0054 08       		.uleb128 0x8
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 18
+ 857 00f7 3B       		.uleb128 0x3b
+ 858 00f8 0B       		.uleb128 0xb
+ 859 00f9 49       		.uleb128 0x49
+ 860 00fa 13       		.uleb128 0x13
+ 861 00fb 3F       		.uleb128 0x3f
+ 862 00fc 19       		.uleb128 0x19
+ 863 00fd 02       		.uleb128 0x2
+ 864 00fe 18       		.uleb128 0x18
+ 865 00ff 00       		.byte	0
+ 866 0100 00       		.byte	0
+ 867 0101 14       		.uleb128 0x14
+ 868 0102 34       		.uleb128 0x34
+ 869 0103 00       		.byte	0
+ 870 0104 03       		.uleb128 0x3
+ 871 0105 0E       		.uleb128 0xe
+ 872 0106 3A       		.uleb128 0x3a
+ 873 0107 0B       		.uleb128 0xb
+ 874 0108 3B       		.uleb128 0x3b
+ 875 0109 05       		.uleb128 0x5
+ 876 010a 49       		.uleb128 0x49
+ 877 010b 13       		.uleb128 0x13
+ 878 010c 3F       		.uleb128 0x3f
+ 879 010d 19       		.uleb128 0x19
+ 880 010e 3C       		.uleb128 0x3c
+ 881 010f 19       		.uleb128 0x19
+ 882 0110 00       		.byte	0
+ 883 0111 00       		.byte	0
+ 884 0112 15       		.uleb128 0x15
+ 885 0113 35       		.uleb128 0x35
+ 886 0114 00       		.byte	0
+ 887 0115 49       		.uleb128 0x49
+ 888 0116 13       		.uleb128 0x13
+ 889 0117 00       		.byte	0
+ 890 0118 00       		.byte	0
+ 891 0119 16       		.uleb128 0x16
+ 892 011a 34       		.uleb128 0x34
+ 893 011b 00       		.byte	0
+ 894 011c 03       		.uleb128 0x3
+ 895 011d 08       		.uleb128 0x8
+ 896 011e 3A       		.uleb128 0x3a
+ 897 011f 0B       		.uleb128 0xb
+ 898 0120 3B       		.uleb128 0x3b
+ 899 0121 0B       		.uleb128 0xb
+ 900 0122 49       		.uleb128 0x49
+ 901 0123 13       		.uleb128 0x13
+ 902 0124 3F       		.uleb128 0x3f
+ 903 0125 19       		.uleb128 0x19
+ 904 0126 02       		.uleb128 0x2
+ 905 0127 18       		.uleb128 0x18
+ 906 0128 00       		.byte	0
+ 907 0129 00       		.byte	0
+ 908 012a 17       		.uleb128 0x17
+ 909 012b 2E       		.uleb128 0x2e
+ 910 012c 00       		.byte	0
+ 911 012d 3F       		.uleb128 0x3f
+ 912 012e 19       		.uleb128 0x19
+ 913 012f 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 18
 
 
- 878 0055 3A       		.uleb128 0x3a
- 879 0056 0B       		.uleb128 0xb
- 880 0057 3B       		.uleb128 0x3b
- 881 0058 0B       		.uleb128 0xb
- 882 0059 49       		.uleb128 0x49
- 883 005a 13       		.uleb128 0x13
- 884 005b 38       		.uleb128 0x38
- 885 005c 0B       		.uleb128 0xb
- 886 005d 00       		.byte	0
- 887 005e 00       		.byte	0
- 888 005f 08       		.uleb128 0x8
- 889 0060 0D       		.uleb128 0xd
- 890 0061 00       		.byte	0
- 891 0062 03       		.uleb128 0x3
- 892 0063 0E       		.uleb128 0xe
- 893 0064 3A       		.uleb128 0x3a
- 894 0065 0B       		.uleb128 0xb
- 895 0066 3B       		.uleb128 0x3b
- 896 0067 0B       		.uleb128 0xb
- 897 0068 49       		.uleb128 0x49
- 898 0069 13       		.uleb128 0x13
- 899 006a 38       		.uleb128 0x38
- 900 006b 0B       		.uleb128 0xb
- 901 006c 00       		.byte	0
- 902 006d 00       		.byte	0
- 903 006e 09       		.uleb128 0x9
- 904 006f 01       		.uleb128 0x1
- 905 0070 01       		.byte	0x1
- 906 0071 49       		.uleb128 0x49
- 907 0072 13       		.uleb128 0x13
- 908 0073 01       		.uleb128 0x1
- 909 0074 13       		.uleb128 0x13
- 910 0075 00       		.byte	0
- 911 0076 00       		.byte	0
- 912 0077 0A       		.uleb128 0xa
- 913 0078 21       		.uleb128 0x21
- 914 0079 00       		.byte	0
- 915 007a 49       		.uleb128 0x49
- 916 007b 13       		.uleb128 0x13
- 917 007c 2F       		.uleb128 0x2f
- 918 007d 0B       		.uleb128 0xb
- 919 007e 00       		.byte	0
- 920 007f 00       		.byte	0
- 921 0080 0B       		.uleb128 0xb
- 922 0081 17       		.uleb128 0x17
- 923 0082 01       		.byte	0x1
- 924 0083 03       		.uleb128 0x3
- 925 0084 0E       		.uleb128 0xe
- 926 0085 0B       		.uleb128 0xb
- 927 0086 0B       		.uleb128 0xb
- 928 0087 3A       		.uleb128 0x3a
- 929 0088 0B       		.uleb128 0xb
- 930 0089 3B       		.uleb128 0x3b
- 931 008a 0B       		.uleb128 0xb
- 932 008b 01       		.uleb128 0x1
- 933 008c 13       		.uleb128 0x13
- 934 008d 00       		.byte	0
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 19
+ 914 0130 19       		.uleb128 0x19
+ 915 0131 6E       		.uleb128 0x6e
+ 916 0132 0E       		.uleb128 0xe
+ 917 0133 03       		.uleb128 0x3
+ 918 0134 0E       		.uleb128 0xe
+ 919 0135 3A       		.uleb128 0x3a
+ 920 0136 0B       		.uleb128 0xb
+ 921 0137 3B       		.uleb128 0x3b
+ 922 0138 0B       		.uleb128 0xb
+ 923 0139 00       		.byte	0
+ 924 013a 00       		.byte	0
+ 925 013b 00       		.byte	0
+ 926              		.section	.debug_aranges,"",%progbits
+ 927 0000 24000000 		.4byte	0x24
+ 928 0004 0200     		.2byte	0x2
+ 929 0006 00000000 		.4byte	.Ldebug_info0
+ 930 000a 04       		.byte	0x4
+ 931 000b 00       		.byte	0
+ 932 000c 0000     		.2byte	0
+ 933 000e 0000     		.2byte	0
+ 934 0010 00000000 		.4byte	.LFB64
+ 935 0014 4C000000 		.4byte	.LFE64-.LFB64
+ 936 0018 00000000 		.4byte	.LFB65
+ 937 001c 5C000000 		.4byte	.LFE65-.LFB65
+ 938 0020 00000000 		.4byte	0
+ 939 0024 00000000 		.4byte	0
+ 940              		.section	.debug_ranges,"",%progbits
+ 941              	.Ldebug_ranges0:
+ 942 0000 00000000 		.4byte	.LFB64
+ 943 0004 4C000000 		.4byte	.LFE64
+ 944 0008 00000000 		.4byte	.LFB65
+ 945 000c 5C000000 		.4byte	.LFE65
+ 946 0010 00000000 		.4byte	0
+ 947 0014 00000000 		.4byte	0
+ 948              		.section	.debug_line,"",%progbits
+ 949              	.Ldebug_line0:
+ 950 0000 37020000 		.section	.debug_str,"MS",%progbits,1
+ 950      02000502 
+ 950      00000201 
+ 950      FB0E0D00 
+ 950      01010101 
+ 951              	.LASF27:
+ 952 0000 54657374 		.ascii	"TestGetal\000"
+ 952      47657461 
+ 952      6C00
+ 953              	.LASF20:
+ 954 000a 73747242 		.ascii	"strBuffer\000"
+ 954      75666665 
+ 954      7200
+ 955              	.LASF35:
+ 956 0014 426C6543 		.ascii	"BleCommunicatie.c\000"
+ 956      6F6D6D75 
+ 956      6E696361 
+ 956      7469652E 
+ 956      6300
+ 957              	.LASF9:
+ 958 0026 5F5F696E 		.ascii	"__int32_t\000"
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 19
 
 
- 935 008e 00       		.byte	0
- 936 008f 0C       		.uleb128 0xc
- 937 0090 0D       		.uleb128 0xd
- 938 0091 00       		.byte	0
- 939 0092 03       		.uleb128 0x3
- 940 0093 0E       		.uleb128 0xe
- 941 0094 3A       		.uleb128 0x3a
- 942 0095 0B       		.uleb128 0xb
- 943 0096 3B       		.uleb128 0x3b
- 944 0097 0B       		.uleb128 0xb
- 945 0098 49       		.uleb128 0x49
- 946 0099 13       		.uleb128 0x13
- 947 009a 00       		.byte	0
- 948 009b 00       		.byte	0
- 949 009c 0D       		.uleb128 0xd
- 950 009d 0D       		.uleb128 0xd
- 951 009e 00       		.byte	0
- 952 009f 49       		.uleb128 0x49
- 953 00a0 13       		.uleb128 0x13
- 954 00a1 00       		.byte	0
- 955 00a2 00       		.byte	0
- 956 00a3 0E       		.uleb128 0xe
- 957 00a4 2E       		.uleb128 0x2e
- 958 00a5 01       		.byte	0x1
- 959 00a6 3F       		.uleb128 0x3f
- 960 00a7 19       		.uleb128 0x19
- 961 00a8 03       		.uleb128 0x3
- 962 00a9 0E       		.uleb128 0xe
- 963 00aa 3A       		.uleb128 0x3a
- 964 00ab 0B       		.uleb128 0xb
- 965 00ac 3B       		.uleb128 0x3b
- 966 00ad 0B       		.uleb128 0xb
- 967 00ae 27       		.uleb128 0x27
- 968 00af 19       		.uleb128 0x19
- 969 00b0 11       		.uleb128 0x11
- 970 00b1 01       		.uleb128 0x1
- 971 00b2 12       		.uleb128 0x12
- 972 00b3 06       		.uleb128 0x6
- 973 00b4 40       		.uleb128 0x40
- 974 00b5 18       		.uleb128 0x18
- 975 00b6 9742     		.uleb128 0x2117
- 976 00b8 19       		.uleb128 0x19
- 977 00b9 01       		.uleb128 0x1
- 978 00ba 13       		.uleb128 0x13
- 979 00bb 00       		.byte	0
- 980 00bc 00       		.byte	0
- 981 00bd 0F       		.uleb128 0xf
- 982 00be 34       		.uleb128 0x34
- 983 00bf 00       		.byte	0
- 984 00c0 03       		.uleb128 0x3
- 985 00c1 0E       		.uleb128 0xe
- 986 00c2 3A       		.uleb128 0x3a
- 987 00c3 0B       		.uleb128 0xb
- 988 00c4 3B       		.uleb128 0x3b
- 989 00c5 0B       		.uleb128 0xb
- 990 00c6 49       		.uleb128 0x49
- 991 00c7 13       		.uleb128 0x13
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 20
+ 958      7433325F 
+ 958      7400
+ 959              	.LASF18:
+ 960 0030 73656E64 		.ascii	"sendBleData\000"
+ 960      426C6544 
+ 960      61746100 
+ 961              	.LASF38:
+ 962 003c 52785374 		.ascii	"RxStr\000"
+ 962      7200
+ 963              	.LASF37:
+ 964 0042 54527842 		.ascii	"TRxBuffer\000"
+ 964      75666665 
+ 964      7200
+ 965              	.LASF12:
+ 966 004c 666C6F61 		.ascii	"float\000"
+ 966      7400
+ 967              	.LASF17:
+ 968 0052 76616C73 		.ascii	"valstr\000"
+ 968      747200
+ 969              	.LASF34:
+ 970 0059 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 970      43313120 
+ 970      352E342E 
+ 970      31203230 
+ 970      31363036 
+ 971 008c 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 971      20726576 
+ 971      6973696F 
+ 971      6E203233 
+ 971      37373135 
+ 972 00bf 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 972      66756E63 
+ 972      74696F6E 
+ 972      2D736563 
+ 972      74696F6E 
+ 973              	.LASF5:
+ 974 00e7 6C6F6E67 		.ascii	"long unsigned int\000"
+ 974      20756E73 
+ 974      69676E65 
+ 974      6420696E 
+ 974      7400
+ 975              	.LASF3:
+ 976 00f9 73686F72 		.ascii	"short unsigned int\000"
+ 976      7420756E 
+ 976      7369676E 
+ 976      65642069 
+ 976      6E7400
+ 977              	.LASF21:
+ 978 010c 68657849 		.ascii	"hexInputBuffer\000"
+ 978      6E707574 
+ 978      42756666 
+ 978      657200
+ 979              	.LASF29:
+ 980 011b 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 980      52784275 
+ 980      66666572 
+ 980      00
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 20
 
 
- 992 00c8 02       		.uleb128 0x2
- 993 00c9 18       		.uleb128 0x18
- 994 00ca 00       		.byte	0
- 995 00cb 00       		.byte	0
- 996 00cc 10       		.uleb128 0x10
- 997 00cd 898201   		.uleb128 0x4109
- 998 00d0 01       		.byte	0x1
- 999 00d1 11       		.uleb128 0x11
- 1000 00d2 01       		.uleb128 0x1
- 1001 00d3 31       		.uleb128 0x31
- 1002 00d4 13       		.uleb128 0x13
- 1003 00d5 01       		.uleb128 0x1
- 1004 00d6 13       		.uleb128 0x13
- 1005 00d7 00       		.byte	0
- 1006 00d8 00       		.byte	0
- 1007 00d9 11       		.uleb128 0x11
- 1008 00da 8A8201   		.uleb128 0x410a
- 1009 00dd 00       		.byte	0
- 1010 00de 02       		.uleb128 0x2
- 1011 00df 18       		.uleb128 0x18
- 1012 00e0 9142     		.uleb128 0x2111
- 1013 00e2 18       		.uleb128 0x18
- 1014 00e3 00       		.byte	0
- 1015 00e4 00       		.byte	0
- 1016 00e5 12       		.uleb128 0x12
- 1017 00e6 898201   		.uleb128 0x4109
- 1018 00e9 01       		.byte	0x1
- 1019 00ea 11       		.uleb128 0x11
- 1020 00eb 01       		.uleb128 0x1
- 1021 00ec 31       		.uleb128 0x31
- 1022 00ed 13       		.uleb128 0x13
- 1023 00ee 00       		.byte	0
- 1024 00ef 00       		.byte	0
- 1025 00f0 13       		.uleb128 0x13
- 1026 00f1 34       		.uleb128 0x34
- 1027 00f2 00       		.byte	0
- 1028 00f3 03       		.uleb128 0x3
- 1029 00f4 0E       		.uleb128 0xe
- 1030 00f5 3A       		.uleb128 0x3a
- 1031 00f6 0B       		.uleb128 0xb
- 1032 00f7 3B       		.uleb128 0x3b
- 1033 00f8 0B       		.uleb128 0xb
- 1034 00f9 49       		.uleb128 0x49
- 1035 00fa 13       		.uleb128 0x13
- 1036 00fb 3F       		.uleb128 0x3f
- 1037 00fc 19       		.uleb128 0x19
- 1038 00fd 02       		.uleb128 0x2
- 1039 00fe 18       		.uleb128 0x18
- 1040 00ff 00       		.byte	0
- 1041 0100 00       		.byte	0
- 1042 0101 14       		.uleb128 0x14
- 1043 0102 34       		.uleb128 0x34
- 1044 0103 00       		.byte	0
- 1045 0104 03       		.uleb128 0x3
- 1046 0105 0E       		.uleb128 0xe
- 1047 0106 3A       		.uleb128 0x3a
- 1048 0107 0B       		.uleb128 0xb
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 21
+ 981              	.LASF1:
+ 982 0128 756E7369 		.ascii	"unsigned char\000"
+ 982      676E6564 
+ 982      20636861 
+ 982      7200
+ 983              	.LASF13:
+ 984 0136 646F7562 		.ascii	"double\000"
+ 984      6C6500
+ 985              	.LASF22:
+ 986 013d 76616C75 		.ascii	"valueX\000"
+ 986      655800
+ 987              	.LASF23:
+ 988 0144 76616C75 		.ascii	"valueY\000"
+ 988      655900
+ 989              	.LASF8:
+ 990 014b 756E7369 		.ascii	"unsigned int\000"
+ 990      676E6564 
+ 990      20696E74 
+ 990      00
+ 991              	.LASF7:
+ 992 0158 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 992      206C6F6E 
+ 992      6720756E 
+ 992      7369676E 
+ 992      65642069 
+ 993              	.LASF26:
+ 994 016f 7374724D 		.ascii	"strMsg1\000"
+ 994      73673100 
+ 995              	.LASF28:
+ 996 0177 49525761 		.ascii	"IRWaarden\000"
+ 996      61726465 
+ 996      6E00
+ 997              	.LASF10:
+ 998 0181 696E7433 		.ascii	"int32_t\000"
+ 998      325F7400 
+ 999              	.LASF33:
+ 1000 0189 67657443 		.ascii	"getCMDValue\000"
+ 1000      4D445661 
+ 1000      6C756500 
+ 1001              	.LASF32:
+ 1002 0195 70757474 		.ascii	"puttyUart1_PutString\000"
+ 1002      79556172 
+ 1002      74315F50 
+ 1002      75745374 
+ 1002      72696E67 
+ 1003              	.LASF16:
+ 1004 01aa 73697A65 		.ascii	"sizetype\000"
+ 1004      74797065 
+ 1004      00
+ 1005              	.LASF6:
+ 1006 01b3 6C6F6E67 		.ascii	"long long int\000"
+ 1006      206C6F6E 
+ 1006      6720696E 
+ 1006      7400
+ 1007              	.LASF14:
+ 1008 01c1 63686172 		.ascii	"char\000"
+ 1008      00
+ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccl5A8Dk.s 			page 21
 
 
- 1049 0108 3B       		.uleb128 0x3b
- 1050 0109 05       		.uleb128 0x5
- 1051 010a 49       		.uleb128 0x49
- 1052 010b 13       		.uleb128 0x13
- 1053 010c 3F       		.uleb128 0x3f
- 1054 010d 19       		.uleb128 0x19
- 1055 010e 3C       		.uleb128 0x3c
- 1056 010f 19       		.uleb128 0x19
- 1057 0110 00       		.byte	0
- 1058 0111 00       		.byte	0
- 1059 0112 15       		.uleb128 0x15
- 1060 0113 35       		.uleb128 0x35
- 1061 0114 00       		.byte	0
- 1062 0115 49       		.uleb128 0x49
- 1063 0116 13       		.uleb128 0x13
- 1064 0117 00       		.byte	0
- 1065 0118 00       		.byte	0
- 1066 0119 16       		.uleb128 0x16
- 1067 011a 34       		.uleb128 0x34
- 1068 011b 00       		.byte	0
- 1069 011c 03       		.uleb128 0x3
- 1070 011d 08       		.uleb128 0x8
- 1071 011e 3A       		.uleb128 0x3a
- 1072 011f 0B       		.uleb128 0xb
- 1073 0120 3B       		.uleb128 0x3b
- 1074 0121 0B       		.uleb128 0xb
- 1075 0122 49       		.uleb128 0x49
- 1076 0123 13       		.uleb128 0x13
- 1077 0124 3F       		.uleb128 0x3f
- 1078 0125 19       		.uleb128 0x19
- 1079 0126 02       		.uleb128 0x2
- 1080 0127 18       		.uleb128 0x18
- 1081 0128 00       		.byte	0
- 1082 0129 00       		.byte	0
- 1083 012a 17       		.uleb128 0x17
- 1084 012b 2E       		.uleb128 0x2e
- 1085 012c 00       		.byte	0
- 1086 012d 3F       		.uleb128 0x3f
- 1087 012e 19       		.uleb128 0x19
- 1088 012f 3C       		.uleb128 0x3c
- 1089 0130 19       		.uleb128 0x19
- 1090 0131 6E       		.uleb128 0x6e
- 1091 0132 0E       		.uleb128 0xe
- 1092 0133 03       		.uleb128 0x3
- 1093 0134 0E       		.uleb128 0xe
- 1094 0135 3A       		.uleb128 0x3a
- 1095 0136 0B       		.uleb128 0xb
- 1096 0137 3B       		.uleb128 0x3b
- 1097 0138 0B       		.uleb128 0xb
- 1098 0139 00       		.byte	0
- 1099 013a 00       		.byte	0
- 1100 013b 00       		.byte	0
- 1101              		.section	.debug_aranges,"",%progbits
- 1102 0000 24000000 		.4byte	0x24
- 1103 0004 0200     		.2byte	0x2
- 1104 0006 00000000 		.4byte	.Ldebug_info0
- 1105 000a 04       		.byte	0x4
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 22
-
-
- 1106 000b 00       		.byte	0
- 1107 000c 0000     		.2byte	0
- 1108 000e 0000     		.2byte	0
- 1109 0010 00000000 		.4byte	.LFB64
- 1110 0014 14010000 		.4byte	.LFE64-.LFB64
- 1111 0018 00000000 		.4byte	.LFB65
- 1112 001c 5C000000 		.4byte	.LFE65-.LFB65
- 1113 0020 00000000 		.4byte	0
- 1114 0024 00000000 		.4byte	0
- 1115              		.section	.debug_ranges,"",%progbits
- 1116              	.Ldebug_ranges0:
- 1117 0000 00000000 		.4byte	.LFB64
- 1118 0004 14010000 		.4byte	.LFE64
- 1119 0008 00000000 		.4byte	.LFB65
- 1120 000c 5C000000 		.4byte	.LFE65
- 1121 0010 00000000 		.4byte	0
- 1122 0014 00000000 		.4byte	0
- 1123              		.section	.debug_line,"",%progbits
- 1124              	.Ldebug_line0:
- 1125 0000 60020000 		.section	.debug_str,"MS",%progbits,1
- 1125      02000502 
- 1125      00000201 
- 1125      FB0E0D00 
- 1125      01010101 
- 1126              	.LASF28:
- 1127 0000 54657374 		.ascii	"TestGetal\000"
- 1127      47657461 
- 1127      6C00
- 1128              	.LASF18:
- 1129 000a 73747242 		.ascii	"strBuffer\000"
- 1129      75666665 
- 1129      7200
- 1130              	.LASF37:
- 1131 0014 426C6543 		.ascii	"BleCommunicatie.c\000"
- 1131      6F6D6D75 
- 1131      6E696361 
- 1131      7469652E 
- 1131      6300
- 1132              	.LASF31:
- 1133 0026 44656354 		.ascii	"DecToHex\000"
- 1133      6F486578 
- 1133      00
- 1134              	.LASF9:
- 1135 002f 5F5F696E 		.ascii	"__int32_t\000"
- 1135      7433325F 
- 1135      7400
- 1136              	.LASF19:
- 1137 0039 68657844 		.ascii	"hexDecBuffer\000"
- 1137      65634275 
- 1137      66666572 
- 1137      00
- 1138              	.LASF20:
- 1139 0046 73656E64 		.ascii	"sendBleData\000"
- 1139      426C6544 
- 1139      61746100 
- 1140              	.LASF40:
- 1141 0052 52785374 		.ascii	"RxStr\000"
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 23
-
-
- 1141      7200
- 1142              	.LASF39:
- 1143 0058 54527842 		.ascii	"TRxBuffer\000"
- 1143      75666665 
- 1143      7200
- 1144              	.LASF12:
- 1145 0062 666C6F61 		.ascii	"float\000"
- 1145      7400
- 1146              	.LASF17:
- 1147 0068 76616C73 		.ascii	"valstr\000"
- 1147      747200
- 1148              	.LASF36:
- 1149 006f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1149      43313120 
- 1149      352E342E 
- 1149      31203230 
- 1149      31363036 
- 1150 00a2 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 1150      20726576 
- 1150      6973696F 
- 1150      6E203233 
- 1150      37373135 
- 1151 00d5 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1151      66756E63 
- 1151      74696F6E 
- 1151      2D736563 
- 1151      74696F6E 
- 1152              	.LASF5:
- 1153 00fd 6C6F6E67 		.ascii	"long unsigned int\000"
- 1153      20756E73 
- 1153      69676E65 
- 1153      6420696E 
- 1153      7400
- 1154              	.LASF3:
- 1155 010f 73686F72 		.ascii	"short unsigned int\000"
- 1155      7420756E 
- 1155      7369676E 
- 1155      65642069 
- 1155      6E7400
- 1156              	.LASF22:
- 1157 0122 68657849 		.ascii	"hexInputBuffer\000"
- 1157      6E707574 
- 1157      42756666 
- 1157      657200
- 1158              	.LASF30:
- 1159 0131 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 1159      52784275 
- 1159      66666572 
- 1159      00
- 1160              	.LASF1:
- 1161 013e 756E7369 		.ascii	"unsigned char\000"
- 1161      676E6564 
- 1161      20636861 
- 1161      7200
- 1162              	.LASF13:
- 1163 014c 646F7562 		.ascii	"double\000"
- 1163      6C6500
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 24
-
-
- 1164              	.LASF23:
- 1165 0153 76616C75 		.ascii	"valueX\000"
- 1165      655800
- 1166              	.LASF24:
- 1167 015a 76616C75 		.ascii	"valueY\000"
- 1167      655900
- 1168              	.LASF8:
- 1169 0161 756E7369 		.ascii	"unsigned int\000"
- 1169      676E6564 
- 1169      20696E74 
- 1169      00
- 1170              	.LASF7:
- 1171 016e 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1171      206C6F6E 
- 1171      6720756E 
- 1171      7369676E 
- 1171      65642069 
- 1172              	.LASF27:
- 1173 0185 7374724D 		.ascii	"strMsg1\000"
- 1173      73673100 
- 1174              	.LASF29:
- 1175 018d 49525761 		.ascii	"IRWaarden\000"
- 1175      61726465 
- 1175      6E00
- 1176              	.LASF10:
- 1177 0197 696E7433 		.ascii	"int32_t\000"
- 1177      325F7400 
- 1178              	.LASF35:
- 1179 019f 67657443 		.ascii	"getCMDValue\000"
- 1179      4D445661 
- 1179      6C756500 
- 1180              	.LASF34:
- 1181 01ab 70757474 		.ascii	"puttyUart1_PutString\000"
- 1181      79556172 
- 1181      74315F50 
- 1181      75745374 
- 1181      72696E67 
- 1182              	.LASF16:
- 1183 01c0 73697A65 		.ascii	"sizetype\000"
- 1183      74797065 
- 1183      00
- 1184              	.LASF6:
- 1185 01c9 6C6F6E67 		.ascii	"long long int\000"
- 1185      206C6F6E 
- 1185      6720696E 
- 1185      7400
- 1186              	.LASF14:
- 1187 01d7 63686172 		.ascii	"char\000"
- 1187      00
- 1188              	.LASF33:
- 1189 01dc 626C6555 		.ascii	"bleUart1_PutString\000"
- 1189      61727431 
- 1189      5F507574 
- 1189      53747269 
- 1189      6E6700
- 1190              	.LASF2:
- 1191 01ef 73686F72 		.ascii	"short int\000"
-ARM GAS  C:\Users\BASILE~1.BER\AppData\Local\Temp\ccrOGN7V.s 			page 25
-
-
- 1191      7420696E 
- 1191      7400
- 1192              	.LASF11:
- 1193 01f9 75696E74 		.ascii	"uint8\000"
- 1193      3800
- 1194              	.LASF38:
- 1195 01ff 433A5C55 		.ascii	"C:\\Users\\basile.berckmoes\\Documents\\GitHub\\Rob"
- 1195      73657273 
- 1195      5C626173 
- 1195      696C652E 
- 1195      62657263 
- 1196 022d 6F74436F 		.ascii	"otComp2ELO\\Software\\PSoc\\Ble\\ProjectBle\\Design"
- 1196      6D703245 
- 1196      4C4F5C53 
- 1196      6F667477 
- 1196      6172655C 
- 1197 025b 30312E63 		.ascii	"01.cydsn\000"
- 1197      7964736E 
- 1197      00
- 1198              	.LASF25:
- 1199 0264 70776D6C 		.ascii	"pwml\000"
- 1199      00
- 1200              	.LASF4:
- 1201 0269 6C6F6E67 		.ascii	"long int\000"
- 1201      20696E74 
- 1201      00
- 1202              	.LASF26:
- 1203 0272 70776D72 		.ascii	"pwmr\000"
- 1203      00
- 1204              	.LASF15:
- 1205 0277 6C6F6E67 		.ascii	"long double\000"
- 1205      20646F75 
- 1205      626C6500 
- 1206              	.LASF0:
- 1207 0283 7369676E 		.ascii	"signed char\000"
- 1207      65642063 
- 1207      68617200 
- 1208              	.LASF32:
- 1209 028f 73707269 		.ascii	"sprintf\000"
- 1209      6E746600 
- 1210              	.LASF21:
- 1211 0297 50726F63 		.ascii	"ProcessCommandMsg\000"
- 1211      65737343 
- 1211      6F6D6D61 
- 1211      6E644D73 
- 1211      6700
- 1212              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 1009              	.LASF31:
+ 1010 01c6 626C6555 		.ascii	"bleUart1_PutString\000"
+ 1010      61727431 
+ 1010      5F507574 
+ 1010      53747269 
+ 1010      6E6700
+ 1011              	.LASF2:
+ 1012 01d9 73686F72 		.ascii	"short int\000"
+ 1012      7420696E 
+ 1012      7400
+ 1013              	.LASF11:
+ 1014 01e3 75696E74 		.ascii	"uint8\000"
+ 1014      3800
+ 1015              	.LASF36:
+ 1016 01e9 433A5C55 		.ascii	"C:\\Users\\basile.berckmoes\\Documents\\GitHub\\Rob"
+ 1016      73657273 
+ 1016      5C626173 
+ 1016      696C652E 
+ 1016      62657263 
+ 1017 0217 6F74436F 		.ascii	"otComp2ELO\\Software\\PSoc\\Ble\\ProjectBle\\Design"
+ 1017      6D703245 
+ 1017      4C4F5C53 
+ 1017      6F667477 
+ 1017      6172655C 
+ 1018 0245 30312E63 		.ascii	"01.cydsn\000"
+ 1018      7964736E 
+ 1018      00
+ 1019              	.LASF24:
+ 1020 024e 70776D6C 		.ascii	"pwml\000"
+ 1020      00
+ 1021              	.LASF4:
+ 1022 0253 6C6F6E67 		.ascii	"long int\000"
+ 1022      20696E74 
+ 1022      00
+ 1023              	.LASF25:
+ 1024 025c 70776D72 		.ascii	"pwmr\000"
+ 1024      00
+ 1025              	.LASF15:
+ 1026 0261 6C6F6E67 		.ascii	"long double\000"
+ 1026      20646F75 
+ 1026      626C6500 
+ 1027              	.LASF0:
+ 1028 026d 7369676E 		.ascii	"signed char\000"
+ 1028      65642063 
+ 1028      68617200 
+ 1029              	.LASF30:
+ 1030 0279 73707269 		.ascii	"sprintf\000"
+ 1030      6E746600 
+ 1031              	.LASF19:
+ 1032 0281 50726F63 		.ascii	"ProcessCommandMsg\000"
+ 1032      65737343 
+ 1032      6F6D6D61 
+ 1032      6E644D73 
+ 1032      6700
+ 1033              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

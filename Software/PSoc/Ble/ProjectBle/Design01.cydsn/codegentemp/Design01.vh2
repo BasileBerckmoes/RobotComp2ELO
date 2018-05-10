@@ -2,7 +2,7 @@
 --	Conversion of Design01.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Sat Apr 21 13:57:00 2018
+--	Wed May 09 16:43:54 2018
 --
 
 USE cypress.cypress.all;
@@ -1091,10 +1091,11 @@ SIGNAL Net_163 : bit;
 SIGNAL \Debouncer_1:op_clk\ : bit;
 SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_0\ : bit;
 SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_1\ : bit;
-SIGNAL Net_164 : bit;
+SIGNAL Net_197 : bit;
 SIGNAL Net_167 : bit;
 SIGNAL Net_165 : bit;
 SIGNAL Net_166 : bit;
+SIGNAL Net_193 : bit;
 SIGNAL tmpOE__LED_net_0 : bit;
 SIGNAL tmpFB_0__LED_net_0 : bit;
 SIGNAL tmpIO_0__LED_net_0 : bit;
@@ -1108,8 +1109,19 @@ SIGNAL \sendBleDataTimer:Net_51\ : bit;
 SIGNAL \sendBleDataTimer:Net_261\ : bit;
 SIGNAL \sendBleDataTimer:Net_57\ : bit;
 SIGNAL Net_173 : bit;
-SIGNAL Net_178 : bit;
+SIGNAL Net_198 : bit;
 SIGNAL \sendBleDataTimer:Net_102\ : bit;
+SIGNAL tmpOE__SW_net_0 : bit;
+SIGNAL Net_191 : bit;
+SIGNAL tmpIO_0__SW_net_0 : bit;
+TERMINAL tmpSIOVREF__SW_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__SW_net_0 : bit;
+SIGNAL \DebSW:op_clk\ : bit;
+SIGNAL \DebSW:DEBOUNCER[0]:d_sync_0\ : bit;
+SIGNAL \DebSW:DEBOUNCER[0]:d_sync_1\ : bit;
+SIGNAL Net_196 : bit;
+SIGNAL Net_194 : bit;
+SIGNAL Net_195 : bit;
 SIGNAL \bleUart1:BUART:reset_reg\\D\ : bit;
 SIGNAL \bleUart1:BUART:txn\\D\ : bit;
 SIGNAL \bleUart1:BUART:tx_state_1\\D\ : bit;
@@ -1246,6 +1258,11 @@ SIGNAL \Debouncer_1:DEBOUNCER[0]:d_sync_1\\D\ : bit;
 SIGNAL Net_167D : bit;
 SIGNAL Net_165D : bit;
 SIGNAL Net_166D : bit;
+SIGNAL \DebSW:DEBOUNCER[0]:d_sync_0\\D\ : bit;
+SIGNAL \DebSW:DEBOUNCER[0]:d_sync_1\\D\ : bit;
+SIGNAL Net_196D : bit;
+SIGNAL Net_194D : bit;
+SIGNAL Net_195D : bit;
 BEGIN
 
 zero <=  ('0') ;
@@ -2904,7 +2921,7 @@ rxBleISR:cy_isr_v1_0
 		id=>"79f4182b-028d-43ca-a1e9-007a8e6fdffc/9725d809-97e7-404e-b621-dfdbe78d0ca9",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"1000004000.016",
+		period=>"999872016.381903",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>\JoyStickADC:clock\,
@@ -3170,12 +3187,12 @@ MotorEN:cy_psoc3_pins_v1_10
 	PORT MAP(clock_in=>Net_163,
 		enable=>tmpOE__bleRx_net_0,
 		clock_out=>\Debouncer_1:op_clk\);
-Clock_1:cy_clock_v1_0
+DebClock:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
 		id=>"c6b4722a-3970-4f12-8213-e12ae92fbe0d",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"5000000000000",
+		period=>"10000000000000",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_163,
@@ -3183,7 +3200,7 @@ Clock_1:cy_clock_v1_0
 motorControlISR:cy_isr_v1_0
 	GENERIC MAP(int_type=>"00",
 		is_nmi=>'0')
-	PORT MAP(int_signal=>Net_164);
+	PORT MAP(int_signal=>Net_193);
 LED:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"f0795e6b-e829-4075-9c7d-e8bf6603012b",
 		drive_mode=>"011",
@@ -3259,7 +3276,7 @@ timer_clock:cy_clock_v1_0
 		id=>"c0fb34bd-1044-4931-9788-16b01ce89812",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"20000000000",
+		period=>"13333333333.3333",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_10,
@@ -3271,13 +3288,88 @@ timer_clock:cy_clock_v1_0
 		enable=>tmpOE__bleRx_net_0,
 		capture=>zero,
 		timer_reset=>zero,
-		tc=>Net_178,
+		tc=>Net_198,
 		compare=>\sendBleDataTimer:Net_261\,
 		interrupt=>\sendBleDataTimer:Net_57\);
 sendBleDataISR:cy_isr_v1_0
 	GENERIC MAP(int_type=>"00",
 		is_nmi=>'0')
-	PORT MAP(int_signal=>Net_178);
+	PORT MAP(int_signal=>Net_198);
+SW:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"5270a28e-846c-42db-8743-a4ab8528d420",
+		drive_mode=>"010",
+		ibuf_enabled=>"1",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		input_clk_en=>'0',
+		input_sync_mode=>"0",
+		intr_mode=>"00",
+		invert_in_clock=>'0',
+		invert_in_clock_en=>'0',
+		invert_in_reset=>'0',
+		invert_out_clock=>'0',
+		invert_out_clock_en=>'0',
+		invert_out_reset=>'0',
+		io_voltage=>"",
+		layout_mode=>"CONTIGUOUS",
+		output_conn=>"0",
+		output_sync=>"0",
+		output_clk_en=>'0',
+		output_mode=>"0",
+		output_reset=>'0',
+		output_clock_mode=>"0",
+		oe_sync=>"0",
+		oe_conn=>"0",
+		oe_reset=>'0',
+		pin_aliases=>"",
+		pin_mode=>"I",
+		por_state=>4,
+		sio_group_cnt=>0,
+		sio_hifreq=>"00000000",
+		sio_hyst=>"1",
+		sio_ibuf=>"00000000",
+		sio_info=>"00",
+		sio_obuf=>"00000000",
+		sio_refsel=>"00000000",
+		sio_vtrip=>"00000000",
+		sio_vohsel=>"00000000",
+		slew_rate=>"0",
+		spanning=>'0',
+		sw_only=>'0',
+		vtrip=>"00",
+		width=>1,
+		port_alias_required=>'0',
+		port_alias_group=>"",
+		use_annotation=>"0",
+		pa_in_clock=>-1,
+		pa_in_clock_en=>-1,
+		pa_in_reset=>-1,
+		pa_out_clock=>-1,
+		pa_out_clock_en=>-1,
+		pa_out_reset=>-1,
+		ovt_needed=>"0",
+		ovt_slew_control=>"00",
+		ovt_hyst_trim=>"0",
+		input_buffer_sel=>"00")
+	PORT MAP(oe=>(tmpOE__bleRx_net_0),
+		y=>(zero),
+		fb=>Net_191,
+		analog=>(open),
+		io=>(tmpIO_0__SW_net_0),
+		siovref=>(tmpSIOVREF__SW_net_0),
+		annotation=>(open),
+		in_clock=>zero,
+		in_clock_en=>tmpOE__bleRx_net_0,
+		in_reset=>zero,
+		out_clock=>zero,
+		out_clock_en=>tmpOE__bleRx_net_0,
+		out_reset=>zero,
+		interrupt=>tmpINTERRUPT_0__SW_net_0);
+\DebSW:ClkSync\:cy_psoc3_udb_clock_enable_v1_0
+	GENERIC MAP(sync_mode=>'1')
+	PORT MAP(clock_in=>Net_163,
+		enable=>tmpOE__bleRx_net_0,
+		clock_out=>\DebSW:op_clk\);
 \bleUart1:BUART:reset_reg\:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\bleUart1:BUART:clock_op\,
@@ -3805,9 +3897,9 @@ Net_48:cy_dff
 \Debouncer_1:DEBOUNCER[0]:d_sync_0\:cy_dff
 	PORT MAP(d=>Net_162,
 		clk=>\Debouncer_1:op_clk\,
-		q=>Net_164);
+		q=>\Debouncer_1:DEBOUNCER[0]:d_sync_0\);
 \Debouncer_1:DEBOUNCER[0]:d_sync_1\:cy_dff
-	PORT MAP(d=>Net_164,
+	PORT MAP(d=>\Debouncer_1:DEBOUNCER[0]:d_sync_0\,
 		clk=>\Debouncer_1:op_clk\,
 		q=>\Debouncer_1:DEBOUNCER[0]:d_sync_1\);
 Net_167:cy_dff
@@ -3822,5 +3914,25 @@ Net_166:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\Debouncer_1:op_clk\,
 		q=>Net_166);
+\DebSW:DEBOUNCER[0]:d_sync_0\:cy_dff
+	PORT MAP(d=>Net_191,
+		clk=>\DebSW:op_clk\,
+		q=>Net_193);
+\DebSW:DEBOUNCER[0]:d_sync_1\:cy_dff
+	PORT MAP(d=>Net_193,
+		clk=>\DebSW:op_clk\,
+		q=>\DebSW:DEBOUNCER[0]:d_sync_1\);
+Net_196:cy_dff
+	PORT MAP(d=>zero,
+		clk=>\DebSW:op_clk\,
+		q=>Net_196);
+Net_194:cy_dff
+	PORT MAP(d=>zero,
+		clk=>\DebSW:op_clk\,
+		q=>Net_194);
+Net_195:cy_dff
+	PORT MAP(d=>zero,
+		clk=>\DebSW:op_clk\,
+		q=>Net_195);
 
 END R_T_L;

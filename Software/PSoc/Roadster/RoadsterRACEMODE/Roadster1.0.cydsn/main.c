@@ -79,11 +79,11 @@ int main(void)
 
 	initFirmwire();
 	richting = 0;
-    LED2_Write(1);
+    //LED2_Write(1);
 	//Interrupts
 	readIRSensors_StartEx(IRSensoren);
     
-    DraaiRichtingISR_StartEx(AndereDraaiRichting);
+    //DraaiRichtingISR_StartEx(AndereDraaiRichting);
     
     
     //schakel motoren uit 
@@ -93,15 +93,19 @@ int main(void)
 	ENB_Write(0);
 	
    
-	while(SW1_Read() == 1) 
+	while(SW1_Read() == 1 && SW2_Read() == 1) 
 	{
       
 	} 
+    if (SW2_Read() == 0)
+    {
+        telProcedure();
+    }
     
 	MotorControl_WriteCompare1(pwmMotorLinks);
 	MotorControl_WriteCompare2(pwmMotorRechts);
     //start de 5 LED Procedure
-	telProcedure();
+	
     ENA_Write(1);
 	ENB_Write(1);
     
@@ -109,30 +113,7 @@ int main(void)
     
     //Loop
 	for(;;)
-	{ 
-		//US deel
-		//===================================================================
-		//Teller die door de mux loopt
-		//selectUS = telTot(selectUS, 0, 2); //PAS DIT AAN INDIEN NIET ALE US SENSOREN ZIJN AANGESLOTEN!!!!!
-		//selectUS_Write(selectUS);
-		
-		//vraag afstand aan 1 van de 3 us sensoren
-	    // uint16 counterValue = readUSValue();
-		//schuif uitkomst timer in juiste array
-		//if (selectUS == 0) schuifRegister(avgUS1, counterValue);
-		//else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
-		//else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
-		
-		//berekenen van de mediaan
-        
-        //LCD_Position(0u,0u);
-        //LCD_PrintInt16(pwmMotorLinks);
-        //LCD_Position(1u,0u);
-        //LCD_PrintInt16(pwmMotorRechts);
-        
-	    //CyDelay(10);
-		//motordeel
-		//===================================================================
+	{
         
         AnalyseerData(IRWaarden);
       
@@ -142,15 +123,7 @@ int main(void)
         LCD_PrintInt16(pwmMotorLinks);  
         LCD_Position(1u,10u);
         LCD_PrintInt16(pwmMotorRechts);  
-        //Pas snelheid motoren aan
-        
-        //schuifRegister(AVGLinks, pwmMotorLinks);
-        //schuifRegister(AVGRechts, pwmMotorRechts);
-        
-        
-        //int links = (AVGLinks[0] + AVGLinks[1] + AVGLinks[2] + AVGLinks[3] + AVGLinks[4])/5;
-        //int rechts = (AVGRechts[0] + AVGRechts[1] + AVGRechts[2] + AVGRechts[3] + AVGRechts[4])/5;
-        
+
         uint16 links = tmpLinks + pwmMotorLinks;
         uint16 rechts = tmpRechts + pwmMotorRechts;
 		MotorControl_WriteCompare1(links / 2);

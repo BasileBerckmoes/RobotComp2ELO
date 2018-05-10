@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+  
+    <block name="`$INSTANCE_NAME`" desc="" visible="true">
+        <block name="`$INSTANCE_NAME`" desc="" visible="true">
+            <register name="GLBL_CTRL"
+                address="`$INSTANCE_NAME`_B_FanCtrl_GlobalControlReg__CONTROL_REG" 
+                bitWidth="8" desc="Global Control Register">
+                <field name="ALERT_ENABLE" from="0" to="0" access="RW" desc="Global alert enable signal">
+                    <value name="ALERTS_DIS" value="0" desc="Generation of all alerts is disabled" />
+                    <value name="ALERTS_EN" value="1" desc="Generation of alerts is enabled" />
+                </field>
+                <field name="STALL_ALERT_ENABLE" from="1" to="1" access="RW" desc="Stall alert enable signal">
+                    <value name="STALL_ALRT_DIS" value="0" desc="Generation of stall alert is disabled" />
+                    <value name="STALL_ALRT_EN" value="1" desc="Generation of stall alert is enabled" />
+                </field>
+                <field name="SPEED_ALERT_ENABLE" from="2" to="2" access="RW" desc="Speed alert enable signal">
+                    <value name="SPEED_ALRT_DIS" value="0" desc="Generation of speed alert is disabled" />
+                    <value name="SPEED_ALRT_EN" value="1" desc="Generation of speed alert is enabled" />
+                </field>
+                <field name="GLOBAL_ENABLE" from="5" to="5" access="RW" desc="Global enable signal for the component">
+                    <value name="COMP_DISABLED" value="0" desc="Component disabled" />
+                    <value name="COMP_ENABLED" value="1" desc="Component is enabled" />
+                </field>
+                <field name="OVERRIDE" from="6" to="6" access="RW" desc="HW mode override bit">
+                    <value name="OVRD_DISABLED" value="0" desc="HW control not overrided" />
+                    <value name="OVRD_ENABLED" value="1" desc="HW control overrided" />
+                </field>
+                <field name="RSRVD" from="7" to="7" access="R" desc="Reserved">
+                </field>
+            </register>
+
+            <register name="ALERT_STATUS"
+            address="`$INSTANCE_NAME`_B_FanCtrl_AlertStatusReg__STATUS_REG" 
+            bitWidth="8" desc="Alert Status Register">
+                <field name="STALL_STATUS" from="0" to="0" access="R" desc="Stall status for all Fans">
+                    <value name="NO_STALL" value="0" desc="No stall occurred" />
+                    <value name="STALL" value="1" desc="Stall is occurred" />
+                </field>
+                <field name="SPEED_STATUS" from="1" to="1" access="R" desc="Speed status for all Fans">
+                    <value name="NO_SPEED_ERROR" value="0" desc="No speed error occurred" />
+                    <value name="SPEED_ERROR" value="1" desc="Speed error is occurred" />
+                </field>
+            </register>
+            
+            <block name="Alert" desc="" visible="`$Psoc3or5`">
+            
+                <register name="ALERT_MASK_LSB"
+                    address="`$INSTANCE_NAME`_B_FanCtrl_HwCtl_AlertMaskLSB__CONTROL_REG" 
+                    bitWidth="8" desc="Alert Mask LSB Register">
+                    <field name="ALRT_MASK_1" from="0" to="0" access="RW" desc="Alert Mask for Fan1">
+                    </field>
+                    <field name="ALRT_MASK_2" from="1" to="1" access="RW" desc="Alert Mask for Fan2">
+                    </field>
+                    <field name="ALRT_MASK_3" from="2" to="2" access="RW" desc="Alert Mask for Fan3">
+                    </field>
+                    <field name="ALRT_MASK_4" from="3" to="3" access="RW" desc="Alert Mask for Fan4">
+                    </field>
+                    <field name="ALRT_MASK_5" from="4" to="4" access="RW" desc="Alert Mask for Fan5">
+                    </field>
+                    <field name="ALRT_MASK_6" from="5" to="5" access="RW" desc="Alert Mask for Fan6">
+                    </field>
+                    <field name="ALRT_MASK_7" from="6" to="6" access="RW" desc="Alert Mask for Fan7">
+                    </field>
+                    <field name="ALRT_MASK_8" from="7" to="7" access="RW" desc="Alert Mask for Fan8">
+                    </field>
+                </register>
+                
+                <register name="STALL_STATUS_LSB"
+                address="`$INSTANCE_NAME`_B_FanCtrl_StallStatus_StallError_LSB__STATUS_REG" 
+                bitWidth="8" desc="Stall Status LSB Register">
+                    <field name="STALL_STAT_1" from="0" to="0" access="RW" desc="Stall status for Fan1">
+                    </field>
+                    <field name="STALL_STAT_2" from="1" to="1" access="RW" desc="Stall status for Fan2">
+                    </field>
+                    <field name="STALL_STAT_3" from="2" to="2" access="RW" desc="Stall status for Fan3">
+                    </field>
+                    <field name="STALL_STAT_4" from="3" to="3" access="RW" desc="Stall status for Fan4">
+                    </field>
+                    <field name="STALL_STAT_5" from="4" to="4" access="RW" desc="Stall status for Fan5">
+                    </field>
+                    <field name="STALL_STAT_6" from="5" to="5" access="RW" desc="Stall status for Fan6">
+                    </field>
+                    <field name="STALL_STAT_7" from="6" to="6" access="RW" desc="Stall status for Fan7">
+                    </field>
+                    <field name="STALL_STAT_8" from="7" to="7" access="RW" desc="Stall status for Fan8">
+                    </field>
+                </register>
+            
+                <block name="MSB" desc="" visible="`$NineOrMoreFans`">
+
+                    <register name="ALERT_MASK_MSB"
+                    address="`$INSTANCE_NAME`_B_FanCtrl_HwCtl_MSB_AlertMaskMSB__CONTROL_REG" 
+                    bitWidth="8" desc="Alert Mask MSB Control Register">
+                        <field name="ALRT_MASK_9" from="0" to="0" access="RW" desc="Alert Mask for Fan9">
+                        </field>
+                        <field name="ALRT_MASK_10" from="1" to="1" access="RW" desc="Alert Mask for Fan10">
+                        </field>
+                        <field name="ALRT_MASK_11" from="2" to="2" access="RW" desc="Alert Mask for Fan11">
+                        </field>
+                        <field name="ALRT_MASK_12" from="3" to="3" access="RW" desc="Alert Mask for Fan12">
+                        </field>
+                        <field name="ALRT_MASK_13" from="4" to="4" access="RW" desc="Alert Mask for Fan13">
+                        </field>
+                        <field name="ALRT_MASK_14" from="5" to="5" access="RW" desc="Alert Mask for Fan14">
+                        </field>
+                        <field name="ALRT_MASK_15" from="6" to="6" access="RW" desc="Alert Mask for Fan15">
+                        </field>
+                        <field name="ALRT_MASK_16" from="7" to="7" access="RW" desc="Alert Mask for Fan16">
+                        </field>
+                    </register>
+                    
+                    <register name="STALL_STATUS_MSB"
+                    address="`$INSTANCE_NAME`_B_FanCtrl_StallStatus_MSB_StallError_MSB__STATUS_REG" 
+                    bitWidth="8" desc="Alert Mask MSB Control Register">
+                        <field name="STALL_STAT_9" from="0" to="0" access="RW" desc="Stall status for Fan9">
+                        </field>
+                        <field name="STALL_STAT_10" from="1" to="1" access="RW" desc="Stall status for Fan10">
+                        </field>
+                        <field name="STALL_STAT_11" from="2" to="2" access="RW" desc="Stall status for Fan11">
+                        </field>
+                        <field name="STALL_STAT_12" from="3" to="3" access="RW" desc="Stall status for Fan12">
+                        </field>
+                        <field name="STALL_STAT_13" from="4" to="4" access="RW" desc="Stall status for Fan13">
+                        </field>
+                        <field name="STALL_STAT_14" from="5" to="5" access="RW" desc="Stall status for Fan14">
+                        </field>
+                        <field name="STALL_STAT_15" from="6" to="6" access="RW" desc="Stall status for Fan15">
+                        </field>
+                        <field name="STALL_STAT_16" from="7" to="7" access="RW" desc="Stall status for Fan16">
+                        </field>
+                    </register>
+                </block>
+            </block>
+        </block>
+    </block>
+</deviceData>

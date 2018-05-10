@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+    <block name="`$INSTANCE_NAME`" desc="Low Power Comparator" visible="true">
+  
+        <block name="" desc="Low Power Comparator v1.0" visible="`$DBGW_LPCOMP_IP_V0`">
+            <register name="CONFIG"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_CONFIG" 
+                bitWidth="32" desc="LPCOMP configuration">
+                <field name="MODE1" from="1" to="0" access="RW" desc="Selects  speed for the comparator #1">
+                    <value name="MED"  value="00" desc="Medium speed"/>
+                    <value name="FAST"  value="01" desc="Fast speed"/>
+                    <value name="SLOW" value="10" desc="Slow speed"/>
+                </field>
+                <field name="HYST1" from="2" to="2" access="RW" desc="Selects hysteresis (10mV) for the comparator #1">
+                    <value name="ENABLE"   value="0" desc="Hysteresis enabled"/>
+                    <value name="DISABLE"  value="1" desc="Hysteresis disabled"/>
+                </field>
+                <field name="INTTYPE1" from="5" to="4" access="RW" desc="Sets which edge will trigger an IRQ for the comparator #1">
+                    <value name="DISABLE"   value="00" desc="Disabled"/>
+                    <value name="RISING"    value="01" desc="Rising edge"/>
+                    <value name="FALLING"   value="10" desc="Falling edge"/>
+                    <value name="BOTH"      value="11" desc="Both rising and falling edges"/>
+                </field>
+                <field name="OUT1" from="6" to="6" access="R" desc="Current output value of the comparator">
+                </field>
+                <field name="ENABLE1" from="7" to="7" access="RW" desc="Enable comparator #1">
+                    <value name="DISABLE"   value="0" desc="Comparator disabled"/>
+                    <value name="ENABLE"    value="1" desc="Comparator enabled"/>
+                </field>
+                <field name="MODE2" from="9" to="8" access="RW" desc="Selects speed for the comparator #2">
+                    <value name="MED"  value="00" desc="Medium speed"/>
+                    <value name="FAST"  value="01" desc="Fast speed"/>
+                    <value name="SLOW" value="10" desc="Slow speed"/>
+                </field>
+                <field name="HYST2" from="10" to="10" access="RW" desc="Selects hysteresis (10mV) for the comparator #2">
+                    <value name="ENABLE"   value="0" desc="Hysteresis enabled"/>
+                    <value name="DISABLE"  value="1" desc="Hysteresis disabled"/>
+                </field>
+                <field name="INTTYPE2" from="13" to="12" access="RW" desc="Sets which edge will trigger an IRQ for the comparator #2">
+                    <value name="DISABLE"   value="00" desc="Disabled"/>
+                    <value name="RISING"    value="01" desc="Rising edge"/>
+                    <value name="FALLING"   value="10" desc="Falling edge"/>
+                    <value name="BOTH"      value="11" desc="Both rising and falling edges"/>
+                </field>
+                <field name="OUT2" from="14" to="14" access="R" desc="Current output value of the comparator #2">
+                </field>
+                <field name="ENABLE2" from="15" to="15" access="RW" desc="Enable comparator #2">
+                    <value name="DISABLE"   value="0" desc="Comparator disabled"/>
+                    <value name="ENABLE"    value="1" desc="Comparator enabled"/>
+                </field>
+            </register> 
+            
+            <register name="INTR"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_INTR" 
+                bitWidth="32" desc="LPCOMP interrupt">
+                <field name="COMP1" from="0" to="0" access="RW" desc="Comparator #1 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+                </field>
+                <field name="COMP2" from="1" to="1" access="RW" desc="Comparator #2 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+                </field>
+            </register> 
+            
+            <register name="INTR_SET"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_INTR_SET" 
+                bitWidth="32" desc="LPCOMP interrupt set register">
+                <field name="COMP1" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+                </field>
+                <field name="COMP2" from="1" to="1" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+                </field>
+            </register>
+            
+            <register name="TRIM_A"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__TRIM_A" bitWidth="32" desc="LPCOMP trim A">
+            </register>
+            
+            <register name="TRIM_B"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__TRIM_B" bitWidth="32" desc="LPCOMP trim B">
+            </register>
+        </block>
+
+        <block name="" desc="Low Power Comparator v2.0" visible="`$DBGW_LPCOMP_IP_V2`">
+            <register name="CONFIG"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_CONFIG" 
+                bitWidth="32" desc="LPCOMP configuration">
+                <field name="MODE1" from="1" to="0" access="RW" desc="Selects  speed for the comparator #1">
+                    <value name="MED"  value="00" desc="Medium speed"/>
+                    <value name="FAST"  value="01" desc="Fast speed"/>
+                    <value name="SLOW" value="10" desc="Slow speed"/>
+                </field>
+                <field name="HYST1" from="2" to="2" access="RW" desc="Selects hysteresis (10mV) for the comparator #1">
+                    <value name="ENABLE"   value="0" desc="Hysteresis enabled"/>
+                    <value name="DISABLE"  value="1" desc="Hysteresis disabled"/>
+                </field>
+                <field name="INTTYPE1" from="5" to="4" access="RW" desc="Sets which edge will trigger an IRQ for the comparator #1">
+                    <value name="DISABLE"   value="00" desc="Disabled"/>
+                    <value name="RISING"    value="01" desc="Rising edge"/>
+                    <value name="FALLING"   value="10" desc="Falling edge"/>
+                    <value name="BOTH"      value="11" desc="Both rising and falling edges"/>
+                </field>
+                <field name="OUT1" from="6" to="6" access="R" desc="Current output value of the comparator">
+                </field>
+                <field name="ENABLE1" from="7" to="7" access="RW" desc="Enable comparator #1">
+                    <value name="DISABLE"   value="0" desc="Comparator disabled"/>
+                    <value name="ENABLE"    value="1" desc="Comparator enabled"/>
+                </field>
+                <field name="MODE2" from="9" to="8" access="RW" desc="Selects speed for the comparator #2">
+                    <value name="MED"  value="00" desc="Medium speed"/>
+                    <value name="FAST"  value="01" desc="Fast speed"/>
+                    <value name="SLOW" value="10" desc="Slow speed"/>
+                </field>
+                <field name="HYST2" from="10" to="10" access="RW" desc="Selects hysteresis (10mV) for the comparator #2">
+                    <value name="ENABLE"   value="0" desc="Hysteresis enabled"/>
+                    <value name="DISABLE"  value="1" desc="Hysteresis disabled"/>
+                </field>
+                <field name="INTTYPE2" from="13" to="12" access="RW" desc="Sets which edge will trigger an IRQ for the comparator #2">
+                    <value name="DISABLE"   value="00" desc="Disabled"/>
+                    <value name="RISING"    value="01" desc="Rising edge"/>
+                    <value name="FALLING"   value="10" desc="Falling edge"/>
+                    <value name="BOTH"      value="11" desc="Both rising and falling edges"/>
+                </field>
+                <field name="OUT2" from="14" to="14" access="R" desc="Current output value of the comparator #2">
+                </field>
+                <field name="ENABLE2" from="15" to="15" access="RW" desc="Enable comparator #2">
+                    <value name="DISABLE"   value="0" desc="Comparator disabled"/>
+                    <value name="ENABLE"    value="1" desc="Comparator enabled"/>
+                </field>
+                <field name="DSI_BYPASS1" from="16" to="16" access="RW" desc="Bypass comparator #1 output synchronization for DSI output">
+                    <value name="SYNCHRONIZE" value="0" desc="Synchronize (level or pulse)"/>
+                    <value name="BYPASS"      value="1" desc="Bypass (output async)"/>
+                </field>
+                <field name="DSI_LEVEL1" from="17" to="17" access="RW" desc="Comparator #1 DSI (trigger) out level">
+                    <value name="PULSE" value="0" desc="Pulse"/>
+                    <value name="LEVEL" value="1" desc="Level"/>
+                </field>
+                <field name="DSI_BYPASS2" from="20" to="20" access="RW" desc="Bypass comparator #2 output synchronization for DSI output">
+                    <value name="SYNCHRONIZE" value="0" desc="Synchronize (level or pulse)"/>
+                    <value name="BYPASS"      value="1" desc="Bypass (output async)"/>
+                </field>
+                <field name="DSI_LEVEL2" from="21" to="21" access="RW" desc="Comparator #2 DSI (trigger) out level">
+                    <value name="PULSE" value="0" desc="Pulse"/>
+                    <value name="LEVEL" value="1" desc="Level"/>
+                </field>
+            </register> 
+            
+            <register name="INTR"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_INTR" 
+                bitWidth="32" desc="LPCOMP interrupt">
+                <field name="COMP1" from="0" to="0" access="RW" desc="Comparator #1 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+                </field>
+                <field name="COMP2" from="1" to="1" access="RW" desc="Comparator #2 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+                </field>
+            </register> 
+            
+            <register name="INTR_SET"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_INTR_SET" 
+                bitWidth="32" desc="LPCOMP interrupt set register">
+                <field name="COMP1" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+                </field>
+                <field name="COMP2" from="1" to="1" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+                </field>
+            </register>
+
+            <register name="INTR_MASK"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_INTR_MASK" 
+                bitWidth="32" desc="LPCOMP interrupt mask">
+                <field name="COMP1_MASK" from="0" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+                </field>
+                <field name="COMP2_MASK" from="1" to="1" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+                </field>
+            </register> 
+
+            <register name="INTR_MASKED"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__LPCOMP_INTR_MASKED" 
+                bitWidth="32" desc="LPCOMP interrupt masked">
+                <field name="COMP1_MASKED" from="0" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+                </field>
+                <field name="COMP2_MASKED" from="1" to="1" access="R" desc="Logical and of corresponding request and mask bits.">
+                </field>
+            </register> 
+            
+            <register name="TRIM_A"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__TRIM_A" bitWidth="32" desc="LPCOMP trim A">
+            </register>
+            
+            <register name="TRIM_B"
+                address="`$INSTANCE_NAME`_cy_psoc4_lpcomp_1__TRIM_B" bitWidth="32" desc="LPCOMP trim B">
+            </register>
+        </block>
+    </block>
+
+</deviceData>

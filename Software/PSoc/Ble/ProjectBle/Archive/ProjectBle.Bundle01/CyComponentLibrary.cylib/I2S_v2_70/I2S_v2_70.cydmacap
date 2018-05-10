@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+
+<!--
+      DMACapability needs to contain 1 or more Category tags. Category needs to contain 1 or more Location tags.
+      
+      Category Attributes
+      ===================
+  
+        name:       The name of the category to display to the user in the DMA Wizard. (If only one category is entered
+                    it will not be displayed as a sub-category in the wizard. Instead it will just be used when the
+                    user selects its associated instance.)
+        
+        enabled:    [OPTIONAL] "true" or "false". If not provided it defaults to true. If false, 
+                    this category and its locations are not included in the DMA Wizard. Note: this value can be set 
+                    to an expression referencing parameters by using `=` (e.g. `="Your Expression here"`).
+        
+        bytes_in_burst: Integer between 1 and 127. The number of bytes that can be sent/recieved in a single burst.
+        
+        bytes_in_burst_is_strict: "true" or "false". Determines whether the bytes_in_burst is a maximum value (false)
+                                  or a specific value that must be used (true).
+                            
+        spoke_width:        Integer between 1 and 4. The spoke width in bytes. 
+        
+        inc_addr:           "true" or "false". Specifies whether or not the address is typically incremented.
+     
+        each_busrt_req_request: "true" or "false". Specifies whether or not a request is required for each burst.
+     
+      Location Attributes
+      ===================
+      
+        name:      The name of the location to display to the user in the DMA Wizard.
+       
+        enabled:  [OPTIONAL] "true" or "false". If not provided it defaults to true. If false, this 
+                  location is not included in the DMA Wizard. Note: this value can be set to an expression 
+                  referencing parameters by using `=Your Expression here`.
+       
+        direction: "source", "destination", or "both".
+  -->
+
+<DMACapability>
+
+    <!-- ===================== Rx Direction ======================= -->
+
+    <!-- Rx mono left, mono right or interleaved stereo data -->
+    <Category name="Rx"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Interleaved) && ($NumRxChannels <= 2))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_RX_CH0_F0_PTR" 
+	        enabled="true" 
+			direction="source"/>  
+    </Category>
+    
+    <!-- Rx separate stereo data. Channel left. -->
+    <Category name="Rx channel left" 
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels == 2))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_RX_CH0_F0_PTR" 
+    	    enabled="true" 
+    		direction="source"/>
+    </Category>
+
+    <!-- Rx separate stereo data. Channel right. -->
+    <Category name="Rx channel right"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels == 2))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_RX_CH0_F1_PTR" 
+	        enabled="true" 
+		    direction="source"/>  
+    </Category>
+
+    <!-- Multi-channel configuration -->
+    <!-- Rx stereo channel 0. Interleaved -->
+    <Category name="Rx stereo channel 0"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Interleaved) && ($NumRxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_RX_CH0_F0_PTR" 
+	        enabled="true" 
+			direction="source"/>  
+    </Category>
+    
+    <!-- Rx stereo channel 0. Separate. Channel left. -->
+    <Category name="Rx stereo channel 0 (left)" 
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 4))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_RX_CH0_F0_PTR" 
+    	    enabled="true" 
+    		direction="source"/>
+    </Category>
+
+    <!-- Rx stereo channel 0. Separate. Channel right. -->
+    <Category name="Rx stereo channel 0 (right)"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_RX_CH0_F1_PTR" 
+	        enabled="true" 
+		    direction="source"/>  
+    </Category>
+
+    <!-- Rx stereo channel 1. Interleaved -->
+    <Category name="Rx stereo channel 1"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Interleaved) && ($NumRxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_RX_CH1_F0_PTR" 
+	        enabled="true" 
+			direction="source"/>  
+    </Category>
+    
+    <!-- Rx stereo channel 1. Separate. Channel left. -->
+    <Category name="Rx stereo channel 1 (left)" 
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 4))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_RX_CH1_F0_PTR" 
+    	    enabled="true" 
+    		direction="source"/>
+    </Category>
+
+    <!-- Rx stereo channel 1. Separate. Channel right. -->
+    <Category name="Rx stereo channel 1 (right)"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_RX_CH1_F1_PTR" 
+	        enabled="true" 
+		    direction="source"/>  
+    </Category>
+
+    <!-- Rx stereo channel 2. Interleaved -->
+    <Category name="Rx stereo channel 2"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Interleaved) && ($NumRxChannels >= 6))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_RX_CH2_F0_PTR" 
+	        enabled="true" 
+			direction="source"/>  
+    </Category>
+    
+    <!-- Rx stereo channel 2. Separate. Channel left. -->
+    <Category name="Rx stereo channel 2 (left)" 
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 6))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_RX_CH2_F0_PTR" 
+    	    enabled="true" 
+    		direction="source"/>
+    </Category>
+
+    <!-- Rx stereo channel 2. Separate. Channel right. -->
+    <Category name="Rx stereo channel 2 (right)"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 6))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_RX_CH2_F1_PTR" 
+	        enabled="true" 
+		    direction="source"/>  
+    </Category>
+
+    <!-- Rx stereo channel 3. Interleaved -->
+    <Category name="Rx stereo channel 3"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Interleaved) && ($NumRxChannels >= 8))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_RX_CH3_F0_PTR" 
+	        enabled="true" 
+			direction="source"/>  
+    </Category>
+    
+    <!-- Rx stereo channel 3. Separate. Channel left. -->
+    <Category name="Rx stereo channel 3 (left)" 
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 8))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_RX_CH3_F0_PTR" 
+    	    enabled="true" 
+    		direction="source"/>
+    </Category>
+
+    <!-- Rx stereo channel 3. Separate. Channel right. -->
+    <Category name="Rx stereo channel 3 (right)"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels >= 8))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_RX_CH3_F1_PTR" 
+	        enabled="true" 
+		    direction="source"/>  
+    </Category>
+
+    <!-- Rx stereo channel 4. Interleaved -->
+    <Category name="Rx stereo channel 4"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Interleaved) && ($NumRxChannels == 10))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_RX_CH4_F0_PTR" 
+	        enabled="true" 
+			direction="source"/>  
+    </Category>
+    
+    <!-- Rx stereo channel 4. Separate. Channel left. -->
+    <Category name="Rx stereo channel 4 (left)" 
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels == 10))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_RX_CH4_F0_PTR" 
+    	    enabled="true" 
+    		direction="source"/>
+    </Category>
+
+    <!-- Rx stereo channel 4. Separate. Channel right. -->
+    <Category name="Rx stereo channel 4 (right)"
+        enabled="`=($RxDmaPresent && ($RxDataInterleaving == Separate) && ($NumRxChannels == 10))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_RX_CH4_F1_PTR" 
+	        enabled="true" 
+		    direction="source"/>  
+    </Category>
+        
+    <!-- ===================== Tx Direction ======================= -->
+
+    <!-- Tx mono left, mono right or interleaved stereo data -->
+    <Category name="Tx"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Interleaved) && ($NumTxChannels <= 2))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_TX_CH0_F0_PTR" 
+	        enabled="true" 
+			direction="destination"/>  
+    </Category>
+    
+    <!-- Tx separate stereo data. Channel left. -->
+    <Category name="Tx channel left" 
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels == 2))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_TX_CH0_F0_PTR" 
+    	    enabled="true" 
+    		direction="destination"/>
+    </Category>
+
+    <!-- Rx separate stereo data. Channel right. -->
+    <Category name="Tx channel right"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels == 2))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_TX_CH0_F1_PTR" 
+	        enabled="true" 
+		    direction="destination"/>  
+    </Category>
+
+    <!-- Multi-channel configuration -->
+    <!-- Tx stereo channel 0. Interleaved -->
+    <Category name="Tx stereo channel 0"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Interleaved) && ($NumTxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_TX_CH0_F0_PTR" 
+	        enabled="true" 
+			direction="destination"/>  
+    </Category>
+    
+    <!-- Tx stereo channel 0. Separate. Channel left. -->
+    <Category name="Tx stereo channel 0 (left)" 
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 4))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_TX_CH0_F0_PTR" 
+    	    enabled="true" 
+    		direction="destination"/>
+    </Category>
+
+    <!-- Tx stereo channel 0. Separate. Channel right. -->
+    <Category name="Tx stereo channel 0 (right)"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_TX_CH0_F1_PTR" 
+	        enabled="true" 
+		    direction="destination"/>  
+    </Category>
+
+    <!-- Tx stereo channel 1. Interleaved -->
+    <Category name="Tx stereo channel 1"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Interleaved) && ($NumTxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_TX_CH1_F0_PTR" 
+	        enabled="true" 
+			direction="destination"/>  
+    </Category>
+    
+    <!-- Tx stereo channel 1. Separate. Channel left. -->
+    <Category name="Tx stereo channel 1 (left)" 
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 4))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_TX_CH1_F0_PTR" 
+    	    enabled="true" 
+    		direction="destination"/>
+    </Category>
+
+    <!-- Tx stereo channel 1. Separate. Channel right. -->
+    <Category name="Tx stereo channel 1 (right)"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 4))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_TX_CH1_F1_PTR" 
+	        enabled="true" 
+		    direction="destination"/>  
+    </Category>
+
+    <!-- Tx stereo channel 2. Interleaved -->
+    <Category name="Tx stereo channel 2"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Interleaved) && ($NumTxChannels >= 6))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_TX_CH2_F0_PTR" 
+	        enabled="true" 
+			direction="destination"/>  
+    </Category>
+    
+    <!-- Tx stereo channel 2. Separate. Channel left. -->
+    <Category name="Tx stereo channel 2 (left)" 
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 6))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_TX_CH2_F0_PTR" 
+    	    enabled="true" 
+    		direction="destination"/>
+    </Category>
+
+    <!-- Tx stereo channel 2. Separate. Channel right. -->
+    <Category name="Tx stereo channel 2 (right)"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 6))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_TX_CH2_F1_PTR" 
+	        enabled="true" 
+		    direction="destination"/>  
+    </Category>
+
+    <!-- Tx stereo channel 3. Interleaved -->
+    <Category name="Tx stereo channel 3"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Interleaved) && ($NumTxChannels >= 8))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_TX_CH3_F0_PTR" 
+	        enabled="true" 
+			direction="destination"/>  
+    </Category>
+    
+    <!-- Tx stereo channel 3. Separate. Channel left. -->
+    <Category name="Tx stereo channel 3 (left)" 
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 8))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_TX_CH3_F0_PTR" 
+    	    enabled="true" 
+    		direction="destination"/>
+    </Category>
+
+    <!-- Tx stereo channel 3. Separate. Channel right. -->
+    <Category name="Tx stereo channel 3 (right)"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels >= 8))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_TX_CH3_F1_PTR" 
+	        enabled="true" 
+		    direction="destination"/>  
+    </Category>
+
+    <!-- Tx stereo channel 4. Interleaved -->
+    <Category name="Tx stereo channel 4"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Interleaved) && ($NumTxChannels == 10))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+	    <Location name="`$INSTANCE_NAME`_TX_CH4_F0_PTR" 
+	        enabled="true" 
+			direction="destination"/>  
+    </Category>
+    
+    <!-- Tx stereo channel 4. Separate. Channel left. -->
+    <Category name="Tx stereo channel 4 (left)" 
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels == 10))`"
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+			
+    	<Location name="`$INSTANCE_NAME`_TX_CH4_F0_PTR" 
+    	    enabled="true" 
+    		direction="destination"/>
+    </Category>
+
+    <!-- Tx stereo channel 4. Separate. Channel right. -->
+    <Category name="Tx stereo channel 4 (right)"
+        enabled="`=($TxDmaPresent && ($TxDataInterleaving == Separate) && ($NumTxChannels == 10))`" 
+        bytes_in_burst="1"
+        bytes_in_burst_is_strict="true" 
+        spoke_width="1" 
+        inc_addr="false" 
+        each_burst_req_request="true">
+						
+        <Location name="`$INSTANCE_NAME`_TX_CH4_F1_PTR" 
+	        enabled="true" 
+		    direction="destination"/>  
+    </Category>
+  
+</DMACapability>
