@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 1
 
 
    1              		.syntax unified
@@ -19,14 +19,14 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 1
   16              		.text
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
-  19              		.section	.text.bepaalLijnDikte,"ax",%progbits
+  19              		.section	.text.stuurMotorenBij,"ax",%progbits
   20              		.align	2
-  21              		.global	bepaalLijnDikte
+  21              		.global	stuurMotorenBij
   22              		.thumb
   23              		.thumb_func
-  24              		.type	bepaalLijnDikte, %function
-  25              	bepaalLijnDikte:
-  26              	.LFB65:
+  24              		.type	stuurMotorenBij, %function
+  25              	stuurMotorenBij:
+  26              	.LFB64:
   27              		.file 1 "RaceLogica.c"
    1:RaceLogica.c  **** /* ========================================
    2:RaceLogica.c  ****  *
@@ -42,7 +42,7 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 1
   12:RaceLogica.c  **** #include "projectMain.h"
   13:RaceLogica.c  **** #include "project.h"
   14:RaceLogica.c  **** 
-  15:RaceLogica.c  **** uint8 IRsensorGewicht[] = {0,180,220,255,255,220,180,0};//{0,180,235,255,235,210,180,0};////{0,25,4
+  15:RaceLogica.c  **** uint8 IRsensorGewicht[] = {0,130,200,255,255,200,130,0};//{0,180,235,255,235,210,180,0};////{0,25,4
   16:RaceLogica.c  **** uint8 IRDigitaleWaarden[8];
   17:RaceLogica.c  **** 
   18:RaceLogica.c  **** uint8 indexLijn = 0;
@@ -58,2569 +58,1576 @@ ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 1
   28:RaceLogica.c  **** {
   29:RaceLogica.c  ****     if (((data & 11000000) == 11000000) /*|| ((data & 11100000) == 11100000) || ((data & 11110000) 
   30:RaceLogica.c  ****     else if ((data & 00000011) == 00000011 /*|| ((data & 00000111) == 00000111) || ((data & 0000111
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 2
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 2
 
 
   31:RaceLogica.c  ****     Data = data;
   32:RaceLogica.c  ****     PlaatsIRWaardenInArray(Data);
-  33:RaceLogica.c  ****     
-  34:RaceLogica.c  ****     LinksVsRechts();
-  35:RaceLogica.c  ****     //if (richting == 255) stuurMotorenBijLNR();
-  36:RaceLogica.c  ****     //else if (richting == 0) stuurMotorenBijRNL();
-  37:RaceLogica.c  **** 
-  38:RaceLogica.c  ****    
-  39:RaceLogica.c  **** }
-  40:RaceLogica.c  **** 
-  41:RaceLogica.c  **** void LinksVsRechts()
-  42:RaceLogica.c  **** {
-  43:RaceLogica.c  ****     uint8 links = 0;
-  44:RaceLogica.c  ****     uint8 rechts = 0;
-  45:RaceLogica.c  ****     for (int i = 0; i < 8; i++)
-  46:RaceLogica.c  ****     {
-  47:RaceLogica.c  ****         if(IRDigitaleWaarden[i] == 1)
-  48:RaceLogica.c  ****         {
-  49:RaceLogica.c  ****             if (i >= 0 &&  i <= 3) links++; 
-  50:RaceLogica.c  ****             else if (i >= 4 && i <= 7)rechts++;
-  51:RaceLogica.c  ****         }
-  52:RaceLogica.c  ****     }
-  53:RaceLogica.c  ****     if (links > rechts) stuurMotorenBijLNR();
-  54:RaceLogica.c  ****     else if (rechts >= links) stuurMotorenBijRNL();
-  55:RaceLogica.c  **** }
-  56:RaceLogica.c  **** 
-  57:RaceLogica.c  **** uint8 bepaalLijnDikte()
-  58:RaceLogica.c  **** {
-  28              		.loc 1 58 0
+  33:RaceLogica.c  ****     stuurMotorenBij();
+  34:RaceLogica.c  ****     
+  35:RaceLogica.c  ****     //LinksVsRechts();
+  36:RaceLogica.c  ****     //if (richting == 255) stuurMotorenBijLNR();
+  37:RaceLogica.c  ****     //else if (richting == 0) stuurMotorenBijRNL();
+  38:RaceLogica.c  **** 
+  39:RaceLogica.c  ****    
+  40:RaceLogica.c  **** }
+  41:RaceLogica.c  **** 
+  42:RaceLogica.c  **** //void LinksVsRechts()
+  43:RaceLogica.c  **** //{
+  44:RaceLogica.c  **** //    uint8 links = 0;
+  45:RaceLogica.c  **** //    uint8 rechts = 0;
+  46:RaceLogica.c  **** //    for (int i = 0; i < 8; i++)
+  47:RaceLogica.c  **** //    {
+  48:RaceLogica.c  **** //        if(IRDigitaleWaarden[i] == 1)
+  49:RaceLogica.c  **** //        {
+  50:RaceLogica.c  **** //            if (i >= 0 &&  i <= 3) links++; 
+  51:RaceLogica.c  **** //            else if (i >= 4 && i <= 7)rechts++;
+  52:RaceLogica.c  **** //        }
+  53:RaceLogica.c  **** //    }
+  54:RaceLogica.c  **** //    if (links > rechts) stuurMotorenBijLNR();
+  55:RaceLogica.c  **** //    else if (rechts >= links) stuurMotorenBijRNL();
+  56:RaceLogica.c  **** //}
+  57:RaceLogica.c  **** 
+  58:RaceLogica.c  **** //uint8 bepaalLijnDikte()
+  59:RaceLogica.c  **** //{
+  60:RaceLogica.c  **** //    uint8 teller = 0;
+  61:RaceLogica.c  **** //    uint8 diksteLijn = 0;
+  62:RaceLogica.c  **** //    for(int i = 0; i < 8; i++)
+  63:RaceLogica.c  **** //    {
+  64:RaceLogica.c  **** //        if (IRDigitaleWaarden[i] == 1) teller++;
+  65:RaceLogica.c  **** //        else {
+  66:RaceLogica.c  **** //            if (teller > diksteLijn)
+  67:RaceLogica.c  **** //            {
+  68:RaceLogica.c  **** //                diksteLijn = teller;
+  69:RaceLogica.c  **** //                indexLijn = i - diksteLijn;
+  70:RaceLogica.c  **** //                teller = 0;
+  71:RaceLogica.c  **** //            } 
+  72:RaceLogica.c  **** //        }
+  73:RaceLogica.c  **** //     }
+  74:RaceLogica.c  **** //        
+  75:RaceLogica.c  **** //     if (teller > diksteLijn)diksteLijn = teller;
+  76:RaceLogica.c  **** //     return diksteLijn;
+  77:RaceLogica.c  **** //}
+  78:RaceLogica.c  **** 
+  79:RaceLogica.c  **** void stuurMotorenBij(void)
+  80:RaceLogica.c  **** { 
+  28              		.loc 1 80 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              		@ link register save eliminated.
   33              	.LVL0:
   34              	.LBB2:
-  59:RaceLogica.c  ****     uint8 teller = 0;
-  60:RaceLogica.c  ****     uint8 diksteLijn = 0;
-  61:RaceLogica.c  ****     for(int i = 0; i < 8; i++)
-  35              		.loc 1 61 0
-  36 0000 0023     		movs	r3, #0
-  37              	.LBE2:
-  60:RaceLogica.c  ****     for(int i = 0; i < 8; i++)
-  38              		.loc 1 60 0
-  39 0002 1946     		mov	r1, r3
-  59:RaceLogica.c  ****     uint8 teller = 0;
-  40              		.loc 1 59 0
-  41 0004 1846     		mov	r0, r3
-  42              	.LBB3:
-  43              		.loc 1 61 0
-  44 0006 0EE0     		b	.L2
-  45              	.LVL1:
-  46              	.L5:
-  62:RaceLogica.c  ****     {
-  63:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1) teller++;
-  47              		.loc 1 63 0
-  48 0008 0A4A     		ldr	r2, .L7
-  49 000a D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 3
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 3
 
 
-  50 000c 012A     		cmp	r2, #1
-  51 000e 02D1     		bne	.L3
-  52              		.loc 1 63 0 is_stmt 0 discriminator 1
-  53 0010 0130     		adds	r0, r0, #1
-  54              	.LVL2:
-  55 0012 C0B2     		uxtb	r0, r0
-  56              	.LVL3:
-  57 0014 06E0     		b	.L4
-  58              	.L3:
-  64:RaceLogica.c  ****         else {
-  65:RaceLogica.c  ****             if (teller > diksteLijn)
-  59              		.loc 1 65 0 is_stmt 1
-  60 0016 8842     		cmp	r0, r1
-  61 0018 04D9     		bls	.L4
-  62              	.LVL4:
-  66:RaceLogica.c  ****             {
-  67:RaceLogica.c  ****                 diksteLijn = teller;
-  68:RaceLogica.c  ****                 indexLijn = i - diksteLijn;
-  63              		.loc 1 68 0
-  64 001a 191A     		subs	r1, r3, r0
-  65 001c 064A     		ldr	r2, .L7+4
-  66 001e 1170     		strb	r1, [r2]
-  67              	.LVL5:
-  67:RaceLogica.c  ****                 indexLijn = i - diksteLijn;
-  68              		.loc 1 67 0
-  69 0020 0146     		mov	r1, r0
-  69:RaceLogica.c  ****                 teller = 0;
-  70              		.loc 1 69 0
-  71 0022 0020     		movs	r0, #0
-  72              	.LVL6:
-  73              	.L4:
-  61:RaceLogica.c  ****     {
-  74              		.loc 1 61 0 discriminator 2
-  75 0024 0133     		adds	r3, r3, #1
-  76              	.LVL7:
-  77              	.L2:
-  61:RaceLogica.c  ****     {
-  78              		.loc 1 61 0 is_stmt 0 discriminator 1
-  79 0026 072B     		cmp	r3, #7
-  80 0028 EEDD     		ble	.L5
-  81              	.LBE3:
-  70:RaceLogica.c  ****             } 
-  71:RaceLogica.c  ****         }
-  72:RaceLogica.c  ****      }
-  73:RaceLogica.c  ****         
-  74:RaceLogica.c  ****      if (teller > diksteLijn)diksteLijn = teller;
-  82              		.loc 1 74 0 is_stmt 1
-  83 002a 8842     		cmp	r0, r1
-  84 002c 00D8     		bhi	.L6
-  85 002e 0846     		mov	r0, r1
-  86              	.LVL8:
-  87              	.L6:
-  75:RaceLogica.c  ****      return diksteLijn;
-  76:RaceLogica.c  **** }
-  88              		.loc 1 76 0
-  89 0030 7047     		bx	lr
-  90              	.L8:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 4
+  81:RaceLogica.c  ****     
+  82:RaceLogica.c  ****      for(int i = 7; i > 3; i--)// for(int i = 4; i <= 7; i++)
+  35              		.loc 1 82 0
+  36 0000 0723     		movs	r3, #7
+  37 0002 20E0     		b	.L2
+  38              	.LVL1:
+  39              	.L8:
+  83:RaceLogica.c  **** 	{
+  84:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1)
+  40              		.loc 1 84 0
+  41 0004 234A     		ldr	r2, .L15
+  42 0006 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+  43 0008 012A     		cmp	r2, #1
+  44 000a 1BD1     		bne	.L3
+  85:RaceLogica.c  ****         {         
+  86:RaceLogica.c  ****             pwmMotorRechts = IRsensorGewicht[i];   
+  45              		.loc 1 86 0
+  46 000c 224A     		ldr	r2, .L15+4
+  47 000e D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+  48 0010 224A     		ldr	r2, .L15+8
+  49 0012 1170     		strb	r1, [r2]
+  87:RaceLogica.c  ****             if (i == 7) pwmMotorLinks = 255;
+  50              		.loc 1 87 0
+  51 0014 072B     		cmp	r3, #7
+  52 0016 03D1     		bne	.L4
+  53              		.loc 1 87 0 is_stmt 0 discriminator 1
+  54 0018 FF22     		movs	r2, #255
+  55 001a 214B     		ldr	r3, .L15+12
+  56              	.LVL2:
+  57 001c 1A70     		strb	r2, [r3]
+  58 001e 7047     		bx	lr
+  59              	.LVL3:
+  60              	.L4:
+  88:RaceLogica.c  ****             else if (i == 6) pwmMotorLinks = 255;
+  61              		.loc 1 88 0 is_stmt 1
+  62 0020 062B     		cmp	r3, #6
+  63 0022 03D1     		bne	.L6
+  64              		.loc 1 88 0 is_stmt 0 discriminator 1
+  65 0024 FF22     		movs	r2, #255
+  66 0026 1E4B     		ldr	r3, .L15+12
+  67              	.LVL4:
+  68 0028 1A70     		strb	r2, [r3]
+  69 002a 7047     		bx	lr
+  70              	.LVL5:
+  71              	.L6:
+  89:RaceLogica.c  ****             else if (i == 5) pwmMotorLinks = 255;
+  72              		.loc 1 89 0 is_stmt 1
+  73 002c 052B     		cmp	r3, #5
+  74 002e 03D1     		bne	.L7
+  75              		.loc 1 89 0 is_stmt 0 discriminator 1
+  76 0030 FF22     		movs	r2, #255
+  77 0032 1B4B     		ldr	r3, .L15+12
+  78              	.LVL6:
+  79 0034 1A70     		strb	r2, [r3]
+  80 0036 7047     		bx	lr
+  81              	.LVL7:
+  82              	.L7:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 4
 
 
-  91 0032 00BF     		.align	2
-  92              	.L7:
-  93 0034 00000000 		.word	IRDigitaleWaarden
-  94 0038 00000000 		.word	.LANCHOR0
-  95              		.cfi_endproc
-  96              	.LFE65:
-  97              		.size	bepaalLijnDikte, .-bepaalLijnDikte
-  98              		.section	.text.stuurMotorenBijRNL,"ax",%progbits
-  99              		.align	2
- 100              		.global	stuurMotorenBijRNL
- 101              		.thumb
- 102              		.thumb_func
- 103              		.type	stuurMotorenBijRNL, %function
- 104              	stuurMotorenBijRNL:
- 105              	.LFB66:
-  77:RaceLogica.c  **** 
-  78:RaceLogica.c  **** void stuurMotorenBijRNL(void)
-  79:RaceLogica.c  **** { 
- 106              		.loc 1 79 0
- 107              		.cfi_startproc
- 108              		@ args = 0, pretend = 0, frame = 0
- 109              		@ frame_needed = 0, uses_anonymous_args = 0
- 110              		@ link register save eliminated.
- 111              	.LVL9:
- 112              	.LBB4:
-  80:RaceLogica.c  ****     
-  81:RaceLogica.c  ****      for(int i = 7; i > 3; i--)// for(int i = 4; i <= 7; i++)
- 113              		.loc 1 81 0
- 114 0000 0723     		movs	r3, #7
- 115 0002 2BE0     		b	.L10
- 116              	.LVL10:
- 117              	.L18:
+  90:RaceLogica.c  ****             else if (i == 4) pwmMotorLinks = 255;
+  83              		.loc 1 90 0 is_stmt 1
+  84 0038 042B     		cmp	r3, #4
+  85 003a 2AD1     		bne	.L1
+  86              		.loc 1 90 0 is_stmt 0 discriminator 1
+  87 003c FF22     		movs	r2, #255
+  88 003e 184B     		ldr	r3, .L15+12
+  89              	.LVL8:
+  90 0040 1A70     		strb	r2, [r3]
+  91 0042 7047     		bx	lr
+  92              	.LVL9:
+  93              	.L3:
   82:RaceLogica.c  **** 	{
-  83:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1)
- 118              		.loc 1 83 0
- 119 0004 414A     		ldr	r2, .L29
- 120 0006 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 121 0008 012A     		cmp	r2, #1
- 122 000a 26D1     		bne	.L11
-  84:RaceLogica.c  ****         {
-  85:RaceLogica.c  ****             antiSlipTeller = 0;
- 123              		.loc 1 85 0
- 124 000c 0021     		movs	r1, #0
- 125 000e 404A     		ldr	r2, .L29+4
- 126 0010 5180     		strh	r1, [r2, #2]	@ movhi
-  86:RaceLogica.c  ****             if (i == 7) laatsteKant = 100;
- 127              		.loc 1 86 0
- 128 0012 072B     		cmp	r3, #7
- 129 0014 02D1     		bne	.L12
- 130              		.loc 1 86 0 is_stmt 0 discriminator 1
- 131 0016 6421     		movs	r1, #100
- 132 0018 1171     		strb	r1, [r2, #4]
- 133 001a 02E0     		b	.L13
- 134              	.L12:
-  87:RaceLogica.c  ****             else laatsteKant = 0;
- 135              		.loc 1 87 0 is_stmt 1
- 136 001c 0021     		movs	r1, #0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 5
+  94              		.loc 1 82 0 is_stmt 1 discriminator 2
+  95 0044 013B     		subs	r3, r3, #1
+  96              	.LVL10:
+  97              	.L2:
+  82:RaceLogica.c  **** 	{
+  98              		.loc 1 82 0 is_stmt 0 discriminator 1
+  99 0046 032B     		cmp	r3, #3
+ 100 0048 DCDC     		bgt	.L8
+ 101 004a 0023     		movs	r3, #0
+ 102              	.LVL11:
+ 103 004c 1FE0     		b	.L9
+ 104              	.LVL12:
+ 105              	.L14:
+ 106              	.LBE2:
+ 107              	.LBB3:
+  91:RaceLogica.c  ****             return;
+  92:RaceLogica.c  ****         }
+  93:RaceLogica.c  ****     }
+  94:RaceLogica.c  ****     //Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
+  95:RaceLogica.c  ****     for(int i = 0; i < 4; i++) //for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
+  96:RaceLogica.c  **** 	{
+  97:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
+ 108              		.loc 1 97 0 is_stmt 1
+ 109 004e 114A     		ldr	r2, .L15
+ 110 0050 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 111 0052 012A     		cmp	r2, #1
+ 112 0054 1AD1     		bne	.L10
+  98:RaceLogica.c  ****         {
+  99:RaceLogica.c  ****             pwmMotorLinks = IRsensorGewicht[i];    
+ 113              		.loc 1 99 0
+ 114 0056 104A     		ldr	r2, .L15+4
+ 115 0058 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 116 005a 114A     		ldr	r2, .L15+12
+ 117 005c 1170     		strb	r1, [r2]
+ 100:RaceLogica.c  ****             if (i == 0) pwmMotorRechts = 255;
+ 118              		.loc 1 100 0
+ 119 005e 1BB9     		cbnz	r3, .L11
+ 120              		.loc 1 100 0 is_stmt 0 discriminator 1
+ 121 0060 FF22     		movs	r2, #255
+ 122 0062 0E4B     		ldr	r3, .L15+8
+ 123              	.LVL13:
+ 124 0064 1A70     		strb	r2, [r3]
+ 125 0066 7047     		bx	lr
+ 126              	.LVL14:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 5
 
 
- 137 001e 3C4A     		ldr	r2, .L29+4
- 138 0020 1171     		strb	r1, [r2, #4]
- 139              	.L13:
-  88:RaceLogica.c  ****             
-  89:RaceLogica.c  ****             pwmMotorRechts = IRsensorGewicht[i];
- 140              		.loc 1 89 0
- 141 0022 3C4A     		ldr	r2, .L29+8
- 142 0024 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
- 143 0026 3C4A     		ldr	r2, .L29+12
- 144 0028 1170     		strb	r1, [r2]
-  90:RaceLogica.c  ****             
-  91:RaceLogica.c  ****             if (i == 7) pwmMotorLinks = 255;
- 145              		.loc 1 91 0
- 146 002a 072B     		cmp	r3, #7
- 147 002c 03D1     		bne	.L14
- 148              		.loc 1 91 0 is_stmt 0 discriminator 1
- 149 002e FF22     		movs	r2, #255
- 150 0030 3A4B     		ldr	r3, .L29+16
- 151              	.LVL11:
- 152 0032 1A70     		strb	r2, [r3]
- 153 0034 7047     		bx	lr
- 154              	.LVL12:
- 155              	.L14:
-  92:RaceLogica.c  ****             else if (i == 6) pwmMotorLinks = 240;
- 156              		.loc 1 92 0 is_stmt 1
- 157 0036 062B     		cmp	r3, #6
- 158 0038 03D1     		bne	.L16
- 159              		.loc 1 92 0 is_stmt 0 discriminator 1
- 160 003a F022     		movs	r2, #240
- 161 003c 374B     		ldr	r3, .L29+16
- 162              	.LVL13:
- 163 003e 1A70     		strb	r2, [r3]
- 164 0040 7047     		bx	lr
- 165              	.LVL14:
- 166              	.L16:
-  93:RaceLogica.c  ****             else if (i == 5) pwmMotorLinks = 225;
- 167              		.loc 1 93 0 is_stmt 1
- 168 0042 052B     		cmp	r3, #5
- 169 0044 03D1     		bne	.L17
- 170              		.loc 1 93 0 is_stmt 0 discriminator 1
- 171 0046 E122     		movs	r2, #225
- 172 0048 344B     		ldr	r3, .L29+16
- 173              	.LVL15:
- 174 004a 1A70     		strb	r2, [r3]
- 175 004c 7047     		bx	lr
- 176              	.LVL16:
- 177              	.L17:
-  94:RaceLogica.c  ****             else if (i == 4) pwmMotorLinks = 255;
- 178              		.loc 1 94 0 is_stmt 1
- 179 004e 042B     		cmp	r3, #4
- 180 0050 5BD1     		bne	.L9
- 181              		.loc 1 94 0 is_stmt 0 discriminator 1
- 182 0052 FF22     		movs	r2, #255
- 183 0054 314B     		ldr	r3, .L29+16
- 184              	.LVL17:
- 185 0056 1A70     		strb	r2, [r3]
- 186 0058 7047     		bx	lr
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 6
+ 127              	.L11:
+ 101:RaceLogica.c  ****             else if (i == 1) pwmMotorRechts = 255;
+ 128              		.loc 1 101 0 is_stmt 1
+ 129 0068 012B     		cmp	r3, #1
+ 130 006a 03D1     		bne	.L12
+ 131              		.loc 1 101 0 is_stmt 0 discriminator 1
+ 132 006c FF22     		movs	r2, #255
+ 133 006e 0B4B     		ldr	r3, .L15+8
+ 134              	.LVL15:
+ 135 0070 1A70     		strb	r2, [r3]
+ 136 0072 7047     		bx	lr
+ 137              	.LVL16:
+ 138              	.L12:
+ 102:RaceLogica.c  ****             else if (i == 2) pwmMotorRechts = 255;
+ 139              		.loc 1 102 0 is_stmt 1
+ 140 0074 022B     		cmp	r3, #2
+ 141 0076 03D1     		bne	.L13
+ 142              		.loc 1 102 0 is_stmt 0 discriminator 1
+ 143 0078 FF22     		movs	r2, #255
+ 144 007a 084B     		ldr	r3, .L15+8
+ 145              	.LVL17:
+ 146 007c 1A70     		strb	r2, [r3]
+ 147 007e 7047     		bx	lr
+ 148              	.LVL18:
+ 149              	.L13:
+ 103:RaceLogica.c  ****             else if (i == 3) pwmMotorRechts = 255;//IRsensorGewicht[i];
+ 150              		.loc 1 103 0 is_stmt 1
+ 151 0080 032B     		cmp	r3, #3
+ 152 0082 06D1     		bne	.L1
+ 153              		.loc 1 103 0 is_stmt 0 discriminator 1
+ 154 0084 FF22     		movs	r2, #255
+ 155 0086 054B     		ldr	r3, .L15+8
+ 156              	.LVL19:
+ 157 0088 1A70     		strb	r2, [r3]
+ 158 008a 7047     		bx	lr
+ 159              	.LVL20:
+ 160              	.L10:
+  95:RaceLogica.c  **** 	{
+ 161              		.loc 1 95 0 is_stmt 1 discriminator 2
+ 162 008c 0133     		adds	r3, r3, #1
+ 163              	.LVL21:
+ 164              	.L9:
+  95:RaceLogica.c  **** 	{
+ 165              		.loc 1 95 0 is_stmt 0 discriminator 1
+ 166 008e 032B     		cmp	r3, #3
+ 167 0090 DDDD     		ble	.L14
+ 168              	.LVL22:
+ 169              	.L1:
+ 170 0092 7047     		bx	lr
+ 171              	.L16:
+ 172              		.align	2
+ 173              	.L15:
+ 174 0094 00000000 		.word	IRDigitaleWaarden
+ 175 0098 00000000 		.word	.LANCHOR0
+ 176 009c 00000000 		.word	pwmMotorRechts
+ 177 00a0 00000000 		.word	pwmMotorLinks
+ 178              	.LBE3:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 6
 
 
- 187              	.LVL18:
- 188              	.L11:
-  81:RaceLogica.c  **** 	{
- 189              		.loc 1 81 0 is_stmt 1 discriminator 2
- 190 005a 013B     		subs	r3, r3, #1
- 191              	.LVL19:
- 192              	.L10:
-  81:RaceLogica.c  **** 	{
- 193              		.loc 1 81 0 is_stmt 0 discriminator 1
- 194 005c 032B     		cmp	r3, #3
- 195 005e D1DC     		bgt	.L18
- 196 0060 0323     		movs	r3, #3
- 197              	.LVL20:
- 198 0062 29E0     		b	.L19
- 199              	.LVL21:
- 200              	.L26:
- 201              	.LBE4:
- 202              	.LBB5:
-  95:RaceLogica.c  ****             return;
-  96:RaceLogica.c  ****         }
-  97:RaceLogica.c  ****     }
-  98:RaceLogica.c  ****     //Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
-  99:RaceLogica.c  ****     /*for(int i = 0; i < 4; i++)*/ for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
- 100:RaceLogica.c  **** 	{
- 101:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
- 203              		.loc 1 101 0 is_stmt 1
- 204 0064 294A     		ldr	r2, .L29
- 205 0066 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 206 0068 012A     		cmp	r2, #1
- 207 006a 24D1     		bne	.L20
- 102:RaceLogica.c  ****         {
- 103:RaceLogica.c  ****             antiSlipTeller = 0;
- 208              		.loc 1 103 0
- 209 006c 0021     		movs	r1, #0
- 210 006e 284A     		ldr	r2, .L29+4
- 211 0070 5180     		strh	r1, [r2, #2]	@ movhi
- 104:RaceLogica.c  ****             if (i == 0) laatsteKant = 100;
- 212              		.loc 1 104 0
- 213 0072 13B9     		cbnz	r3, .L21
- 214              		.loc 1 104 0 is_stmt 0 discriminator 1
- 215 0074 6421     		movs	r1, #100
- 216 0076 1171     		strb	r1, [r2, #4]
- 217 0078 02E0     		b	.L22
- 218              	.L21:
- 105:RaceLogica.c  ****             else laatsteKant = 0;
- 219              		.loc 1 105 0 is_stmt 1
- 220 007a 0021     		movs	r1, #0
- 221 007c 244A     		ldr	r2, .L29+4
- 222 007e 1171     		strb	r1, [r2, #4]
- 223              	.L22:
- 106:RaceLogica.c  ****             
- 107:RaceLogica.c  ****             pwmMotorLinks = IRsensorGewicht[i];
- 224              		.loc 1 107 0
- 225 0080 244A     		ldr	r2, .L29+8
- 226 0082 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
- 227 0084 254A     		ldr	r2, .L29+16
- 228 0086 1170     		strb	r1, [r2]
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 7
+ 179              		.cfi_endproc
+ 180              	.LFE64:
+ 181              		.size	stuurMotorenBij, .-stuurMotorenBij
+ 182              		.section	.text.PlaatsIRWaardenInArray,"ax",%progbits
+ 183              		.align	2
+ 184              		.global	PlaatsIRWaardenInArray
+ 185              		.thumb
+ 186              		.thumb_func
+ 187              		.type	PlaatsIRWaardenInArray, %function
+ 188              	PlaatsIRWaardenInArray:
+ 189              	.LFB65:
+ 104:RaceLogica.c  ****             return;
+ 105:RaceLogica.c  ****         }
+ 106:RaceLogica.c  ****     }
+ 107:RaceLogica.c  ****     //Zet tweede for loop in commentaar indien de robot met de klok mee rijd
+ 108:RaceLogica.c  ****    
+ 109:RaceLogica.c  ****         
+ 110:RaceLogica.c  **** //    if (antiSlipTeller < UINT16_MAX && laatsteKant != 0)
+ 111:RaceLogica.c  **** //    {
+ 112:RaceLogica.c  **** //        antiSlipTeller++;
+ 113:RaceLogica.c  **** //    }   
+ 114:RaceLogica.c  **** //    if ( antiSlipTeller > 300 && laatsteKant != 0)
+ 115:RaceLogica.c  **** //    {
+ 116:RaceLogica.c  **** //        if (laatsteKant == 100)
+ 117:RaceLogica.c  **** //        {
+ 118:RaceLogica.c  **** //            if (pwmMotorLinks < 255) pwmMotorLinks = pwmMotorLinks + 2;
+ 119:RaceLogica.c  **** //        }
+ 120:RaceLogica.c  **** //        
+ 121:RaceLogica.c  **** //        
+ 122:RaceLogica.c  **** //        else if (laatsteKant == 200) 
+ 123:RaceLogica.c  **** //        {
+ 124:RaceLogica.c  **** //            if (pwmMotorRechts < 255) pwmMotorRechts = pwmMotorRechts + 2;
+ 125:RaceLogica.c  **** //        }
+ 126:RaceLogica.c  **** //    }
+ 127:RaceLogica.c  **** }
+ 128:RaceLogica.c  **** 
+ 129:RaceLogica.c  **** //void stuurMotorenBijLNR(void)
+ 130:RaceLogica.c  **** //{ 
+ 131:RaceLogica.c  **** //    Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
+ 132:RaceLogica.c  **** //    for(int i = 0; i < 4; i++) //for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
+ 133:RaceLogica.c  **** //	{
+ 134:RaceLogica.c  **** //        if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
+ 135:RaceLogica.c  **** //        {   
+ 136:RaceLogica.c  **** //            pwmMotorLinks = IRsensorGewicht[i];
+ 137:RaceLogica.c  **** //           
+ 138:RaceLogica.c  **** //            if (i == 0) pwmMotorRechts = 255;
+ 139:RaceLogica.c  **** //            else if (i == 1) pwmMotorRechts = 240;
+ 140:RaceLogica.c  **** //            else if (i == 2) pwmMotorRechts = 225;
+ 141:RaceLogica.c  **** //            else if (i == 3) pwmMotorRechts = 255;//IRsensorGewicht[i];
+ 142:RaceLogica.c  **** //            return;
+ 143:RaceLogica.c  **** //        }
+ 144:RaceLogica.c  **** //    }
+ 145:RaceLogica.c  **** //    Zet tweede for loop in commentaar indien de robot met de klok mee rijd
+ 146:RaceLogica.c  **** //    /*for(int i = 7; i > 3; i--)*/ for(int i = 4; i <= 7; i++)
+ 147:RaceLogica.c  **** //	{
+ 148:RaceLogica.c  **** //        if (IRDigitaleWaarden[i] == 1)
+ 149:RaceLogica.c  **** //        {
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 7
 
 
- 108:RaceLogica.c  ****            
- 109:RaceLogica.c  ****             if (i == 0) pwmMotorRechts = 255;
- 229              		.loc 1 109 0
- 230 0088 1BB9     		cbnz	r3, .L23
- 231              		.loc 1 109 0 is_stmt 0 discriminator 1
- 232 008a FF22     		movs	r2, #255
- 233 008c 224B     		ldr	r3, .L29+12
- 234              	.LVL22:
- 235 008e 1A70     		strb	r2, [r3]
- 236 0090 7047     		bx	lr
- 237              	.LVL23:
- 238              	.L23:
- 110:RaceLogica.c  ****             else if (i == 1) pwmMotorRechts = 240;
- 239              		.loc 1 110 0 is_stmt 1
- 240 0092 012B     		cmp	r3, #1
- 241 0094 03D1     		bne	.L24
- 242              		.loc 1 110 0 is_stmt 0 discriminator 1
- 243 0096 F022     		movs	r2, #240
- 244 0098 1F4B     		ldr	r3, .L29+12
- 245              	.LVL24:
- 246 009a 1A70     		strb	r2, [r3]
- 247 009c 7047     		bx	lr
- 248              	.LVL25:
- 249              	.L24:
- 111:RaceLogica.c  ****             else if (i == 2) pwmMotorRechts = 225;
- 250              		.loc 1 111 0 is_stmt 1
- 251 009e 022B     		cmp	r3, #2
- 252 00a0 03D1     		bne	.L25
- 253              		.loc 1 111 0 is_stmt 0 discriminator 1
- 254 00a2 E122     		movs	r2, #225
- 255 00a4 1C4B     		ldr	r3, .L29+12
- 256              	.LVL26:
- 257 00a6 1A70     		strb	r2, [r3]
- 258 00a8 7047     		bx	lr
- 259              	.LVL27:
- 260              	.L25:
- 112:RaceLogica.c  ****             else if (i == 3) pwmMotorRechts = 255;//IRsensorGewicht[i];
- 261              		.loc 1 112 0 is_stmt 1
- 262 00aa 032B     		cmp	r3, #3
- 263 00ac 2DD1     		bne	.L9
- 264              		.loc 1 112 0 is_stmt 0 discriminator 1
- 265 00ae FF22     		movs	r2, #255
- 266 00b0 194B     		ldr	r3, .L29+12
- 267              	.LVL28:
- 268 00b2 1A70     		strb	r2, [r3]
- 269 00b4 7047     		bx	lr
- 270              	.LVL29:
- 271              	.L20:
-  99:RaceLogica.c  **** 	{
- 272              		.loc 1 99 0 is_stmt 1 discriminator 2
- 273 00b6 013B     		subs	r3, r3, #1
- 274              	.LVL30:
- 275              	.L19:
-  99:RaceLogica.c  **** 	{
- 276              		.loc 1 99 0 is_stmt 0 discriminator 1
- 277 00b8 002B     		cmp	r3, #0
- 278 00ba D3DA     		bge	.L26
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 8
+ 150:RaceLogica.c  **** //            pwmMotorRechts = IRsensorGewicht[i];
+ 151:RaceLogica.c  **** //            if (i == 7) pwmMotorLinks = 255;
+ 152:RaceLogica.c  **** //            else if (i == 6) pwmMotorLinks = 240;
+ 153:RaceLogica.c  **** //            else if (i == 5) pwmMotorLinks = 225;
+ 154:RaceLogica.c  **** //            else if (i == 4) pwmMotorLinks = 255;
+ 155:RaceLogica.c  **** //            return;
+ 156:RaceLogica.c  **** //        }
+ 157:RaceLogica.c  **** //    }
+ 158:RaceLogica.c  **** //}
+ 159:RaceLogica.c  **** 
+ 160:RaceLogica.c  **** 
+ 161:RaceLogica.c  **** 
+ 162:RaceLogica.c  **** void PlaatsIRWaardenInArray(uint8 value)
+ 163:RaceLogica.c  **** {
+ 190              		.loc 1 163 0 is_stmt 1
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194              	.LVL23:
+ 195 0000 38B5     		push	{r3, r4, r5, lr}
+ 196              		.cfi_def_cfa_offset 16
+ 197              		.cfi_offset 3, -16
+ 198              		.cfi_offset 4, -12
+ 199              		.cfi_offset 5, -8
+ 200              		.cfi_offset 14, -4
+ 201 0002 0546     		mov	r5, r0
+ 202              	.LVL24:
+ 203              	.LBB4:
+ 164:RaceLogica.c  ****     for(int i = 0; i < 8; i++)
+ 204              		.loc 1 164 0
+ 205 0004 0024     		movs	r4, #0
+ 206 0006 0FE0     		b	.L18
+ 207              	.LVL25:
+ 208              	.L21:
+ 209              	.LBB5:
+ 165:RaceLogica.c  **** 	{
+ 166:RaceLogica.c  **** 		uint8 tmpWaarde =  exponent(2,i);
+ 210              		.loc 1 166 0
+ 211 0008 2146     		mov	r1, r4
+ 212 000a 0220     		movs	r0, #2
+ 213 000c FFF7FEFF 		bl	exponent
+ 214              	.LVL26:
+ 215 0010 C0B2     		uxtb	r0, r0
+ 216              	.LVL27:
+ 167:RaceLogica.c  **** 		if ((value & tmpWaarde) == tmpWaarde)
+ 217              		.loc 1 167 0
+ 218 0012 30EA0503 		bics	r3, r0, r5
+ 219 0016 03D1     		bne	.L19
+ 168:RaceLogica.c  **** 		{
+ 169:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 1;
+ 220              		.loc 1 169 0
+ 221 0018 0122     		movs	r2, #1
+ 222 001a 054B     		ldr	r3, .L23
+ 223 001c 1A55     		strb	r2, [r3, r4]
+ 224 001e 02E0     		b	.L20
+ 225              	.L19:
+ 170:RaceLogica.c  **** 		}
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 8
 
 
- 279              	.LBE5:
- 113:RaceLogica.c  ****             return;
- 114:RaceLogica.c  ****         }
- 115:RaceLogica.c  ****     }
- 116:RaceLogica.c  ****     //Zet tweede for loop in commentaar indien de robot met de klok mee rijd
- 117:RaceLogica.c  ****    
- 118:RaceLogica.c  ****         
- 119:RaceLogica.c  ****     if (antiSlipTeller < UINT16_MAX && laatsteKant != 0)
- 280              		.loc 1 119 0 is_stmt 1
- 281 00bc 144B     		ldr	r3, .L29+4
- 282              	.LVL31:
- 283 00be 5B88     		ldrh	r3, [r3, #2]
- 284 00c0 4FF6FF72 		movw	r2, #65535
- 285 00c4 9342     		cmp	r3, r2
- 286 00c6 05D0     		beq	.L27
- 287              		.loc 1 119 0 is_stmt 0 discriminator 1
- 288 00c8 114A     		ldr	r2, .L29+4
- 289 00ca 1279     		ldrb	r2, [r2, #4]	@ zero_extendqisi2
- 290 00cc 12B1     		cbz	r2, .L27
- 120:RaceLogica.c  ****     {
- 121:RaceLogica.c  ****         antiSlipTeller++;
- 291              		.loc 1 121 0 is_stmt 1
- 292 00ce 0133     		adds	r3, r3, #1
- 293 00d0 0F4A     		ldr	r2, .L29+4
- 294 00d2 5380     		strh	r3, [r2, #2]	@ movhi
- 295              	.L27:
- 122:RaceLogica.c  ****     }   
- 123:RaceLogica.c  ****     if ( antiSlipTeller > 300 && laatsteKant != 0)
- 296              		.loc 1 123 0
- 297 00d4 0E4B     		ldr	r3, .L29+4
- 298 00d6 5B88     		ldrh	r3, [r3, #2]
- 299 00d8 B3F5967F 		cmp	r3, #300
- 300 00dc 15D9     		bls	.L9
- 301              		.loc 1 123 0 is_stmt 0 discriminator 1
- 302 00de 0C4B     		ldr	r3, .L29+4
- 303 00e0 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 304 00e2 93B1     		cbz	r3, .L9
- 124:RaceLogica.c  ****     {
- 125:RaceLogica.c  ****         if (laatsteKant == 100)
- 305              		.loc 1 125 0 is_stmt 1
- 306 00e4 642B     		cmp	r3, #100
- 307 00e6 07D1     		bne	.L28
- 126:RaceLogica.c  ****         {
- 127:RaceLogica.c  ****             if (pwmMotorLinks < 255) pwmMotorLinks = pwmMotorLinks + 2;
- 308              		.loc 1 127 0
- 309 00e8 0C4B     		ldr	r3, .L29+16
- 310 00ea 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 311 00ec FF2B     		cmp	r3, #255
- 312 00ee 0CD0     		beq	.L9
- 313              		.loc 1 127 0 is_stmt 0 discriminator 1
- 314 00f0 0233     		adds	r3, r3, #2
- 315 00f2 0A4A     		ldr	r2, .L29+16
- 316 00f4 1370     		strb	r3, [r2]
- 317 00f6 7047     		bx	lr
- 318              	.L28:
- 128:RaceLogica.c  ****         }
- 129:RaceLogica.c  ****         
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 9
-
-
- 130:RaceLogica.c  ****         
- 131:RaceLogica.c  ****         else if (laatsteKant == 200) 
- 319              		.loc 1 131 0 is_stmt 1
- 320 00f8 C82B     		cmp	r3, #200
- 321 00fa 06D1     		bne	.L9
- 132:RaceLogica.c  ****         {
- 133:RaceLogica.c  ****             if (pwmMotorRechts < 255) pwmMotorRechts = pwmMotorRechts + 2;
- 322              		.loc 1 133 0
- 323 00fc 064B     		ldr	r3, .L29+12
- 324 00fe 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 325 0100 FF2B     		cmp	r3, #255
- 326 0102 02D0     		beq	.L9
- 327              		.loc 1 133 0 is_stmt 0 discriminator 1
- 328 0104 0233     		adds	r3, r3, #2
- 329 0106 044A     		ldr	r2, .L29+12
- 330 0108 1370     		strb	r3, [r2]
- 331              	.L9:
- 332 010a 7047     		bx	lr
- 333              	.L30:
- 334              		.align	2
- 335              	.L29:
- 336 010c 00000000 		.word	IRDigitaleWaarden
- 337 0110 00000000 		.word	.LANCHOR0
- 338 0114 00000000 		.word	.LANCHOR1
- 339 0118 00000000 		.word	pwmMotorRechts
- 340 011c 00000000 		.word	pwmMotorLinks
- 341              		.cfi_endproc
- 342              	.LFE66:
- 343              		.size	stuurMotorenBijRNL, .-stuurMotorenBijRNL
- 344              		.section	.text.stuurMotorenBijLNR,"ax",%progbits
- 345              		.align	2
- 346              		.global	stuurMotorenBijLNR
- 347              		.thumb
- 348              		.thumb_func
- 349              		.type	stuurMotorenBijLNR, %function
- 350              	stuurMotorenBijLNR:
- 351              	.LFB67:
- 134:RaceLogica.c  ****         }
- 135:RaceLogica.c  ****     }
- 136:RaceLogica.c  **** }
- 137:RaceLogica.c  **** 
- 138:RaceLogica.c  **** void stuurMotorenBijLNR(void)
- 139:RaceLogica.c  **** { 
- 352              		.loc 1 139 0 is_stmt 1
- 353              		.cfi_startproc
- 354              		@ args = 0, pretend = 0, frame = 0
- 355              		@ frame_needed = 0, uses_anonymous_args = 0
- 356              		@ link register save eliminated.
- 357              	.LVL32:
- 358              	.LBB6:
- 140:RaceLogica.c  ****     //Zet de eerste for loop in commentaar indien de robot met de klok mee rijd
- 141:RaceLogica.c  ****     for(int i = 0; i < 4; i++) //for(int i = 3; i >= 0; i--) //linkse kant van de sensoren afgaan
- 359              		.loc 1 141 0
- 360 0000 0023     		movs	r3, #0
- 361 0002 29E0     		b	.L32
- 362              	.LVL33:
- 363              	.L40:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 10
-
-
- 142:RaceLogica.c  **** 	{
- 143:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1) //indien er een zwarte lijn is op de sensor
- 364              		.loc 1 143 0
- 365 0004 414A     		ldr	r2, .L51
- 366 0006 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 367 0008 012A     		cmp	r2, #1
- 368 000a 24D1     		bne	.L33
- 144:RaceLogica.c  ****         {
- 145:RaceLogica.c  ****             antiSlipTeller = 0;
- 369              		.loc 1 145 0
- 370 000c 0021     		movs	r1, #0
- 371 000e 404A     		ldr	r2, .L51+4
- 372 0010 5180     		strh	r1, [r2, #2]	@ movhi
- 146:RaceLogica.c  ****             if (i == 0) laatsteKant = 100;
- 373              		.loc 1 146 0
- 374 0012 13B9     		cbnz	r3, .L34
- 375              		.loc 1 146 0 is_stmt 0 discriminator 1
- 376 0014 6421     		movs	r1, #100
- 377 0016 1171     		strb	r1, [r2, #4]
- 378 0018 02E0     		b	.L35
- 379              	.L34:
- 147:RaceLogica.c  ****             else laatsteKant = 0;
- 380              		.loc 1 147 0 is_stmt 1
- 381 001a 0021     		movs	r1, #0
- 382 001c 3C4A     		ldr	r2, .L51+4
- 383 001e 1171     		strb	r1, [r2, #4]
- 384              	.L35:
- 148:RaceLogica.c  ****             
- 149:RaceLogica.c  ****             pwmMotorLinks = IRsensorGewicht[i];
- 385              		.loc 1 149 0
- 386 0020 3C4A     		ldr	r2, .L51+8
- 387 0022 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
- 388 0024 3C4A     		ldr	r2, .L51+12
- 389 0026 1170     		strb	r1, [r2]
- 150:RaceLogica.c  ****            
- 151:RaceLogica.c  ****             if (i == 0) pwmMotorRechts = 255;
- 390              		.loc 1 151 0
- 391 0028 1BB9     		cbnz	r3, .L36
- 392              		.loc 1 151 0 is_stmt 0 discriminator 1
- 393 002a FF22     		movs	r2, #255
- 394 002c 3B4B     		ldr	r3, .L51+16
- 395              	.LVL34:
- 396 002e 1A70     		strb	r2, [r3]
- 397 0030 7047     		bx	lr
- 398              	.LVL35:
- 399              	.L36:
- 152:RaceLogica.c  ****             else if (i == 1) pwmMotorRechts = 240;
- 400              		.loc 1 152 0 is_stmt 1
- 401 0032 012B     		cmp	r3, #1
- 402 0034 03D1     		bne	.L38
- 403              		.loc 1 152 0 is_stmt 0 discriminator 1
- 404 0036 F022     		movs	r2, #240
- 405 0038 384B     		ldr	r3, .L51+16
- 406              	.LVL36:
- 407 003a 1A70     		strb	r2, [r3]
- 408 003c 7047     		bx	lr
- 409              	.LVL37:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 11
-
-
- 410              	.L38:
- 153:RaceLogica.c  ****             else if (i == 2) pwmMotorRechts = 225;
- 411              		.loc 1 153 0 is_stmt 1
- 412 003e 022B     		cmp	r3, #2
- 413 0040 03D1     		bne	.L39
- 414              		.loc 1 153 0 is_stmt 0 discriminator 1
- 415 0042 E122     		movs	r2, #225
- 416 0044 354B     		ldr	r3, .L51+16
- 417              	.LVL38:
- 418 0046 1A70     		strb	r2, [r3]
- 419 0048 7047     		bx	lr
- 420              	.LVL39:
- 421              	.L39:
- 154:RaceLogica.c  ****             else if (i == 3) pwmMotorRechts = 255;//IRsensorGewicht[i];
- 422              		.loc 1 154 0 is_stmt 1
- 423 004a 032B     		cmp	r3, #3
- 424 004c 5DD1     		bne	.L31
- 425              		.loc 1 154 0 is_stmt 0 discriminator 1
- 426 004e FF22     		movs	r2, #255
- 427 0050 324B     		ldr	r3, .L51+16
- 428              	.LVL40:
- 429 0052 1A70     		strb	r2, [r3]
- 430 0054 7047     		bx	lr
- 431              	.LVL41:
- 432              	.L33:
- 141:RaceLogica.c  **** 	{
- 433              		.loc 1 141 0 is_stmt 1 discriminator 2
- 434 0056 0133     		adds	r3, r3, #1
- 435              	.LVL42:
- 436              	.L32:
- 141:RaceLogica.c  **** 	{
- 437              		.loc 1 141 0 is_stmt 0 discriminator 1
- 438 0058 032B     		cmp	r3, #3
- 439 005a D3DD     		ble	.L40
- 440 005c 0423     		movs	r3, #4
- 441              	.LVL43:
- 442 005e 2BE0     		b	.L41
- 443              	.LVL44:
- 444              	.L48:
- 445              	.LBE6:
- 446              	.LBB7:
- 155:RaceLogica.c  ****             return;
- 156:RaceLogica.c  ****         }
- 157:RaceLogica.c  ****     }
- 158:RaceLogica.c  ****     //Zet tweede for loop in commentaar indien de robot met de klok mee rijd
- 159:RaceLogica.c  ****     /*for(int i = 7; i > 3; i--)*/ for(int i = 4; i <= 7; i++)
- 160:RaceLogica.c  **** 	{
- 161:RaceLogica.c  ****         if (IRDigitaleWaarden[i] == 1)
- 447              		.loc 1 161 0 is_stmt 1
- 448 0060 2A4A     		ldr	r2, .L51
- 449 0062 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 450 0064 012A     		cmp	r2, #1
- 451 0066 26D1     		bne	.L42
- 162:RaceLogica.c  ****         {
- 163:RaceLogica.c  ****             antiSlipTeller = 0;
- 452              		.loc 1 163 0
- 453 0068 0021     		movs	r1, #0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 12
-
-
- 454 006a 294A     		ldr	r2, .L51+4
- 455 006c 5180     		strh	r1, [r2, #2]	@ movhi
- 164:RaceLogica.c  ****             if (i == 7) laatsteKant = 200;
- 456              		.loc 1 164 0
- 457 006e 072B     		cmp	r3, #7
- 458 0070 02D1     		bne	.L43
- 459              		.loc 1 164 0 is_stmt 0 discriminator 1
- 460 0072 C821     		movs	r1, #200
- 461 0074 1171     		strb	r1, [r2, #4]
- 462 0076 02E0     		b	.L44
- 463              	.L43:
- 165:RaceLogica.c  ****             else laatsteKant = 0;
- 464              		.loc 1 165 0 is_stmt 1
- 465 0078 0021     		movs	r1, #0
- 466 007a 254A     		ldr	r2, .L51+4
- 467 007c 1171     		strb	r1, [r2, #4]
- 468              	.L44:
- 166:RaceLogica.c  ****             
- 167:RaceLogica.c  ****             pwmMotorRechts = IRsensorGewicht[i];
- 469              		.loc 1 167 0
- 470 007e 254A     		ldr	r2, .L51+8
- 471 0080 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
- 472 0082 264A     		ldr	r2, .L51+16
- 473 0084 1170     		strb	r1, [r2]
- 168:RaceLogica.c  ****             
- 169:RaceLogica.c  ****             if (i == 7) pwmMotorLinks = 255;
- 474              		.loc 1 169 0
- 475 0086 072B     		cmp	r3, #7
- 476 0088 03D1     		bne	.L45
- 477              		.loc 1 169 0 is_stmt 0 discriminator 1
- 478 008a FF22     		movs	r2, #255
- 479 008c 224B     		ldr	r3, .L51+12
- 480              	.LVL45:
- 481 008e 1A70     		strb	r2, [r3]
- 482 0090 7047     		bx	lr
- 483              	.LVL46:
- 484              	.L45:
- 170:RaceLogica.c  ****             else if (i == 6) pwmMotorLinks = 240;
- 485              		.loc 1 170 0 is_stmt 1
- 486 0092 062B     		cmp	r3, #6
- 487 0094 03D1     		bne	.L46
- 488              		.loc 1 170 0 is_stmt 0 discriminator 1
- 489 0096 F022     		movs	r2, #240
- 490 0098 1F4B     		ldr	r3, .L51+12
- 491              	.LVL47:
- 492 009a 1A70     		strb	r2, [r3]
- 493 009c 7047     		bx	lr
- 494              	.LVL48:
- 495              	.L46:
- 171:RaceLogica.c  ****             else if (i == 5) pwmMotorLinks = 225;
- 496              		.loc 1 171 0 is_stmt 1
- 497 009e 052B     		cmp	r3, #5
- 498 00a0 03D1     		bne	.L47
- 499              		.loc 1 171 0 is_stmt 0 discriminator 1
- 500 00a2 E122     		movs	r2, #225
- 501 00a4 1C4B     		ldr	r3, .L51+12
- 502              	.LVL49:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 13
-
-
- 503 00a6 1A70     		strb	r2, [r3]
- 504 00a8 7047     		bx	lr
- 505              	.LVL50:
- 506              	.L47:
- 172:RaceLogica.c  ****             else if (i == 4) pwmMotorLinks = 255;
- 507              		.loc 1 172 0 is_stmt 1
- 508 00aa 042B     		cmp	r3, #4
- 509 00ac 2DD1     		bne	.L31
- 510              		.loc 1 172 0 is_stmt 0 discriminator 1
- 511 00ae FF22     		movs	r2, #255
- 512 00b0 194B     		ldr	r3, .L51+12
- 513              	.LVL51:
- 514 00b2 1A70     		strb	r2, [r3]
- 515 00b4 7047     		bx	lr
- 516              	.LVL52:
- 517              	.L42:
- 159:RaceLogica.c  **** 	{
- 518              		.loc 1 159 0 is_stmt 1 discriminator 2
- 519 00b6 0133     		adds	r3, r3, #1
- 520              	.LVL53:
- 521              	.L41:
- 159:RaceLogica.c  **** 	{
- 522              		.loc 1 159 0 is_stmt 0 discriminator 1
- 523 00b8 072B     		cmp	r3, #7
- 524 00ba D1DD     		ble	.L48
- 525              	.LBE7:
- 173:RaceLogica.c  ****             return;
- 174:RaceLogica.c  ****         }
- 175:RaceLogica.c  ****     }
- 176:RaceLogica.c  ****         
- 177:RaceLogica.c  ****     if (antiSlipTeller < UINT16_MAX && laatsteKant != 0)
- 526              		.loc 1 177 0 is_stmt 1
- 527 00bc 144B     		ldr	r3, .L51+4
- 528              	.LVL54:
- 529 00be 5B88     		ldrh	r3, [r3, #2]
- 530 00c0 4FF6FF72 		movw	r2, #65535
- 531 00c4 9342     		cmp	r3, r2
- 532 00c6 05D0     		beq	.L49
- 533              		.loc 1 177 0 is_stmt 0 discriminator 1
- 534 00c8 114A     		ldr	r2, .L51+4
- 535 00ca 1279     		ldrb	r2, [r2, #4]	@ zero_extendqisi2
- 536 00cc 12B1     		cbz	r2, .L49
- 178:RaceLogica.c  ****     {
- 179:RaceLogica.c  ****         antiSlipTeller++;
- 537              		.loc 1 179 0 is_stmt 1
- 538 00ce 0133     		adds	r3, r3, #1
- 539 00d0 0F4A     		ldr	r2, .L51+4
- 540 00d2 5380     		strh	r3, [r2, #2]	@ movhi
- 541              	.L49:
- 180:RaceLogica.c  ****     }   
- 181:RaceLogica.c  ****     if ( antiSlipTeller > 300 && laatsteKant != 0)
- 542              		.loc 1 181 0
- 543 00d4 0E4B     		ldr	r3, .L51+4
- 544 00d6 5B88     		ldrh	r3, [r3, #2]
- 545 00d8 B3F5967F 		cmp	r3, #300
- 546 00dc 15D9     		bls	.L31
- 547              		.loc 1 181 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 14
-
-
- 548 00de 0C4B     		ldr	r3, .L51+4
- 549 00e0 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 550 00e2 93B1     		cbz	r3, .L31
- 182:RaceLogica.c  ****     {
- 183:RaceLogica.c  ****         if (laatsteKant == 100)
- 551              		.loc 1 183 0 is_stmt 1
- 552 00e4 642B     		cmp	r3, #100
- 553 00e6 07D1     		bne	.L50
- 184:RaceLogica.c  ****         {
- 185:RaceLogica.c  ****             if (pwmMotorLinks < 255) pwmMotorLinks = pwmMotorLinks + 2;
- 554              		.loc 1 185 0
- 555 00e8 0B4B     		ldr	r3, .L51+12
- 556 00ea 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 557 00ec FF2B     		cmp	r3, #255
- 558 00ee 0CD0     		beq	.L31
- 559              		.loc 1 185 0 is_stmt 0 discriminator 1
- 560 00f0 0233     		adds	r3, r3, #2
- 561 00f2 094A     		ldr	r2, .L51+12
- 562 00f4 1370     		strb	r3, [r2]
- 563 00f6 7047     		bx	lr
- 564              	.L50:
- 186:RaceLogica.c  ****         }
- 187:RaceLogica.c  ****         
- 188:RaceLogica.c  ****         
- 189:RaceLogica.c  ****         else if (laatsteKant == 200) 
- 565              		.loc 1 189 0 is_stmt 1
- 566 00f8 C82B     		cmp	r3, #200
- 567 00fa 06D1     		bne	.L31
- 190:RaceLogica.c  ****         {
- 191:RaceLogica.c  ****             if (pwmMotorRechts < 255) pwmMotorRechts = pwmMotorRechts + 2;
- 568              		.loc 1 191 0
- 569 00fc 074B     		ldr	r3, .L51+16
- 570 00fe 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 571 0100 FF2B     		cmp	r3, #255
- 572 0102 02D0     		beq	.L31
- 573              		.loc 1 191 0 is_stmt 0 discriminator 1
- 574 0104 0233     		adds	r3, r3, #2
- 575 0106 054A     		ldr	r2, .L51+16
- 576 0108 1370     		strb	r3, [r2]
- 577              	.L31:
- 578 010a 7047     		bx	lr
- 579              	.L52:
- 580              		.align	2
- 581              	.L51:
- 582 010c 00000000 		.word	IRDigitaleWaarden
- 583 0110 00000000 		.word	.LANCHOR0
- 584 0114 00000000 		.word	.LANCHOR1
- 585 0118 00000000 		.word	pwmMotorLinks
- 586 011c 00000000 		.word	pwmMotorRechts
- 587              		.cfi_endproc
- 588              	.LFE67:
- 589              		.size	stuurMotorenBijLNR, .-stuurMotorenBijLNR
- 590              		.section	.text.LinksVsRechts,"ax",%progbits
- 591              		.align	2
- 592              		.global	LinksVsRechts
- 593              		.thumb
- 594              		.thumb_func
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 15
-
-
- 595              		.type	LinksVsRechts, %function
- 596              	LinksVsRechts:
- 597              	.LFB64:
-  42:RaceLogica.c  ****     uint8 links = 0;
- 598              		.loc 1 42 0 is_stmt 1
- 599              		.cfi_startproc
- 600              		@ args = 0, pretend = 0, frame = 0
- 601              		@ frame_needed = 0, uses_anonymous_args = 0
- 602 0000 08B5     		push	{r3, lr}
- 603              		.cfi_def_cfa_offset 8
- 604              		.cfi_offset 3, -8
- 605              		.cfi_offset 14, -4
- 606              	.LVL55:
- 607              	.LBB8:
-  45:RaceLogica.c  ****     {
- 608              		.loc 1 45 0
- 609 0002 0023     		movs	r3, #0
- 610              	.LBE8:
-  44:RaceLogica.c  ****     for (int i = 0; i < 8; i++)
- 611              		.loc 1 44 0
- 612 0004 1846     		mov	r0, r3
-  43:RaceLogica.c  ****     uint8 rechts = 0;
- 613              		.loc 1 43 0
- 614 0006 1946     		mov	r1, r3
- 615              	.LBB9:
-  45:RaceLogica.c  ****     {
- 616              		.loc 1 45 0
- 617 0008 0EE0     		b	.L54
- 618              	.LVL56:
- 619              	.L57:
-  47:RaceLogica.c  ****         {
- 620              		.loc 1 47 0
- 621 000a 0D4A     		ldr	r2, .L61
- 622 000c D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 623 000e 012A     		cmp	r2, #1
- 624 0010 09D1     		bne	.L55
-  49:RaceLogica.c  ****             else if (i >= 4 && i <= 7)rechts++;
- 625              		.loc 1 49 0
- 626 0012 032B     		cmp	r3, #3
- 627 0014 02D8     		bhi	.L56
-  49:RaceLogica.c  ****             else if (i >= 4 && i <= 7)rechts++;
- 628              		.loc 1 49 0 is_stmt 0 discriminator 1
- 629 0016 0131     		adds	r1, r1, #1
- 630              	.LVL57:
- 631 0018 C9B2     		uxtb	r1, r1
- 632              	.LVL58:
- 633 001a 04E0     		b	.L55
- 634              	.L56:
-  50:RaceLogica.c  ****         }
- 635              		.loc 1 50 0 is_stmt 1
- 636 001c 1A1F     		subs	r2, r3, #4
- 637 001e 032A     		cmp	r2, #3
- 638 0020 01D8     		bhi	.L55
-  50:RaceLogica.c  ****         }
- 639              		.loc 1 50 0 is_stmt 0 discriminator 1
- 640 0022 0130     		adds	r0, r0, #1
- 641              	.LVL59:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 16
-
-
- 642 0024 C0B2     		uxtb	r0, r0
- 643              	.LVL60:
- 644              	.L55:
-  45:RaceLogica.c  ****     {
- 645              		.loc 1 45 0 is_stmt 1 discriminator 2
- 646 0026 0133     		adds	r3, r3, #1
- 647              	.LVL61:
- 648              	.L54:
-  45:RaceLogica.c  ****     {
- 649              		.loc 1 45 0 is_stmt 0 discriminator 1
- 650 0028 072B     		cmp	r3, #7
- 651 002a EEDD     		ble	.L57
- 652              	.LBE9:
-  53:RaceLogica.c  ****     else if (rechts >= links) stuurMotorenBijRNL();
- 653              		.loc 1 53 0 is_stmt 1
- 654 002c 8142     		cmp	r1, r0
- 655 002e 02D9     		bls	.L58
-  53:RaceLogica.c  ****     else if (rechts >= links) stuurMotorenBijRNL();
- 656              		.loc 1 53 0 is_stmt 0 discriminator 1
- 657 0030 FFF7FEFF 		bl	stuurMotorenBijLNR
- 658              	.LVL62:
- 659 0034 08BD     		pop	{r3, pc}
- 660              	.LVL63:
- 661              	.L58:
-  54:RaceLogica.c  **** }
- 662              		.loc 1 54 0 is_stmt 1
- 663 0036 8142     		cmp	r1, r0
- 664 0038 01D8     		bhi	.L53
-  54:RaceLogica.c  **** }
- 665              		.loc 1 54 0 is_stmt 0 discriminator 1
- 666 003a FFF7FEFF 		bl	stuurMotorenBijRNL
- 667              	.LVL64:
- 668              	.L53:
- 669 003e 08BD     		pop	{r3, pc}
- 670              	.L62:
- 671              		.align	2
- 672              	.L61:
- 673 0040 00000000 		.word	IRDigitaleWaarden
- 674              		.cfi_endproc
- 675              	.LFE64:
- 676              		.size	LinksVsRechts, .-LinksVsRechts
- 677              		.section	.text.PlaatsIRWaardenInArray,"ax",%progbits
- 678              		.align	2
- 679              		.global	PlaatsIRWaardenInArray
- 680              		.thumb
- 681              		.thumb_func
- 682              		.type	PlaatsIRWaardenInArray, %function
- 683              	PlaatsIRWaardenInArray:
- 684              	.LFB68:
- 192:RaceLogica.c  ****         }
- 193:RaceLogica.c  ****     }
- 194:RaceLogica.c  **** }
- 195:RaceLogica.c  **** 
- 196:RaceLogica.c  **** 
- 197:RaceLogica.c  **** 
- 198:RaceLogica.c  **** void PlaatsIRWaardenInArray(uint8 value)
- 199:RaceLogica.c  **** {
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 17
-
-
- 685              		.loc 1 199 0 is_stmt 1
- 686              		.cfi_startproc
- 687              		@ args = 0, pretend = 0, frame = 0
- 688              		@ frame_needed = 0, uses_anonymous_args = 0
- 689              	.LVL65:
- 690 0000 38B5     		push	{r3, r4, r5, lr}
- 691              		.cfi_def_cfa_offset 16
- 692              		.cfi_offset 3, -16
- 693              		.cfi_offset 4, -12
- 694              		.cfi_offset 5, -8
- 695              		.cfi_offset 14, -4
- 696 0002 0546     		mov	r5, r0
- 697              	.LVL66:
- 698              	.LBB10:
- 200:RaceLogica.c  ****     for(int i = 0; i < 8; i++)
- 699              		.loc 1 200 0
- 700 0004 0024     		movs	r4, #0
- 701 0006 0FE0     		b	.L64
- 702              	.LVL67:
- 703              	.L67:
- 704              	.LBB11:
- 201:RaceLogica.c  **** 	{
- 202:RaceLogica.c  **** 		uint8 tmpWaarde =  exponent(2,i);
- 705              		.loc 1 202 0
- 706 0008 2146     		mov	r1, r4
- 707 000a 0220     		movs	r0, #2
- 708 000c FFF7FEFF 		bl	exponent
- 709              	.LVL68:
- 710 0010 C0B2     		uxtb	r0, r0
- 711              	.LVL69:
- 203:RaceLogica.c  **** 		if ((value & tmpWaarde) == tmpWaarde)
- 712              		.loc 1 203 0
- 713 0012 30EA0503 		bics	r3, r0, r5
- 714 0016 03D1     		bne	.L65
- 204:RaceLogica.c  **** 		{
- 205:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 1;
- 715              		.loc 1 205 0
- 716 0018 0122     		movs	r2, #1
- 717 001a 054B     		ldr	r3, .L69
- 718 001c 1A55     		strb	r2, [r3, r4]
- 719 001e 02E0     		b	.L66
- 720              	.L65:
- 206:RaceLogica.c  **** 		}
- 207:RaceLogica.c  **** 			else 
- 208:RaceLogica.c  **** 		{
- 209:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 0;
- 721              		.loc 1 209 0
- 722 0020 0022     		movs	r2, #0
- 723 0022 034B     		ldr	r3, .L69
- 724 0024 1A55     		strb	r2, [r3, r4]
- 725              	.L66:
- 726              	.LBE11:
- 200:RaceLogica.c  **** 	{
- 727              		.loc 1 200 0 discriminator 2
- 728 0026 0134     		adds	r4, r4, #1
- 729              	.LVL70:
- 730              	.L64:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 18
-
-
- 200:RaceLogica.c  **** 	{
- 731              		.loc 1 200 0 is_stmt 0 discriminator 1
- 732 0028 072C     		cmp	r4, #7
- 733 002a EDDD     		ble	.L67
- 734              	.LBE10:
- 210:RaceLogica.c  **** 		}  
- 211:RaceLogica.c  **** 	 }  
- 212:RaceLogica.c  **** }
- 735              		.loc 1 212 0 is_stmt 1
- 736 002c 38BD     		pop	{r3, r4, r5, pc}
- 737              	.LVL71:
- 738              	.L70:
- 739 002e 00BF     		.align	2
- 740              	.L69:
- 741 0030 00000000 		.word	IRDigitaleWaarden
- 742              		.cfi_endproc
- 743              	.LFE68:
- 744              		.size	PlaatsIRWaardenInArray, .-PlaatsIRWaardenInArray
- 745              		.section	.text.AnalyseerData,"ax",%progbits
- 746              		.align	2
- 747              		.global	AnalyseerData
- 748              		.thumb
- 749              		.thumb_func
- 750              		.type	AnalyseerData, %function
- 751              	AnalyseerData:
- 752              	.LFB63:
+ 171:RaceLogica.c  **** 			else 
+ 172:RaceLogica.c  **** 		{
+ 173:RaceLogica.c  **** 			IRDigitaleWaarden[i]= 0;
+ 226              		.loc 1 173 0
+ 227 0020 0022     		movs	r2, #0
+ 228 0022 034B     		ldr	r3, .L23
+ 229 0024 1A55     		strb	r2, [r3, r4]
+ 230              	.L20:
+ 231              	.LBE5:
+ 164:RaceLogica.c  **** 	{
+ 232              		.loc 1 164 0 discriminator 2
+ 233 0026 0134     		adds	r4, r4, #1
+ 234              	.LVL28:
+ 235              	.L18:
+ 164:RaceLogica.c  **** 	{
+ 236              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 237 0028 072C     		cmp	r4, #7
+ 238 002a EDDD     		ble	.L21
+ 239              	.LBE4:
+ 174:RaceLogica.c  **** 		}  
+ 175:RaceLogica.c  **** 	 }  
+ 176:RaceLogica.c  **** }
+ 240              		.loc 1 176 0 is_stmt 1
+ 241 002c 38BD     		pop	{r3, r4, r5, pc}
+ 242              	.LVL29:
+ 243              	.L24:
+ 244 002e 00BF     		.align	2
+ 245              	.L23:
+ 246 0030 00000000 		.word	IRDigitaleWaarden
+ 247              		.cfi_endproc
+ 248              	.LFE65:
+ 249              		.size	PlaatsIRWaardenInArray, .-PlaatsIRWaardenInArray
+ 250              		.section	.text.AnalyseerData,"ax",%progbits
+ 251              		.align	2
+ 252              		.global	AnalyseerData
+ 253              		.thumb
+ 254              		.thumb_func
+ 255              		.type	AnalyseerData, %function
+ 256              	AnalyseerData:
+ 257              	.LFB63:
   28:RaceLogica.c  ****     if (((data & 11000000) == 11000000) /*|| ((data & 11100000) == 11100000) || ((data & 11110000) 
- 753              		.loc 1 28 0
- 754              		.cfi_startproc
- 755              		@ args = 0, pretend = 0, frame = 0
- 756              		@ frame_needed = 0, uses_anonymous_args = 0
- 757              	.LVL72:
- 758 0000 08B5     		push	{r3, lr}
- 759              		.cfi_def_cfa_offset 8
- 760              		.cfi_offset 3, -8
- 761              		.cfi_offset 14, -4
+ 258              		.loc 1 28 0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              	.LVL30:
+ 263 0000 08B5     		push	{r3, lr}
+ 264              		.cfi_def_cfa_offset 8
+ 265              		.cfi_offset 3, -8
+ 266              		.cfi_offset 14, -4
   29:RaceLogica.c  ****     else if ((data & 00000011) == 00000011 /*|| ((data & 00000111) == 00000111) || ((data & 0000111
- 762              		.loc 1 29 0
- 763 0002 094B     		ldr	r3, .L76
- 764 0004 8343     		bics	r3, r3, r0
- 765 0006 04D0     		beq	.L73
+ 267              		.loc 1 29 0
+ 268 0002 094B     		ldr	r3, .L30
+ 269 0004 8343     		bics	r3, r3, r0
+ 270 0006 04D0     		beq	.L27
   30:RaceLogica.c  ****     Data = data;
- 766              		.loc 1 30 0
- 767 0008 00F00903 		and	r3, r0, #9
- 768 000c 092B     		cmp	r3, #9
- 769 000e 03D1     		bne	.L72
- 770 0010 01E0     		b	.L74
- 771              	.L73:
-  29:RaceLogica.c  ****     else if ((data & 00000011) == 00000011 /*|| ((data & 00000111) == 00000111) || ((data & 0000111
- 772              		.loc 1 29 0
- 773 0012 8020     		movs	r0, #128
- 774              	.LVL73:
- 775 0014 00E0     		b	.L72
- 776              	.LVL74:
- 777              	.L74:
-  30:RaceLogica.c  ****     Data = data;
- 778              		.loc 1 30 0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 19
+ 271              		.loc 1 30 0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 9
 
 
- 779 0016 0120     		movs	r0, #1
- 780              	.LVL75:
- 781              	.L72:
+ 272 0008 00F00903 		and	r3, r0, #9
+ 273 000c 092B     		cmp	r3, #9
+ 274 000e 03D1     		bne	.L26
+ 275 0010 01E0     		b	.L28
+ 276              	.L27:
+  29:RaceLogica.c  ****     else if ((data & 00000011) == 00000011 /*|| ((data & 00000111) == 00000111) || ((data & 0000111
+ 277              		.loc 1 29 0
+ 278 0012 8020     		movs	r0, #128
+ 279              	.LVL31:
+ 280 0014 00E0     		b	.L26
+ 281              	.LVL32:
+ 282              	.L28:
+  30:RaceLogica.c  ****     Data = data;
+ 283              		.loc 1 30 0
+ 284 0016 0120     		movs	r0, #1
+ 285              	.LVL33:
+ 286              	.L26:
   31:RaceLogica.c  ****     PlaatsIRWaardenInArray(Data);
- 782              		.loc 1 31 0
- 783 0018 044B     		ldr	r3, .L76+4
- 784 001a 1870     		strb	r0, [r3]
-  32:RaceLogica.c  ****     
- 785              		.loc 1 32 0
- 786 001c FFF7FEFF 		bl	PlaatsIRWaardenInArray
- 787              	.LVL76:
-  34:RaceLogica.c  ****     //if (richting == 255) stuurMotorenBijLNR();
- 788              		.loc 1 34 0
- 789 0020 FFF7FEFF 		bl	LinksVsRechts
- 790              	.LVL77:
- 791 0024 08BD     		pop	{r3, pc}
- 792              	.L77:
- 793 0026 00BF     		.align	2
- 794              	.L76:
- 795 0028 C0D8A700 		.word	11000000
- 796 002c 00000000 		.word	Data
- 797              		.cfi_endproc
- 798              	.LFE63:
- 799              		.size	AnalyseerData, .-AnalyseerData
- 800              		.global	antiSlipTeller
- 801              		.global	laatsteKant
- 802              		.comm	boolIsVanLijn,1,1
- 803              		.comm	Data,1,1
- 804              		.global	indexLijn
- 805              		.comm	IRDigitaleWaarden,8,4
- 806              		.global	IRsensorGewicht
- 807              		.comm	boolSelect,1,1
- 808              		.comm	avgUS3,10,4
- 809              		.comm	avgUS2,10,4
- 810              		.comm	avgUS1,10,4
- 811              		.comm	selectUS,1,1
- 812              		.comm	mediaan,2,2
- 813              		.comm	TestGetal,1,1
- 814              		.comm	IRDrempel,1,1
- 815              		.comm	IRWaarden,1,1
- 816              		.comm	richting,1,1
- 817              		.comm	pwmMotorRechts,1,1
- 818              		.comm	pwmMotorLinks,1,1
- 819              		.data
- 820              		.align	2
- 821              		.set	.LANCHOR1,. + 0
- 822              		.type	IRsensorGewicht, %object
- 823              		.size	IRsensorGewicht, 8
- 824              	IRsensorGewicht:
- 825 0000 00       		.byte	0
- 826 0001 B4       		.byte	-76
- 827 0002 DC       		.byte	-36
- 828 0003 FF       		.byte	-1
- 829 0004 FF       		.byte	-1
- 830 0005 DC       		.byte	-36
- 831 0006 B4       		.byte	-76
- 832 0007 00       		.byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 20
+ 287              		.loc 1 31 0
+ 288 0018 044B     		ldr	r3, .L30+4
+ 289 001a 1870     		strb	r0, [r3]
+  32:RaceLogica.c  ****     stuurMotorenBij();
+ 290              		.loc 1 32 0
+ 291 001c FFF7FEFF 		bl	PlaatsIRWaardenInArray
+ 292              	.LVL34:
+  33:RaceLogica.c  ****     
+ 293              		.loc 1 33 0
+ 294 0020 FFF7FEFF 		bl	stuurMotorenBij
+ 295              	.LVL35:
+ 296 0024 08BD     		pop	{r3, pc}
+ 297              	.L31:
+ 298 0026 00BF     		.align	2
+ 299              	.L30:
+ 300 0028 C0D8A700 		.word	11000000
+ 301 002c 00000000 		.word	Data
+ 302              		.cfi_endproc
+ 303              	.LFE63:
+ 304              		.size	AnalyseerData, .-AnalyseerData
+ 305              		.global	antiSlipTeller
+ 306              		.global	laatsteKant
+ 307              		.comm	boolIsVanLijn,1,1
+ 308              		.comm	Data,1,1
+ 309              		.global	indexLijn
+ 310              		.comm	IRDigitaleWaarden,8,4
+ 311              		.global	IRsensorGewicht
+ 312              		.comm	boolSelect,1,1
+ 313              		.comm	avgUS3,10,4
+ 314              		.comm	avgUS2,10,4
+ 315              		.comm	avgUS1,10,4
+ 316              		.comm	selectUS,1,1
+ 317              		.comm	mediaan,2,2
+ 318              		.comm	TestGetal,1,1
+ 319              		.comm	IRDrempel,1,1
+ 320              		.comm	IRWaarden,1,1
+ 321              		.comm	richting,1,1
+ 322              		.comm	pwmMotorRechts,1,1
+ 323              		.comm	pwmMotorLinks,1,1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 10
 
 
- 833              		.bss
- 834              		.align	1
- 835              		.set	.LANCHOR0,. + 0
- 836              		.type	indexLijn, %object
- 837              		.size	indexLijn, 1
- 838              	indexLijn:
- 839 0000 00       		.space	1
- 840 0001 00       		.space	1
- 841              		.type	antiSlipTeller, %object
- 842              		.size	antiSlipTeller, 2
- 843              	antiSlipTeller:
- 844 0002 0000     		.space	2
- 845              		.type	laatsteKant, %object
- 846              		.size	laatsteKant, 1
- 847              	laatsteKant:
- 848 0004 00       		.space	1
- 849              		.text
- 850              	.Letext0:
- 851              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 852              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
- 853              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
- 854              		.file 5 "projectMain.h"
- 855              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
- 856              		.section	.debug_info,"",%progbits
- 857              	.Ldebug_info0:
- 858 0000 11040000 		.4byte	0x411
- 859 0004 0400     		.2byte	0x4
- 860 0006 00000000 		.4byte	.Ldebug_abbrev0
- 861 000a 04       		.byte	0x4
- 862 000b 01       		.uleb128 0x1
- 863 000c B2000000 		.4byte	.LASF50
- 864 0010 0C       		.byte	0xc
- 865 0011 43000000 		.4byte	.LASF51
- 866 0015 13020000 		.4byte	.LASF52
- 867 0019 30000000 		.4byte	.Ldebug_ranges0+0x30
- 868 001d 00000000 		.4byte	0
- 869 0021 00000000 		.4byte	.Ldebug_line0
- 870 0025 02       		.uleb128 0x2
- 871 0026 01       		.byte	0x1
- 872 0027 06       		.byte	0x6
- 873 0028 07020000 		.4byte	.LASF0
- 874 002c 02       		.uleb128 0x2
- 875 002d 01       		.byte	0x1
- 876 002e 08       		.byte	0x8
- 877 002f A4000000 		.4byte	.LASF1
- 878 0033 02       		.uleb128 0x2
- 879 0034 02       		.byte	0x2
- 880 0035 05       		.byte	0x5
- 881 0036 E7020000 		.4byte	.LASF2
- 882 003a 02       		.uleb128 0x2
- 883 003b 02       		.byte	0x2
- 884 003c 07       		.byte	0x7
- 885 003d 76010000 		.4byte	.LASF3
- 886 0041 03       		.uleb128 0x3
- 887 0042 31000000 		.4byte	.LASF9
- 888 0046 02       		.byte	0x2
- 889 0047 3F       		.byte	0x3f
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 21
+ 324              		.data
+ 325              		.align	2
+ 326              		.set	.LANCHOR0,. + 0
+ 327              		.type	IRsensorGewicht, %object
+ 328              		.size	IRsensorGewicht, 8
+ 329              	IRsensorGewicht:
+ 330 0000 00       		.byte	0
+ 331 0001 82       		.byte	-126
+ 332 0002 C8       		.byte	-56
+ 333 0003 FF       		.byte	-1
+ 334 0004 FF       		.byte	-1
+ 335 0005 C8       		.byte	-56
+ 336 0006 82       		.byte	-126
+ 337 0007 00       		.byte	0
+ 338              		.bss
+ 339              		.align	1
+ 340              		.type	antiSlipTeller, %object
+ 341              		.size	antiSlipTeller, 2
+ 342              	antiSlipTeller:
+ 343 0000 0000     		.space	2
+ 344              		.type	laatsteKant, %object
+ 345              		.size	laatsteKant, 1
+ 346              	laatsteKant:
+ 347 0002 00       		.space	1
+ 348              		.type	indexLijn, %object
+ 349              		.size	indexLijn, 1
+ 350              	indexLijn:
+ 351 0003 00       		.space	1
+ 352              		.text
+ 353              	.Letext0:
+ 354              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
+ 355              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
+ 356              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 357              		.file 5 "projectMain.h"
+ 358              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 359              		.section	.debug_info,"",%progbits
+ 360              	.Ldebug_info0:
+ 361 0000 21030000 		.4byte	0x321
+ 362 0004 0400     		.2byte	0x4
+ 363 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 364 000a 04       		.byte	0x4
+ 365 000b 01       		.uleb128 0x1
+ 366 000c 9D000000 		.4byte	.LASF44
+ 367 0010 0C       		.byte	0xc
+ 368 0011 3C000000 		.4byte	.LASF45
+ 369 0015 F7010000 		.4byte	.LASF46
+ 370 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 371 001d 00000000 		.4byte	0
+ 372 0021 00000000 		.4byte	.Ldebug_line0
+ 373 0025 02       		.uleb128 0x2
+ 374 0026 01       		.byte	0x1
+ 375 0027 06       		.byte	0x6
+ 376 0028 DA020000 		.4byte	.LASF0
+ 377 002c 02       		.uleb128 0x2
+ 378 002d 01       		.byte	0x1
+ 379 002e 08       		.byte	0x8
+ 380 002f 8F000000 		.4byte	.LASF1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 11
 
 
- 890 0048 4C000000 		.4byte	0x4c
- 891 004c 02       		.uleb128 0x2
- 892 004d 04       		.byte	0x4
- 893 004e 05       		.byte	0x5
- 894 004f F7020000 		.4byte	.LASF4
- 895 0053 02       		.uleb128 0x2
- 896 0054 04       		.byte	0x4
- 897 0055 07       		.byte	0x7
- 898 0056 59010000 		.4byte	.LASF5
- 899 005a 02       		.uleb128 0x2
- 900 005b 08       		.byte	0x8
- 901 005c 05       		.byte	0x5
- 902 005d 92020000 		.4byte	.LASF6
- 903 0061 02       		.uleb128 0x2
- 904 0062 08       		.byte	0x8
- 905 0063 07       		.byte	0x7
- 906 0064 E6010000 		.4byte	.LASF7
- 907 0068 04       		.uleb128 0x4
- 908 0069 04       		.byte	0x4
- 909 006a 05       		.byte	0x5
- 910 006b 696E7400 		.ascii	"int\000"
- 911 006f 02       		.uleb128 0x2
- 912 0070 04       		.byte	0x4
- 913 0071 07       		.byte	0x7
- 914 0072 C2010000 		.4byte	.LASF8
- 915 0076 03       		.uleb128 0x3
- 916 0077 7A000000 		.4byte	.LASF10
- 917 007b 03       		.byte	0x3
- 918 007c 2C       		.byte	0x2c
- 919 007d 41000000 		.4byte	0x41
- 920 0081 05       		.uleb128 0x5
- 921 0082 F1020000 		.4byte	.LASF11
- 922 0086 04       		.byte	0x4
- 923 0087 9201     		.2byte	0x192
- 924 0089 2C000000 		.4byte	0x2c
- 925 008d 05       		.uleb128 0x5
- 926 008e AC010000 		.4byte	.LASF12
- 927 0092 04       		.byte	0x4
- 928 0093 9301     		.2byte	0x193
- 929 0095 3A000000 		.4byte	0x3a
- 930 0099 02       		.uleb128 0x2
- 931 009a 04       		.byte	0x4
- 932 009b 04       		.byte	0x4
- 933 009c 8B000000 		.4byte	.LASF13
- 934 00a0 02       		.uleb128 0x2
- 935 00a1 08       		.byte	0x8
- 936 00a2 04       		.byte	0x4
- 937 00a3 A0010000 		.4byte	.LASF14
- 938 00a7 02       		.uleb128 0x2
- 939 00a8 01       		.byte	0x1
- 940 00a9 08       		.byte	0x8
- 941 00aa A0020000 		.4byte	.LASF15
- 942 00ae 02       		.uleb128 0x2
- 943 00af 08       		.byte	0x8
- 944 00b0 04       		.byte	0x4
- 945 00b1 13030000 		.4byte	.LASF16
- 946 00b5 02       		.uleb128 0x2
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 22
+ 381 0033 02       		.uleb128 0x2
+ 382 0034 02       		.byte	0x2
+ 383 0035 05       		.byte	0x5
+ 384 0036 B5020000 		.4byte	.LASF2
+ 385 003a 02       		.uleb128 0x2
+ 386 003b 02       		.byte	0x2
+ 387 003c 07       		.byte	0x7
+ 388 003d 56010000 		.4byte	.LASF3
+ 389 0041 03       		.uleb128 0x3
+ 390 0042 2A000000 		.4byte	.LASF9
+ 391 0046 02       		.byte	0x2
+ 392 0047 3F       		.byte	0x3f
+ 393 0048 4C000000 		.4byte	0x4c
+ 394 004c 02       		.uleb128 0x2
+ 395 004d 04       		.byte	0x4
+ 396 004e 05       		.byte	0x5
+ 397 004f C5020000 		.4byte	.LASF4
+ 398 0053 02       		.uleb128 0x2
+ 399 0054 04       		.byte	0x4
+ 400 0055 07       		.byte	0x7
+ 401 0056 44010000 		.4byte	.LASF5
+ 402 005a 02       		.uleb128 0x2
+ 403 005b 08       		.byte	0x8
+ 404 005c 05       		.byte	0x5
+ 405 005d 76020000 		.4byte	.LASF6
+ 406 0061 02       		.uleb128 0x2
+ 407 0062 08       		.byte	0x8
+ 408 0063 07       		.byte	0x7
+ 409 0064 D6010000 		.4byte	.LASF7
+ 410 0068 04       		.uleb128 0x4
+ 411 0069 04       		.byte	0x4
+ 412 006a 05       		.byte	0x5
+ 413 006b 696E7400 		.ascii	"int\000"
+ 414 006f 02       		.uleb128 0x2
+ 415 0070 04       		.byte	0x4
+ 416 0071 07       		.byte	0x7
+ 417 0072 A2010000 		.4byte	.LASF8
+ 418 0076 03       		.uleb128 0x3
+ 419 0077 73000000 		.4byte	.LASF10
+ 420 007b 03       		.byte	0x3
+ 421 007c 2C       		.byte	0x2c
+ 422 007d 41000000 		.4byte	0x41
+ 423 0081 05       		.uleb128 0x5
+ 424 0082 BF020000 		.4byte	.LASF11
+ 425 0086 04       		.byte	0x4
+ 426 0087 9201     		.2byte	0x192
+ 427 0089 2C000000 		.4byte	0x2c
+ 428 008d 05       		.uleb128 0x5
+ 429 008e 8C010000 		.4byte	.LASF12
+ 430 0092 04       		.byte	0x4
+ 431 0093 9301     		.2byte	0x193
+ 432 0095 3A000000 		.4byte	0x3a
+ 433 0099 02       		.uleb128 0x2
+ 434 009a 04       		.byte	0x4
+ 435 009b 04       		.byte	0x4
+ 436 009c 84000000 		.4byte	.LASF13
+ 437 00a0 02       		.uleb128 0x2
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 12
 
 
- 947 00b6 04       		.byte	0x4
- 948 00b7 07       		.byte	0x7
- 949 00b8 89020000 		.4byte	.LASF17
- 950 00bc 06       		.uleb128 0x6
- 951 00bd BE020000 		.4byte	.LASF20
- 952 00c1 01       		.byte	0x1
- 953 00c2 39       		.byte	0x39
- 954 00c3 81000000 		.4byte	0x81
- 955 00c7 00000000 		.4byte	.LFB65
- 956 00cb 3C000000 		.4byte	.LFE65-.LFB65
- 957 00cf 01       		.uleb128 0x1
- 958 00d0 9C       		.byte	0x9c
- 959 00d1 07010000 		.4byte	0x107
- 960 00d5 07       		.uleb128 0x7
- 961 00d6 0E000000 		.4byte	.LASF18
- 962 00da 01       		.byte	0x1
- 963 00db 3B       		.byte	0x3b
- 964 00dc 81000000 		.4byte	0x81
- 965 00e0 00000000 		.4byte	.LLST0
- 966 00e4 07       		.uleb128 0x7
- 967 00e5 6B010000 		.4byte	.LASF19
- 968 00e9 01       		.byte	0x1
- 969 00ea 3C       		.byte	0x3c
- 970 00eb 81000000 		.4byte	0x81
- 971 00ef 41000000 		.4byte	.LLST1
- 972 00f3 08       		.uleb128 0x8
- 973 00f4 00000000 		.4byte	.Ldebug_ranges0+0
- 974 00f8 09       		.uleb128 0x9
- 975 00f9 6900     		.ascii	"i\000"
- 976 00fb 01       		.byte	0x1
- 977 00fc 3D       		.byte	0x3d
- 978 00fd 68000000 		.4byte	0x68
- 979 0101 81000000 		.4byte	.LLST2
- 980 0105 00       		.byte	0
- 981 0106 00       		.byte	0
- 982 0107 0A       		.uleb128 0xa
- 983 0108 1F030000 		.4byte	.LASF21
- 984 010c 01       		.byte	0x1
- 985 010d 4E       		.byte	0x4e
- 986 010e 00000000 		.4byte	.LFB66
- 987 0112 20010000 		.4byte	.LFE66-.LFB66
- 988 0116 01       		.uleb128 0x1
- 989 0117 9C       		.byte	0x9c
- 990 0118 4F010000 		.4byte	0x14f
- 991 011c 0B       		.uleb128 0xb
- 992 011d 00000000 		.4byte	.LBB4
- 993 0121 64000000 		.4byte	.LBE4-.LBB4
- 994 0125 37010000 		.4byte	0x137
- 995 0129 09       		.uleb128 0x9
- 996 012a 6900     		.ascii	"i\000"
- 997 012c 01       		.byte	0x1
- 998 012d 51       		.byte	0x51
- 999 012e 68000000 		.4byte	0x68
- 1000 0132 A0000000 		.4byte	.LLST3
- 1001 0136 00       		.byte	0
- 1002 0137 0C       		.uleb128 0xc
- 1003 0138 64000000 		.4byte	.LBB5
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 23
+ 438 00a1 08       		.byte	0x8
+ 439 00a2 04       		.byte	0x4
+ 440 00a3 80010000 		.4byte	.LASF14
+ 441 00a7 02       		.uleb128 0x2
+ 442 00a8 01       		.byte	0x1
+ 443 00a9 08       		.byte	0x8
+ 444 00aa 84020000 		.4byte	.LASF15
+ 445 00ae 02       		.uleb128 0x2
+ 446 00af 08       		.byte	0x8
+ 447 00b0 04       		.byte	0x4
+ 448 00b1 CE020000 		.4byte	.LASF16
+ 449 00b5 02       		.uleb128 0x2
+ 450 00b6 04       		.byte	0x4
+ 451 00b7 07       		.byte	0x7
+ 452 00b8 6D020000 		.4byte	.LASF17
+ 453 00bc 06       		.uleb128 0x6
+ 454 00bd AF010000 		.4byte	.LASF18
+ 455 00c1 01       		.byte	0x1
+ 456 00c2 4F       		.byte	0x4f
+ 457 00c3 00000000 		.4byte	.LFB64
+ 458 00c7 A4000000 		.4byte	.LFE64-.LFB64
+ 459 00cb 01       		.uleb128 0x1
+ 460 00cc 9C       		.byte	0x9c
+ 461 00cd 04010000 		.4byte	0x104
+ 462 00d1 07       		.uleb128 0x7
+ 463 00d2 00000000 		.4byte	.LBB2
+ 464 00d6 4E000000 		.4byte	.LBE2-.LBB2
+ 465 00da EC000000 		.4byte	0xec
+ 466 00de 08       		.uleb128 0x8
+ 467 00df 6900     		.ascii	"i\000"
+ 468 00e1 01       		.byte	0x1
+ 469 00e2 52       		.byte	0x52
+ 470 00e3 68000000 		.4byte	0x68
+ 471 00e7 00000000 		.4byte	.LLST0
+ 472 00eb 00       		.byte	0
+ 473 00ec 09       		.uleb128 0x9
+ 474 00ed 4E000000 		.4byte	.LBB3
+ 475 00f1 56000000 		.4byte	.LBE3-.LBB3
+ 476 00f5 08       		.uleb128 0x8
+ 477 00f6 6900     		.ascii	"i\000"
+ 478 00f8 01       		.byte	0x1
+ 479 00f9 5F       		.byte	0x5f
+ 480 00fa 68000000 		.4byte	0x68
+ 481 00fe 4B000000 		.4byte	.LLST1
+ 482 0102 00       		.byte	0
+ 483 0103 00       		.byte	0
+ 484 0104 06       		.uleb128 0x6
+ 485 0105 BF010000 		.4byte	.LASF19
+ 486 0109 01       		.byte	0x1
+ 487 010a A2       		.byte	0xa2
+ 488 010b 00000000 		.4byte	.LFB65
+ 489 010f 34000000 		.4byte	.LFE65-.LFB65
+ 490 0113 01       		.uleb128 0x1
+ 491 0114 9C       		.byte	0x9c
+ 492 0115 6E010000 		.4byte	0x16e
+ 493 0119 0A       		.uleb128 0xa
+ 494 011a 24000000 		.4byte	.LASF22
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 13
 
 
- 1004 013c 58000000 		.4byte	.LBE5-.LBB5
- 1005 0140 09       		.uleb128 0x9
- 1006 0141 6900     		.ascii	"i\000"
- 1007 0143 01       		.byte	0x1
- 1008 0144 63       		.byte	0x63
- 1009 0145 68000000 		.4byte	0x68
- 1010 0149 EB000000 		.4byte	.LLST4
- 1011 014d 00       		.byte	0
- 1012 014e 00       		.byte	0
- 1013 014f 0A       		.uleb128 0xa
- 1014 0150 00030000 		.4byte	.LASF22
- 1015 0154 01       		.byte	0x1
- 1016 0155 8A       		.byte	0x8a
- 1017 0156 00000000 		.4byte	.LFB67
- 1018 015a 20010000 		.4byte	.LFE67-.LFB67
- 1019 015e 01       		.uleb128 0x1
- 1020 015f 9C       		.byte	0x9c
- 1021 0160 97010000 		.4byte	0x197
- 1022 0164 0B       		.uleb128 0xb
- 1023 0165 00000000 		.4byte	.LBB6
- 1024 0169 60000000 		.4byte	.LBE6-.LBB6
- 1025 016d 7F010000 		.4byte	0x17f
- 1026 0171 09       		.uleb128 0x9
- 1027 0172 6900     		.ascii	"i\000"
- 1028 0174 01       		.byte	0x1
- 1029 0175 8D       		.byte	0x8d
- 1030 0176 68000000 		.4byte	0x68
- 1031 017a 2A010000 		.4byte	.LLST5
- 1032 017e 00       		.byte	0
- 1033 017f 0C       		.uleb128 0xc
- 1034 0180 60000000 		.4byte	.LBB7
- 1035 0184 5C000000 		.4byte	.LBE7-.LBB7
- 1036 0188 09       		.uleb128 0x9
- 1037 0189 6900     		.ascii	"i\000"
- 1038 018b 01       		.byte	0x1
- 1039 018c 9F       		.byte	0x9f
- 1040 018d 68000000 		.4byte	0x68
- 1041 0191 75010000 		.4byte	.LLST6
- 1042 0195 00       		.byte	0
- 1043 0196 00       		.byte	0
- 1044 0197 0D       		.uleb128 0xd
- 1045 0198 96000000 		.4byte	.LASF53
- 1046 019c 01       		.byte	0x1
- 1047 019d 29       		.byte	0x29
- 1048 019e 00000000 		.4byte	.LFB64
- 1049 01a2 44000000 		.4byte	.LFE64-.LFB64
- 1050 01a6 01       		.uleb128 0x1
- 1051 01a7 9C       		.byte	0x9c
- 1052 01a8 F4010000 		.4byte	0x1f4
- 1053 01ac 07       		.uleb128 0x7
- 1054 01ad B8020000 		.4byte	.LASF23
- 1055 01b1 01       		.byte	0x1
- 1056 01b2 2B       		.byte	0x2b
- 1057 01b3 81000000 		.4byte	0x81
- 1058 01b7 B4010000 		.4byte	.LLST7
- 1059 01bb 07       		.uleb128 0x7
- 1060 01bc 32030000 		.4byte	.LASF24
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 24
+ 495 011e 01       		.byte	0x1
+ 496 011f A2       		.byte	0xa2
+ 497 0120 81000000 		.4byte	0x81
+ 498 0124 8A000000 		.4byte	.LLST2
+ 499 0128 09       		.uleb128 0x9
+ 500 0129 04000000 		.4byte	.LBB4
+ 501 012d 28000000 		.4byte	.LBE4-.LBB4
+ 502 0131 08       		.uleb128 0x8
+ 503 0132 6900     		.ascii	"i\000"
+ 504 0134 01       		.byte	0x1
+ 505 0135 A4       		.byte	0xa4
+ 506 0136 68000000 		.4byte	0x68
+ 507 013a AB000000 		.4byte	.LLST3
+ 508 013e 09       		.uleb128 0x9
+ 509 013f 08000000 		.4byte	.LBB5
+ 510 0143 1E000000 		.4byte	.LBE5-.LBB5
+ 511 0147 0B       		.uleb128 0xb
+ 512 0148 92020000 		.4byte	.LASF20
+ 513 014c 01       		.byte	0x1
+ 514 014d A6       		.byte	0xa6
+ 515 014e 81000000 		.4byte	0x81
+ 516 0152 CA000000 		.4byte	.LLST4
+ 517 0156 0C       		.uleb128 0xc
+ 518 0157 10000000 		.4byte	.LVL26
+ 519 015b 19030000 		.4byte	0x319
+ 520 015f 0D       		.uleb128 0xd
+ 521 0160 01       		.uleb128 0x1
+ 522 0161 50       		.byte	0x50
+ 523 0162 01       		.uleb128 0x1
+ 524 0163 32       		.byte	0x32
+ 525 0164 0D       		.uleb128 0xd
+ 526 0165 01       		.uleb128 0x1
+ 527 0166 51       		.byte	0x51
+ 528 0167 02       		.uleb128 0x2
+ 529 0168 74       		.byte	0x74
+ 530 0169 00       		.sleb128 0
+ 531 016a 00       		.byte	0
+ 532 016b 00       		.byte	0
+ 533 016c 00       		.byte	0
+ 534 016d 00       		.byte	0
+ 535 016e 06       		.uleb128 0x6
+ 536 016f 65000000 		.4byte	.LASF21
+ 537 0173 01       		.byte	0x1
+ 538 0174 1B       		.byte	0x1b
+ 539 0175 00000000 		.4byte	.LFB63
+ 540 0179 30000000 		.4byte	.LFE63-.LFB63
+ 541 017d 01       		.uleb128 0x1
+ 542 017e 9C       		.byte	0x9c
+ 543 017f A5010000 		.4byte	0x1a5
+ 544 0183 0A       		.uleb128 0xa
+ 545 0184 8A000000 		.4byte	.LASF23
+ 546 0188 01       		.byte	0x1
+ 547 0189 1B       		.byte	0x1b
+ 548 018a 81000000 		.4byte	0x81
+ 549 018e DD000000 		.4byte	.LLST5
+ 550 0192 0E       		.uleb128 0xe
+ 551 0193 20000000 		.4byte	.LVL34
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 14
 
 
- 1061 01c0 01       		.byte	0x1
- 1062 01c1 2C       		.byte	0x2c
- 1063 01c2 81000000 		.4byte	0x81
- 1064 01c6 E9010000 		.4byte	.LLST8
- 1065 01ca 0E       		.uleb128 0xe
- 1066 01cb 18000000 		.4byte	.Ldebug_ranges0+0x18
- 1067 01cf E1010000 		.4byte	0x1e1
- 1068 01d3 09       		.uleb128 0x9
- 1069 01d4 6900     		.ascii	"i\000"
- 1070 01d6 01       		.byte	0x1
- 1071 01d7 2D       		.byte	0x2d
- 1072 01d8 68000000 		.4byte	0x68
- 1073 01dc 1E020000 		.4byte	.LLST9
- 1074 01e0 00       		.byte	0
- 1075 01e1 0F       		.uleb128 0xf
- 1076 01e2 34000000 		.4byte	.LVL62
- 1077 01e6 4F010000 		.4byte	0x14f
- 1078 01ea 0F       		.uleb128 0xf
- 1079 01eb 3E000000 		.4byte	.LVL64
- 1080 01ef 07010000 		.4byte	0x107
- 1081 01f3 00       		.byte	0
- 1082 01f4 0A       		.uleb128 0xa
- 1083 01f5 CF010000 		.4byte	.LASF25
- 1084 01f9 01       		.byte	0x1
- 1085 01fa C6       		.byte	0xc6
- 1086 01fb 00000000 		.4byte	.LFB68
- 1087 01ff 34000000 		.4byte	.LFE68-.LFB68
- 1088 0203 01       		.uleb128 0x1
- 1089 0204 9C       		.byte	0x9c
- 1090 0205 5E020000 		.4byte	0x25e
- 1091 0209 10       		.uleb128 0x10
- 1092 020a 2B000000 		.4byte	.LASF28
- 1093 020e 01       		.byte	0x1
- 1094 020f C6       		.byte	0xc6
- 1095 0210 81000000 		.4byte	0x81
- 1096 0214 48020000 		.4byte	.LLST10
- 1097 0218 0C       		.uleb128 0xc
- 1098 0219 04000000 		.4byte	.LBB10
- 1099 021d 28000000 		.4byte	.LBE10-.LBB10
- 1100 0221 09       		.uleb128 0x9
- 1101 0222 6900     		.ascii	"i\000"
- 1102 0224 01       		.byte	0x1
- 1103 0225 C8       		.byte	0xc8
- 1104 0226 68000000 		.4byte	0x68
- 1105 022a 69020000 		.4byte	.LLST11
- 1106 022e 0C       		.uleb128 0xc
- 1107 022f 08000000 		.4byte	.LBB11
- 1108 0233 1E000000 		.4byte	.LBE11-.LBB11
- 1109 0237 07       		.uleb128 0x7
- 1110 0238 AE020000 		.4byte	.LASF26
- 1111 023c 01       		.byte	0x1
- 1112 023d CA       		.byte	0xca
- 1113 023e 81000000 		.4byte	0x81
- 1114 0242 88020000 		.4byte	.LLST12
- 1115 0246 11       		.uleb128 0x11
- 1116 0247 10000000 		.4byte	.LVL68
- 1117 024b 09040000 		.4byte	0x409
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 25
+ 552 0197 04010000 		.4byte	0x104
+ 553 019b 0E       		.uleb128 0xe
+ 554 019c 24000000 		.4byte	.LVL35
+ 555 01a0 BC000000 		.4byte	0xbc
+ 556 01a4 00       		.byte	0
+ 557 01a5 0F       		.uleb128 0xf
+ 558 01a6 57000000 		.4byte	.LASF24
+ 559 01aa 05       		.byte	0x5
+ 560 01ab 18       		.byte	0x18
+ 561 01ac 81000000 		.4byte	0x81
+ 562 01b0 05       		.uleb128 0x5
+ 563 01b1 03       		.byte	0x3
+ 564 01b2 00000000 		.4byte	pwmMotorLinks
+ 565 01b6 0F       		.uleb128 0xf
+ 566 01b7 93010000 		.4byte	.LASF25
+ 567 01bb 05       		.byte	0x5
+ 568 01bc 19       		.byte	0x19
+ 569 01bd 81000000 		.4byte	0x81
+ 570 01c1 05       		.uleb128 0x5
+ 571 01c2 03       		.byte	0x3
+ 572 01c3 00000000 		.4byte	pwmMotorRechts
+ 573 01c7 0F       		.uleb128 0xf
+ 574 01c8 89020000 		.4byte	.LASF26
+ 575 01cc 05       		.byte	0x5
+ 576 01cd 1A       		.byte	0x1a
+ 577 01ce 81000000 		.4byte	0x81
+ 578 01d2 05       		.uleb128 0x5
+ 579 01d3 03       		.byte	0x3
+ 580 01d4 00000000 		.4byte	richting
+ 581 01d8 0F       		.uleb128 0xf
+ 582 01d9 ED010000 		.4byte	.LASF27
+ 583 01dd 05       		.byte	0x5
+ 584 01de 23       		.byte	0x23
+ 585 01df 81000000 		.4byte	0x81
+ 586 01e3 05       		.uleb128 0x5
+ 587 01e4 03       		.byte	0x3
+ 588 01e5 00000000 		.4byte	IRWaarden
+ 589 01e9 0F       		.uleb128 0xf
+ 590 01ea 76010000 		.4byte	.LASF28
+ 591 01ee 05       		.byte	0x5
+ 592 01ef 24       		.byte	0x24
+ 593 01f0 81000000 		.4byte	0x81
+ 594 01f4 05       		.uleb128 0x5
+ 595 01f5 03       		.byte	0x3
+ 596 01f6 00000000 		.4byte	IRDrempel
+ 597 01fa 0F       		.uleb128 0xf
+ 598 01fb 0E000000 		.4byte	.LASF29
+ 599 01ff 05       		.byte	0x5
+ 600 0200 29       		.byte	0x29
+ 601 0201 81000000 		.4byte	0x81
+ 602 0205 05       		.uleb128 0x5
+ 603 0206 03       		.byte	0x3
+ 604 0207 00000000 		.4byte	TestGetal
+ 605 020b 0F       		.uleb128 0xf
+ 606 020c 34000000 		.4byte	.LASF30
+ 607 0210 05       		.byte	0x5
+ 608 0211 2C       		.byte	0x2c
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 15
 
 
- 1118 024f 12       		.uleb128 0x12
- 1119 0250 01       		.uleb128 0x1
- 1120 0251 50       		.byte	0x50
- 1121 0252 01       		.uleb128 0x1
- 1122 0253 32       		.byte	0x32
- 1123 0254 12       		.uleb128 0x12
- 1124 0255 01       		.uleb128 0x1
- 1125 0256 51       		.byte	0x51
- 1126 0257 02       		.uleb128 0x2
- 1127 0258 74       		.byte	0x74
- 1128 0259 00       		.sleb128 0
- 1129 025a 00       		.byte	0
- 1130 025b 00       		.byte	0
- 1131 025c 00       		.byte	0
- 1132 025d 00       		.byte	0
- 1133 025e 0A       		.uleb128 0xa
- 1134 025f 6C000000 		.4byte	.LASF27
- 1135 0263 01       		.byte	0x1
- 1136 0264 1B       		.byte	0x1b
- 1137 0265 00000000 		.4byte	.LFB63
- 1138 0269 30000000 		.4byte	.LFE63-.LFB63
- 1139 026d 01       		.uleb128 0x1
- 1140 026e 9C       		.byte	0x9c
- 1141 026f 95020000 		.4byte	0x295
- 1142 0273 10       		.uleb128 0x10
- 1143 0274 91000000 		.4byte	.LASF29
- 1144 0278 01       		.byte	0x1
- 1145 0279 1B       		.byte	0x1b
- 1146 027a 81000000 		.4byte	0x81
- 1147 027e 9B020000 		.4byte	.LLST13
- 1148 0282 0F       		.uleb128 0xf
- 1149 0283 20000000 		.4byte	.LVL76
- 1150 0287 F4010000 		.4byte	0x1f4
- 1151 028b 0F       		.uleb128 0xf
- 1152 028c 24000000 		.4byte	.LVL77
- 1153 0290 97010000 		.4byte	0x197
- 1154 0294 00       		.byte	0
- 1155 0295 13       		.uleb128 0x13
- 1156 0296 5E000000 		.4byte	.LASF30
- 1157 029a 05       		.byte	0x5
- 1158 029b 18       		.byte	0x18
- 1159 029c 81000000 		.4byte	0x81
- 1160 02a0 05       		.uleb128 0x5
- 1161 02a1 03       		.byte	0x3
- 1162 02a2 00000000 		.4byte	pwmMotorLinks
- 1163 02a6 13       		.uleb128 0x13
- 1164 02a7 B3010000 		.4byte	.LASF31
- 1165 02ab 05       		.byte	0x5
- 1166 02ac 19       		.byte	0x19
- 1167 02ad 81000000 		.4byte	0x81
- 1168 02b1 05       		.uleb128 0x5
- 1169 02b2 03       		.byte	0x3
- 1170 02b3 00000000 		.4byte	pwmMotorRechts
- 1171 02b7 13       		.uleb128 0x13
- 1172 02b8 A5020000 		.4byte	.LASF32
- 1173 02bc 05       		.byte	0x5
- 1174 02bd 1A       		.byte	0x1a
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 26
+ 609 0212 8D000000 		.4byte	0x8d
+ 610 0216 05       		.uleb128 0x5
+ 611 0217 03       		.byte	0x3
+ 612 0218 00000000 		.4byte	mediaan
+ 613 021c 0F       		.uleb128 0xf
+ 614 021d 7B000000 		.4byte	.LASF31
+ 615 0221 05       		.byte	0x5
+ 616 0222 2D       		.byte	0x2d
+ 617 0223 81000000 		.4byte	0x81
+ 618 0227 05       		.uleb128 0x5
+ 619 0228 03       		.byte	0x3
+ 620 0229 00000000 		.4byte	selectUS
+ 621 022d 10       		.uleb128 0x10
+ 622 022e 8D000000 		.4byte	0x8d
+ 623 0232 3D020000 		.4byte	0x23d
+ 624 0236 11       		.uleb128 0x11
+ 625 0237 B5000000 		.4byte	0xb5
+ 626 023b 04       		.byte	0x4
+ 627 023c 00       		.byte	0
+ 628 023d 0F       		.uleb128 0xf
+ 629 023e 3D010000 		.4byte	.LASF32
+ 630 0242 05       		.byte	0x5
+ 631 0243 2F       		.byte	0x2f
+ 632 0244 2D020000 		.4byte	0x22d
+ 633 0248 05       		.uleb128 0x5
+ 634 0249 03       		.byte	0x3
+ 635 024a 00000000 		.4byte	avgUS1
+ 636 024e 0F       		.uleb128 0xf
+ 637 024f 49000000 		.4byte	.LASF33
+ 638 0253 05       		.byte	0x5
+ 639 0254 30       		.byte	0x30
+ 640 0255 2D020000 		.4byte	0x22d
+ 641 0259 05       		.uleb128 0x5
+ 642 025a 03       		.byte	0x3
+ 643 025b 00000000 		.4byte	avgUS2
+ 644 025f 0F       		.uleb128 0xf
+ 645 0260 50000000 		.4byte	.LASF34
+ 646 0264 05       		.byte	0x5
+ 647 0265 31       		.byte	0x31
+ 648 0266 2D020000 		.4byte	0x22d
+ 649 026a 05       		.uleb128 0x5
+ 650 026b 03       		.byte	0x3
+ 651 026c 00000000 		.4byte	avgUS3
+ 652 0270 0F       		.uleb128 0xf
+ 653 0271 F0020000 		.4byte	.LASF35
+ 654 0275 05       		.byte	0x5
+ 655 0276 46       		.byte	0x46
+ 656 0277 81000000 		.4byte	0x81
+ 657 027b 05       		.uleb128 0x5
+ 658 027c 03       		.byte	0x3
+ 659 027d 00000000 		.4byte	boolSelect
+ 660 0281 12       		.uleb128 0x12
+ 661 0282 69010000 		.4byte	.LASF36
+ 662 0286 06       		.byte	0x6
+ 663 0287 1207     		.2byte	0x712
+ 664 0289 8D020000 		.4byte	0x28d
+ 665 028d 13       		.uleb128 0x13
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 16
 
 
- 1175 02be 81000000 		.4byte	0x81
- 1176 02c2 05       		.uleb128 0x5
- 1177 02c3 03       		.byte	0x3
- 1178 02c4 00000000 		.4byte	richting
- 1179 02c8 13       		.uleb128 0x13
- 1180 02c9 FD010000 		.4byte	.LASF33
- 1181 02cd 05       		.byte	0x5
- 1182 02ce 23       		.byte	0x23
- 1183 02cf 81000000 		.4byte	0x81
- 1184 02d3 05       		.uleb128 0x5
- 1185 02d4 03       		.byte	0x3
- 1186 02d5 00000000 		.4byte	IRWaarden
- 1187 02d9 13       		.uleb128 0x13
- 1188 02da 96010000 		.4byte	.LASF34
- 1189 02de 05       		.byte	0x5
- 1190 02df 24       		.byte	0x24
- 1191 02e0 81000000 		.4byte	0x81
- 1192 02e4 05       		.uleb128 0x5
- 1193 02e5 03       		.byte	0x3
- 1194 02e6 00000000 		.4byte	IRDrempel
- 1195 02ea 13       		.uleb128 0x13
- 1196 02eb 15000000 		.4byte	.LASF35
- 1197 02ef 05       		.byte	0x5
- 1198 02f0 29       		.byte	0x29
- 1199 02f1 81000000 		.4byte	0x81
- 1200 02f5 05       		.uleb128 0x5
- 1201 02f6 03       		.byte	0x3
- 1202 02f7 00000000 		.4byte	TestGetal
- 1203 02fb 13       		.uleb128 0x13
- 1204 02fc 3B000000 		.4byte	.LASF36
- 1205 0300 05       		.byte	0x5
- 1206 0301 2C       		.byte	0x2c
- 1207 0302 8D000000 		.4byte	0x8d
- 1208 0306 05       		.uleb128 0x5
- 1209 0307 03       		.byte	0x3
- 1210 0308 00000000 		.4byte	mediaan
- 1211 030c 13       		.uleb128 0x13
- 1212 030d 82000000 		.4byte	.LASF37
- 1213 0311 05       		.byte	0x5
- 1214 0312 2D       		.byte	0x2d
- 1215 0313 81000000 		.4byte	0x81
- 1216 0317 05       		.uleb128 0x5
- 1217 0318 03       		.byte	0x3
- 1218 0319 00000000 		.4byte	selectUS
- 1219 031d 14       		.uleb128 0x14
- 1220 031e 8D000000 		.4byte	0x8d
- 1221 0322 2D030000 		.4byte	0x32d
- 1222 0326 15       		.uleb128 0x15
- 1223 0327 B5000000 		.4byte	0xb5
- 1224 032b 04       		.byte	0x4
- 1225 032c 00       		.byte	0
- 1226 032d 13       		.uleb128 0x13
- 1227 032e 52010000 		.4byte	.LASF38
- 1228 0332 05       		.byte	0x5
- 1229 0333 2F       		.byte	0x2f
- 1230 0334 1D030000 		.4byte	0x31d
- 1231 0338 05       		.uleb128 0x5
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 27
+ 666 028e 76000000 		.4byte	0x76
+ 667 0292 10       		.uleb128 0x10
+ 668 0293 81000000 		.4byte	0x81
+ 669 0297 A2020000 		.4byte	0x2a2
+ 670 029b 11       		.uleb128 0x11
+ 671 029c B5000000 		.4byte	0xb5
+ 672 02a0 07       		.byte	0x7
+ 673 02a1 00       		.byte	0
+ 674 02a2 0F       		.uleb128 0xf
+ 675 02a3 9C020000 		.4byte	.LASF37
+ 676 02a7 01       		.byte	0x1
+ 677 02a8 0F       		.byte	0xf
+ 678 02a9 92020000 		.4byte	0x292
+ 679 02ad 05       		.uleb128 0x5
+ 680 02ae 03       		.byte	0x3
+ 681 02af 00000000 		.4byte	IRsensorGewicht
+ 682 02b3 0F       		.uleb128 0xf
+ 683 02b4 2B010000 		.4byte	.LASF38
+ 684 02b8 01       		.byte	0x1
+ 685 02b9 10       		.byte	0x10
+ 686 02ba 92020000 		.4byte	0x292
+ 687 02be 05       		.uleb128 0x5
+ 688 02bf 03       		.byte	0x3
+ 689 02c0 00000000 		.4byte	IRDigitaleWaarden
+ 690 02c4 0F       		.uleb128 0xf
+ 691 02c5 E6020000 		.4byte	.LASF39
+ 692 02c9 01       		.byte	0x1
+ 693 02ca 12       		.byte	0x12
+ 694 02cb 81000000 		.4byte	0x81
+ 695 02cf 05       		.uleb128 0x5
+ 696 02d0 03       		.byte	0x3
+ 697 02d1 00000000 		.4byte	indexLijn
+ 698 02d5 0F       		.uleb128 0xf
+ 699 02d6 87010000 		.4byte	.LASF40
+ 700 02da 01       		.byte	0x1
+ 701 02db 14       		.byte	0x14
+ 702 02dc 81000000 		.4byte	0x81
+ 703 02e0 05       		.uleb128 0x5
+ 704 02e1 03       		.byte	0x3
+ 705 02e2 00000000 		.4byte	Data
+ 706 02e6 0F       		.uleb128 0xf
+ 707 02e7 00000000 		.4byte	.LASF41
+ 708 02eb 01       		.byte	0x1
+ 709 02ec 16       		.byte	0x16
+ 710 02ed 81000000 		.4byte	0x81
+ 711 02f1 05       		.uleb128 0x5
+ 712 02f2 03       		.byte	0x3
+ 713 02f3 00000000 		.4byte	boolIsVanLijn
+ 714 02f7 0F       		.uleb128 0xf
+ 715 02f8 18000000 		.4byte	.LASF42
+ 716 02fc 01       		.byte	0x1
+ 717 02fd 18       		.byte	0x18
+ 718 02fe 81000000 		.4byte	0x81
+ 719 0302 05       		.uleb128 0x5
+ 720 0303 03       		.byte	0x3
+ 721 0304 00000000 		.4byte	laatsteKant
+ 722 0308 0F       		.uleb128 0xf
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 17
 
 
- 1232 0339 03       		.byte	0x3
- 1233 033a 00000000 		.4byte	avgUS1
- 1234 033e 13       		.uleb128 0x13
- 1235 033f 50000000 		.4byte	.LASF39
- 1236 0343 05       		.byte	0x5
- 1237 0344 30       		.byte	0x30
- 1238 0345 1D030000 		.4byte	0x31d
- 1239 0349 05       		.uleb128 0x5
- 1240 034a 03       		.byte	0x3
- 1241 034b 00000000 		.4byte	avgUS2
- 1242 034f 13       		.uleb128 0x13
- 1243 0350 57000000 		.4byte	.LASF40
- 1244 0354 05       		.byte	0x5
- 1245 0355 31       		.byte	0x31
- 1246 0356 1D030000 		.4byte	0x31d
- 1247 035a 05       		.uleb128 0x5
- 1248 035b 03       		.byte	0x3
- 1249 035c 00000000 		.4byte	avgUS3
- 1250 0360 13       		.uleb128 0x13
- 1251 0361 43030000 		.4byte	.LASF41
- 1252 0365 05       		.byte	0x5
- 1253 0366 46       		.byte	0x46
- 1254 0367 81000000 		.4byte	0x81
- 1255 036b 05       		.uleb128 0x5
- 1256 036c 03       		.byte	0x3
- 1257 036d 00000000 		.4byte	boolSelect
- 1258 0371 16       		.uleb128 0x16
- 1259 0372 89010000 		.4byte	.LASF42
- 1260 0376 06       		.byte	0x6
- 1261 0377 1207     		.2byte	0x712
- 1262 0379 7D030000 		.4byte	0x37d
- 1263 037d 17       		.uleb128 0x17
- 1264 037e 76000000 		.4byte	0x76
- 1265 0382 14       		.uleb128 0x14
- 1266 0383 81000000 		.4byte	0x81
- 1267 0387 92030000 		.4byte	0x392
- 1268 038b 15       		.uleb128 0x15
- 1269 038c B5000000 		.4byte	0xb5
- 1270 0390 07       		.byte	0x7
- 1271 0391 00       		.byte	0
- 1272 0392 13       		.uleb128 0x13
- 1273 0393 CE020000 		.4byte	.LASF43
- 1274 0397 01       		.byte	0x1
- 1275 0398 0F       		.byte	0xf
- 1276 0399 82030000 		.4byte	0x382
- 1277 039d 05       		.uleb128 0x5
- 1278 039e 03       		.byte	0x3
- 1279 039f 00000000 		.4byte	IRsensorGewicht
- 1280 03a3 13       		.uleb128 0x13
- 1281 03a4 40010000 		.4byte	.LASF44
- 1282 03a8 01       		.byte	0x1
- 1283 03a9 10       		.byte	0x10
- 1284 03aa 82030000 		.4byte	0x382
- 1285 03ae 05       		.uleb128 0x5
- 1286 03af 03       		.byte	0x3
- 1287 03b0 00000000 		.4byte	IRDigitaleWaarden
- 1288 03b4 13       		.uleb128 0x13
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 28
+ 723 0309 5E020000 		.4byte	.LASF43
+ 724 030d 01       		.byte	0x1
+ 725 030e 19       		.byte	0x19
+ 726 030f 8D000000 		.4byte	0x8d
+ 727 0313 05       		.uleb128 0x5
+ 728 0314 03       		.byte	0x3
+ 729 0315 00000000 		.4byte	antiSlipTeller
+ 730 0319 14       		.uleb128 0x14
+ 731 031a AC020000 		.4byte	.LASF47
+ 732 031e AC020000 		.4byte	.LASF47
+ 733 0322 05       		.byte	0x5
+ 734 0323 41       		.byte	0x41
+ 735 0324 00       		.byte	0
+ 736              		.section	.debug_abbrev,"",%progbits
+ 737              	.Ldebug_abbrev0:
+ 738 0000 01       		.uleb128 0x1
+ 739 0001 11       		.uleb128 0x11
+ 740 0002 01       		.byte	0x1
+ 741 0003 25       		.uleb128 0x25
+ 742 0004 0E       		.uleb128 0xe
+ 743 0005 13       		.uleb128 0x13
+ 744 0006 0B       		.uleb128 0xb
+ 745 0007 03       		.uleb128 0x3
+ 746 0008 0E       		.uleb128 0xe
+ 747 0009 1B       		.uleb128 0x1b
+ 748 000a 0E       		.uleb128 0xe
+ 749 000b 55       		.uleb128 0x55
+ 750 000c 17       		.uleb128 0x17
+ 751 000d 11       		.uleb128 0x11
+ 752 000e 01       		.uleb128 0x1
+ 753 000f 10       		.uleb128 0x10
+ 754 0010 17       		.uleb128 0x17
+ 755 0011 00       		.byte	0
+ 756 0012 00       		.byte	0
+ 757 0013 02       		.uleb128 0x2
+ 758 0014 24       		.uleb128 0x24
+ 759 0015 00       		.byte	0
+ 760 0016 0B       		.uleb128 0xb
+ 761 0017 0B       		.uleb128 0xb
+ 762 0018 3E       		.uleb128 0x3e
+ 763 0019 0B       		.uleb128 0xb
+ 764 001a 03       		.uleb128 0x3
+ 765 001b 0E       		.uleb128 0xe
+ 766 001c 00       		.byte	0
+ 767 001d 00       		.byte	0
+ 768 001e 03       		.uleb128 0x3
+ 769 001f 16       		.uleb128 0x16
+ 770 0020 00       		.byte	0
+ 771 0021 03       		.uleb128 0x3
+ 772 0022 0E       		.uleb128 0xe
+ 773 0023 3A       		.uleb128 0x3a
+ 774 0024 0B       		.uleb128 0xb
+ 775 0025 3B       		.uleb128 0x3b
+ 776 0026 0B       		.uleb128 0xb
+ 777 0027 49       		.uleb128 0x49
+ 778 0028 13       		.uleb128 0x13
+ 779 0029 00       		.byte	0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 18
 
 
- 1289 03b5 39030000 		.4byte	.LASF45
- 1290 03b9 01       		.byte	0x1
- 1291 03ba 12       		.byte	0x12
- 1292 03bb 81000000 		.4byte	0x81
- 1293 03bf 05       		.uleb128 0x5
- 1294 03c0 03       		.byte	0x3
- 1295 03c1 00000000 		.4byte	indexLijn
- 1296 03c5 13       		.uleb128 0x13
- 1297 03c6 A7010000 		.4byte	.LASF46
- 1298 03ca 01       		.byte	0x1
- 1299 03cb 14       		.byte	0x14
- 1300 03cc 81000000 		.4byte	0x81
- 1301 03d0 05       		.uleb128 0x5
- 1302 03d1 03       		.byte	0x3
- 1303 03d2 00000000 		.4byte	Data
- 1304 03d6 13       		.uleb128 0x13
- 1305 03d7 00000000 		.4byte	.LASF47
- 1306 03db 01       		.byte	0x1
- 1307 03dc 16       		.byte	0x16
- 1308 03dd 81000000 		.4byte	0x81
- 1309 03e1 05       		.uleb128 0x5
- 1310 03e2 03       		.byte	0x3
- 1311 03e3 00000000 		.4byte	boolIsVanLijn
- 1312 03e7 13       		.uleb128 0x13
- 1313 03e8 1F000000 		.4byte	.LASF48
- 1314 03ec 01       		.byte	0x1
- 1315 03ed 18       		.byte	0x18
- 1316 03ee 81000000 		.4byte	0x81
- 1317 03f2 05       		.uleb128 0x5
- 1318 03f3 03       		.byte	0x3
- 1319 03f4 00000000 		.4byte	laatsteKant
- 1320 03f8 13       		.uleb128 0x13
- 1321 03f9 7A020000 		.4byte	.LASF49
- 1322 03fd 01       		.byte	0x1
- 1323 03fe 19       		.byte	0x19
- 1324 03ff 8D000000 		.4byte	0x8d
- 1325 0403 05       		.uleb128 0x5
- 1326 0404 03       		.byte	0x3
- 1327 0405 00000000 		.4byte	antiSlipTeller
- 1328 0409 18       		.uleb128 0x18
- 1329 040a DE020000 		.4byte	.LASF54
- 1330 040e DE020000 		.4byte	.LASF54
- 1331 0412 05       		.byte	0x5
- 1332 0413 41       		.byte	0x41
- 1333 0414 00       		.byte	0
- 1334              		.section	.debug_abbrev,"",%progbits
- 1335              	.Ldebug_abbrev0:
- 1336 0000 01       		.uleb128 0x1
- 1337 0001 11       		.uleb128 0x11
- 1338 0002 01       		.byte	0x1
- 1339 0003 25       		.uleb128 0x25
- 1340 0004 0E       		.uleb128 0xe
- 1341 0005 13       		.uleb128 0x13
- 1342 0006 0B       		.uleb128 0xb
- 1343 0007 03       		.uleb128 0x3
- 1344 0008 0E       		.uleb128 0xe
- 1345 0009 1B       		.uleb128 0x1b
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 29
+ 780 002a 00       		.byte	0
+ 781 002b 04       		.uleb128 0x4
+ 782 002c 24       		.uleb128 0x24
+ 783 002d 00       		.byte	0
+ 784 002e 0B       		.uleb128 0xb
+ 785 002f 0B       		.uleb128 0xb
+ 786 0030 3E       		.uleb128 0x3e
+ 787 0031 0B       		.uleb128 0xb
+ 788 0032 03       		.uleb128 0x3
+ 789 0033 08       		.uleb128 0x8
+ 790 0034 00       		.byte	0
+ 791 0035 00       		.byte	0
+ 792 0036 05       		.uleb128 0x5
+ 793 0037 16       		.uleb128 0x16
+ 794 0038 00       		.byte	0
+ 795 0039 03       		.uleb128 0x3
+ 796 003a 0E       		.uleb128 0xe
+ 797 003b 3A       		.uleb128 0x3a
+ 798 003c 0B       		.uleb128 0xb
+ 799 003d 3B       		.uleb128 0x3b
+ 800 003e 05       		.uleb128 0x5
+ 801 003f 49       		.uleb128 0x49
+ 802 0040 13       		.uleb128 0x13
+ 803 0041 00       		.byte	0
+ 804 0042 00       		.byte	0
+ 805 0043 06       		.uleb128 0x6
+ 806 0044 2E       		.uleb128 0x2e
+ 807 0045 01       		.byte	0x1
+ 808 0046 3F       		.uleb128 0x3f
+ 809 0047 19       		.uleb128 0x19
+ 810 0048 03       		.uleb128 0x3
+ 811 0049 0E       		.uleb128 0xe
+ 812 004a 3A       		.uleb128 0x3a
+ 813 004b 0B       		.uleb128 0xb
+ 814 004c 3B       		.uleb128 0x3b
+ 815 004d 0B       		.uleb128 0xb
+ 816 004e 27       		.uleb128 0x27
+ 817 004f 19       		.uleb128 0x19
+ 818 0050 11       		.uleb128 0x11
+ 819 0051 01       		.uleb128 0x1
+ 820 0052 12       		.uleb128 0x12
+ 821 0053 06       		.uleb128 0x6
+ 822 0054 40       		.uleb128 0x40
+ 823 0055 18       		.uleb128 0x18
+ 824 0056 9742     		.uleb128 0x2117
+ 825 0058 19       		.uleb128 0x19
+ 826 0059 01       		.uleb128 0x1
+ 827 005a 13       		.uleb128 0x13
+ 828 005b 00       		.byte	0
+ 829 005c 00       		.byte	0
+ 830 005d 07       		.uleb128 0x7
+ 831 005e 0B       		.uleb128 0xb
+ 832 005f 01       		.byte	0x1
+ 833 0060 11       		.uleb128 0x11
+ 834 0061 01       		.uleb128 0x1
+ 835 0062 12       		.uleb128 0x12
+ 836 0063 06       		.uleb128 0x6
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 19
 
 
- 1346 000a 0E       		.uleb128 0xe
- 1347 000b 55       		.uleb128 0x55
- 1348 000c 17       		.uleb128 0x17
- 1349 000d 11       		.uleb128 0x11
- 1350 000e 01       		.uleb128 0x1
- 1351 000f 10       		.uleb128 0x10
- 1352 0010 17       		.uleb128 0x17
- 1353 0011 00       		.byte	0
- 1354 0012 00       		.byte	0
- 1355 0013 02       		.uleb128 0x2
- 1356 0014 24       		.uleb128 0x24
- 1357 0015 00       		.byte	0
- 1358 0016 0B       		.uleb128 0xb
- 1359 0017 0B       		.uleb128 0xb
- 1360 0018 3E       		.uleb128 0x3e
- 1361 0019 0B       		.uleb128 0xb
- 1362 001a 03       		.uleb128 0x3
- 1363 001b 0E       		.uleb128 0xe
- 1364 001c 00       		.byte	0
- 1365 001d 00       		.byte	0
- 1366 001e 03       		.uleb128 0x3
- 1367 001f 16       		.uleb128 0x16
- 1368 0020 00       		.byte	0
- 1369 0021 03       		.uleb128 0x3
- 1370 0022 0E       		.uleb128 0xe
- 1371 0023 3A       		.uleb128 0x3a
- 1372 0024 0B       		.uleb128 0xb
- 1373 0025 3B       		.uleb128 0x3b
- 1374 0026 0B       		.uleb128 0xb
- 1375 0027 49       		.uleb128 0x49
- 1376 0028 13       		.uleb128 0x13
- 1377 0029 00       		.byte	0
- 1378 002a 00       		.byte	0
- 1379 002b 04       		.uleb128 0x4
- 1380 002c 24       		.uleb128 0x24
- 1381 002d 00       		.byte	0
- 1382 002e 0B       		.uleb128 0xb
- 1383 002f 0B       		.uleb128 0xb
- 1384 0030 3E       		.uleb128 0x3e
- 1385 0031 0B       		.uleb128 0xb
- 1386 0032 03       		.uleb128 0x3
- 1387 0033 08       		.uleb128 0x8
- 1388 0034 00       		.byte	0
- 1389 0035 00       		.byte	0
- 1390 0036 05       		.uleb128 0x5
- 1391 0037 16       		.uleb128 0x16
- 1392 0038 00       		.byte	0
- 1393 0039 03       		.uleb128 0x3
- 1394 003a 0E       		.uleb128 0xe
- 1395 003b 3A       		.uleb128 0x3a
- 1396 003c 0B       		.uleb128 0xb
- 1397 003d 3B       		.uleb128 0x3b
- 1398 003e 05       		.uleb128 0x5
- 1399 003f 49       		.uleb128 0x49
- 1400 0040 13       		.uleb128 0x13
- 1401 0041 00       		.byte	0
- 1402 0042 00       		.byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 30
+ 837 0064 01       		.uleb128 0x1
+ 838 0065 13       		.uleb128 0x13
+ 839 0066 00       		.byte	0
+ 840 0067 00       		.byte	0
+ 841 0068 08       		.uleb128 0x8
+ 842 0069 34       		.uleb128 0x34
+ 843 006a 00       		.byte	0
+ 844 006b 03       		.uleb128 0x3
+ 845 006c 08       		.uleb128 0x8
+ 846 006d 3A       		.uleb128 0x3a
+ 847 006e 0B       		.uleb128 0xb
+ 848 006f 3B       		.uleb128 0x3b
+ 849 0070 0B       		.uleb128 0xb
+ 850 0071 49       		.uleb128 0x49
+ 851 0072 13       		.uleb128 0x13
+ 852 0073 02       		.uleb128 0x2
+ 853 0074 17       		.uleb128 0x17
+ 854 0075 00       		.byte	0
+ 855 0076 00       		.byte	0
+ 856 0077 09       		.uleb128 0x9
+ 857 0078 0B       		.uleb128 0xb
+ 858 0079 01       		.byte	0x1
+ 859 007a 11       		.uleb128 0x11
+ 860 007b 01       		.uleb128 0x1
+ 861 007c 12       		.uleb128 0x12
+ 862 007d 06       		.uleb128 0x6
+ 863 007e 00       		.byte	0
+ 864 007f 00       		.byte	0
+ 865 0080 0A       		.uleb128 0xa
+ 866 0081 05       		.uleb128 0x5
+ 867 0082 00       		.byte	0
+ 868 0083 03       		.uleb128 0x3
+ 869 0084 0E       		.uleb128 0xe
+ 870 0085 3A       		.uleb128 0x3a
+ 871 0086 0B       		.uleb128 0xb
+ 872 0087 3B       		.uleb128 0x3b
+ 873 0088 0B       		.uleb128 0xb
+ 874 0089 49       		.uleb128 0x49
+ 875 008a 13       		.uleb128 0x13
+ 876 008b 02       		.uleb128 0x2
+ 877 008c 17       		.uleb128 0x17
+ 878 008d 00       		.byte	0
+ 879 008e 00       		.byte	0
+ 880 008f 0B       		.uleb128 0xb
+ 881 0090 34       		.uleb128 0x34
+ 882 0091 00       		.byte	0
+ 883 0092 03       		.uleb128 0x3
+ 884 0093 0E       		.uleb128 0xe
+ 885 0094 3A       		.uleb128 0x3a
+ 886 0095 0B       		.uleb128 0xb
+ 887 0096 3B       		.uleb128 0x3b
+ 888 0097 0B       		.uleb128 0xb
+ 889 0098 49       		.uleb128 0x49
+ 890 0099 13       		.uleb128 0x13
+ 891 009a 02       		.uleb128 0x2
+ 892 009b 17       		.uleb128 0x17
+ 893 009c 00       		.byte	0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 20
 
 
- 1403 0043 06       		.uleb128 0x6
- 1404 0044 2E       		.uleb128 0x2e
- 1405 0045 01       		.byte	0x1
- 1406 0046 3F       		.uleb128 0x3f
- 1407 0047 19       		.uleb128 0x19
- 1408 0048 03       		.uleb128 0x3
- 1409 0049 0E       		.uleb128 0xe
- 1410 004a 3A       		.uleb128 0x3a
- 1411 004b 0B       		.uleb128 0xb
- 1412 004c 3B       		.uleb128 0x3b
- 1413 004d 0B       		.uleb128 0xb
- 1414 004e 49       		.uleb128 0x49
- 1415 004f 13       		.uleb128 0x13
- 1416 0050 11       		.uleb128 0x11
- 1417 0051 01       		.uleb128 0x1
- 1418 0052 12       		.uleb128 0x12
- 1419 0053 06       		.uleb128 0x6
- 1420 0054 40       		.uleb128 0x40
- 1421 0055 18       		.uleb128 0x18
- 1422 0056 9742     		.uleb128 0x2117
- 1423 0058 19       		.uleb128 0x19
- 1424 0059 01       		.uleb128 0x1
- 1425 005a 13       		.uleb128 0x13
- 1426 005b 00       		.byte	0
- 1427 005c 00       		.byte	0
- 1428 005d 07       		.uleb128 0x7
- 1429 005e 34       		.uleb128 0x34
- 1430 005f 00       		.byte	0
- 1431 0060 03       		.uleb128 0x3
- 1432 0061 0E       		.uleb128 0xe
- 1433 0062 3A       		.uleb128 0x3a
- 1434 0063 0B       		.uleb128 0xb
- 1435 0064 3B       		.uleb128 0x3b
- 1436 0065 0B       		.uleb128 0xb
- 1437 0066 49       		.uleb128 0x49
- 1438 0067 13       		.uleb128 0x13
- 1439 0068 02       		.uleb128 0x2
- 1440 0069 17       		.uleb128 0x17
- 1441 006a 00       		.byte	0
- 1442 006b 00       		.byte	0
- 1443 006c 08       		.uleb128 0x8
- 1444 006d 0B       		.uleb128 0xb
- 1445 006e 01       		.byte	0x1
- 1446 006f 55       		.uleb128 0x55
- 1447 0070 17       		.uleb128 0x17
- 1448 0071 00       		.byte	0
- 1449 0072 00       		.byte	0
- 1450 0073 09       		.uleb128 0x9
- 1451 0074 34       		.uleb128 0x34
- 1452 0075 00       		.byte	0
- 1453 0076 03       		.uleb128 0x3
- 1454 0077 08       		.uleb128 0x8
- 1455 0078 3A       		.uleb128 0x3a
- 1456 0079 0B       		.uleb128 0xb
- 1457 007a 3B       		.uleb128 0x3b
- 1458 007b 0B       		.uleb128 0xb
- 1459 007c 49       		.uleb128 0x49
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 31
+ 894 009d 00       		.byte	0
+ 895 009e 0C       		.uleb128 0xc
+ 896 009f 898201   		.uleb128 0x4109
+ 897 00a2 01       		.byte	0x1
+ 898 00a3 11       		.uleb128 0x11
+ 899 00a4 01       		.uleb128 0x1
+ 900 00a5 31       		.uleb128 0x31
+ 901 00a6 13       		.uleb128 0x13
+ 902 00a7 00       		.byte	0
+ 903 00a8 00       		.byte	0
+ 904 00a9 0D       		.uleb128 0xd
+ 905 00aa 8A8201   		.uleb128 0x410a
+ 906 00ad 00       		.byte	0
+ 907 00ae 02       		.uleb128 0x2
+ 908 00af 18       		.uleb128 0x18
+ 909 00b0 9142     		.uleb128 0x2111
+ 910 00b2 18       		.uleb128 0x18
+ 911 00b3 00       		.byte	0
+ 912 00b4 00       		.byte	0
+ 913 00b5 0E       		.uleb128 0xe
+ 914 00b6 898201   		.uleb128 0x4109
+ 915 00b9 00       		.byte	0
+ 916 00ba 11       		.uleb128 0x11
+ 917 00bb 01       		.uleb128 0x1
+ 918 00bc 31       		.uleb128 0x31
+ 919 00bd 13       		.uleb128 0x13
+ 920 00be 00       		.byte	0
+ 921 00bf 00       		.byte	0
+ 922 00c0 0F       		.uleb128 0xf
+ 923 00c1 34       		.uleb128 0x34
+ 924 00c2 00       		.byte	0
+ 925 00c3 03       		.uleb128 0x3
+ 926 00c4 0E       		.uleb128 0xe
+ 927 00c5 3A       		.uleb128 0x3a
+ 928 00c6 0B       		.uleb128 0xb
+ 929 00c7 3B       		.uleb128 0x3b
+ 930 00c8 0B       		.uleb128 0xb
+ 931 00c9 49       		.uleb128 0x49
+ 932 00ca 13       		.uleb128 0x13
+ 933 00cb 3F       		.uleb128 0x3f
+ 934 00cc 19       		.uleb128 0x19
+ 935 00cd 02       		.uleb128 0x2
+ 936 00ce 18       		.uleb128 0x18
+ 937 00cf 00       		.byte	0
+ 938 00d0 00       		.byte	0
+ 939 00d1 10       		.uleb128 0x10
+ 940 00d2 01       		.uleb128 0x1
+ 941 00d3 01       		.byte	0x1
+ 942 00d4 49       		.uleb128 0x49
+ 943 00d5 13       		.uleb128 0x13
+ 944 00d6 01       		.uleb128 0x1
+ 945 00d7 13       		.uleb128 0x13
+ 946 00d8 00       		.byte	0
+ 947 00d9 00       		.byte	0
+ 948 00da 11       		.uleb128 0x11
+ 949 00db 21       		.uleb128 0x21
+ 950 00dc 00       		.byte	0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 21
 
 
- 1460 007d 13       		.uleb128 0x13
- 1461 007e 02       		.uleb128 0x2
- 1462 007f 17       		.uleb128 0x17
- 1463 0080 00       		.byte	0
- 1464 0081 00       		.byte	0
- 1465 0082 0A       		.uleb128 0xa
- 1466 0083 2E       		.uleb128 0x2e
- 1467 0084 01       		.byte	0x1
- 1468 0085 3F       		.uleb128 0x3f
- 1469 0086 19       		.uleb128 0x19
- 1470 0087 03       		.uleb128 0x3
- 1471 0088 0E       		.uleb128 0xe
- 1472 0089 3A       		.uleb128 0x3a
- 1473 008a 0B       		.uleb128 0xb
- 1474 008b 3B       		.uleb128 0x3b
- 1475 008c 0B       		.uleb128 0xb
- 1476 008d 27       		.uleb128 0x27
- 1477 008e 19       		.uleb128 0x19
- 1478 008f 11       		.uleb128 0x11
- 1479 0090 01       		.uleb128 0x1
- 1480 0091 12       		.uleb128 0x12
- 1481 0092 06       		.uleb128 0x6
- 1482 0093 40       		.uleb128 0x40
- 1483 0094 18       		.uleb128 0x18
- 1484 0095 9742     		.uleb128 0x2117
- 1485 0097 19       		.uleb128 0x19
- 1486 0098 01       		.uleb128 0x1
- 1487 0099 13       		.uleb128 0x13
- 1488 009a 00       		.byte	0
- 1489 009b 00       		.byte	0
- 1490 009c 0B       		.uleb128 0xb
- 1491 009d 0B       		.uleb128 0xb
- 1492 009e 01       		.byte	0x1
- 1493 009f 11       		.uleb128 0x11
- 1494 00a0 01       		.uleb128 0x1
- 1495 00a1 12       		.uleb128 0x12
- 1496 00a2 06       		.uleb128 0x6
- 1497 00a3 01       		.uleb128 0x1
- 1498 00a4 13       		.uleb128 0x13
- 1499 00a5 00       		.byte	0
- 1500 00a6 00       		.byte	0
- 1501 00a7 0C       		.uleb128 0xc
- 1502 00a8 0B       		.uleb128 0xb
- 1503 00a9 01       		.byte	0x1
- 1504 00aa 11       		.uleb128 0x11
- 1505 00ab 01       		.uleb128 0x1
- 1506 00ac 12       		.uleb128 0x12
- 1507 00ad 06       		.uleb128 0x6
- 1508 00ae 00       		.byte	0
- 1509 00af 00       		.byte	0
- 1510 00b0 0D       		.uleb128 0xd
- 1511 00b1 2E       		.uleb128 0x2e
- 1512 00b2 01       		.byte	0x1
- 1513 00b3 3F       		.uleb128 0x3f
- 1514 00b4 19       		.uleb128 0x19
- 1515 00b5 03       		.uleb128 0x3
- 1516 00b6 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 32
+ 951 00dd 49       		.uleb128 0x49
+ 952 00de 13       		.uleb128 0x13
+ 953 00df 2F       		.uleb128 0x2f
+ 954 00e0 0B       		.uleb128 0xb
+ 955 00e1 00       		.byte	0
+ 956 00e2 00       		.byte	0
+ 957 00e3 12       		.uleb128 0x12
+ 958 00e4 34       		.uleb128 0x34
+ 959 00e5 00       		.byte	0
+ 960 00e6 03       		.uleb128 0x3
+ 961 00e7 0E       		.uleb128 0xe
+ 962 00e8 3A       		.uleb128 0x3a
+ 963 00e9 0B       		.uleb128 0xb
+ 964 00ea 3B       		.uleb128 0x3b
+ 965 00eb 05       		.uleb128 0x5
+ 966 00ec 49       		.uleb128 0x49
+ 967 00ed 13       		.uleb128 0x13
+ 968 00ee 3F       		.uleb128 0x3f
+ 969 00ef 19       		.uleb128 0x19
+ 970 00f0 3C       		.uleb128 0x3c
+ 971 00f1 19       		.uleb128 0x19
+ 972 00f2 00       		.byte	0
+ 973 00f3 00       		.byte	0
+ 974 00f4 13       		.uleb128 0x13
+ 975 00f5 35       		.uleb128 0x35
+ 976 00f6 00       		.byte	0
+ 977 00f7 49       		.uleb128 0x49
+ 978 00f8 13       		.uleb128 0x13
+ 979 00f9 00       		.byte	0
+ 980 00fa 00       		.byte	0
+ 981 00fb 14       		.uleb128 0x14
+ 982 00fc 2E       		.uleb128 0x2e
+ 983 00fd 00       		.byte	0
+ 984 00fe 3F       		.uleb128 0x3f
+ 985 00ff 19       		.uleb128 0x19
+ 986 0100 3C       		.uleb128 0x3c
+ 987 0101 19       		.uleb128 0x19
+ 988 0102 6E       		.uleb128 0x6e
+ 989 0103 0E       		.uleb128 0xe
+ 990 0104 03       		.uleb128 0x3
+ 991 0105 0E       		.uleb128 0xe
+ 992 0106 3A       		.uleb128 0x3a
+ 993 0107 0B       		.uleb128 0xb
+ 994 0108 3B       		.uleb128 0x3b
+ 995 0109 0B       		.uleb128 0xb
+ 996 010a 00       		.byte	0
+ 997 010b 00       		.byte	0
+ 998 010c 00       		.byte	0
+ 999              		.section	.debug_loc,"",%progbits
+ 1000              	.Ldebug_loc0:
+ 1001              	.LLST0:
+ 1002 0000 00000000 		.4byte	.LVL0
+ 1003 0004 04000000 		.4byte	.LVL1
+ 1004 0008 0200     		.2byte	0x2
+ 1005 000a 37       		.byte	0x37
+ 1006 000b 9F       		.byte	0x9f
+ 1007 000c 04000000 		.4byte	.LVL1
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 22
 
 
- 1517 00b7 3A       		.uleb128 0x3a
- 1518 00b8 0B       		.uleb128 0xb
- 1519 00b9 3B       		.uleb128 0x3b
- 1520 00ba 0B       		.uleb128 0xb
- 1521 00bb 11       		.uleb128 0x11
- 1522 00bc 01       		.uleb128 0x1
- 1523 00bd 12       		.uleb128 0x12
- 1524 00be 06       		.uleb128 0x6
- 1525 00bf 40       		.uleb128 0x40
- 1526 00c0 18       		.uleb128 0x18
- 1527 00c1 9742     		.uleb128 0x2117
- 1528 00c3 19       		.uleb128 0x19
- 1529 00c4 01       		.uleb128 0x1
- 1530 00c5 13       		.uleb128 0x13
- 1531 00c6 00       		.byte	0
- 1532 00c7 00       		.byte	0
- 1533 00c8 0E       		.uleb128 0xe
- 1534 00c9 0B       		.uleb128 0xb
- 1535 00ca 01       		.byte	0x1
- 1536 00cb 55       		.uleb128 0x55
- 1537 00cc 17       		.uleb128 0x17
- 1538 00cd 01       		.uleb128 0x1
- 1539 00ce 13       		.uleb128 0x13
- 1540 00cf 00       		.byte	0
- 1541 00d0 00       		.byte	0
- 1542 00d1 0F       		.uleb128 0xf
- 1543 00d2 898201   		.uleb128 0x4109
- 1544 00d5 00       		.byte	0
- 1545 00d6 11       		.uleb128 0x11
- 1546 00d7 01       		.uleb128 0x1
- 1547 00d8 31       		.uleb128 0x31
- 1548 00d9 13       		.uleb128 0x13
- 1549 00da 00       		.byte	0
- 1550 00db 00       		.byte	0
- 1551 00dc 10       		.uleb128 0x10
- 1552 00dd 05       		.uleb128 0x5
- 1553 00de 00       		.byte	0
- 1554 00df 03       		.uleb128 0x3
- 1555 00e0 0E       		.uleb128 0xe
- 1556 00e1 3A       		.uleb128 0x3a
- 1557 00e2 0B       		.uleb128 0xb
- 1558 00e3 3B       		.uleb128 0x3b
- 1559 00e4 0B       		.uleb128 0xb
- 1560 00e5 49       		.uleb128 0x49
- 1561 00e6 13       		.uleb128 0x13
- 1562 00e7 02       		.uleb128 0x2
- 1563 00e8 17       		.uleb128 0x17
- 1564 00e9 00       		.byte	0
- 1565 00ea 00       		.byte	0
- 1566 00eb 11       		.uleb128 0x11
- 1567 00ec 898201   		.uleb128 0x4109
- 1568 00ef 01       		.byte	0x1
- 1569 00f0 11       		.uleb128 0x11
- 1570 00f1 01       		.uleb128 0x1
- 1571 00f2 31       		.uleb128 0x31
- 1572 00f3 13       		.uleb128 0x13
- 1573 00f4 00       		.byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 33
+ 1008 0010 1C000000 		.4byte	.LVL2
+ 1009 0014 0100     		.2byte	0x1
+ 1010 0016 53       		.byte	0x53
+ 1011 0017 20000000 		.4byte	.LVL3
+ 1012 001b 28000000 		.4byte	.LVL4
+ 1013 001f 0100     		.2byte	0x1
+ 1014 0021 53       		.byte	0x53
+ 1015 0022 2C000000 		.4byte	.LVL5
+ 1016 0026 34000000 		.4byte	.LVL6
+ 1017 002a 0100     		.2byte	0x1
+ 1018 002c 53       		.byte	0x53
+ 1019 002d 38000000 		.4byte	.LVL7
+ 1020 0031 40000000 		.4byte	.LVL8
+ 1021 0035 0100     		.2byte	0x1
+ 1022 0037 53       		.byte	0x53
+ 1023 0038 44000000 		.4byte	.LVL9
+ 1024 003c 4C000000 		.4byte	.LVL11
+ 1025 0040 0100     		.2byte	0x1
+ 1026 0042 53       		.byte	0x53
+ 1027 0043 00000000 		.4byte	0
+ 1028 0047 00000000 		.4byte	0
+ 1029              	.LLST1:
+ 1030 004b 4E000000 		.4byte	.LVL12
+ 1031 004f 64000000 		.4byte	.LVL13
+ 1032 0053 0100     		.2byte	0x1
+ 1033 0055 53       		.byte	0x53
+ 1034 0056 68000000 		.4byte	.LVL14
+ 1035 005a 70000000 		.4byte	.LVL15
+ 1036 005e 0100     		.2byte	0x1
+ 1037 0060 53       		.byte	0x53
+ 1038 0061 74000000 		.4byte	.LVL16
+ 1039 0065 7C000000 		.4byte	.LVL17
+ 1040 0069 0100     		.2byte	0x1
+ 1041 006b 53       		.byte	0x53
+ 1042 006c 80000000 		.4byte	.LVL18
+ 1043 0070 88000000 		.4byte	.LVL19
+ 1044 0074 0100     		.2byte	0x1
+ 1045 0076 53       		.byte	0x53
+ 1046 0077 8C000000 		.4byte	.LVL20
+ 1047 007b 92000000 		.4byte	.LVL22
+ 1048 007f 0100     		.2byte	0x1
+ 1049 0081 53       		.byte	0x53
+ 1050 0082 00000000 		.4byte	0
+ 1051 0086 00000000 		.4byte	0
+ 1052              	.LLST2:
+ 1053 008a 00000000 		.4byte	.LVL23
+ 1054 008e 08000000 		.4byte	.LVL25
+ 1055 0092 0100     		.2byte	0x1
+ 1056 0094 50       		.byte	0x50
+ 1057 0095 08000000 		.4byte	.LVL25
+ 1058 0099 34000000 		.4byte	.LFE65
+ 1059 009d 0400     		.2byte	0x4
+ 1060 009f F3       		.byte	0xf3
+ 1061 00a0 01       		.uleb128 0x1
+ 1062 00a1 50       		.byte	0x50
+ 1063 00a2 9F       		.byte	0x9f
+ 1064 00a3 00000000 		.4byte	0
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 23
 
 
- 1574 00f5 00       		.byte	0
- 1575 00f6 12       		.uleb128 0x12
- 1576 00f7 8A8201   		.uleb128 0x410a
- 1577 00fa 00       		.byte	0
- 1578 00fb 02       		.uleb128 0x2
- 1579 00fc 18       		.uleb128 0x18
- 1580 00fd 9142     		.uleb128 0x2111
- 1581 00ff 18       		.uleb128 0x18
- 1582 0100 00       		.byte	0
- 1583 0101 00       		.byte	0
- 1584 0102 13       		.uleb128 0x13
- 1585 0103 34       		.uleb128 0x34
- 1586 0104 00       		.byte	0
- 1587 0105 03       		.uleb128 0x3
- 1588 0106 0E       		.uleb128 0xe
- 1589 0107 3A       		.uleb128 0x3a
- 1590 0108 0B       		.uleb128 0xb
- 1591 0109 3B       		.uleb128 0x3b
- 1592 010a 0B       		.uleb128 0xb
- 1593 010b 49       		.uleb128 0x49
- 1594 010c 13       		.uleb128 0x13
- 1595 010d 3F       		.uleb128 0x3f
- 1596 010e 19       		.uleb128 0x19
- 1597 010f 02       		.uleb128 0x2
- 1598 0110 18       		.uleb128 0x18
- 1599 0111 00       		.byte	0
- 1600 0112 00       		.byte	0
- 1601 0113 14       		.uleb128 0x14
- 1602 0114 01       		.uleb128 0x1
- 1603 0115 01       		.byte	0x1
- 1604 0116 49       		.uleb128 0x49
- 1605 0117 13       		.uleb128 0x13
- 1606 0118 01       		.uleb128 0x1
- 1607 0119 13       		.uleb128 0x13
- 1608 011a 00       		.byte	0
- 1609 011b 00       		.byte	0
- 1610 011c 15       		.uleb128 0x15
- 1611 011d 21       		.uleb128 0x21
- 1612 011e 00       		.byte	0
- 1613 011f 49       		.uleb128 0x49
- 1614 0120 13       		.uleb128 0x13
- 1615 0121 2F       		.uleb128 0x2f
- 1616 0122 0B       		.uleb128 0xb
- 1617 0123 00       		.byte	0
- 1618 0124 00       		.byte	0
- 1619 0125 16       		.uleb128 0x16
- 1620 0126 34       		.uleb128 0x34
- 1621 0127 00       		.byte	0
- 1622 0128 03       		.uleb128 0x3
- 1623 0129 0E       		.uleb128 0xe
- 1624 012a 3A       		.uleb128 0x3a
- 1625 012b 0B       		.uleb128 0xb
- 1626 012c 3B       		.uleb128 0x3b
- 1627 012d 05       		.uleb128 0x5
- 1628 012e 49       		.uleb128 0x49
- 1629 012f 13       		.uleb128 0x13
- 1630 0130 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 34
+ 1065 00a7 00000000 		.4byte	0
+ 1066              	.LLST3:
+ 1067 00ab 04000000 		.4byte	.LVL24
+ 1068 00af 08000000 		.4byte	.LVL25
+ 1069 00b3 0200     		.2byte	0x2
+ 1070 00b5 30       		.byte	0x30
+ 1071 00b6 9F       		.byte	0x9f
+ 1072 00b7 08000000 		.4byte	.LVL25
+ 1073 00bb 2E000000 		.4byte	.LVL29
+ 1074 00bf 0100     		.2byte	0x1
+ 1075 00c1 54       		.byte	0x54
+ 1076 00c2 00000000 		.4byte	0
+ 1077 00c6 00000000 		.4byte	0
+ 1078              	.LLST4:
+ 1079 00ca 12000000 		.4byte	.LVL27
+ 1080 00ce 28000000 		.4byte	.LVL28
+ 1081 00d2 0100     		.2byte	0x1
+ 1082 00d4 50       		.byte	0x50
+ 1083 00d5 00000000 		.4byte	0
+ 1084 00d9 00000000 		.4byte	0
+ 1085              	.LLST5:
+ 1086 00dd 00000000 		.4byte	.LVL30
+ 1087 00e1 14000000 		.4byte	.LVL31
+ 1088 00e5 0100     		.2byte	0x1
+ 1089 00e7 50       		.byte	0x50
+ 1090 00e8 14000000 		.4byte	.LVL31
+ 1091 00ec 16000000 		.4byte	.LVL32
+ 1092 00f0 0400     		.2byte	0x4
+ 1093 00f2 F3       		.byte	0xf3
+ 1094 00f3 01       		.uleb128 0x1
+ 1095 00f4 50       		.byte	0x50
+ 1096 00f5 9F       		.byte	0x9f
+ 1097 00f6 16000000 		.4byte	.LVL32
+ 1098 00fa 1F000000 		.4byte	.LVL34-1
+ 1099 00fe 0100     		.2byte	0x1
+ 1100 0100 50       		.byte	0x50
+ 1101 0101 00000000 		.4byte	0
+ 1102 0105 00000000 		.4byte	0
+ 1103              		.section	.debug_aranges,"",%progbits
+ 1104 0000 2C000000 		.4byte	0x2c
+ 1105 0004 0200     		.2byte	0x2
+ 1106 0006 00000000 		.4byte	.Ldebug_info0
+ 1107 000a 04       		.byte	0x4
+ 1108 000b 00       		.byte	0
+ 1109 000c 0000     		.2byte	0
+ 1110 000e 0000     		.2byte	0
+ 1111 0010 00000000 		.4byte	.LFB64
+ 1112 0014 A4000000 		.4byte	.LFE64-.LFB64
+ 1113 0018 00000000 		.4byte	.LFB65
+ 1114 001c 34000000 		.4byte	.LFE65-.LFB65
+ 1115 0020 00000000 		.4byte	.LFB63
+ 1116 0024 30000000 		.4byte	.LFE63-.LFB63
+ 1117 0028 00000000 		.4byte	0
+ 1118 002c 00000000 		.4byte	0
+ 1119              		.section	.debug_ranges,"",%progbits
+ 1120              	.Ldebug_ranges0:
+ 1121 0000 00000000 		.4byte	.LFB64
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 24
 
 
- 1631 0131 19       		.uleb128 0x19
- 1632 0132 3C       		.uleb128 0x3c
- 1633 0133 19       		.uleb128 0x19
- 1634 0134 00       		.byte	0
- 1635 0135 00       		.byte	0
- 1636 0136 17       		.uleb128 0x17
- 1637 0137 35       		.uleb128 0x35
- 1638 0138 00       		.byte	0
- 1639 0139 49       		.uleb128 0x49
- 1640 013a 13       		.uleb128 0x13
- 1641 013b 00       		.byte	0
- 1642 013c 00       		.byte	0
- 1643 013d 18       		.uleb128 0x18
- 1644 013e 2E       		.uleb128 0x2e
- 1645 013f 00       		.byte	0
- 1646 0140 3F       		.uleb128 0x3f
- 1647 0141 19       		.uleb128 0x19
- 1648 0142 3C       		.uleb128 0x3c
- 1649 0143 19       		.uleb128 0x19
- 1650 0144 6E       		.uleb128 0x6e
- 1651 0145 0E       		.uleb128 0xe
- 1652 0146 03       		.uleb128 0x3
- 1653 0147 0E       		.uleb128 0xe
- 1654 0148 3A       		.uleb128 0x3a
- 1655 0149 0B       		.uleb128 0xb
- 1656 014a 3B       		.uleb128 0x3b
- 1657 014b 0B       		.uleb128 0xb
- 1658 014c 00       		.byte	0
- 1659 014d 00       		.byte	0
- 1660 014e 00       		.byte	0
- 1661              		.section	.debug_loc,"",%progbits
- 1662              	.Ldebug_loc0:
- 1663              	.LLST0:
- 1664 0000 00000000 		.4byte	.LVL0
- 1665 0004 08000000 		.4byte	.LVL1
- 1666 0008 0200     		.2byte	0x2
- 1667 000a 30       		.byte	0x30
- 1668 000b 9F       		.byte	0x9f
- 1669 000c 08000000 		.4byte	.LVL1
- 1670 0010 12000000 		.4byte	.LVL2
- 1671 0014 0100     		.2byte	0x1
- 1672 0016 50       		.byte	0x50
- 1673 0017 14000000 		.4byte	.LVL3
- 1674 001b 20000000 		.4byte	.LVL5
- 1675 001f 0100     		.2byte	0x1
- 1676 0021 50       		.byte	0x50
- 1677 0022 20000000 		.4byte	.LVL5
- 1678 0026 24000000 		.4byte	.LVL6
- 1679 002a 0200     		.2byte	0x2
- 1680 002c 30       		.byte	0x30
- 1681 002d 9F       		.byte	0x9f
- 1682 002e 24000000 		.4byte	.LVL6
- 1683 0032 30000000 		.4byte	.LVL8
- 1684 0036 0100     		.2byte	0x1
- 1685 0038 50       		.byte	0x50
- 1686 0039 00000000 		.4byte	0
- 1687 003d 00000000 		.4byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 35
+ 1122 0004 A4000000 		.4byte	.LFE64
+ 1123 0008 00000000 		.4byte	.LFB65
+ 1124 000c 34000000 		.4byte	.LFE65
+ 1125 0010 00000000 		.4byte	.LFB63
+ 1126 0014 30000000 		.4byte	.LFE63
+ 1127 0018 00000000 		.4byte	0
+ 1128 001c 00000000 		.4byte	0
+ 1129              		.section	.debug_line,"",%progbits
+ 1130              	.Ldebug_line0:
+ 1131 0000 17020000 		.section	.debug_str,"MS",%progbits,1
+ 1131      02006301 
+ 1131      00000201 
+ 1131      FB0E0D00 
+ 1131      01010101 
+ 1132              	.LASF41:
+ 1133 0000 626F6F6C 		.ascii	"boolIsVanLijn\000"
+ 1133      49735661 
+ 1133      6E4C696A 
+ 1133      6E00
+ 1134              	.LASF29:
+ 1135 000e 54657374 		.ascii	"TestGetal\000"
+ 1135      47657461 
+ 1135      6C00
+ 1136              	.LASF42:
+ 1137 0018 6C616174 		.ascii	"laatsteKant\000"
+ 1137      7374654B 
+ 1137      616E7400 
+ 1138              	.LASF22:
+ 1139 0024 76616C75 		.ascii	"value\000"
+ 1139      6500
+ 1140              	.LASF9:
+ 1141 002a 5F5F696E 		.ascii	"__int32_t\000"
+ 1141      7433325F 
+ 1141      7400
+ 1142              	.LASF30:
+ 1143 0034 6D656469 		.ascii	"mediaan\000"
+ 1143      61616E00 
+ 1144              	.LASF45:
+ 1145 003c 52616365 		.ascii	"RaceLogica.c\000"
+ 1145      4C6F6769 
+ 1145      63612E63 
+ 1145      00
+ 1146              	.LASF33:
+ 1147 0049 61766755 		.ascii	"avgUS2\000"
+ 1147      533200
+ 1148              	.LASF34:
+ 1149 0050 61766755 		.ascii	"avgUS3\000"
+ 1149      533300
+ 1150              	.LASF24:
+ 1151 0057 70776D4D 		.ascii	"pwmMotorLinks\000"
+ 1151      6F746F72 
+ 1151      4C696E6B 
+ 1151      7300
+ 1152              	.LASF21:
+ 1153 0065 416E616C 		.ascii	"AnalyseerData\000"
+ 1153      79736565 
+ 1153      72446174 
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 25
 
 
- 1688              	.LLST1:
- 1689 0041 00000000 		.4byte	.LVL0
- 1690 0045 08000000 		.4byte	.LVL1
- 1691 0049 0200     		.2byte	0x2
- 1692 004b 30       		.byte	0x30
- 1693 004c 9F       		.byte	0x9f
- 1694 004d 08000000 		.4byte	.LVL1
- 1695 0051 1A000000 		.4byte	.LVL4
- 1696 0055 0100     		.2byte	0x1
- 1697 0057 51       		.byte	0x51
- 1698 0058 1A000000 		.4byte	.LVL4
- 1699 005c 24000000 		.4byte	.LVL6
- 1700 0060 0100     		.2byte	0x1
- 1701 0062 50       		.byte	0x50
- 1702 0063 24000000 		.4byte	.LVL6
- 1703 0067 30000000 		.4byte	.LVL8
- 1704 006b 0100     		.2byte	0x1
- 1705 006d 51       		.byte	0x51
- 1706 006e 30000000 		.4byte	.LVL8
- 1707 0072 3C000000 		.4byte	.LFE65
- 1708 0076 0100     		.2byte	0x1
- 1709 0078 50       		.byte	0x50
- 1710 0079 00000000 		.4byte	0
- 1711 007d 00000000 		.4byte	0
- 1712              	.LLST2:
- 1713 0081 00000000 		.4byte	.LVL0
- 1714 0085 08000000 		.4byte	.LVL1
- 1715 0089 0200     		.2byte	0x2
- 1716 008b 30       		.byte	0x30
- 1717 008c 9F       		.byte	0x9f
- 1718 008d 08000000 		.4byte	.LVL1
- 1719 0091 3C000000 		.4byte	.LFE65
- 1720 0095 0100     		.2byte	0x1
- 1721 0097 53       		.byte	0x53
- 1722 0098 00000000 		.4byte	0
- 1723 009c 00000000 		.4byte	0
- 1724              	.LLST3:
- 1725 00a0 00000000 		.4byte	.LVL9
- 1726 00a4 04000000 		.4byte	.LVL10
- 1727 00a8 0200     		.2byte	0x2
- 1728 00aa 37       		.byte	0x37
- 1729 00ab 9F       		.byte	0x9f
- 1730 00ac 04000000 		.4byte	.LVL10
- 1731 00b0 32000000 		.4byte	.LVL11
- 1732 00b4 0100     		.2byte	0x1
- 1733 00b6 53       		.byte	0x53
- 1734 00b7 36000000 		.4byte	.LVL12
- 1735 00bb 3E000000 		.4byte	.LVL13
- 1736 00bf 0100     		.2byte	0x1
- 1737 00c1 53       		.byte	0x53
- 1738 00c2 42000000 		.4byte	.LVL14
- 1739 00c6 4A000000 		.4byte	.LVL15
- 1740 00ca 0100     		.2byte	0x1
- 1741 00cc 53       		.byte	0x53
- 1742 00cd 4E000000 		.4byte	.LVL16
- 1743 00d1 56000000 		.4byte	.LVL17
- 1744 00d5 0100     		.2byte	0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 36
+ 1153      6100
+ 1154              	.LASF10:
+ 1155 0073 696E7433 		.ascii	"int32_t\000"
+ 1155      325F7400 
+ 1156              	.LASF31:
+ 1157 007b 73656C65 		.ascii	"selectUS\000"
+ 1157      63745553 
+ 1157      00
+ 1158              	.LASF13:
+ 1159 0084 666C6F61 		.ascii	"float\000"
+ 1159      7400
+ 1160              	.LASF23:
+ 1161 008a 64617461 		.ascii	"data\000"
+ 1161      00
+ 1162              	.LASF1:
+ 1163 008f 756E7369 		.ascii	"unsigned char\000"
+ 1163      676E6564 
+ 1163      20636861 
+ 1163      7200
+ 1164              	.LASF44:
+ 1165 009d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1165      43313120 
+ 1165      352E342E 
+ 1165      31203230 
+ 1165      31363036 
+ 1166 00d0 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1166      20726576 
+ 1166      6973696F 
+ 1166      6E203233 
+ 1166      37373135 
+ 1167 0103 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1167      66756E63 
+ 1167      74696F6E 
+ 1167      2D736563 
+ 1167      74696F6E 
+ 1168              	.LASF38:
+ 1169 012b 49524469 		.ascii	"IRDigitaleWaarden\000"
+ 1169      67697461 
+ 1169      6C655761 
+ 1169      61726465 
+ 1169      6E00
+ 1170              	.LASF32:
+ 1171 013d 61766755 		.ascii	"avgUS1\000"
+ 1171      533100
+ 1172              	.LASF5:
+ 1173 0144 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1173      20756E73 
+ 1173      69676E65 
+ 1173      6420696E 
+ 1173      7400
+ 1174              	.LASF3:
+ 1175 0156 73686F72 		.ascii	"short unsigned int\000"
+ 1175      7420756E 
+ 1175      7369676E 
+ 1175      65642069 
+ 1175      6E7400
+ 1176              	.LASF36:
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 26
 
 
- 1745 00d7 53       		.byte	0x53
- 1746 00d8 5A000000 		.4byte	.LVL18
- 1747 00dc 62000000 		.4byte	.LVL20
- 1748 00e0 0100     		.2byte	0x1
- 1749 00e2 53       		.byte	0x53
- 1750 00e3 00000000 		.4byte	0
- 1751 00e7 00000000 		.4byte	0
- 1752              	.LLST4:
- 1753 00eb 64000000 		.4byte	.LVL21
- 1754 00ef 8E000000 		.4byte	.LVL22
- 1755 00f3 0100     		.2byte	0x1
- 1756 00f5 53       		.byte	0x53
- 1757 00f6 92000000 		.4byte	.LVL23
- 1758 00fa 9A000000 		.4byte	.LVL24
- 1759 00fe 0100     		.2byte	0x1
- 1760 0100 53       		.byte	0x53
- 1761 0101 9E000000 		.4byte	.LVL25
- 1762 0105 A6000000 		.4byte	.LVL26
- 1763 0109 0100     		.2byte	0x1
- 1764 010b 53       		.byte	0x53
- 1765 010c AA000000 		.4byte	.LVL27
- 1766 0110 B2000000 		.4byte	.LVL28
- 1767 0114 0100     		.2byte	0x1
- 1768 0116 53       		.byte	0x53
- 1769 0117 B6000000 		.4byte	.LVL29
- 1770 011b BE000000 		.4byte	.LVL31
- 1771 011f 0100     		.2byte	0x1
- 1772 0121 53       		.byte	0x53
- 1773 0122 00000000 		.4byte	0
- 1774 0126 00000000 		.4byte	0
- 1775              	.LLST5:
- 1776 012a 00000000 		.4byte	.LVL32
- 1777 012e 04000000 		.4byte	.LVL33
- 1778 0132 0200     		.2byte	0x2
- 1779 0134 30       		.byte	0x30
- 1780 0135 9F       		.byte	0x9f
- 1781 0136 04000000 		.4byte	.LVL33
- 1782 013a 2E000000 		.4byte	.LVL34
- 1783 013e 0100     		.2byte	0x1
- 1784 0140 53       		.byte	0x53
- 1785 0141 32000000 		.4byte	.LVL35
- 1786 0145 3A000000 		.4byte	.LVL36
- 1787 0149 0100     		.2byte	0x1
- 1788 014b 53       		.byte	0x53
- 1789 014c 3E000000 		.4byte	.LVL37
- 1790 0150 46000000 		.4byte	.LVL38
- 1791 0154 0100     		.2byte	0x1
- 1792 0156 53       		.byte	0x53
- 1793 0157 4A000000 		.4byte	.LVL39
- 1794 015b 52000000 		.4byte	.LVL40
- 1795 015f 0100     		.2byte	0x1
- 1796 0161 53       		.byte	0x53
- 1797 0162 56000000 		.4byte	.LVL41
- 1798 0166 5E000000 		.4byte	.LVL43
- 1799 016a 0100     		.2byte	0x1
- 1800 016c 53       		.byte	0x53
- 1801 016d 00000000 		.4byte	0
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 37
+ 1177 0169 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1177      52784275 
+ 1177      66666572 
+ 1177      00
+ 1178              	.LASF28:
+ 1179 0176 49524472 		.ascii	"IRDrempel\000"
+ 1179      656D7065 
+ 1179      6C00
+ 1180              	.LASF14:
+ 1181 0180 646F7562 		.ascii	"double\000"
+ 1181      6C6500
+ 1182              	.LASF40:
+ 1183 0187 44617461 		.ascii	"Data\000"
+ 1183      00
+ 1184              	.LASF12:
+ 1185 018c 75696E74 		.ascii	"uint16\000"
+ 1185      313600
+ 1186              	.LASF25:
+ 1187 0193 70776D4D 		.ascii	"pwmMotorRechts\000"
+ 1187      6F746F72 
+ 1187      52656368 
+ 1187      747300
+ 1188              	.LASF8:
+ 1189 01a2 756E7369 		.ascii	"unsigned int\000"
+ 1189      676E6564 
+ 1189      20696E74 
+ 1189      00
+ 1190              	.LASF18:
+ 1191 01af 73747575 		.ascii	"stuurMotorenBij\000"
+ 1191      724D6F74 
+ 1191      6F72656E 
+ 1191      42696A00 
+ 1192              	.LASF19:
+ 1193 01bf 506C6161 		.ascii	"PlaatsIRWaardenInArray\000"
+ 1193      74734952 
+ 1193      57616172 
+ 1193      64656E49 
+ 1193      6E417272 
+ 1194              	.LASF7:
+ 1195 01d6 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1195      206C6F6E 
+ 1195      6720756E 
+ 1195      7369676E 
+ 1195      65642069 
+ 1196              	.LASF27:
+ 1197 01ed 49525761 		.ascii	"IRWaarden\000"
+ 1197      61726465 
+ 1197      6E00
+ 1198              	.LASF46:
+ 1199 01f7 433A5C55 		.ascii	"C:\\Users\\Jona\\Documents\\GitHub\\RobotComp2ELO\\"
+ 1199      73657273 
+ 1199      5C4A6F6E 
+ 1199      615C446F 
+ 1199      63756D65 
+ 1200 0224 536F6674 		.ascii	"Software\\PSoc\\Roadster\\RoadsterRACEMODE\\Roadste"
+ 1200      77617265 
+ 1200      5C50536F 
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 27
 
 
- 1802 0171 00000000 		.4byte	0
- 1803              	.LLST6:
- 1804 0175 60000000 		.4byte	.LVL44
- 1805 0179 8E000000 		.4byte	.LVL45
- 1806 017d 0100     		.2byte	0x1
- 1807 017f 53       		.byte	0x53
- 1808 0180 92000000 		.4byte	.LVL46
- 1809 0184 9A000000 		.4byte	.LVL47
- 1810 0188 0100     		.2byte	0x1
- 1811 018a 53       		.byte	0x53
- 1812 018b 9E000000 		.4byte	.LVL48
- 1813 018f A6000000 		.4byte	.LVL49
- 1814 0193 0100     		.2byte	0x1
- 1815 0195 53       		.byte	0x53
- 1816 0196 AA000000 		.4byte	.LVL50
- 1817 019a B2000000 		.4byte	.LVL51
- 1818 019e 0100     		.2byte	0x1
- 1819 01a0 53       		.byte	0x53
- 1820 01a1 B6000000 		.4byte	.LVL52
- 1821 01a5 BE000000 		.4byte	.LVL54
- 1822 01a9 0100     		.2byte	0x1
- 1823 01ab 53       		.byte	0x53
- 1824 01ac 00000000 		.4byte	0
- 1825 01b0 00000000 		.4byte	0
- 1826              	.LLST7:
- 1827 01b4 02000000 		.4byte	.LVL55
- 1828 01b8 0A000000 		.4byte	.LVL56
- 1829 01bc 0200     		.2byte	0x2
- 1830 01be 30       		.byte	0x30
- 1831 01bf 9F       		.byte	0x9f
- 1832 01c0 0A000000 		.4byte	.LVL56
- 1833 01c4 18000000 		.4byte	.LVL57
- 1834 01c8 0100     		.2byte	0x1
- 1835 01ca 51       		.byte	0x51
- 1836 01cb 1A000000 		.4byte	.LVL58
- 1837 01cf 33000000 		.4byte	.LVL62-1
- 1838 01d3 0100     		.2byte	0x1
- 1839 01d5 51       		.byte	0x51
- 1840 01d6 36000000 		.4byte	.LVL63
- 1841 01da 3D000000 		.4byte	.LVL64-1
- 1842 01de 0100     		.2byte	0x1
- 1843 01e0 51       		.byte	0x51
- 1844 01e1 00000000 		.4byte	0
- 1845 01e5 00000000 		.4byte	0
- 1846              	.LLST8:
- 1847 01e9 02000000 		.4byte	.LVL55
- 1848 01ed 0A000000 		.4byte	.LVL56
- 1849 01f1 0200     		.2byte	0x2
- 1850 01f3 30       		.byte	0x30
- 1851 01f4 9F       		.byte	0x9f
- 1852 01f5 0A000000 		.4byte	.LVL56
- 1853 01f9 24000000 		.4byte	.LVL59
- 1854 01fd 0100     		.2byte	0x1
- 1855 01ff 50       		.byte	0x50
- 1856 0200 26000000 		.4byte	.LVL60
- 1857 0204 33000000 		.4byte	.LVL62-1
- 1858 0208 0100     		.2byte	0x1
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 38
+ 1200      635C526F 
+ 1200      61647374 
+ 1201 0253 72312E30 		.ascii	"r1.0.cydsn\000"
+ 1201      2E637964 
+ 1201      736E00
+ 1202              	.LASF43:
+ 1203 025e 616E7469 		.ascii	"antiSlipTeller\000"
+ 1203      536C6970 
+ 1203      54656C6C 
+ 1203      657200
+ 1204              	.LASF17:
+ 1205 026d 73697A65 		.ascii	"sizetype\000"
+ 1205      74797065 
+ 1205      00
+ 1206              	.LASF6:
+ 1207 0276 6C6F6E67 		.ascii	"long long int\000"
+ 1207      206C6F6E 
+ 1207      6720696E 
+ 1207      7400
+ 1208              	.LASF15:
+ 1209 0284 63686172 		.ascii	"char\000"
+ 1209      00
+ 1210              	.LASF26:
+ 1211 0289 72696368 		.ascii	"richting\000"
+ 1211      74696E67 
+ 1211      00
+ 1212              	.LASF20:
+ 1213 0292 746D7057 		.ascii	"tmpWaarde\000"
+ 1213      61617264 
+ 1213      6500
+ 1214              	.LASF37:
+ 1215 029c 49527365 		.ascii	"IRsensorGewicht\000"
+ 1215      6E736F72 
+ 1215      47657769 
+ 1215      63687400 
+ 1216              	.LASF47:
+ 1217 02ac 6578706F 		.ascii	"exponent\000"
+ 1217      6E656E74 
+ 1217      00
+ 1218              	.LASF2:
+ 1219 02b5 73686F72 		.ascii	"short int\000"
+ 1219      7420696E 
+ 1219      7400
+ 1220              	.LASF11:
+ 1221 02bf 75696E74 		.ascii	"uint8\000"
+ 1221      3800
+ 1222              	.LASF4:
+ 1223 02c5 6C6F6E67 		.ascii	"long int\000"
+ 1223      20696E74 
+ 1223      00
+ 1224              	.LASF16:
+ 1225 02ce 6C6F6E67 		.ascii	"long double\000"
+ 1225      20646F75 
+ 1225      626C6500 
+ 1226              	.LASF0:
+ 1227 02da 7369676E 		.ascii	"signed char\000"
+ 1227      65642063 
+ARM GAS  C:\Users\Jona\AppData\Local\Temp\ccyK3VJm.s 			page 28
 
 
- 1859 020a 50       		.byte	0x50
- 1860 020b 36000000 		.4byte	.LVL63
- 1861 020f 3D000000 		.4byte	.LVL64-1
- 1862 0213 0100     		.2byte	0x1
- 1863 0215 50       		.byte	0x50
- 1864 0216 00000000 		.4byte	0
- 1865 021a 00000000 		.4byte	0
- 1866              	.LLST9:
- 1867 021e 02000000 		.4byte	.LVL55
- 1868 0222 0A000000 		.4byte	.LVL56
- 1869 0226 0200     		.2byte	0x2
- 1870 0228 30       		.byte	0x30
- 1871 0229 9F       		.byte	0x9f
- 1872 022a 0A000000 		.4byte	.LVL56
- 1873 022e 33000000 		.4byte	.LVL62-1
- 1874 0232 0100     		.2byte	0x1
- 1875 0234 53       		.byte	0x53
- 1876 0235 36000000 		.4byte	.LVL63
- 1877 0239 3D000000 		.4byte	.LVL64-1
- 1878 023d 0100     		.2byte	0x1
- 1879 023f 53       		.byte	0x53
- 1880 0240 00000000 		.4byte	0
- 1881 0244 00000000 		.4byte	0
- 1882              	.LLST10:
- 1883 0248 00000000 		.4byte	.LVL65
- 1884 024c 08000000 		.4byte	.LVL67
- 1885 0250 0100     		.2byte	0x1
- 1886 0252 50       		.byte	0x50
- 1887 0253 08000000 		.4byte	.LVL67
- 1888 0257 34000000 		.4byte	.LFE68
- 1889 025b 0400     		.2byte	0x4
- 1890 025d F3       		.byte	0xf3
- 1891 025e 01       		.uleb128 0x1
- 1892 025f 50       		.byte	0x50
- 1893 0260 9F       		.byte	0x9f
- 1894 0261 00000000 		.4byte	0
- 1895 0265 00000000 		.4byte	0
- 1896              	.LLST11:
- 1897 0269 04000000 		.4byte	.LVL66
- 1898 026d 08000000 		.4byte	.LVL67
- 1899 0271 0200     		.2byte	0x2
- 1900 0273 30       		.byte	0x30
- 1901 0274 9F       		.byte	0x9f
- 1902 0275 08000000 		.4byte	.LVL67
- 1903 0279 2E000000 		.4byte	.LVL71
- 1904 027d 0100     		.2byte	0x1
- 1905 027f 54       		.byte	0x54
- 1906 0280 00000000 		.4byte	0
- 1907 0284 00000000 		.4byte	0
- 1908              	.LLST12:
- 1909 0288 12000000 		.4byte	.LVL69
- 1910 028c 28000000 		.4byte	.LVL70
- 1911 0290 0100     		.2byte	0x1
- 1912 0292 50       		.byte	0x50
- 1913 0293 00000000 		.4byte	0
- 1914 0297 00000000 		.4byte	0
- 1915              	.LLST13:
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 39
-
-
- 1916 029b 00000000 		.4byte	.LVL72
- 1917 029f 14000000 		.4byte	.LVL73
- 1918 02a3 0100     		.2byte	0x1
- 1919 02a5 50       		.byte	0x50
- 1920 02a6 14000000 		.4byte	.LVL73
- 1921 02aa 16000000 		.4byte	.LVL74
- 1922 02ae 0400     		.2byte	0x4
- 1923 02b0 F3       		.byte	0xf3
- 1924 02b1 01       		.uleb128 0x1
- 1925 02b2 50       		.byte	0x50
- 1926 02b3 9F       		.byte	0x9f
- 1927 02b4 16000000 		.4byte	.LVL74
- 1928 02b8 1F000000 		.4byte	.LVL76-1
- 1929 02bc 0100     		.2byte	0x1
- 1930 02be 50       		.byte	0x50
- 1931 02bf 00000000 		.4byte	0
- 1932 02c3 00000000 		.4byte	0
- 1933              		.section	.debug_aranges,"",%progbits
- 1934 0000 44000000 		.4byte	0x44
- 1935 0004 0200     		.2byte	0x2
- 1936 0006 00000000 		.4byte	.Ldebug_info0
- 1937 000a 04       		.byte	0x4
- 1938 000b 00       		.byte	0
- 1939 000c 0000     		.2byte	0
- 1940 000e 0000     		.2byte	0
- 1941 0010 00000000 		.4byte	.LFB65
- 1942 0014 3C000000 		.4byte	.LFE65-.LFB65
- 1943 0018 00000000 		.4byte	.LFB66
- 1944 001c 20010000 		.4byte	.LFE66-.LFB66
- 1945 0020 00000000 		.4byte	.LFB67
- 1946 0024 20010000 		.4byte	.LFE67-.LFB67
- 1947 0028 00000000 		.4byte	.LFB64
- 1948 002c 44000000 		.4byte	.LFE64-.LFB64
- 1949 0030 00000000 		.4byte	.LFB68
- 1950 0034 34000000 		.4byte	.LFE68-.LFB68
- 1951 0038 00000000 		.4byte	.LFB63
- 1952 003c 30000000 		.4byte	.LFE63-.LFB63
- 1953 0040 00000000 		.4byte	0
- 1954 0044 00000000 		.4byte	0
- 1955              		.section	.debug_ranges,"",%progbits
- 1956              	.Ldebug_ranges0:
- 1957 0000 00000000 		.4byte	.LBB2
- 1958 0004 02000000 		.4byte	.LBE2
- 1959 0008 06000000 		.4byte	.LBB3
- 1960 000c 2A000000 		.4byte	.LBE3
- 1961 0010 00000000 		.4byte	0
- 1962 0014 00000000 		.4byte	0
- 1963 0018 02000000 		.4byte	.LBB8
- 1964 001c 04000000 		.4byte	.LBE8
- 1965 0020 08000000 		.4byte	.LBB9
- 1966 0024 2C000000 		.4byte	.LBE9
- 1967 0028 00000000 		.4byte	0
- 1968 002c 00000000 		.4byte	0
- 1969 0030 00000000 		.4byte	.LFB65
- 1970 0034 3C000000 		.4byte	.LFE65
- 1971 0038 00000000 		.4byte	.LFB66
- 1972 003c 20010000 		.4byte	.LFE66
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 40
-
-
- 1973 0040 00000000 		.4byte	.LFB67
- 1974 0044 20010000 		.4byte	.LFE67
- 1975 0048 00000000 		.4byte	.LFB64
- 1976 004c 44000000 		.4byte	.LFE64
- 1977 0050 00000000 		.4byte	.LFB68
- 1978 0054 34000000 		.4byte	.LFE68
- 1979 0058 00000000 		.4byte	.LFB63
- 1980 005c 30000000 		.4byte	.LFE63
- 1981 0060 00000000 		.4byte	0
- 1982 0064 00000000 		.4byte	0
- 1983              		.section	.debug_line,"",%progbits
- 1984              	.Ldebug_line0:
- 1985 0000 6B030000 		.section	.debug_str,"MS",%progbits,1
- 1985      02006301 
- 1985      00000201 
- 1985      FB0E0D00 
- 1985      01010101 
- 1986              	.LASF47:
- 1987 0000 626F6F6C 		.ascii	"boolIsVanLijn\000"
- 1987      49735661 
- 1987      6E4C696A 
- 1987      6E00
- 1988              	.LASF18:
- 1989 000e 74656C6C 		.ascii	"teller\000"
- 1989      657200
- 1990              	.LASF35:
- 1991 0015 54657374 		.ascii	"TestGetal\000"
- 1991      47657461 
- 1991      6C00
- 1992              	.LASF48:
- 1993 001f 6C616174 		.ascii	"laatsteKant\000"
- 1993      7374654B 
- 1993      616E7400 
- 1994              	.LASF28:
- 1995 002b 76616C75 		.ascii	"value\000"
- 1995      6500
- 1996              	.LASF9:
- 1997 0031 5F5F696E 		.ascii	"__int32_t\000"
- 1997      7433325F 
- 1997      7400
- 1998              	.LASF36:
- 1999 003b 6D656469 		.ascii	"mediaan\000"
- 1999      61616E00 
- 2000              	.LASF51:
- 2001 0043 52616365 		.ascii	"RaceLogica.c\000"
- 2001      4C6F6769 
- 2001      63612E63 
- 2001      00
- 2002              	.LASF39:
- 2003 0050 61766755 		.ascii	"avgUS2\000"
- 2003      533200
- 2004              	.LASF40:
- 2005 0057 61766755 		.ascii	"avgUS3\000"
- 2005      533300
- 2006              	.LASF30:
- 2007 005e 70776D4D 		.ascii	"pwmMotorLinks\000"
- 2007      6F746F72 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 41
-
-
- 2007      4C696E6B 
- 2007      7300
- 2008              	.LASF27:
- 2009 006c 416E616C 		.ascii	"AnalyseerData\000"
- 2009      79736565 
- 2009      72446174 
- 2009      6100
- 2010              	.LASF10:
- 2011 007a 696E7433 		.ascii	"int32_t\000"
- 2011      325F7400 
- 2012              	.LASF37:
- 2013 0082 73656C65 		.ascii	"selectUS\000"
- 2013      63745553 
- 2013      00
- 2014              	.LASF13:
- 2015 008b 666C6F61 		.ascii	"float\000"
- 2015      7400
- 2016              	.LASF29:
- 2017 0091 64617461 		.ascii	"data\000"
- 2017      00
- 2018              	.LASF53:
- 2019 0096 4C696E6B 		.ascii	"LinksVsRechts\000"
- 2019      73567352 
- 2019      65636874 
- 2019      7300
- 2020              	.LASF1:
- 2021 00a4 756E7369 		.ascii	"unsigned char\000"
- 2021      676E6564 
- 2021      20636861 
- 2021      7200
- 2022              	.LASF50:
- 2023 00b2 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 2023      43313120 
- 2023      352E342E 
- 2023      31203230 
- 2023      31363036 
- 2024 00e5 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 2024      20726576 
- 2024      6973696F 
- 2024      6E203233 
- 2024      37373135 
- 2025 0118 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 2025      66756E63 
- 2025      74696F6E 
- 2025      2D736563 
- 2025      74696F6E 
- 2026              	.LASF44:
- 2027 0140 49524469 		.ascii	"IRDigitaleWaarden\000"
- 2027      67697461 
- 2027      6C655761 
- 2027      61726465 
- 2027      6E00
- 2028              	.LASF38:
- 2029 0152 61766755 		.ascii	"avgUS1\000"
- 2029      533100
- 2030              	.LASF5:
- 2031 0159 6C6F6E67 		.ascii	"long unsigned int\000"
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 42
-
-
- 2031      20756E73 
- 2031      69676E65 
- 2031      6420696E 
- 2031      7400
- 2032              	.LASF19:
- 2033 016b 64696B73 		.ascii	"diksteLijn\000"
- 2033      74654C69 
- 2033      6A6E00
- 2034              	.LASF3:
- 2035 0176 73686F72 		.ascii	"short unsigned int\000"
- 2035      7420756E 
- 2035      7369676E 
- 2035      65642069 
- 2035      6E7400
- 2036              	.LASF42:
- 2037 0189 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 2037      52784275 
- 2037      66666572 
- 2037      00
- 2038              	.LASF34:
- 2039 0196 49524472 		.ascii	"IRDrempel\000"
- 2039      656D7065 
- 2039      6C00
- 2040              	.LASF14:
- 2041 01a0 646F7562 		.ascii	"double\000"
- 2041      6C6500
- 2042              	.LASF46:
- 2043 01a7 44617461 		.ascii	"Data\000"
- 2043      00
- 2044              	.LASF12:
- 2045 01ac 75696E74 		.ascii	"uint16\000"
- 2045      313600
- 2046              	.LASF31:
- 2047 01b3 70776D4D 		.ascii	"pwmMotorRechts\000"
- 2047      6F746F72 
- 2047      52656368 
- 2047      747300
- 2048              	.LASF8:
- 2049 01c2 756E7369 		.ascii	"unsigned int\000"
- 2049      676E6564 
- 2049      20696E74 
- 2049      00
- 2050              	.LASF25:
- 2051 01cf 506C6161 		.ascii	"PlaatsIRWaardenInArray\000"
- 2051      74734952 
- 2051      57616172 
- 2051      64656E49 
- 2051      6E417272 
- 2052              	.LASF7:
- 2053 01e6 6C6F6E67 		.ascii	"long long unsigned int\000"
- 2053      206C6F6E 
- 2053      6720756E 
- 2053      7369676E 
- 2053      65642069 
- 2054              	.LASF33:
- 2055 01fd 49525761 		.ascii	"IRWaarden\000"
- 2055      61726465 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 43
-
-
- 2055      6E00
- 2056              	.LASF0:
- 2057 0207 7369676E 		.ascii	"signed char\000"
- 2057      65642063 
- 2057      68617200 
- 2058              	.LASF52:
- 2059 0213 433A5C55 		.ascii	"C:\\Users\\Jona\\Documents\\GitHub\\RobotComp2ELO\\"
- 2059      73657273 
- 2059      5C4A6F6E 
- 2059      615C446F 
- 2059      63756D65 
- 2060 0240 536F6674 		.ascii	"Software\\PSoc\\Roadster\\RoadsterRACEMODE\\Roadste"
- 2060      77617265 
- 2060      5C50536F 
- 2060      635C526F 
- 2060      61647374 
- 2061 026f 72312E30 		.ascii	"r1.0.cydsn\000"
- 2061      2E637964 
- 2061      736E00
- 2062              	.LASF49:
- 2063 027a 616E7469 		.ascii	"antiSlipTeller\000"
- 2063      536C6970 
- 2063      54656C6C 
- 2063      657200
- 2064              	.LASF17:
- 2065 0289 73697A65 		.ascii	"sizetype\000"
- 2065      74797065 
- 2065      00
- 2066              	.LASF6:
- 2067 0292 6C6F6E67 		.ascii	"long long int\000"
- 2067      206C6F6E 
- 2067      6720696E 
- 2067      7400
- 2068              	.LASF15:
- 2069 02a0 63686172 		.ascii	"char\000"
- 2069      00
- 2070              	.LASF32:
- 2071 02a5 72696368 		.ascii	"richting\000"
- 2071      74696E67 
- 2071      00
- 2072              	.LASF26:
- 2073 02ae 746D7057 		.ascii	"tmpWaarde\000"
- 2073      61617264 
- 2073      6500
- 2074              	.LASF23:
- 2075 02b8 6C696E6B 		.ascii	"links\000"
- 2075      7300
- 2076              	.LASF20:
- 2077 02be 62657061 		.ascii	"bepaalLijnDikte\000"
- 2077      616C4C69 
- 2077      6A6E4469 
- 2077      6B746500 
- 2078              	.LASF43:
- 2079 02ce 49527365 		.ascii	"IRsensorGewicht\000"
- 2079      6E736F72 
- 2079      47657769 
- 2079      63687400 
-ARM GAS  C:\Users\Jona\AppData\Local\Temp\cctrGIcV.s 			page 44
-
-
- 2080              	.LASF54:
- 2081 02de 6578706F 		.ascii	"exponent\000"
- 2081      6E656E74 
- 2081      00
- 2082              	.LASF2:
- 2083 02e7 73686F72 		.ascii	"short int\000"
- 2083      7420696E 
- 2083      7400
- 2084              	.LASF11:
- 2085 02f1 75696E74 		.ascii	"uint8\000"
- 2085      3800
- 2086              	.LASF4:
- 2087 02f7 6C6F6E67 		.ascii	"long int\000"
- 2087      20696E74 
- 2087      00
- 2088              	.LASF22:
- 2089 0300 73747575 		.ascii	"stuurMotorenBijLNR\000"
- 2089      724D6F74 
- 2089      6F72656E 
- 2089      42696A4C 
- 2089      4E5200
- 2090              	.LASF16:
- 2091 0313 6C6F6E67 		.ascii	"long double\000"
- 2091      20646F75 
- 2091      626C6500 
- 2092              	.LASF21:
- 2093 031f 73747575 		.ascii	"stuurMotorenBijRNL\000"
- 2093      724D6F74 
- 2093      6F72656E 
- 2093      42696A52 
- 2093      4E4C00
- 2094              	.LASF24:
- 2095 0332 72656368 		.ascii	"rechts\000"
- 2095      747300
- 2096              	.LASF45:
- 2097 0339 696E6465 		.ascii	"indexLijn\000"
- 2097      784C696A 
- 2097      6E00
- 2098              	.LASF41:
- 2099 0343 626F6F6C 		.ascii	"boolSelect\000"
- 2099      53656C65 
- 2099      637400
- 2100              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 1227      68617200 
+ 1228              	.LASF39:
+ 1229 02e6 696E6465 		.ascii	"indexLijn\000"
+ 1229      784C696A 
+ 1229      6E00
+ 1230              	.LASF35:
+ 1231 02f0 626F6F6C 		.ascii	"boolSelect\000"
+ 1231      53656C65 
+ 1231      637400
+ 1232              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
