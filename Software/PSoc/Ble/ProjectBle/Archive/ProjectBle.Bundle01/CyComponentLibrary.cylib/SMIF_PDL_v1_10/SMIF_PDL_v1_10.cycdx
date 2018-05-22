@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="" visible="true">
+        <block name="SMIF" desc="" visible="true">
+<!-- =============== Register definitions for SMIF IP Block. =============== -->
+		    <register name="SMIF_CTL" address="0x40420000" bitWidth="32" desc="Control">
+
+<!-- **************************SMIF_CTL_REG fields ************************* -->
+<!-- Control -->
+<!-- *********************************************************************** -->
+				<field name="XIP_MODE" from="0" to="0" access="RW" desc="Mode of operation.&#xA;&#xA;Note: this field should only be changed when the IP is disabled or when STATUS.BUSY is '0' and SW should not be executing from the XIP interface or MMIO interface.">
+
+<!-- XIP_MODE bitfield enumerated values -->
+					<value name="MMIO_MODE" value="0" desc="'0': MMIO mode. Individual MMIO accesses to TX and RX FIFOs are used to generate a sequence of SPI transfers. This mode of operation allows for large flexibility in terms of the SPI transfers that can be generated."/>
+					<value name="XIP_MODE" value="1" desc="1': XIP mode. eXecute-In-Place mode: incoming read and write transfers over the AHB-Lite bus infrastructure are automatically translated in SPI transfers to read data from and write data to a device. This mode of operation allow for efficient device read and write operations. This mode is only supported in SPI_MODE."/>
+				</field>
+				<field name="CLOCK_IF_RX_SEL" from="13" to="12" access="RW" desc="Specifies device interface receiver clock &quot;clk_if_rx&quot; source. MISO data is captured on the rising edge of &quot;clk_if_rx&quot;.&#xA;&quot;0&quot;: &quot;spi_clk_out&quot; (internal clock)&#xA;&quot;1&quot;: !&quot;spi_clk_out&quot; (internal clock)&#xA;&quot;2&quot;: &quot;spi_clk_in&quot; (feedback clock)&#xA;&quot;3&quot;: !&quot;spi_clk_in&quot; (feedback clock)&#xA;&#xA;Note: the device interface transmitter clock &quot;clk_if_tx&quot; is fixed and is &quot;spi_clk_out&quot; MOSI data is driven on the falling edge of &quot;clk_if_tx&quot;.">
+				</field>
+				<field name="DESELECT_DELAY" from="18" to="16" access="RW" desc="Specifies the minimum duration of SPI deselection (&quot;spi_select_out[]&quot; is high/'1') in between SPI transfers:&#xA;&quot;0&quot;: 1 interface clock cycle.&#xA;&quot;1&quot;: 2 interface clock cycles.&#xA;&quot;2&quot;: 3 interface clock cycles.&#xA;&quot;3&quot;: 4 interface clock cycles.&#xA;&quot;4&quot;: 5 interface clock cycles.&#xA;&quot;5&quot;: 6 interface clock cycles.&#xA;&quot;6&quot;: 7 interface clock cycles.&#xA;&quot;7&quot;: 8 interface clock cycles.&#xA;&#xA;During SPI deselection, &quot;spi_select_out[]&quot; are '1'/inactive, &quot;spi_data_out[]&quot; are '1' and &quot;spi_clk_out&quot; is '0'/inactive.">
+				</field>
+				<field name="BLOCK" from="24" to="24" access="RW" desc="Specifies what happens for MMIO interface read accesses to an empty RX data FIFO or to a full TX format/data FIFO. Note: the FIFOs can only be accessed in MMIO_MODE.&#xA;&#xA;This field is not used for test controller accesses.">
+
+<!-- BLOCK bitfield enumerated values -->
+					<value name="BUS_ERROR" value="0" desc="0': Generate an AHB-Lite bus error. This option is useful when SW decides to use polling on STATUS.TR_BUSY to determine if a interface transfer is no longer busy (transfer is completed). This option adds SW complexity, but limits the number of AHB-Lite wait states (and limits ISR latency)."/>
+					<value name="WAIT_STATES" value="1" desc="1': Introduce wait states. This setting potentially locks up the AHB-Lite infrastructure and may increase the CPU interrupt latency.This option is useful when SW performs TX/RX data FIFO accesses immediately after a command is setup using the TX format FIFO. This option has low SW complexity, but may result in a significant number of AHB-Lite wait states (and may increase ISR latency)."/>
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="IP enable:&#xA;'0': Disabled. All non-retention registers are reset to their default value when the IP is disabled. When the IP is disabled, the XIP accesses produce AHB-Lite bus errors.&#xA;'1': Enabled.&#xA;&#xA;Note: Before disabling the IP, SW should ensure that the IP is NOT busy (STATUS.BUSY is '0'), otherwise illegal interface transfers may occur.">
+
+<!-- ENABLED bitfield enumerated values -->
+					<value name="DISABLED" value="0" desc=""/>
+					<value name="ENABLED" value="1" desc=""/>
+				</field>
+			</register>
+			<register name="SMIF_STATUS" address="0x40420004" bitWidth="32" desc="Status">
+
+<!-- ************************SMIF_STATUS_REG fields ************************ -->
+<!-- Status -->
+<!-- *********************************************************************** -->
+				<field name="BUSY" from="31" to="31" access="R" desc="Cache, cryptography, XIP, device interface or any other logic busy in the IP:&#xA;'0': not busy&#xA;'1': busy&#xA;When BUSY is '0', the IP can be safely disabled without:&#xA;- the potential loss of transient write data.&#xA;- the potential risk of aborting an inflight SPI device interface transfer.&#xA;When BUSY is '0', the mode of operation (XIP_MODE or MMIO_MODE) can be safely changed.">
+				</field>
+			</register>
+			<register name="SMIF_TX_CMD_FIFO_STATUS" address="0x40420044" bitWidth="32" desc="Transmitter command FIFO status">
+
+<!-- ******************SMIF_TX_CMD_FIFO_STATUS_REG fields ****************** -->
+<!-- Transmitter command FIFO status -->
+<!-- *********************************************************************** -->
+				<field name="USED3" from="2" to="0" access="R" desc="Number of entries that are used in the TX command FIFO (available in both XIP_MODE and MMIO_MODE). Legal range: [0, 4].">
+				</field>
+			</register>
+			<register name="SMIF_TX_CMD_FIFO_WR" address="0x40420050" bitWidth="32" desc="Transmitter command FIFO write">
+
+<!-- ********************SMIF_TX_CMD_FIFO_WR_REG fields ******************** -->
+<!-- Transmitter command FIFO write -->
+<!-- *********************************************************************** -->
+				<field name="DATA20" from="19" to="0" access="W" desc="Command data. The higher two bits DATA[19:18] specify the specific command&#xA;&quot;0&quot;/TX: A SPI transfer always start with a TX command FIFO entry of the “TX” format.&#xA;- DATA[17:16] specifies the width of the data transfer:&#xA;   - &quot;0&quot;: 1 bit/cycle (single data transfer).&#xA;   - &quot;1&quot;: 2 bits/cycle (dual data transfer).&#xA;   - &quot;2&quot;: 4 bits/cycle (quad data transfer).&#xA;   - &quot;3&quot;: 8 bits/cycle (octal data transfer).&#xA;- DATA[15]: specifies whether this is the last TX Byte; i.e. whether the “spi_select_out[3:0]” IO output signals are de-activated after the transfer.&#xA;- DATA[11:8] specifies which of the four devices are selected. DATA[11:8] are directly mapped to &quot;spi_select_out[3:0]&quot;. Two devices can be selected at the same time in dual-quad mode.&#xA;  - '0': device deselected&#xA;  - '1': device selected &#xA;- DATA[7:0] specifies the transmitted Byte.&#xA;&#xA;&quot;1&quot;/TX_COUNT: The “TX_COUNT” command relies on the TX data FIFO to provide the transmitted bytes. The &quot;TX_COUNT&quot; command is ALWAYS considered to be the last command of a SPI data transfers.&#xA;- DATA[17:16] specifies the width of the transfer.&#xA;- DATA[15:0] specifies the number of to be transmitted Bytes (minus 1) from the TX data FIFO.&#xA;&#xA;&quot;2&quot;/RX_COUNT: The “RX_COUNT” command relies on the RX data FIFO to accept the received bytes. The &quot;RX_COUNT&quot; command is ALWAYS considered to be the last command of a SPI data transfers.&#xA;- DATA[17:16] specifies the width of the transfer.&#xA;- DATA[15:0] specifies the number of to be transmitted Bytes (minus 1) to the RX data FIFO.&#xA;&#xA;&quot;3&quot;/DUMMY_COUNT: The &quot;DUMMY_COUNT&quot; command conveys dummy cycles. Dummy cycles are used to implement a Turn-Around time in which the SPI master changes from a transmitter driving the data lines to a receiver receiving on the same data lines. The &quot;DUMMY_COUNT&quot; command is ALWAYS considered to be NOT the last command of a SPI data transfers; i.e. it needs to be followed by another command.&#xA;- DATA[15:0] specifies the number of dummy cycles (minus 1). In dummy cycles, the data lines are not driven.">
+				</field>
+			</register>
+			<register name="SMIF_TX_DATA_FIFO_CTL" address="0x40420080" bitWidth="32" desc="Transmitter data FIFO control">
+
+<!-- *******************SMIF_TX_DATA_FIFO_CTL_REG fields ******************* -->
+<!-- Transmitter data FIFO control -->
+<!-- *********************************************************************** -->
+				<field name="TRIGGER_LEVEL" from="2" to="0" access="RW" desc="Determines when the TX data FIFO &quot;tr_tx_req&quot; trigger is activated  (trigger activation requires MMIO_MODE, the trigger is NOT activated in XIP_MODE):&#xA;- Trigger is active when TX_DATA_FIFO_STATUS.USED &lt;= TRIGGER_LEVEL.">
+				</field>
+			</register>
+			<register name="SMIF_TX_DATA_FIFO_STATUS" address="0x40420084" bitWidth="32" desc="Transmitter data FIFO status">
+
+<!-- ******************SMIF_TX_DATA_FIFO_STATUS_REG fields ***************** -->
+<!-- Transmitter data FIFO status -->
+<!-- *********************************************************************** -->
+				<field name="USED4" from="3" to="0" access="R" desc="Number of entries that are used in the TX data FIFO (available in both XIP_MODE and MMIO_MODE). Legal range: [0, 8].">
+				</field>
+			</register>
+			<register name="SMIF_TX_DATA_FIFO_WR1" address="0x40420090" bitWidth="32" desc="Transmitter data FIFO write">
+
+<!-- *******************SMIF_TX_DATA_FIFO_WR1_REG fields ******************* -->
+<!-- Transmitter data FIFO write -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="W" desc="TX data (written to TX data FIFO).">
+				</field>
+			</register>
+			<register name="SMIF_TX_DATA_FIFO_WR2" address="0x40420094" bitWidth="32" desc="Transmitter data FIFO write">
+
+<!-- *******************SMIF_TX_DATA_FIFO_WR2_REG fields ******************* -->
+<!-- Transmitter data FIFO write -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="W" desc="TX data (written to TX data FIFO, first byte).">
+				</field>
+				<field name="DATA1" from="15" to="8" access="W" desc="TX data (written to TX data FIFO, second byte).">
+				</field>
+			</register>
+			<register name="SMIF_TX_DATA_FIFO_WR4" address="0x40420098" bitWidth="32" desc="Transmitter data FIFO write">
+
+<!-- *******************SMIF_TX_DATA_FIFO_WR4_REG fields ******************* -->
+<!-- Transmitter data FIFO write -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="W" desc="TX data (written to TX data FIFO, first byte).">
+				</field>
+				<field name="DATA1" from="15" to="8" access="W" desc="TX data (written to TX data FIFO, second byte).">
+				</field>
+				<field name="DATA2" from="23" to="16" access="W" desc="TX data (written to TX data FIFO, third byte).">
+				</field>
+				<field name="DATA3" from="31" to="24" access="W" desc="TX data (written to TX data FIFO, fourth byte).">
+				</field>
+			</register>
+			<register name="SMIF_RX_DATA_FIFO_CTL" address="0x404200c0" bitWidth="32" desc="Receiver data FIFO control">
+
+<!-- *******************SMIF_RX_DATA_FIFO_CTL_REG fields ******************* -->
+<!-- Receiver data FIFO control -->
+<!-- *********************************************************************** -->
+				<field name="TRIGGER_LEVEL" from="2" to="0" access="RW" desc="Determines when RX data FIFI &quot;tr_rx_req&quot; trigger is activated (trigger activation requires MMIO_MODE, the trigger is NOT activated in XIP_MODE):&#xA;- Trigger is active when RX_DATA_FIFO_STATUS.USED &gt; TRIGGER_LEVEL.">
+				</field>
+			</register>
+			<register name="SMIF_RX_DATA_FIFO_STATUS" address="0x404200c4" bitWidth="32" desc="Receiver data FIFO status">
+
+<!-- ******************SMIF_RX_DATA_FIFO_STATUS_REG fields ***************** -->
+<!-- Receiver data FIFO status -->
+<!-- *********************************************************************** -->
+				<field name="USED4" from="3" to="0" access="R" desc="Number of entries that are used in the RX data FIFO (available in both XIP_MODE and MMIO_MODE). Legal range: [0, 8].">
+				</field>
+			</register>
+			<register name="SMIF_RX_DATA_FIFO_RD1" address="0x404200d0" bitWidth="32" desc="Receiver data FIFO read">
+
+<!-- *******************SMIF_RX_DATA_FIFO_RD1_REG fields ******************* -->
+<!-- Receiver data FIFO read -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="R" desc="RX data (read from RX data FIFO).">
+				</field>
+			</register>
+			<register name="SMIF_RX_DATA_FIFO_RD2" address="0x404200d4" bitWidth="32" desc="Receiver data FIFO read">
+
+<!-- *******************SMIF_RX_DATA_FIFO_RD2_REG fields ******************* -->
+<!-- Receiver data FIFO read -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="R" desc="RX data (read from RX data FIFO, first byte).">
+				</field>
+				<field name="DATA1" from="15" to="8" access="R" desc="RX data (read from RX data FIFO, second byte).">
+				</field>
+			</register>
+			<register name="SMIF_RX_DATA_FIFO_RD4" address="0x404200d8" bitWidth="32" desc="Receiver data FIFO read">
+
+<!-- *******************SMIF_RX_DATA_FIFO_RD4_REG fields ******************* -->
+<!-- Receiver data FIFO read -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="R" desc="RX data (read from RX data FIFO, first byte).">
+				</field>
+				<field name="DATA1" from="15" to="8" access="R" desc="RX data (read from RX data FIFO, second byte).">
+				</field>
+				<field name="DATA2" from="23" to="16" access="R" desc="RX data (read from RX data FIFO, third byte).">
+				</field>
+				<field name="DATA3" from="31" to="24" access="R" desc="RX data (read from RX data FIFO, fourth byte).">
+				</field>
+			</register>
+			<register name="SMIF_RX_DATA_FIFO_RD1_SILENT" address="0x404200e0" bitWidth="32" desc="Receiver data FIFO silent read">
+
+<!-- ****************SMIF_RX_DATA_FIFO_RD1_SILENT_REG fields *************** -->
+<!-- Receiver data FIFO silent read -->
+<!-- *********************************************************************** -->
+				<field name="DATA0" from="7" to="0" access="R" desc="RX data (read from RX data FIFO).">
+				</field>
+			</register>
+			<register name="SMIF_SLOW_CA_CTL" address="0x40420100" bitWidth="32" desc="Slow cache control">
+
+<!-- **********************SMIF_SLOW_CA_CTL_REG fields ********************* -->
+<!-- Slow cache control -->
+<!-- *********************************************************************** -->
+				<field name="WAY" from="17" to="16" access="RW" desc="Specifies the cache way for which cache information is provided in SLOW_CA_STATUS0/1/2.">
+				</field>
+				<field name="SET_ADDR" from="25" to="24" access="RW" desc="Specifies the cache set for which cache information is provided in SLOW_CA_STATUS0/1/2.">
+				</field>
+				<field name="PREF_EN" from="30" to="30" access="RW" desc="Prefetch enable:&#xA;'0': Disabled.&#xA;'1': Enabled.&#xA;&#xA;Prefetching requires the cache to be enabled; i.e. ENABLED is '1'.">
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="Cache enable:&#xA;'0': Disabled.&#xA;'1': Enabled.">
+				</field>
+			</register>
+			<register name="SMIF_SLOW_CA_CMD" address="0x40420108" bitWidth="32" desc="Slow cache command">
+
+<!-- **********************SMIF_SLOW_CA_CMD_REG fields ********************* -->
+<!-- Slow cache command -->
+<!-- *********************************************************************** -->
+				<field name="INV" from="0" to="0" access="RW" desc="Cache invalidation. SW writes a '1' to clear the cache. The cache's LRU structure is also reset to its default state.">
+				</field>
+			</register>
+			<register name="SMIF_SLOW_CA_STATUS0" address="0x40420140" bitWidth="32" desc="Slow cache status 0">
+
+<!-- ********************SMIF_SLOW_CA_STATUS0_REG fields ******************* -->
+<!-- Slow cache status 0 -->
+<!-- *********************************************************************** -->
+				<field name="VALID16" from="15" to="0" access="R" desc="Sixteen valid bits of the cache line specified by SLOW_CA_CTL.WAY and SLOW_CA_CTL.SET_ADDR.">
+				</field>
+			</register>
+			<register name="SMIF_SLOW_CA_STATUS1" address="0x40420144" bitWidth="32" desc="Slow cache status 1">
+
+<!-- ********************SMIF_SLOW_CA_STATUS1_REG fields ******************* -->
+<!-- Slow cache status 1 -->
+<!-- *********************************************************************** -->
+				<field name="TAG" from="31" to="0" access="R" desc="Cache line address of the cache line specified by SLOW_CA_CTL.WAY and SLOW_CA_CTL.SET_ADDR.">
+				</field>
+			</register>
+			<register name="SMIF_SLOW_CA_STATUS2" address="0x40420148" bitWidth="32" desc="Slow cache status 2">
+
+<!-- ********************SMIF_SLOW_CA_STATUS2_REG fields ******************* -->
+<!-- Slow cache status 2 -->
+<!-- *********************************************************************** -->
+				<field name="LRU" from="5" to="0" access="R" desc="Six bit LRU representation of the cache set specified by SLOW_CA_CTL.SET_ADDR. The encoding of the field is as follows (&quot;X_LRU_Y&quot; indicates that way X is Less Recently Used than way Y):&#xA;Bit 5: 0_LRU_1: way 0 less recently used than way 1.&#xA;Bit 4: 0_LRU_2.&#xA;Bit 3: 0_LRU_3.&#xA;Bit 2: 1_LRU_2.&#xA;Bit 1: 1_LRU_3.&#xA;Bit 0: 2_LRU_3.">
+				</field>
+			</register>
+			<register name="SMIF_FAST_CA_CTL" address="0x40420180" bitWidth="32" desc="Fast cache control">
+
+<!-- **********************SMIF_FAST_CA_CTL_REG fields ********************* -->
+<!-- Fast cache control -->
+<!-- *********************************************************************** -->
+				<field name="WAY" from="17" to="16" access="RW" desc="See SLOW_CA_CTL.WAY.">
+				</field>
+				<field name="SET_ADDR" from="25" to="24" access="RW" desc="See SLOW_CA_CTL.SET_ADDR.">
+				</field>
+				<field name="PREF_EN" from="30" to="30" access="RW" desc="See SLOW_CA_CTL.PREF_EN.">
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="See SLOW_CA_CTL.ENABLED.">
+				</field>
+			</register>
+			<register name="SMIF_FAST_CA_CMD" address="0x40420188" bitWidth="32" desc="Fast cache command">
+
+<!-- **********************SMIF_FAST_CA_CMD_REG fields ********************* -->
+<!-- Fast cache command -->
+<!-- *********************************************************************** -->
+				<field name="INV" from="0" to="0" access="RW" desc="See SLOW_CA_CMD.INV.">
+				</field>
+			</register>
+			<register name="SMIF_FAST_CA_STATUS0" address="0x404201c0" bitWidth="32" desc="Fast cache status 0">
+
+<!-- ********************SMIF_FAST_CA_STATUS0_REG fields ******************* -->
+<!-- Fast cache status 0 -->
+<!-- *********************************************************************** -->
+				<field name="VALID16" from="15" to="0" access="R" desc="See SLOW_CA_STATUS0.VALID16.">
+				</field>
+			</register>
+			<register name="SMIF_FAST_CA_STATUS1" address="0x404201c4" bitWidth="32" desc="Fast cache status 1">
+
+<!-- ********************SMIF_FAST_CA_STATUS1_REG fields ******************* -->
+<!-- Fast cache status 1 -->
+<!-- *********************************************************************** -->
+				<field name="TAG" from="31" to="0" access="R" desc="See SLOW_CA_STATUS1.TAG.">
+				</field>
+			</register>
+			<register name="SMIF_FAST_CA_STATUS2" address="0x404201c8" bitWidth="32" desc="Fast cache status 2">
+
+<!-- ********************SMIF_FAST_CA_STATUS2_REG fields ******************* -->
+<!-- Fast cache status 2 -->
+<!-- *********************************************************************** -->
+				<field name="LRU" from="5" to="0" access="R" desc="See SLOW_CA_STATUS2.LRU.">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_CMD" address="0x40420200" bitWidth="32" desc="Cryptography Command">
+
+<!-- **********************SMIF_CRYPTO_CMD_REG fields ********************** -->
+<!-- Cryptography Command -->
+<!-- *********************************************************************** -->
+				<field name="START" from="0" to="0" access="RW" desc="SW sets this field to '1' to start a AES-128 forward block cipher operation (on the address in CRYPTO_ADDR). HW sets this field to '0' to indicate that the operation has completed. Once completed, the result of the operation can be read from CRYPTO_RESULT0, ..., CRYPTO_RESULT3.&#xA;&#xA;The operation takes roughly 13 clk_hf clock cycles.&#xA;&#xA;Note: An operation can only be started in MMIO_MODE.">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_INPUT0" address="0x40420220" bitWidth="32" desc="Cryptography input 0">
+
+<!-- *********************SMIF_CRYPTO_INPUT0_REG fields ******************** -->
+<!-- Cryptography input 0 -->
+<!-- *********************************************************************** -->
+				<field name="INPUT" from="31" to="0" access="RW" desc="Four Bytes of the plaintext PT[31:0] = CRYPTO_INPUT0.INPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_INPUT1" address="0x40420224" bitWidth="32" desc="Cryptography input 1">
+
+<!-- *********************SMIF_CRYPTO_INPUT1_REG fields ******************** -->
+<!-- Cryptography input 1 -->
+<!-- *********************************************************************** -->
+				<field name="INPUT" from="31" to="0" access="RW" desc="Four Bytes of the plaintext PT[63:32] = CRYPTO_INPUT1.INPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_INPUT2" address="0x40420228" bitWidth="32" desc="Cryptography input 2">
+
+<!-- *********************SMIF_CRYPTO_INPUT2_REG fields ******************** -->
+<!-- Cryptography input 2 -->
+<!-- *********************************************************************** -->
+				<field name="INPUT" from="31" to="0" access="RW" desc="Four Bytes of the plaintext PT[95:64] = CRYPTO_INPUT2.INPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_INPUT3" address="0x4042022c" bitWidth="32" desc="Cryptography input 3">
+
+<!-- *********************SMIF_CRYPTO_INPUT3_REG fields ******************** -->
+<!-- Cryptography input 3 -->
+<!-- *********************************************************************** -->
+				<field name="INPUT" from="31" to="0" access="RW" desc="Four Bytes of the plaintext PT[127:96] = CRYPTO_INPUT3.INPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_KEY0" address="0x40420240" bitWidth="32" desc="Cryptography key 0">
+
+<!-- **********************SMIF_CRYPTO_KEY0_REG fields ********************* -->
+<!-- Cryptography key 0 -->
+<!-- *********************************************************************** -->
+				<field name="KEY" from="31" to="0" access="W" desc="Four Bytes of the key KEY[31:0] = CRYPTO_KEY0.KEY[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_KEY1" address="0x40420244" bitWidth="32" desc="Cryptography key 1">
+
+<!-- **********************SMIF_CRYPTO_KEY1_REG fields ********************* -->
+<!-- Cryptography key 1 -->
+<!-- *********************************************************************** -->
+				<field name="KEY" from="31" to="0" access="W" desc="Four Bytes of the key KEY[63:32] = CRYPTO_KEY1.KEY[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_KEY2" address="0x40420248" bitWidth="32" desc="Cryptography key 2">
+
+<!-- **********************SMIF_CRYPTO_KEY2_REG fields ********************* -->
+<!-- Cryptography key 2 -->
+<!-- *********************************************************************** -->
+				<field name="KEY" from="31" to="0" access="W" desc="Four Bytes of the key KEY[95:64] = CRYPTO_KEY2.KEY[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_KEY3" address="0x4042024c" bitWidth="32" desc="Cryptography key 3">
+
+<!-- **********************SMIF_CRYPTO_KEY3_REG fields ********************* -->
+<!-- Cryptography key 3 -->
+<!-- *********************************************************************** -->
+				<field name="KEY" from="31" to="0" access="W" desc="Four Bytes of the key KEY[127:96] = CRYPTO_KEY3.KEY[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_OUTPUT0" address="0x40420260" bitWidth="32" desc="Cryptography output 0">
+
+<!-- ********************SMIF_CRYPTO_OUTPUT0_REG fields ******************** -->
+<!-- Cryptography output 0 -->
+<!-- *********************************************************************** -->
+				<field name="OUTPUT" from="31" to="0" access="RW" desc="Four Bytes of the ciphertext CT[31:0] = CRYPTO_OUTPUT0.OUTPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_OUTPUT1" address="0x40420264" bitWidth="32" desc="Cryptography output 1">
+
+<!-- ********************SMIF_CRYPTO_OUTPUT1_REG fields ******************** -->
+<!-- Cryptography output 1 -->
+<!-- *********************************************************************** -->
+				<field name="OUTPUT" from="31" to="0" access="RW" desc="Four Bytes of the ciphertext CT[63:32] = CRYPTO_OUTPUT1.OUTPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_OUTPUT2" address="0x40420268" bitWidth="32" desc="Cryptography output 2">
+
+<!-- ********************SMIF_CRYPTO_OUTPUT2_REG fields ******************** -->
+<!-- Cryptography output 2 -->
+<!-- *********************************************************************** -->
+				<field name="OUTPUT" from="31" to="0" access="RW" desc="Four Bytes of the ciphertext CT[95:64] = CRYPTO_OUTPUT2.OUTPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_CRYPTO_OUTPUT3" address="0x4042026c" bitWidth="32" desc="Cryptography output 3">
+
+<!-- ********************SMIF_CRYPTO_OUTPUT3_REG fields ******************** -->
+<!-- Cryptography output 3 -->
+<!-- *********************************************************************** -->
+				<field name="OUTPUT" from="31" to="0" access="RW" desc="Four Bytes of the ciphertext CT[127:96] = CRYPTO_OUTPUT3.OUTPUT[31:0].">
+				</field>
+			</register>
+			<register name="SMIF_INTR" address="0x404207c0" bitWidth="32" desc="Interrupt register">
+
+<!-- *************************SMIF_INTR_REG fields ************************* -->
+<!-- Interrupt register -->
+<!-- *********************************************************************** -->
+				<field name="TR_TX_REQ" from="0" to="0" access="RW" desc="Activated in MMIO mode, when a TX data FIFO trigger &quot;tr_tx_req&quot; is activated.">
+				</field>
+				<field name="TR_RX_REQ" from="1" to="1" access="RW" desc="Activated in MMIO mode, when a RX data FIFO trigger &quot;tr_rx_req&quot; is activated.">
+				</field>
+				<field name="XIP_ALIGNMENT_ERROR" from="2" to="2" access="RW" desc="Activated in XIP mode, if:&#xA;- The selected device's ADDR_CTL.DIV2 is '1' and the AHB-Lite bus transfer address is not a multiple of 2.&#xA;- The selected device's ADDR_CTL.DIV2 is '1' and the XIP transfer request is NOT for a multiple of 2 Bytes. &#xA;&#xA;Note: In dual-quad SPI mode (ADDR_CTL.DIV is '1'), each memory device contributes a 4-bit nibble for read data or write data. This is only possible if the request address is a multiple of 2 and the number of requested Bytes is a multiple of 2.">
+				</field>
+				<field name="TX_CMD_FIFO_OVERFLOW" from="3" to="3" access="RW" desc="Activated in MMIO mode, on an AHB-Lite write transfer to the TX command FIFO (TX_CMD_FIFO_WR) with not enough free entries available.">
+				</field>
+				<field name="TX_DATA_FIFO_OVERFLOW" from="4" to="4" access="RW" desc="Activated in MMIO mode, on an AHB-Lite write transfer to the TX data FIFO (TX_DATA_FIFO_WR1, TX_DATA_FIFO_WR2, TX_DATA_FIFO_WR4) with not enough free entries available.">
+				</field>
+				<field name="RX_DATA_FIFO_UNDERFLOW" from="5" to="5" access="RW" desc="Activated in MMIO mode, on an AHB-Lite read transfer from the RX data FIFO (RX_DATA_FIFO_RD1, RX_DATA_FIFO_RD2, RX_DATA_FIFO_RD4) with not enough entries available. Only activated for NON test bus controller transfers.">
+				</field>
+			</register>
+			<register name="SMIF_INTR_SET" address="0x404207c4" bitWidth="32" desc="Interrupt set register">
+
+<!-- ***********************SMIF_INTR_SET_REG fields *********************** -->
+<!-- Interrupt set register -->
+<!-- *********************************************************************** -->
+				<field name="TR_TX_REQ" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="TR_RX_REQ" from="1" to="1" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="XIP_ALIGNMENT_ERROR" from="2" to="2" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="TX_CMD_FIFO_OVERFLOW" from="3" to="3" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="TX_DATA_FIFO_OVERFLOW" from="4" to="4" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="RX_DATA_FIFO_UNDERFLOW" from="5" to="5" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="SMIF_INTR_MASK" address="0x404207c8" bitWidth="32" desc="Interrupt mask register">
+
+<!-- ***********************SMIF_INTR_MASK_REG fields ********************** -->
+<!-- Interrupt mask register -->
+<!-- *********************************************************************** -->
+				<field name="TR_TX_REQ" from="0" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="TR_RX_REQ" from="1" to="1" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="XIP_ALIGNMENT_ERROR" from="2" to="2" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="TX_CMD_FIFO_OVERFLOW" from="3" to="3" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="TX_DATA_FIFO_OVERFLOW" from="4" to="4" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="RX_DATA_FIFO_UNDERFLOW" from="5" to="5" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="SMIF_INTR_MASKED" address="0x404207cc" bitWidth="32" desc="Interrupt masked register">
+
+<!-- **********************SMIF_INTR_MASKED_REG fields ********************* -->
+<!-- Interrupt masked register -->
+<!-- *********************************************************************** -->
+				<field name="TR_TX_REQ" from="0" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="TR_RX_REQ" from="1" to="1" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="XIP_ALIGNMENT_ERROR" from="2" to="2" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="TX_CMD_FIFO_OVERFLOW" from="3" to="3" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="TX_DATA_FIFO_OVERFLOW" from="4" to="4" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="RX_DATA_FIFO_UNDERFLOW" from="5" to="5" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+			</register>
+		</block>
+			<block name="DEVICE[0]" desc="" visible="true">
+<!-- ============= Register definitions for DEVICE[0] IP Block. ============ -->
+				<register name="SMIF_DEVICE_CTL" address="0x40420800" bitWidth="32" desc="Control">
+
+<!-- **********************SMIF_DEVICE_CTL_REG fields ********************** -->
+<!-- Control -->
+<!-- *********************************************************************** -->
+					<field name="WR_EN" from="0" to="0" access="RW" desc="Write enable:&#xA;'0': write transfers are not allowed to this device. An attempt to write to this device results in an AHB-Lite bus error.&#xA;'1': write transfers are allowed to this device.">
+					</field>
+					<field name="CRYPTO_EN" from="8" to="8" access="RW" desc="Cryptography on read/write accesses:&#xA;'0': disabled.&#xA;'1': enabled.">
+					</field>
+					<field name="DATA_SEL" from="17" to="16" access="RW" desc="Specifies the connection of the IP's data lines (spi_data[0], …, spi_data[7]) to the device's data lines (SI/IO0, SO/IO1, IO2, IO3, IO4, IO5, IO6, IO7):&#xA;&quot;0&quot;: spi_data[0] = IO0, spi_data[1] = IO1, …, spi_data[7] = IO7. This value is allowed for single, dual, quad, dual quad and octal SPI modes. This value must be used for the first device in dual quad SPI mode. This value must be used for octal SPI mode.&#xA;&quot;1&quot;: spi_data[2] = IO0, spi_data[3] = IO1. This value is only allowed for single and dual SPI modes.&#xA;&quot;2&quot;: spi_data[4] = IO0, spi_data[5] = IO1, …, spi_data[7] = IO3. This value is only allowed for single, dual, quad and dual quad  SPI modes. In dual quad SPI mode, this value must be used for the second device. &#xA;&quot;3&quot;: spi_data[6] = IO0, spi_data[7] = IO1. This value is only allowed for single and dual SPI modes.">
+					</field>
+					<field name="ENABLED" from="31" to="31" access="RW" desc="Device enable:&#xA;'0': Disabled.&#xA;'1': Enabled.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR" address="0x40420808" bitWidth="32" desc="Device region base address">
+
+<!-- **********************SMIF_DEVICE_ADDR_REG fields ********************* -->
+<!-- Device region base address -->
+<!-- *********************************************************************** -->
+					<field name="ADDR" from="31" to="8" access="RW" desc="Specifies the base address of the device region. If the device region is 2^m Bytes, ADDR MUST be a multiple of 2^m.&#xA;&#xA;In dual quad SPI data transfer, the two devices should have the same ADDR and MASK register settings. The device control information (ADDR_CTL, RD_CMD_CTL, etc.) are provided by the MMIO control registers of the device with the lowest index.&#xA;&#xA;The most significant bit fields are constants and set based on the SMIF_XIP_ADDR parameter. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK is 0xff00:0000 (16 MB XIP memory region), ADDR[31:24] = SMIF_XIP_ADDR[31:24].">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_MASK" address="0x4042080c" bitWidth="32" desc="Device region mask">
+
+<!-- **********************SMIF_DEVICE_MASK_REG fields ********************* -->
+<!-- Device region mask -->
+<!-- *********************************************************************** -->
+					<field name="MASK" from="31" to="8" access="RW" desc="Specifies the size of the device region. All '1' bits are used to compare the incoming transfer request address A[31:0] with the address as specified in ADDR.ADDR: Address A is in the device when (A[31:8] &amp; MASK[31:8]) == ADDR.ADDR[31:8].&#xA;&#xA;The most significant bit fields are constants and set to'1'. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK  is 0xff00:0000 (16 MB XIP memory region), MASK[31:24] = 0xff.&#xA;&#xA;Note: a transfer request that is not in any device region results in an AHB-Lite bus error.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR_CTL" address="0x40420820" bitWidth="32" desc="Address control">
+
+<!-- ********************SMIF_DEVICE_ADDR_CTL_REG fields ******************* -->
+<!-- Address control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE2" from="1" to="0" access="RW" desc="Specifies the size of the XIP device address in Bytes:&#xA;&quot;0&quot;: 1 Byte address.&#xA;&quot;1&quot;: 2 Byte address.&#xA;&quot;2&quot;: 3 Byte address.&#xA;&quot;3&quot;: 4 Byte address.&#xA;The lower significant address Bytes of the transfer request are used as XIP address to the external device. Note that for dual quad SPI data transfer, the transfer request address is divided by 2. Therefore, the transfer request address needs to be a multiple of 2. If the trasnfer requestaddress is NOT a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+					<field name="DIV2" from="8" to="8" access="RW" desc="Specifies if the AHB-Lite bus transfer address is divided by 2 or not:&#xA;'0': No divide by 2.&#xA;'1': Divide by 2.  &#xA;&#xA;This functionality is used for read and write operation in XIP, dual quad SPI mode; i.e. this DIV2 must be set to '1' in dual quad SPI mode. If the transfer request address is NOT a multiple of 2 or the requested number of Bytes is not a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_CMD_CTL" address="0x40420840" bitWidth="32" desc="Read command control">
+
+<!-- *******************SMIF_DEVICE_RD_CMD_CTL_REG fields ****************** -->
+<!-- Read command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of data transfer:&#xA;&quot;0&quot;: 1 bit/cycle (single data transfer).&#xA;&quot;1&quot;: 2 bits/cycle (dual data transfer).&#xA;&quot;2&quot;: 4 bits/cycle (quad data transfer).&#xA;&quot;3&quot;: 8 bits/cycle (octal data transfer).">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_ADDR_CTL" address="0x40420844" bitWidth="32" desc="Read address control">
+
+<!-- ******************SMIF_DEVICE_RD_ADDR_CTL_REG fields ****************** -->
+<!-- Read address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_MODE_CTL" address="0x40420848" bitWidth="32" desc="Read mode control">
+
+<!-- ******************SMIF_DEVICE_RD_MODE_CTL_REG fields ****************** -->
+<!-- Read mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DUMMY_CTL" address="0x4042084c" bitWidth="32" desc="Read dummy control">
+
+<!-- ******************SMIF_DEVICE_RD_DUMMY_CTL_REG fields ***************** -->
+<!-- Read dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.&#xA;&#xA;Note: this field specifies dummy cycles, not dummy Bytes!">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DATA_CTL" address="0x40420850" bitWidth="32" desc="Read data control">
+
+<!-- ******************SMIF_DEVICE_RD_DATA_CTL_REG fields ****************** -->
+<!-- Read data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_CMD_CTL" address="0x40420860" bitWidth="32" desc="Write command control">
+
+<!-- *******************SMIF_DEVICE_WR_CMD_CTL_REG fields ****************** -->
+<!-- Write command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_ADDR_CTL" address="0x40420864" bitWidth="32" desc="Write address control">
+
+<!-- ******************SMIF_DEVICE_WR_ADDR_CTL_REG fields ****************** -->
+<!-- Write address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_MODE_CTL" address="0x40420868" bitWidth="32" desc="Write mode control">
+
+<!-- ******************SMIF_DEVICE_WR_MODE_CTL_REG fields ****************** -->
+<!-- Write mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DUMMY_CTL" address="0x4042086c" bitWidth="32" desc="Write dummy control">
+
+<!-- ******************SMIF_DEVICE_WR_DUMMY_CTL_REG fields ***************** -->
+<!-- Write dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DATA_CTL" address="0x40420870" bitWidth="32" desc="Write data control">
+
+<!-- ******************SMIF_DEVICE_WR_DATA_CTL_REG fields ****************** -->
+<!-- Write data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+			</block>
+			<block name="DEVICE[1]" desc="" visible="true">
+<!-- ============= Register definitions for DEVICE[1] IP Block. ============ -->
+				<register name="SMIF_DEVICE_CTL" address="0x40420880" bitWidth="32" desc="Control">
+
+<!-- **********************SMIF_DEVICE_CTL_REG fields ********************** -->
+<!-- Control -->
+<!-- *********************************************************************** -->
+					<field name="WR_EN" from="0" to="0" access="RW" desc="Write enable:&#xA;'0': write transfers are not allowed to this device. An attempt to write to this device results in an AHB-Lite bus error.&#xA;'1': write transfers are allowed to this device.">
+					</field>
+					<field name="CRYPTO_EN" from="8" to="8" access="RW" desc="Cryptography on read/write accesses:&#xA;'0': disabled.&#xA;'1': enabled.">
+					</field>
+					<field name="DATA_SEL" from="17" to="16" access="RW" desc="Specifies the connection of the IP's data lines (spi_data[0], …, spi_data[7]) to the device's data lines (SI/IO0, SO/IO1, IO2, IO3, IO4, IO5, IO6, IO7):&#xA;&quot;0&quot;: spi_data[0] = IO0, spi_data[1] = IO1, …, spi_data[7] = IO7. This value is allowed for single, dual, quad, dual quad and octal SPI modes. This value must be used for the first device in dual quad SPI mode. This value must be used for octal SPI mode.&#xA;&quot;1&quot;: spi_data[2] = IO0, spi_data[3] = IO1. This value is only allowed for single and dual SPI modes.&#xA;&quot;2&quot;: spi_data[4] = IO0, spi_data[5] = IO1, …, spi_data[7] = IO3. This value is only allowed for single, dual, quad and dual quad  SPI modes. In dual quad SPI mode, this value must be used for the second device. &#xA;&quot;3&quot;: spi_data[6] = IO0, spi_data[7] = IO1. This value is only allowed for single and dual SPI modes.">
+					</field>
+					<field name="ENABLED" from="31" to="31" access="RW" desc="Device enable:&#xA;'0': Disabled.&#xA;'1': Enabled.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR" address="0x40420888" bitWidth="32" desc="Device region base address">
+
+<!-- **********************SMIF_DEVICE_ADDR_REG fields ********************* -->
+<!-- Device region base address -->
+<!-- *********************************************************************** -->
+					<field name="ADDR" from="31" to="8" access="RW" desc="Specifies the base address of the device region. If the device region is 2^m Bytes, ADDR MUST be a multiple of 2^m.&#xA;&#xA;In dual quad SPI data transfer, the two devices should have the same ADDR and MASK register settings. The device control information (ADDR_CTL, RD_CMD_CTL, etc.) are provided by the MMIO control registers of the device with the lowest index.&#xA;&#xA;The most significant bit fields are constants and set based on the SMIF_XIP_ADDR parameter. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK is 0xff00:0000 (16 MB XIP memory region), ADDR[31:24] = SMIF_XIP_ADDR[31:24].">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_MASK" address="0x4042088c" bitWidth="32" desc="Device region mask">
+
+<!-- **********************SMIF_DEVICE_MASK_REG fields ********************* -->
+<!-- Device region mask -->
+<!-- *********************************************************************** -->
+					<field name="MASK" from="31" to="8" access="RW" desc="Specifies the size of the device region. All '1' bits are used to compare the incoming transfer request address A[31:0] with the address as specified in ADDR.ADDR: Address A is in the device when (A[31:8] &amp; MASK[31:8]) == ADDR.ADDR[31:8].&#xA;&#xA;The most significant bit fields are constants and set to'1'. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK  is 0xff00:0000 (16 MB XIP memory region), MASK[31:24] = 0xff.&#xA;&#xA;Note: a transfer request that is not in any device region results in an AHB-Lite bus error.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR_CTL" address="0x404208a0" bitWidth="32" desc="Address control">
+
+<!-- ********************SMIF_DEVICE_ADDR_CTL_REG fields ******************* -->
+<!-- Address control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE2" from="1" to="0" access="RW" desc="Specifies the size of the XIP device address in Bytes:&#xA;&quot;0&quot;: 1 Byte address.&#xA;&quot;1&quot;: 2 Byte address.&#xA;&quot;2&quot;: 3 Byte address.&#xA;&quot;3&quot;: 4 Byte address.&#xA;The lower significant address Bytes of the transfer request are used as XIP address to the external device. Note that for dual quad SPI data transfer, the transfer request address is divided by 2. Therefore, the transfer request address needs to be a multiple of 2. If the trasnfer requestaddress is NOT a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+					<field name="DIV2" from="8" to="8" access="RW" desc="Specifies if the AHB-Lite bus transfer address is divided by 2 or not:&#xA;'0': No divide by 2.&#xA;'1': Divide by 2.  &#xA;&#xA;This functionality is used for read and write operation in XIP, dual quad SPI mode; i.e. this DIV2 must be set to '1' in dual quad SPI mode. If the transfer request address is NOT a multiple of 2 or the requested number of Bytes is not a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_CMD_CTL" address="0x404208c0" bitWidth="32" desc="Read command control">
+
+<!-- *******************SMIF_DEVICE_RD_CMD_CTL_REG fields ****************** -->
+<!-- Read command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of data transfer:&#xA;&quot;0&quot;: 1 bit/cycle (single data transfer).&#xA;&quot;1&quot;: 2 bits/cycle (dual data transfer).&#xA;&quot;2&quot;: 4 bits/cycle (quad data transfer).&#xA;&quot;3&quot;: 8 bits/cycle (octal data transfer).">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_ADDR_CTL" address="0x404208c4" bitWidth="32" desc="Read address control">
+
+<!-- ******************SMIF_DEVICE_RD_ADDR_CTL_REG fields ****************** -->
+<!-- Read address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_MODE_CTL" address="0x404208c8" bitWidth="32" desc="Read mode control">
+
+<!-- ******************SMIF_DEVICE_RD_MODE_CTL_REG fields ****************** -->
+<!-- Read mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DUMMY_CTL" address="0x404208cc" bitWidth="32" desc="Read dummy control">
+
+<!-- ******************SMIF_DEVICE_RD_DUMMY_CTL_REG fields ***************** -->
+<!-- Read dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.&#xA;&#xA;Note: this field specifies dummy cycles, not dummy Bytes!">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DATA_CTL" address="0x404208d0" bitWidth="32" desc="Read data control">
+
+<!-- ******************SMIF_DEVICE_RD_DATA_CTL_REG fields ****************** -->
+<!-- Read data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_CMD_CTL" address="0x404208e0" bitWidth="32" desc="Write command control">
+
+<!-- *******************SMIF_DEVICE_WR_CMD_CTL_REG fields ****************** -->
+<!-- Write command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_ADDR_CTL" address="0x404208e4" bitWidth="32" desc="Write address control">
+
+<!-- ******************SMIF_DEVICE_WR_ADDR_CTL_REG fields ****************** -->
+<!-- Write address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_MODE_CTL" address="0x404208e8" bitWidth="32" desc="Write mode control">
+
+<!-- ******************SMIF_DEVICE_WR_MODE_CTL_REG fields ****************** -->
+<!-- Write mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DUMMY_CTL" address="0x404208ec" bitWidth="32" desc="Write dummy control">
+
+<!-- ******************SMIF_DEVICE_WR_DUMMY_CTL_REG fields ***************** -->
+<!-- Write dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DATA_CTL" address="0x404208f0" bitWidth="32" desc="Write data control">
+
+<!-- ******************SMIF_DEVICE_WR_DATA_CTL_REG fields ****************** -->
+<!-- Write data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+			</block>
+			<block name="DEVICE[2]" desc="" visible="true">
+<!-- ============= Register definitions for DEVICE[2] IP Block. ============ -->
+				<register name="SMIF_DEVICE_CTL" address="0x40420900" bitWidth="32" desc="Control">
+
+<!-- **********************SMIF_DEVICE_CTL_REG fields ********************** -->
+<!-- Control -->
+<!-- *********************************************************************** -->
+					<field name="WR_EN" from="0" to="0" access="RW" desc="Write enable:&#xA;'0': write transfers are not allowed to this device. An attempt to write to this device results in an AHB-Lite bus error.&#xA;'1': write transfers are allowed to this device.">
+					</field>
+					<field name="CRYPTO_EN" from="8" to="8" access="RW" desc="Cryptography on read/write accesses:&#xA;'0': disabled.&#xA;'1': enabled.">
+					</field>
+					<field name="DATA_SEL" from="17" to="16" access="RW" desc="Specifies the connection of the IP's data lines (spi_data[0], …, spi_data[7]) to the device's data lines (SI/IO0, SO/IO1, IO2, IO3, IO4, IO5, IO6, IO7):&#xA;&quot;0&quot;: spi_data[0] = IO0, spi_data[1] = IO1, …, spi_data[7] = IO7. This value is allowed for single, dual, quad, dual quad and octal SPI modes. This value must be used for the first device in dual quad SPI mode. This value must be used for octal SPI mode.&#xA;&quot;1&quot;: spi_data[2] = IO0, spi_data[3] = IO1. This value is only allowed for single and dual SPI modes.&#xA;&quot;2&quot;: spi_data[4] = IO0, spi_data[5] = IO1, …, spi_data[7] = IO3. This value is only allowed for single, dual, quad and dual quad  SPI modes. In dual quad SPI mode, this value must be used for the second device. &#xA;&quot;3&quot;: spi_data[6] = IO0, spi_data[7] = IO1. This value is only allowed for single and dual SPI modes.">
+					</field>
+					<field name="ENABLED" from="31" to="31" access="RW" desc="Device enable:&#xA;'0': Disabled.&#xA;'1': Enabled.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR" address="0x40420908" bitWidth="32" desc="Device region base address">
+
+<!-- **********************SMIF_DEVICE_ADDR_REG fields ********************* -->
+<!-- Device region base address -->
+<!-- *********************************************************************** -->
+					<field name="ADDR" from="31" to="8" access="RW" desc="Specifies the base address of the device region. If the device region is 2^m Bytes, ADDR MUST be a multiple of 2^m.&#xA;&#xA;In dual quad SPI data transfer, the two devices should have the same ADDR and MASK register settings. The device control information (ADDR_CTL, RD_CMD_CTL, etc.) are provided by the MMIO control registers of the device with the lowest index.&#xA;&#xA;The most significant bit fields are constants and set based on the SMIF_XIP_ADDR parameter. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK is 0xff00:0000 (16 MB XIP memory region), ADDR[31:24] = SMIF_XIP_ADDR[31:24].">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_MASK" address="0x4042090c" bitWidth="32" desc="Device region mask">
+
+<!-- **********************SMIF_DEVICE_MASK_REG fields ********************* -->
+<!-- Device region mask -->
+<!-- *********************************************************************** -->
+					<field name="MASK" from="31" to="8" access="RW" desc="Specifies the size of the device region. All '1' bits are used to compare the incoming transfer request address A[31:0] with the address as specified in ADDR.ADDR: Address A is in the device when (A[31:8] &amp; MASK[31:8]) == ADDR.ADDR[31:8].&#xA;&#xA;The most significant bit fields are constants and set to'1'. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK  is 0xff00:0000 (16 MB XIP memory region), MASK[31:24] = 0xff.&#xA;&#xA;Note: a transfer request that is not in any device region results in an AHB-Lite bus error.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR_CTL" address="0x40420920" bitWidth="32" desc="Address control">
+
+<!-- ********************SMIF_DEVICE_ADDR_CTL_REG fields ******************* -->
+<!-- Address control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE2" from="1" to="0" access="RW" desc="Specifies the size of the XIP device address in Bytes:&#xA;&quot;0&quot;: 1 Byte address.&#xA;&quot;1&quot;: 2 Byte address.&#xA;&quot;2&quot;: 3 Byte address.&#xA;&quot;3&quot;: 4 Byte address.&#xA;The lower significant address Bytes of the transfer request are used as XIP address to the external device. Note that for dual quad SPI data transfer, the transfer request address is divided by 2. Therefore, the transfer request address needs to be a multiple of 2. If the trasnfer requestaddress is NOT a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+					<field name="DIV2" from="8" to="8" access="RW" desc="Specifies if the AHB-Lite bus transfer address is divided by 2 or not:&#xA;'0': No divide by 2.&#xA;'1': Divide by 2.  &#xA;&#xA;This functionality is used for read and write operation in XIP, dual quad SPI mode; i.e. this DIV2 must be set to '1' in dual quad SPI mode. If the transfer request address is NOT a multiple of 2 or the requested number of Bytes is not a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_CMD_CTL" address="0x40420940" bitWidth="32" desc="Read command control">
+
+<!-- *******************SMIF_DEVICE_RD_CMD_CTL_REG fields ****************** -->
+<!-- Read command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of data transfer:&#xA;&quot;0&quot;: 1 bit/cycle (single data transfer).&#xA;&quot;1&quot;: 2 bits/cycle (dual data transfer).&#xA;&quot;2&quot;: 4 bits/cycle (quad data transfer).&#xA;&quot;3&quot;: 8 bits/cycle (octal data transfer).">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_ADDR_CTL" address="0x40420944" bitWidth="32" desc="Read address control">
+
+<!-- ******************SMIF_DEVICE_RD_ADDR_CTL_REG fields ****************** -->
+<!-- Read address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_MODE_CTL" address="0x40420948" bitWidth="32" desc="Read mode control">
+
+<!-- ******************SMIF_DEVICE_RD_MODE_CTL_REG fields ****************** -->
+<!-- Read mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DUMMY_CTL" address="0x4042094c" bitWidth="32" desc="Read dummy control">
+
+<!-- ******************SMIF_DEVICE_RD_DUMMY_CTL_REG fields ***************** -->
+<!-- Read dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.&#xA;&#xA;Note: this field specifies dummy cycles, not dummy Bytes!">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DATA_CTL" address="0x40420950" bitWidth="32" desc="Read data control">
+
+<!-- ******************SMIF_DEVICE_RD_DATA_CTL_REG fields ****************** -->
+<!-- Read data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_CMD_CTL" address="0x40420960" bitWidth="32" desc="Write command control">
+
+<!-- *******************SMIF_DEVICE_WR_CMD_CTL_REG fields ****************** -->
+<!-- Write command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_ADDR_CTL" address="0x40420964" bitWidth="32" desc="Write address control">
+
+<!-- ******************SMIF_DEVICE_WR_ADDR_CTL_REG fields ****************** -->
+<!-- Write address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_MODE_CTL" address="0x40420968" bitWidth="32" desc="Write mode control">
+
+<!-- ******************SMIF_DEVICE_WR_MODE_CTL_REG fields ****************** -->
+<!-- Write mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DUMMY_CTL" address="0x4042096c" bitWidth="32" desc="Write dummy control">
+
+<!-- ******************SMIF_DEVICE_WR_DUMMY_CTL_REG fields ***************** -->
+<!-- Write dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DATA_CTL" address="0x40420970" bitWidth="32" desc="Write data control">
+
+<!-- ******************SMIF_DEVICE_WR_DATA_CTL_REG fields ****************** -->
+<!-- Write data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+			</block>
+			<block name="DEVICE[3]" desc="" visible="true">
+<!-- ============= Register definitions for DEVICE[3] IP Block. ============ -->
+				<register name="SMIF_DEVICE_CTL" address="0x40420980" bitWidth="32" desc="Control">
+
+<!-- **********************SMIF_DEVICE_CTL_REG fields ********************** -->
+<!-- Control -->
+<!-- *********************************************************************** -->
+					<field name="WR_EN" from="0" to="0" access="RW" desc="Write enable:&#xA;'0': write transfers are not allowed to this device. An attempt to write to this device results in an AHB-Lite bus error.&#xA;'1': write transfers are allowed to this device.">
+					</field>
+					<field name="CRYPTO_EN" from="8" to="8" access="RW" desc="Cryptography on read/write accesses:&#xA;'0': disabled.&#xA;'1': enabled.">
+					</field>
+					<field name="DATA_SEL" from="17" to="16" access="RW" desc="Specifies the connection of the IP's data lines (spi_data[0], …, spi_data[7]) to the device's data lines (SI/IO0, SO/IO1, IO2, IO3, IO4, IO5, IO6, IO7):&#xA;&quot;0&quot;: spi_data[0] = IO0, spi_data[1] = IO1, …, spi_data[7] = IO7. This value is allowed for single, dual, quad, dual quad and octal SPI modes. This value must be used for the first device in dual quad SPI mode. This value must be used for octal SPI mode.&#xA;&quot;1&quot;: spi_data[2] = IO0, spi_data[3] = IO1. This value is only allowed for single and dual SPI modes.&#xA;&quot;2&quot;: spi_data[4] = IO0, spi_data[5] = IO1, …, spi_data[7] = IO3. This value is only allowed for single, dual, quad and dual quad  SPI modes. In dual quad SPI mode, this value must be used for the second device. &#xA;&quot;3&quot;: spi_data[6] = IO0, spi_data[7] = IO1. This value is only allowed for single and dual SPI modes.">
+					</field>
+					<field name="ENABLED" from="31" to="31" access="RW" desc="Device enable:&#xA;'0': Disabled.&#xA;'1': Enabled.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR" address="0x40420988" bitWidth="32" desc="Device region base address">
+
+<!-- **********************SMIF_DEVICE_ADDR_REG fields ********************* -->
+<!-- Device region base address -->
+<!-- *********************************************************************** -->
+					<field name="ADDR" from="31" to="8" access="RW" desc="Specifies the base address of the device region. If the device region is 2^m Bytes, ADDR MUST be a multiple of 2^m.&#xA;&#xA;In dual quad SPI data transfer, the two devices should have the same ADDR and MASK register settings. The device control information (ADDR_CTL, RD_CMD_CTL, etc.) are provided by the MMIO control registers of the device with the lowest index.&#xA;&#xA;The most significant bit fields are constants and set based on the SMIF_XIP_ADDR parameter. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK is 0xff00:0000 (16 MB XIP memory region), ADDR[31:24] = SMIF_XIP_ADDR[31:24].">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_MASK" address="0x4042098c" bitWidth="32" desc="Device region mask">
+
+<!-- **********************SMIF_DEVICE_MASK_REG fields ********************* -->
+<!-- Device region mask -->
+<!-- *********************************************************************** -->
+					<field name="MASK" from="31" to="8" access="RW" desc="Specifies the size of the device region. All '1' bits are used to compare the incoming transfer request address A[31:0] with the address as specified in ADDR.ADDR: Address A is in the device when (A[31:8] &amp; MASK[31:8]) == ADDR.ADDR[31:8].&#xA;&#xA;The most significant bit fields are constants and set to'1'. The most significant bits are identified on the SMIF_XIP_MASK parameter. E.g., if SMIF_XIP_MASK  is 0xff00:0000 (16 MB XIP memory region), MASK[31:24] = 0xff.&#xA;&#xA;Note: a transfer request that is not in any device region results in an AHB-Lite bus error.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_ADDR_CTL" address="0x404209a0" bitWidth="32" desc="Address control">
+
+<!-- ********************SMIF_DEVICE_ADDR_CTL_REG fields ******************* -->
+<!-- Address control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE2" from="1" to="0" access="RW" desc="Specifies the size of the XIP device address in Bytes:&#xA;&quot;0&quot;: 1 Byte address.&#xA;&quot;1&quot;: 2 Byte address.&#xA;&quot;2&quot;: 3 Byte address.&#xA;&quot;3&quot;: 4 Byte address.&#xA;The lower significant address Bytes of the transfer request are used as XIP address to the external device. Note that for dual quad SPI data transfer, the transfer request address is divided by 2. Therefore, the transfer request address needs to be a multiple of 2. If the trasnfer requestaddress is NOT a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+					<field name="DIV2" from="8" to="8" access="RW" desc="Specifies if the AHB-Lite bus transfer address is divided by 2 or not:&#xA;'0': No divide by 2.&#xA;'1': Divide by 2.  &#xA;&#xA;This functionality is used for read and write operation in XIP, dual quad SPI mode; i.e. this DIV2 must be set to '1' in dual quad SPI mode. If the transfer request address is NOT a multiple of 2 or the requested number of Bytes is not a multiple of 2, the XIP_ALIGNMENT_ERROR interrupt cause is activated.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_CMD_CTL" address="0x404209c0" bitWidth="32" desc="Read command control">
+
+<!-- *******************SMIF_DEVICE_RD_CMD_CTL_REG fields ****************** -->
+<!-- Read command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of data transfer:&#xA;&quot;0&quot;: 1 bit/cycle (single data transfer).&#xA;&quot;1&quot;: 2 bits/cycle (dual data transfer).&#xA;&quot;2&quot;: 4 bits/cycle (quad data transfer).&#xA;&quot;3&quot;: 8 bits/cycle (octal data transfer).">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_ADDR_CTL" address="0x404209c4" bitWidth="32" desc="Read address control">
+
+<!-- ******************SMIF_DEVICE_RD_ADDR_CTL_REG fields ****************** -->
+<!-- Read address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_MODE_CTL" address="0x404209c8" bitWidth="32" desc="Read mode control">
+
+<!-- ******************SMIF_DEVICE_RD_MODE_CTL_REG fields ****************** -->
+<!-- Read mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DUMMY_CTL" address="0x404209cc" bitWidth="32" desc="Read dummy control">
+
+<!-- ******************SMIF_DEVICE_RD_DUMMY_CTL_REG fields ***************** -->
+<!-- Read dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.&#xA;&#xA;Note: this field specifies dummy cycles, not dummy Bytes!">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_RD_DATA_CTL" address="0x404209d0" bitWidth="32" desc="Read data control">
+
+<!-- ******************SMIF_DEVICE_RD_DATA_CTL_REG fields ****************** -->
+<!-- Read data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_CMD_CTL" address="0x404209e0" bitWidth="32" desc="Write command control">
+
+<!-- *******************SMIF_DEVICE_WR_CMD_CTL_REG fields ****************** -->
+<!-- Write command control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Command byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of command field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_ADDR_CTL" address="0x404209e4" bitWidth="32" desc="Write address control">
+
+<!-- ******************SMIF_DEVICE_WR_ADDR_CTL_REG fields ****************** -->
+<!-- Write address control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_MODE_CTL" address="0x404209e8" bitWidth="32" desc="Write mode control">
+
+<!-- ******************SMIF_DEVICE_WR_MODE_CTL_REG fields ****************** -->
+<!-- Write mode control -->
+<!-- *********************************************************************** -->
+					<field name="CODE" from="7" to="0" access="RW" desc="Mode byte code.">
+					</field>
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of mode field:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DUMMY_CTL" address="0x404209ec" bitWidth="32" desc="Write dummy control">
+
+<!-- ******************SMIF_DEVICE_WR_DUMMY_CTL_REG fields ***************** -->
+<!-- Write dummy control -->
+<!-- *********************************************************************** -->
+					<field name="SIZE5" from="4" to="0" access="RW" desc="Number of dummy cycles (minus 1):&#xA;&quot;0&quot;: 1 cycles&#xA;...&#xA;&quot;31&quot;: 32 cycles.">
+					</field>
+					<field name="PRESENT" from="31" to="31" access="RW" desc="Presence of dummy cycles:&#xA;'0': not present&#xA;'1': present">
+					</field>
+				</register>
+				<register name="SMIF_DEVICE_WR_DATA_CTL" address="0x404209f0" bitWidth="32" desc="Write data control">
+
+<!-- ******************SMIF_DEVICE_WR_DATA_CTL_REG fields ****************** -->
+<!-- Write data control -->
+<!-- *********************************************************************** -->
+					<field name="WIDTH" from="17" to="16" access="RW" desc="Width of transfer.">
+					</field>
+				</register>
+			</block>
+    
+  </block>
+</deviceData>

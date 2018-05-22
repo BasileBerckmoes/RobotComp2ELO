@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="" visible="true">
+
+    <register name="SC_CR0" address="`$INSTANCE_NAME`_SC__CR0" bitWidth="8" desc="Switched Capacitor Control Register 0">
+        <field name="mode" from="3" to="1" access="R" desc="Configuration select for the SC block ">
+            <value name="SC_MODE_NAKED_OPAMP"  value="000" desc="Naked Op-Amp"/>
+            <value name="SC_MODE_TIA"          value="001" desc="Transimpedance Amplifier"/>
+            <value name="SC_MODE_CTMIXER"      value="010" desc="Continuous Time Mixer"/>
+            <value name="SC_MODE_NRZ_SH"       value="011" desc="Discrete Time Mixer - NRZ S/H"/>
+            <value name="SC_MODE_UNITY"        value="100" desc="Unity Gain Buffer"/>
+            <value name="SC_MODE_1ST_MOD"      value="101" desc="First Order Modulator"/>
+            <value name="SC_MODE_PGA"          value="110" desc="Programmable Gain Amplifier (PGA)"/>
+            <value name="SC_MODE_TRACKANDHOLD" value="111" desc="Track and Hold"/>
+        </field>
+        <field name="dft" from="5" to="4" access="R" desc="Configuration select for the SC block">
+            <value name="SC_DFT_NORMAL"         value="00" desc="Normal Operation"/>
+            <value name="SC_DFT_VBOOST"         value="01" desc="Vboost DFT"/>
+            <value name="SC_DFT_MODE_DEPENDENT" value="10" desc="Mode Dependent (PGA Mode = Voltage Integrator, TIA Mode = Charge Integrator, Naked Opamp Mode = Comparator)"/>
+            <value name="SC_DFT_RESET"          value="11" desc="DFT reset"/>
+        </field>
+    </register>
+
+    <register name="SC_CR2" address="`$INSTANCE_NAME`_SC__CR2" bitWidth="8" desc="Switched Capacitor Control Register 2">
+        <field name="bias_ctrl" from="0" to="0" access="R" desc="Toggles the bias current in the amplifier between normal and 1/2">
+            <value name="BIAS_1X" value="0" desc="1x current reference reduces bandwidth to increase stability"/>
+            <value name="BIAS_2X" value="1" desc="normal operation - 2x current reference to increase bandwidth"/>
+        </field>
+    </register>
+
+    <register name="SC_PM_ACT_CFG" address="`$INSTANCE_NAME`_SC__PM_ACT_CFG" bitWidth="8" desc="Active Power Mode Configuration Register 9">
+        <field name="en_swcap" from="3" to="0" access="R" desc="Enable switchcap block(s)">
+            <value name="en_swcap[0]" value="0001" desc="Enables SC Block 0"/>
+            <value name="en_swcap[1]" value="0010" desc="Enables SC Block 1"/>
+            <value name="en_swcap[2]" value="0100" desc="Enables SC Block 2"/>
+            <value name="en_swcap[3]" value="1000" desc="Enables SC Block 3"/>
+        </field>
+    </register>
+
+    <register name="SC_PM_STBY_CFG" address="`$INSTANCE_NAME`_SC__PM_STBY_CFG" bitWidth="8" desc="Standby Power Mode Configuration Register 9">
+        <field name="en_swcap" from="3" to="0" access="R" desc="Enable switchcap block(s)">
+            <value name="en_swcap[0]" value="0001" desc="Enables SC Block 0"/>
+            <value name="en_swcap[1]" value="0010" desc="Enables SC Block 1"/>
+            <value name="en_swcap[2]" value="0100" desc="Enables SC Block 2"/>
+            <value name="en_swcap[3]" value="1000" desc="Enables SC Block 3"/>
+        </field>
+    </register>
+
+    <register name="SC_CLK" address="`$INSTANCE_NAME`_SC__CLK" bitWidth="8" desc="Switched Capacitor Clock Selection Register">
+        <field name="mx_clk" from="2" to="0" access="R" desc="Clock Selection">
+            <value name="MX_CLK_0" value="000" desc="Select clk_a0 and clk_a0_dig"/>
+            <value name="MX_CLK_1" value="001" desc="Select clk_a1 and clk_a1_dig"/>
+            <value name="MX_CLK_2" value="010" desc="Select clk_a2 and clk_a2_dig"/>
+            <value name="MX_CLK_3" value="011" desc="Select clk_a3 and clk_a3_dig"/>
+            <value name="MX_CLK_4" value="100" desc="Select UDB generated clock"/>
+            <value name="MX_CLK_5" value="101" desc="Reserved"/>
+            <value name="MX_CLK_6" value="110" desc="Reserved"/>
+            <value name="MX_CLK_7" value="111" desc="Reserved"/>
+        </field>
+        <field name="clk_en" from="3" to="3" access="RW" desc="Clock gating control">
+            <value name="CLK_EN_0" value="0" desc="disable clock"/>
+            <value name="CLK_EN_1" value="1" desc="enable clock"/>
+        </field>
+        <field name="bypass_sync" from="4" to="4" access="R" desc="Bypass Synchronization">
+            <value name="BYPASS_SYNC_0" value="0" desc="Synchronization not bypassed (Synchronization enabled)"/>
+            <value name="BYPASS_SYNC_1" value="1" desc="Synchronization bypassed (Synchronization disabled)"/>
+        </field>
+        <field name="dyn_cntl_en" from="5" to="5" access="R" desc="Enable Dynamic Control (UDB generated clock source drives dynamic control)">
+            <value name="DYN_CNTL_DIS" value="0" desc="Dynamic Control Disabled"/>
+            <value name="DYN_CNTL_EN"  value="1" desc="Dynamic Control Enabled"/>
+        </field>
+    </register>
+
+    <register name="SC__BST" address="`$INSTANCE_NAME`_SC__BST" bitWidth="8" desc="Switched Capacitor Boost Clock Selection Register">
+        <field name="mx_bst_clk" from="2" to="0" access="R" desc="Clock Selection">
+            <value name="MX_CLK_0" value="000" desc="Select clk_a0 and clk_a0_dig"/>
+            <value name="MX_CLK_1" value="001" desc="Select clk_a1 and clk_a1_dig"/>
+            <value name="MX_CLK_2" value="010" desc="Select clk_a2 and clk_a2_dig"/>
+            <value name="MX_CLK_3" value="011" desc="Select clk_a3 and clk_a3_dig"/>
+            <value name="MX_CLK_4" value="100" desc="Select UDB generated clock"/>
+            <value name="MX_CLK_5" value="101" desc="Reserved"/>
+            <value name="MX_CLK_6" value="110" desc="Reserved"/>
+            <value name="MX_CLK_7" value="111" desc="Reserved"/>
+        </field>
+        <field name="bst_clk_en" from="3" to="3" access="RW" desc="Clock gating control">
+            <value name="CLK_EN_0" value="0" desc="disable clock"/>
+            <value name="CLK_EN_1" value="1" desc="enable clock"/>
+        </field>
+    </register>
+    
+    <register name="SC_MISC" address="CYDEV_ANAIF_RT_SC_MISC" bitWidth="8" desc="Switched Cap Miscellaneous Control Register">
+        <field name="sc_pump_force" from="5" to="5" access="R" desc="Force pumping - if block enabled enable pump regardless of voltage state">
+        </field>
+    </register> 
+
+    <register name="PUMP_CR1" address="CYDEV_ANAIF_CFG_PUMP_CR1" bitWidth="8" desc="Pump Configuration Register 1">
+        <field name="npump_sc_selclk" from="7" to="7" access="R" desc="Switched Cap Negative Pump Clock Selection">
+            <value name="NPUMP_SC_SELCLK_EXTERNAL"  value="0" desc="External (DSI) clock selected"/>
+            <value name="NPUMP_SC_SELCLK_INTERNAL " value="1" desc="Negative pump internal clock selected"/>
+        </field>
+    </register>
+    
+  </block>
+</deviceData>

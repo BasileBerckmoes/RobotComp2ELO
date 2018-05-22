@@ -49,12 +49,18 @@ uint16 avgUS2[5];
 uint16 avgUS3[5];
 
 uint16 readUSValue(void);
-void schuifRegister(uint16 array[], uint16 newValue);
+void schuifRegister(uint8 array[], uint16 newValue);
 
 /////////////////////////////////////////////////////
 //Race Logica
+<<<<<<< HEAD
 void stuurMotorenBij(void);
 //void stuurMotorenBijRNL(void);
+=======
+void stuurMotorenBijLNR(void);
+void stuurMotorenBijRNL(void);
+void stuurMotorenBijOG(void);
+>>>>>>> 0d9966f82f736fc259921368420d58d37d6db2a4
 void PlaatsIRWaardenInArray(uint8 value);
 void AnalyseerData(uint8 data);
 uint8 CheckVoor2eLijn(void);

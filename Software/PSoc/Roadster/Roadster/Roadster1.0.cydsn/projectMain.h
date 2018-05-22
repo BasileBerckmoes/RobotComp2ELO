@@ -24,7 +24,7 @@ CY_ISR_PROTO(sendBleData);
 
 void ProcessCommandMsg(void);
 uint8 HexToDec(char hexVal[]);
-void DecToHex(uint8 value ,char buffer[]);
+//void DecToHex(uint8 value ,char buffer[]);
 uint8 getCMDValue(char delimiter, char str[], char HexBuffer[]);
 
 /////////////////////////////////////////////////////
@@ -32,44 +32,24 @@ uint8 getCMDValue(char delimiter, char str[], char HexBuffer[]);
 uint8 pwmMotorLinks;
 uint8 pwmMotorRechts;
 
+uint8 ValueX;
+uint8 ValueY;
+
+void BepaalMotorWaarden(void);
+
 /////////////////////////////////////////////////////
 //LCD
 void printBINopLCD(uint8 value, int row);
 void printTextopLCD(int testValue1, int testValue2);
 
-/////////////////////////////////////////////////////
-//IR
-uint8 IRWaarden;
-uint8 IRDrempel;
-
-CY_ISR_PROTO(IRSensoren); 
-
-/////////////////////////////////////////////////////
-//US
-uint16 mediaan;
-uint8 selectUS;
-
-uint16 avgUS1[5];
-uint16 avgUS2[5];
-uint16 avgUS3[5];
-
-uint16 readUSValue(void);
-void schuifRegister(uint16 array[], uint16 newValue);
-
-/////////////////////////////////////////////////////
-//Race Logica
-void stuurMotorenBij(void);
-void PlaatsIRWaardenInArray(void);
-void AnalyseerData(uint8 data);
 
 /////////////////////////////////////////////////////
 //Varia
 int exponent(int grondgetal, int exponent);
-uint8 telTot(uint8 getal, uint8 min, uint8 max);
 void telProcedure(void);
-void looplicht(void);
 void berekenMediaan(uint16 array[]);
-uint8 boolSelect;
+uint8 telTot(uint8 getal, uint8 min, uint8 max);
+
 
 
 

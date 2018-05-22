@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1" xmlns="http://cypress.com/xsd/cydevicedata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+	<block name="`$INSTANCE_NAME`" desc="" visible="true">
+
+		<block name="CTBM" desc="CTB opamp and switch control" visible="true">
+<!-- =============== Register definitions for CTBM IP Block. =============== -->
+			<register name="CTB_CTRL" address="0x00000000" bitWidth="32" desc="global CTB and power control">
+
+<!-- ***********************CTBM0_CTB_CTRL_REG fields ********************** -->
+<!-- global CTB and power control -->
+<!-- *********************************************************************** -->
+				<field name="DEEPSLEEP_ON" from="30" to="30" access="RW" desc="- 0: CTB IP disabled off during DeepSleep power mode&#xA;- 1: CTB IP remains enabled during DeepSleep power mode (if ENABLED=1)">
+				</field>
+				<field name="ENABLED" from="31" to="31" access="RW" desc="- 0: CTB IP disabled (put analog in power down, open all switches)&#xA;- 1: CTB IP enabled">
+				</field>
+			</register>
+			<register name="OA_RES0_CTRL" address="0x00000004" bitWidth="32" desc="Opamp0 and resistor0 control">
+
+<!-- *********************CTBM0_OA_RES0_CTRL_REG fields ******************** -->
+<!-- Opamp0 and resistor0 control -->
+<!-- *********************************************************************** -->
+				<field name="OA0_PWR_MODE" from="2" to="0" access="RW" desc="Opamp0 power level, assumes Cload=15pF for the (internal only) 1x driver or 50pF for the (external) 10x driver">
+
+<!-- OA0_PWR_MODE bitfield enumerated values -->
+					<value name="OFF" value="0" desc="Off"/>
+					<value name="LOW" value="1" desc="Low power mode (IDD: 350uA, GBW: 1MHz for both 1x/10x)"/>
+					<value name="MEDIUM" value="10" desc="Medium power mode (IDD: 600uA, GBW: 3MHz for 1x &amp; 2.5MHz for 10x)"/>
+					<value name="HIGH" value="11" desc="High power mode for highest GBW (IDD: 1500uA, GBW: 8MHz for 1x &amp; 6MHz for 10x)"/>
+					<value name="RESERVED" value="100" desc="Reserved"/>
+					<value name="PS_LOW" value="101" desc="Power Saver Low power mode (IDD: ~20uA with 1uA bias from AREF, GBW: ~100kHz for 1x/10x, offset correcting IDAC is disabled)"/>
+					<value name="PS_MEDIUM" value="110" desc="Power Saver Medium power mode (IDD: ~40uA with 1uA bias from AREF, GBW: ~100kHz for 1x/10x, offset correcting IDAC is enabled)"/>
+					<value name="PS_HIGH" value="111" desc="Power Saver Medium power mode (IDD: ~60uA with 1uA bias from AREF, GBW: ~200kHz for 1x/10x, offset correcting IDAC is enabled)"/>
+				</field>
+				<field name="OA0_DRIVE_STR_SEL" from="3" to="3" access="RW" desc="Opamp0 output strenght select 0=1x, 1=10x">
+				</field>
+				<field name="OA0_COMP_EN" from="4" to="4" access="RW" desc="Opamp0 comparator enable">
+				</field>
+				<field name="OA0_HYST_EN" from="5" to="5" access="RW" desc="Opamp0 hysteresis enable (10mV)">
+				</field>
+				<field name="OA0_BYPASS_DSI_SYNC" from="6" to="6" access="RW" desc="Opamp0 bypass comparator output synchronization for DSI (trigger) output: 0=synchronize (level or pulse), 1=bypass (output async)">
+				</field>
+				<field name="OA0_DSI_LEVEL" from="7" to="7" access="RW" desc="Opamp0 comparator DSI (trigger) out level : 0=pulse, 1=level">
+				</field>
+				<field name="OA0_COMPINT" from="9" to="8" access="RW" desc="Opamp0 comparator edge detect">
+
+<!-- OA0_COMPINT bitfield enumerated values -->
+					<value name="DISABLE" value="0" desc="Disabled, no interrupts will be detected"/>
+					<value name="RISING" value="1" desc="Rising edge"/>
+					<value name="FALLING" value="10" desc="Falling edge"/>
+					<value name="BOTH" value="11" desc="Both rising and falling edges"/>
+				</field>
+				<field name="OA0_PUMP_EN" from="11" to="11" access="RW" desc="Opamp0 pump enable">
+				</field>
+				<field name="OA0_BOOST_EN" from="12" to="12" access="RW" desc="Opamp0 gain booster enable for class A output, for risk mitigation only, not user selectable">
+				</field>
+			</register>
+			<register name="OA_RES1_CTRL" address="0x00000008" bitWidth="32" desc="Opamp1 and resistor1 control">
+
+<!-- *********************CTBM0_OA_RES1_CTRL_REG fields ******************** -->
+<!-- Opamp1 and resistor1 control -->
+<!-- *********************************************************************** -->
+				<field name="OA1_PWR_MODE" from="2" to="0" access="RW" desc="Opamp1 power level: see description of OA0_PWR_MODE">
+				</field>
+				<field name="OA1_DRIVE_STR_SEL" from="3" to="3" access="RW" desc="Opamp1 output strenght select 0=1x, 1=10x">
+				</field>
+				<field name="OA1_COMP_EN" from="4" to="4" access="RW" desc="Opamp1 comparator enable">
+				</field>
+				<field name="OA1_HYST_EN" from="5" to="5" access="RW" desc="Opamp1 hysteresis enable (10mV)">
+				</field>
+				<field name="OA1_BYPASS_DSI_SYNC" from="6" to="6" access="RW" desc="Opamp1 bypass comparator output synchronization for DSI output: 0=synchronize, 1=bypass">
+				</field>
+				<field name="OA1_DSI_LEVEL" from="7" to="7" access="RW" desc="Opamp0 comparator DSI (trigger) out level : 0=pulse, 1=level">
+				</field>
+				<field name="OA1_COMPINT" from="9" to="8" access="RW" desc="Opamp0 comparator edge detect">
+
+<!-- OA1_COMPINT bitfield enumerated values -->
+					<value name="DISABLE" value="0" desc="Disabled, no interrupts will be detected"/>
+					<value name="RISING" value="1" desc="Rising edge"/>
+					<value name="FALLING" value="10" desc="Falling edge"/>
+					<value name="BOTH" value="11" desc="Both rising and falling edges"/>
+				</field>
+				<field name="OA1_PUMP_EN" from="11" to="11" access="RW" desc="Opamp1 pump enable">
+				</field>
+				<field name="OA1_BOOST_EN" from="12" to="12" access="RW" desc="Opamp1 gain booster enable for class A output, for risk mitigation only, not user selectable">
+				</field>
+			</register>
+			<register name="COMP_STAT" address="0x0000000C" bitWidth="32" desc="Comparator status">
+
+<!-- **********************CTBM0_COMP_STAT_REG fields ********************** -->
+<!-- Comparator status -->
+<!-- *********************************************************************** -->
+				<field name="OA0_COMP" from="0" to="0" access="R" desc="Opamp0 current comparator status">
+				</field>
+				<field name="OA1_COMP" from="16" to="16" access="R" desc="Opamp1 current comparator status">
+				</field>
+			</register>
+			<register name="INTR" address="0x00000020" bitWidth="32" desc="Interrupt request register">
+
+<!-- *************************CTBM0_INTR_REG fields ************************ -->
+<!-- Interrupt request register -->
+<!-- *********************************************************************** -->
+				<field name="COMP0" from="0" to="0" access="RW" desc="Comparator 0 Interrupt: hardware sets this interrupt when comparator 0 triggers. Write with '1' to clear bit.">
+				</field>
+				<field name="COMP1" from="1" to="1" access="RW" desc="Comparator 1 Interrupt: hardware sets this interrupt when comparator 1 triggers. Write with '1' to clear bit.">
+				</field>
+			</register>
+			<register name="INTR_SET" address="0x00000024" bitWidth="32" desc="Interrupt request set register">
+
+<!-- ***********************CTBM0_INTR_SET_REG fields ********************** -->
+<!-- Interrupt request set register -->
+<!-- *********************************************************************** -->
+				<field name="COMP0_SET" from="0" to="0" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+				<field name="COMP1_SET" from="1" to="1" access="RW" desc="Write with '1' to set corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="INTR_MASK" address="0x00000028" bitWidth="32" desc="Interrupt request mask">
+
+<!-- **********************CTBM0_INTR_MASK_REG fields ********************** -->
+<!-- Interrupt request mask -->
+<!-- *********************************************************************** -->
+				<field name="COMP0_MASK" from="0" to="0" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+				<field name="COMP1_MASK" from="1" to="1" access="RW" desc="Mask bit for corresponding bit in interrupt request register.">
+				</field>
+			</register>
+			<register name="INTR_MASKED" address="0x0000002C" bitWidth="32" desc="Interrupt request masked">
+
+<!-- *********************CTBM0_INTR_MASKED_REG fields ********************* -->
+<!-- Interrupt request masked -->
+<!-- *********************************************************************** -->
+				<field name="COMP0_MASKED" from="0" to="0" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+				<field name="COMP1_MASKED" from="1" to="1" access="R" desc="Logical and of corresponding request and mask bits.">
+				</field>
+			</register>
+			<register name="OA0_SW" address="0x00000080" bitWidth="32" desc="Opamp0 switch control">
+
+<!-- ************************CTBM0_OA0_SW_REG fields *********************** -->
+<!-- Opamp0 switch control -->
+<!-- *********************************************************************** -->
+				<field name="OA0P_A00" from="0" to="0" access="RW" desc="Opamp0 positive terminal amuxbusa">
+				</field>
+				<field name="OA0P_A20" from="2" to="2" access="RW" desc="Opamp0 positive terminal P0">
+				</field>
+				<field name="OA0P_A30" from="3" to="3" access="RW" desc="Opamp0 positive terminal ctbbus0">
+				</field>
+				<field name="OA0M_A11" from="8" to="8" access="RW" desc="Opamp0 negative terminal P1">
+				</field>
+				<field name="OA0M_A81" from="14" to="14" access="RW" desc="Opamp0 negative terminal Opamp0 output">
+				</field>
+				<field name="OA0O_D51" from="18" to="18" access="RW" desc="Opamp0 output sarbus0 (ctbbus2 in CTB)">
+				</field>
+				<field name="OA0O_D81" from="21" to="21" access="RW" desc="Opamp0 output switch to short 1x with 10x drive">
+				</field>
+			</register>
+			<register name="OA0_SW_CLEAR" address="0x00000084" bitWidth="32" desc="Opamp0 switch control clear">
+
+<!-- *********************CTBM0_OA0_SW_CLEAR_REG fields ******************** -->
+<!-- Opamp0 switch control clear -->
+<!-- *********************************************************************** -->
+				<field name="OA0P_A00" from="0" to="0" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+				<field name="OA0P_A20" from="2" to="2" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+				<field name="OA0P_A30" from="3" to="3" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+				<field name="OA0M_A11" from="8" to="8" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+				<field name="OA0M_A81" from="14" to="14" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+				<field name="OA0O_D51" from="18" to="18" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+				<field name="OA0O_D81" from="21" to="21" access="RW" desc="see corresponding bit in OA0_SW">
+				</field>
+			</register>
+			<register name="OA1_SW" address="0x00000088" bitWidth="32" desc="Opamp1 switch control">
+
+<!-- ************************CTBM0_OA1_SW_REG fields *********************** -->
+<!-- Opamp1 switch control -->
+<!-- *********************************************************************** -->
+				<field name="OA1P_A03" from="0" to="0" access="RW" desc="Opamp1 positive terminal amuxbusb">
+				</field>
+				<field name="OA1P_A13" from="1" to="1" access="RW" desc="Opamp1 positive terminal P5">
+				</field>
+				<field name="OA1P_A43" from="4" to="4" access="RW" desc="Opamp1 positive terminal ctbbus1">
+				</field>
+				<field name="OA1P_A73" from="7" to="7" access="RW" desc="Opamp1 positive terminal to vref1">
+				</field>
+				<field name="OA1M_A22" from="8" to="8" access="RW" desc="Opamp1 negative terminal P4">
+				</field>
+				<field name="OA1M_A82" from="14" to="14" access="RW" desc="Opamp1 negative terminal Opamp1 output">
+				</field>
+				<field name="OA1O_D52" from="18" to="18" access="RW" desc="Opamp1 output sarbus0 (ctbbus2 in CTB)">
+				</field>
+				<field name="OA1O_D62" from="19" to="19" access="RW" desc="Opamp1 output sarbus1 (ctbbus3 in CTB)">
+				</field>
+				<field name="OA1O_D82" from="21" to="21" access="RW" desc="Opamp1 output switch to short 1x with 10x drive">
+				</field>
+			</register>
+			<register name="OA1_SW_CLEAR" address="0x0000008C" bitWidth="32" desc="Opamp1 switch control clear">
+
+<!-- *********************CTBM0_OA1_SW_CLEAR_REG fields ******************** -->
+<!-- Opamp1 switch control clear -->
+<!-- *********************************************************************** -->
+				<field name="OA1P_A03" from="0" to="0" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1P_A13" from="1" to="1" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1P_A43" from="4" to="4" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1P_A73" from="7" to="7" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1M_A22" from="8" to="8" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1M_A82" from="14" to="14" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1O_D52" from="18" to="18" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1O_D62" from="19" to="19" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+				<field name="OA1O_D82" from="21" to="21" access="RW" desc="see corresponding bit in OA1_SW">
+				</field>
+			</register>
+			<register name="CTD_SW" address="0x000000A0" bitWidth="32" desc="CTDAC connection switch control">
+
+<!-- ************************CTBM0_CTD_SW_REG fields *********************** -->
+<!-- CTDAC connection switch control -->
+<!-- *********************************************************************** -->
+				<field name="CTDD_CRD" from="1" to="1" access="RW" desc="CTDAC Reference opamp output to ctdrefdrive">
+				</field>
+				<field name="CTDS_CRS" from="4" to="4" access="RW" desc="ctdrefsense to opamp input">
+				</field>
+				<field name="CTDS_COR" from="5" to="5" access="RW" desc="ctdvout to opamp input">
+				</field>
+				<field name="CTDO_C6H" from="8" to="8" access="RW" desc="P6 pin to Hold capacitor">
+				</field>
+				<field name="CTDO_COS" from="9" to="9" access="RW" desc="ctdvout to Hold capacitor (Sample switch). Note this switch will temporarily be opened for deglitching if CTDAC.DEGLITCH_COS is set">
+				</field>
+				<field name="CTDH_COB" from="10" to="10" access="RW" desc="Drive the CTDAC output with CTBM 1x output during hold mode in Sample and Hold operation">
+				</field>
+				<field name="CTDH_CHD" from="12" to="12" access="RW" desc="Hold capacitor disconnect">
+				</field>
+				<field name="CTDH_CA0" from="13" to="13" access="RW" desc="Hold capacitor to opamp input">
+				</field>
+				<field name="CTDH_CIS" from="14" to="14" access="RW" desc="Hold capacitor isolation (from all the other switches)">
+				</field>
+				<field name="CTDH_ILR" from="15" to="15" access="RW" desc="Hold capacitor leakage reduction (drive other side of CIS to capacitor voltage)">
+				</field>
+			</register>
+			<register name="CTD_SW_CLEAR" address="0x000000A4" bitWidth="32" desc="CTDAC connection switch control clear">
+
+<!-- *********************CTBM0_CTD_SW_CLEAR_REG fields ******************** -->
+<!-- CTDAC connection switch control clear -->
+<!-- *********************************************************************** -->
+				<field name="CTDD_CRD" from="1" to="1" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDS_CRS" from="4" to="4" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDS_COR" from="5" to="5" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDO_C6H" from="8" to="8" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDO_COS" from="9" to="9" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDH_COB" from="10" to="10" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDH_CHD" from="12" to="12" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDH_CA0" from="13" to="13" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDH_CIS" from="14" to="14" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+				<field name="CTDH_ILR" from="15" to="15" access="RW" desc="see corresponding bit in CTD_SW">
+				</field>
+			</register>
+			<register name="CTB_SW_DS_CTRL" address="0x000000C0" bitWidth="32" desc="CTB bus switch control">
+
+<!-- ********************CTBM0_CTB_SW_DS_CTRL_REG fields ******************* -->
+<!-- CTB bus switch control -->
+<!-- *********************************************************************** -->
+				<field name="P2_DS_CTRL23" from="10" to="10" access="RW" desc="for P22, D51 (dsi_out[2])">
+				</field>
+				<field name="P3_DS_CTRL23" from="11" to="11" access="RW" desc="for P33, D52, D62 (dsi_out[3])">
+				</field>
+				<field name="CTD_COS_DS_CTRL" from="31" to="31" access="RW" desc="Hold capacitor Sample switch (COS)">
+				</field>
+			</register>
+			<register name="CTB_SW_SQ_CTRL" address="0x000000C4" bitWidth="32" desc="CTB bus switch Sar Sequencer control">
+
+<!-- ********************CTBM0_CTB_SW_SQ_CTRL_REG fields ******************* -->
+<!-- CTB bus switch Sar Sequencer control -->
+<!-- *********************************************************************** -->
+				<field name="P2_SQ_CTRL23" from="10" to="10" access="RW" desc="for D51">
+				</field>
+				<field name="P3_SQ_CTRL23" from="11" to="11" access="RW" desc="for D52, D62">
+				</field>
+			</register>
+			<register name="CTB_SW_STATUS" address="0x000000C8" bitWidth="32" desc="CTB bus switch control status">
+
+<!-- ********************CTBM0_CTB_SW_STATUS_REG fields ******************** -->
+<!-- CTB bus switch control status -->
+<!-- *********************************************************************** -->
+				<field name="OA0O_D51_STAT" from="28" to="28" access="R" desc="see OA0O_D51 bit in OA0_SW">
+				</field>
+				<field name="OA1O_D52_STAT" from="29" to="29" access="R" desc="see OA1O_D52 bit in OA1_SW">
+				</field>
+				<field name="OA1O_D62_STAT" from="30" to="30" access="R" desc="see OA1O_D62 bit in OA1_SW">
+				</field>
+				<field name="CTD_COS_STAT" from="31" to="31" access="R" desc="see COS bit in CTD_SW">
+				</field>
+			</register>
+
+		</block>
+
+	</block>
+
+</deviceData>

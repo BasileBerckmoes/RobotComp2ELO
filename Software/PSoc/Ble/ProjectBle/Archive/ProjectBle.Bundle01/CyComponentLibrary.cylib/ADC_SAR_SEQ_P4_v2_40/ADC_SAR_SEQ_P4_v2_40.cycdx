@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<deviceData version="1"
+  xmlns="http://cypress.com/xsd/cydevicedata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cypress.com/xsd/cydevicedata cydevicedata.xsd">
+
+  <block name="`$INSTANCE_NAME`" desc="Sequencing SAR ADC" visible="true">
+
+ <register name="CTRL"
+		    address="`$INSTANCE_NAME`_cy_psoc4_sar__SAR_CTRL" bitWidth="32" desc="Analog control register">
+            <field name="VREF_SEL"              from="6"  to="4" access="RW" desc="SARADC internal VREF selection">
+            </field>
+            <field name="VREF_BYP_CAP_EN"       from="7"  to="7" access="RW" desc="VREF bypass cap enable for when VREF buffer is on">
+            </field>
+            <field name="NEG_SEL"               from="11"  to="9" access="RW" desc="SARADC internal NEG selection for Single ended conversion">
+            </field>
+            <field name="SAR_HW_CTRL_NEGVREF"   from="13"  to="13" access="RW" desc="Hardware control: 0=firmware, 1=hardware.">
+            </field>
+            <field name="PWR_CTRL_VREF"         from="15"  to="14" access="RW" desc="VREF buffer low power mode.">
+            </field>
+            <field name="SPARE"                 from="19"  to="16" access="RW" desc="Spare controls">
+            </field>
+            <field name="ICONT_LV"              from="25"  to="24" access="RW" desc="SARADC low power mode">
+            </field>
+            <field name="DSI_SYNC_CONFIG"       from="28"  to="28" access="RW" desc="Synchronize the DSI config signals to peripheral clock domain">
+            </field>
+            <field name="DSI_MODE"              from="29"  to="29" access="RW" desc="SAR sequencer takes configuration from DSI signals">
+            </field>
+            <field name="SWITCH_DISABLE"        from="30"  to="30" access="RW" desc="Disable SAR sequencer from enabling routing switches">
+            </field>
+            <field name="ENABLED"               from="31"  to="31" access="RW" desc="0: SAR IP disabled, 1: SAR IP enabled.">
+            </field>
+		    </register>    
+ <register name="SAMPLE_CTRL"
+		    address="`$INSTANCE_NAME`_cy_psoc4_sar__SAR_SAMPLE_CTRL" bitWidth="32" desc="Sample control register">
+            <field name="SUB_RESOLUTION"        from="0"  to="0" access="RW" desc="Conversion resolution for channels that have sub-resolution enabled (RESOLUTION=1) (otherwise resolution is 12-bit).">
+            </field>
+            <field name="LEFT_ALIGN"            from="1"  to="1" access="RW" desc="Left align data in data[15:0], default data is right aligned in data[11:0], with sign extension to 16 bits if the channel is differential.">
+            </field>
+            <field name="SINGLE_ENDED_SIGNED"   from="2"  to="2" access="RW" desc="Output data from a single ended conversion as a signed value">
+            </field>
+            <field name="DIFFERENTIAL_SIGNED"   from="3"  to="3" access="RW" desc="Output data from a differential conversion as a signed value">
+            </field>
+            <field name="AVG_CNT"               from="6"  to="4" access="RW" desc="Averaging Count for channels that have over sampling enabled">
+            </field>
+            <field name="AVG_SHIFT"             from="7"  to="7" access="RW" desc="Averaging shifting: after averaging the result is shifted right to fit in the sample resolution, i.e. 12 bits.">
+            </field>
+            <field name="CONTINUOUS"            from="16"  to="16" access="RW" desc="0: Wait for next FW_TRIGGER or hardware trigger before scanning enabled channels. 1: Continuously scan enabled channels..">
+            </field>
+            <field name="DSI_TRIGGER_EN"        from="17"  to="17" access="RW" desc="0: firmware trigger only, 1: enable hardware (DSI) trigger.">
+            </field>
+            <field name="DSI_TRIGGER_LEVEL"     from="18"  to="18" access="RW" desc="0: DSI trigger signal is a pulse input, 1: DSI trigger signal is a level inpu.t">
+            </field>
+            <field name="DSI_SYNC_TRIGGER"      from="19"  to="19" access="RW" desc="0: bypass clock domain synchronisation of the DSI trigger signal, 1: synchronize the DSI trigger signal to the SAR clock domain.">
+            </field>
+            <field name="EOS_DSI_OUT_EN"        from="31"  to="31" access="RW" desc="Enable to output EOS_INTR to DSI">
+            </field>
+		    </register>    
+ <register name="SAMPLE_TIME01"
+		    address="`$INSTANCE_NAME`_cy_psoc4_sar__SAR_SAMPLE_TIME01" bitWidth="32" desc="Sample time specification ST0 and ST1">
+            <field name="SAMPLE_TIME0"          from="9"  to="0" access="RW" desc="Sample time0 (aperture) in ADC clock cycles">
+            </field>
+            <field name="SAMPLE_TIME1"          from="25"  to="16" access="RW" desc="Sample time1">
+            </field>
+		    </register>    
+ <register name="SAMPLE_TIME23"
+		    address="`$INSTANCE_NAME`_cy_psoc4_sar__SAR_SAMPLE_TIME23" bitWidth="32" desc="Sample time specification ST2 and ST3">
+            <field name="SAMPLE_TIME2"          from="9"  to="0" access="RW" desc="Sample time2">
+            </field>
+            <field name="SAMPLE_TIME3"          from="25"  to="16" access="RW" desc="Sample time3">
+            </field>
+		    </register>    
+ <register name="RANGE_THRES"
+		    address="`$INSTANCE_NAME`_cy_psoc4_sar__SAR_RANGE_THRES" bitWidth="32" desc="Global range detect threshold register">
+            <field name="RANGE_LOW"             from="15"  to="0" access="RW" desc="Low threshold for range detect">
+            </field>
+            <field name="RANGE_HIGH"            from="31"  to="16" access="RW" desc="High threshold for range detect">
+            </field>
+		    </register>    
+ <register name="RANGE_COND"
+		    address="`$INSTANCE_NAME`_cy_psoc4_sar__SAR_RANGE_COND" bitWidth="32" desc="Global range detect mode register">
+            <field name="RANGE_COND"            from="31"  to="30" access="RW" desc="Range condition select">
+            </field>
+		    </register>    
+ <register name="CHAN_EN"
+		    address="CYREG_SAR_CHAN_EN" bitWidth="32" desc="Enable bits for the channels">
+            <field name="CHAN_EN" from="15"  to="0" access="RW" desc="Channel enable. 0: the corresponding channel is disabled. 1: the corresponding channel is enabled, it will be included in the next scan.">
+            </field>
+		    </register>    
+ <register name="START_CTRL"
+		    address="CYREG_SAR_START_CTRL" bitWidth="32" desc="Start control register (firmware trigger)">
+            <field name="FW_TRIGGER"            from="0"  to="0" access="RW" desc="When firmware writes a 1 here it will trigger the next scan of enabled channels">
+            </field>
+		    </register>    
+ <register name="DFT_CTRL"
+		    address="CYREG_SAR_DFT_CTRL" bitWidth="32" desc="DFT control register">
+		    </register>    
+ <register name="CHAN_CONFIG0"
+		    address="CYREG_SAR_CHAN_CONFIG00" bitWidth="32" desc="Channel0 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG1"
+		    address="CYREG_SAR_CHAN_CONFIG01" bitWidth="32" desc="Channel1 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG2"
+		    address="CYREG_SAR_CHAN_CONFIG02" bitWidth="32" desc="Channel2 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG3"
+		    address="CYREG_SAR_CHAN_CONFIG03" bitWidth="32" desc="Channel3 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG4"
+		    address="CYREG_SAR_CHAN_CONFIG04" bitWidth="32" desc="Channel4 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG5"
+		    address="CYREG_SAR_CHAN_CONFIG05" bitWidth="32" desc="Channel5 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG6"
+		    address="CYREG_SAR_CHAN_CONFIG06" bitWidth="32" desc="Channel6 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_CONFIG7"
+		    address="CYREG_SAR_CHAN_CONFIG07" bitWidth="32" desc="Channel7 configuration register">
+            <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK0"
+		    address="CYREG_SAR_CHAN_WORK00" bitWidth="32" desc="Channel0 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK1"
+		    address="CYREG_SAR_CHAN_WORK01" bitWidth="32" desc="Channel1 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK2"
+		    address="CYREG_SAR_CHAN_WORK02" bitWidth="32" desc="Channel2 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK3"
+		    address="CYREG_SAR_CHAN_WORK03" bitWidth="32" desc="Channel3 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK4"
+		    address="CYREG_SAR_CHAN_WORK04" bitWidth="32" desc="Channel4 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK5"
+		    address="CYREG_SAR_CHAN_WORK05" bitWidth="32" desc="Channel5 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK6"
+		    address="CYREG_SAR_CHAN_WORK06" bitWidth="32" desc="Channel6 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_WORK7"
+		    address="CYREG_SAR_CHAN_WORK07" bitWidth="32" desc="Channel7 working data register">
+            <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+            </field>
+            <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT0"
+		    address="CYREG_SAR_CHAN_RESULT00" bitWidth="32" desc="Channel0 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT1"
+		    address="CYREG_SAR_CHAN_RESULT01" bitWidth="32" desc="Channel1 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT2"
+		    address="CYREG_SAR_CHAN_RESULT02" bitWidth="32" desc="Channel2 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT3"
+		    address="CYREG_SAR_CHAN_RESULT03" bitWidth="32" desc="Channel3 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT4"
+		    address="CYREG_SAR_CHAN_RESULT04" bitWidth="32" desc="Channel4 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT5"
+		    address="CYREG_SAR_CHAN_RESULT05" bitWidth="32" desc="Channel5 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT6"
+		    address="CYREG_SAR_CHAN_RESULT06" bitWidth="32" desc="Channel6 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT7"
+		    address="CYREG_SAR_CHAN_RESULT07" bitWidth="32" desc="Channel7 result data register">
+            <field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+            </field>
+            <field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+            <field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+            </field>
+            <field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+            </field>
+		    </register>    
+ <block name="CHAN" desc="" visible="`$AdcSequencedChannels` > 8"> 
+     <register name="CONFIG8"
+    		    address="CYREG_SAR_CHAN_CONFIG08" bitWidth="32" desc="Channel8 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG9"
+    		    address="CYREG_SAR_CHAN_CONFIG09" bitWidth="32" desc="Channel9 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG10"
+    		    address="CYREG_SAR_CHAN_CONFIG10" bitWidth="32" desc="Channel10 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG11"
+    		    address="CYREG_SAR_CHAN_CONFIG11" bitWidth="32" desc="Channel11 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG12"
+    		    address="CYREG_SAR_CHAN_CONFIG12" bitWidth="32" desc="Channel12 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG13"
+    		    address="CYREG_SAR_CHAN_CONFIG13" bitWidth="32" desc="Channel13 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG14"
+    		    address="CYREG_SAR_CHAN_CONFIG14" bitWidth="32" desc="Channel14 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="CONFIG15"
+    		    address="CYREG_SAR_CHAN_CONFIG15" bitWidth="32" desc="Channel15 configuration register">
+                <field name="PIN_ADDR"              from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+                </field>
+                <field name="PORT_ADDR"             from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+                </field>
+                <field name="DIFFERENTIAL_EN"       from="8"  to="8" access="RW" desc="Differential enable for this channel">
+                </field>
+                <field name="RESOLUTION"            from="9"  to="9" access="RW" desc="Resolution for this channel">
+                </field>
+                <field name="AVG_EN"                from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+                </field>
+                <field name="SAMPLE_TIME_SEL"       from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+                </field>
+                <field name="DSI_OUT_EN"            from="31"  to="31" access="RW" desc="DSI data output enable for this channel">
+                </field>
+    		    </register>    
+     <register name="WORK8"
+    		    address="CYREG_SAR_CHAN_WORK08" bitWidth="32" desc="Channel8 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK9"
+    		    address="CYREG_SAR_CHAN_WORK09" bitWidth="32" desc="Channel9 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK10"
+    		    address="CYREG_SAR_CHAN_WORK10" bitWidth="32" desc="Channel10 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK11"
+    		    address="CYREG_SAR_CHAN_WORK11" bitWidth="32" desc="Channel11 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK12"
+    		    address="CYREG_SAR_CHAN_WORK12" bitWidth="32" desc="Channel12 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK13"
+    		    address="CYREG_SAR_CHAN_WORK13" bitWidth="32" desc="Channel13 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK14"
+    		    address="CYREG_SAR_CHAN_WORK14" bitWidth="32" desc="Channel14 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+     <register name="WORK15"
+    		    address="CYREG_SAR_CHAN_WORK15" bitWidth="32" desc="Channel15 working data register">
+                <field name="WORK"                  from="15"  to="0" access="R" desc="SAR conversion working data of the channel">
+                </field>
+                <field name="CHAN_WORK_VALID_MIR"   from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_CHAN_WORK_VALID register">
+                </field>
+    		    </register>    
+	 <register name="RESULT8"
+				address="CYREG_SAR_CHAN_RESULT08" bitWidth="32" desc="Channel8 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT9"
+				address="CYREG_SAR_CHAN_RESULT09" bitWidth="32" desc="Channel9 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT10"
+				address="CYREG_SAR_CHAN_RESULT10" bitWidth="32" desc="Channel10 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT11"
+				address="CYREG_SAR_CHAN_RESULT11" bitWidth="32" desc="Channel11 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT12"
+				address="CYREG_SAR_CHAN_RESULT12" bitWidth="32" desc="Channel12 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT13"
+				address="CYREG_SAR_CHAN_RESULT13" bitWidth="32" desc="Channel13 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT14"
+				address="CYREG_SAR_CHAN_RESULT14" bitWidth="32" desc="Channel14 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+	 <register name="RESULT15"
+				address="CYREG_SAR_CHAN_RESULT15" bitWidth="32" desc="Channel15 result data register">
+				<field name="RESULT"                from="15"  to="0" access="R" desc="SAR conversion result of the channel. The data is copied here from the WORK field after all enabled channels in this scan have been sampled.">
+				</field>
+				<field name="SATURATE_INTR_MIR"     from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				<field name="RANGE_INTR_MIR"        from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_RANGE_INTR register">
+				</field>
+				<field name="CHAN_RESULT_VALID_MIR" from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_SATURATE_INTR register">
+				</field>
+				</register>    
+ </block>            
+
+ <register name="CHAN_WORK_VALID"
+		    address="CYREG_SAR_CHAN_WORK_VALID" bitWidth="32" desc="Channel working data register valid bits">
+            <field name="CHAN_WORK_VALID"       from="15"  to="0" access="R" desc="If set the corresponding WORK data is valid, i.e. was already sampled during the current scan.">
+            </field>
+		    </register>    
+ <register name="CHAN_RESULT_VALID"
+		    address="CYREG_SAR_CHAN_RESULT_VALID" bitWidth="32" desc="Channel result data register valid bits">
+            <field name="CHAN_RESULT_VALID"     from="15"  to="0" access="R" desc="If set the corresponding RESULT data is valid, i.e. was sampled during the last scan.">
+            </field>
+		    </register>    
+ <register name="STATUS"
+		    address="CYREG_SAR_STATUS" bitWidth="32" desc="Current status of internal SAR registers (mostly for debug)">
+		    </register>    
+ <register name="AVG_STAT"
+		    address="CYREG_SAR_AVG_STAT" bitWidth="32" desc="Current averaging status (for debug)">
+		    </register>    
+ <register name="INTR"
+		    address="CYREG_SAR_INTR" bitWidth="32" desc="Interrupt request register">
+            <field name="EOS_INTR"              from="0"  to="0" access="RW" desc="End Of Scan Interrupt">
+            </field>
+            <field name="OVERFLOW_INTR"         from="1"  to="1" access="RW" desc="Overflow Interrupt">
+            </field>
+            <field name="FW_COLLISION_INTR"     from="2"  to="2" access="RW" desc="Firmware Collision Interrupt">
+            </field>
+            <field name="DSI_COLLISION_INTR"    from="3"  to="3" access="RW" desc="DSI Collision Interrupt">
+            </field>
+            <field name="INJ_EOC_INTR"          from="4"  to="4" access="RW" desc="Injection End of Conversion Interrupt">
+            </field>
+            <field name="INJ_SATURATE_INTR"     from="5"  to="5" access="RW" desc="Injection Saturation Interrupt">
+            </field>
+            <field name="INJ_RANGE_INTR"        from="6"  to="6" access="RW" desc="Injection Range detect Interrupt">
+            </field>
+            <field name="INJ_COLLISION_INTR"    from="7"  to="7" access="RW" desc="Injection Collision Interrupt">
+            </field>
+		    </register>    
+ <register name="INTR_SET"
+		    address="CYREG_SAR_INTR_SET" bitWidth="32" desc="Not really a register, intended for verification/debug. When read, this register reflects the interrupt request register.">
+            <field name="EOS_INTR"              from="0"  to="0" access="RW" desc="End Of Scan Interrupt">
+            </field>
+            <field name="OVERFLOW_INTR"         from="1"  to="1" access="RW" desc="Overflow Interrupt">
+            </field>
+            <field name="FW_COLLISION_INTR"     from="2"  to="2" access="RW" desc="Firmware Collision Interrupt">
+            </field>
+            <field name="DSI_COLLISION_INTR"    from="3"  to="3" access="RW" desc="DSI Collision Interrupt">
+            </field>
+            <field name="INJ_EOC_INTR"          from="4"  to="4" access="RW" desc="Injection End of Conversion Interrupt">
+            </field>
+            <field name="INJ_SATURATE_INTR"     from="5"  to="5" access="RW" desc="Injection Saturation Interrupt">
+            </field>
+            <field name="INJ_RANGE_INTR"        from="6"  to="6" access="RW" desc="Injection Range detect Interrupt">
+            </field>
+            <field name="INJ_COLLISION_INTR"    from="7"  to="7" access="RW" desc="Injection Collision Interrupt">
+            </field>
+		    </register>    
+ <register name="INTR_MASK"
+		    address="CYREG_SAR_INTR_MASK" bitWidth="32" desc="Interrupt mask register">
+            <field name="EOS_INTR"              from="0"  to="0" access="RW" desc="End Of Scan Interrupt">
+            </field>
+            <field name="OVERFLOW_INTR"         from="1"  to="1" access="RW" desc="Overflow Interrupt">
+            </field>
+            <field name="FW_COLLISION_INTR"     from="2"  to="2" access="RW" desc="Firmware Collision Interrupt">
+            </field>
+            <field name="DSI_COLLISION_INTR"    from="3"  to="3" access="RW" desc="DSI Collision Interrupt">
+            </field>
+            <field name="INJ_EOC_INTR"          from="4"  to="4" access="RW" desc="Injection End of Conversion Interrupt">
+            </field>
+            <field name="INJ_SATURATE_INTR"     from="5"  to="5" access="RW" desc="Injection Saturation Interrupt">
+            </field>
+            <field name="INJ_RANGE_INTR"        from="6"  to="6" access="RW" desc="Injection Range detect Interrupt">
+            </field>
+            <field name="INJ_COLLISION_INTR"    from="7"  to="7" access="RW" desc="Injection Collision Interrupt">
+            </field>
+		    </register>    
+ <register name="INTR_MASKED"
+		    address="CYREG_SAR_INTR_MASKED" bitWidth="32" desc="Interrupt masked request register">
+            <field name="EOS_INTR"              from="0"  to="0" access="RW" desc="End Of Scan Interrupt">
+            </field>
+            <field name="OVERFLOW_INTR"         from="1"  to="1" access="RW" desc="Overflow Interrupt">
+            </field>
+            <field name="FW_COLLISION_INTR"     from="2"  to="2" access="RW" desc="Firmware Collision Interrupt">
+            </field>
+            <field name="DSI_COLLISION_INTR"    from="3"  to="3" access="RW" desc="DSI Collision Interrupt">
+            </field>
+            <field name="INJ_EOC_INTR"          from="4"  to="4" access="RW" desc="Injection End of Conversion Interrupt">
+            </field>
+            <field name="INJ_SATURATE_INTR"     from="5"  to="5" access="RW" desc="Injection Saturation Interrupt">
+            </field>
+            <field name="INJ_RANGE_INTR"        from="6"  to="6" access="RW" desc="Injection Range detect Interrupt">
+            </field>
+            <field name="INJ_COLLISION_INTR"    from="7"  to="7" access="RW" desc="Injection Collision Interrupt">
+            </field>
+		    </register>    
+ <register name="SATURATE_INTR"
+		    address="CYREG_SAR_SATURATE_INTR" bitWidth="32" desc="Saturate interrupt request register">
+            <field name="SATURATE_INTR"         from="15"  to="0" access="RW" desc="Saturate Interrupt">
+            </field>
+		    </register>    
+ <register name="SATURATE_INTR_SET"
+		    address="CYREG_SAR_SATURATE_INTR_SET" bitWidth="32" desc="Saturate interrupt set request register">
+            <field name="SATURATE_INTR"         from="15"  to="0" access="RW" desc="Saturate Interrupt">
+            </field>
+		    </register>    
+ <register name="SATURATE_INTR_MASK"
+		    address="CYREG_SAR_SATURATE_INTR_MASK" bitWidth="32" desc="Saturate interrupt mask register">
+            <field name="SATURATE_INTR"         from="15"  to="0" access="RW" desc="Saturate Interrupt">
+            </field>
+		    </register>    
+ <register name="SATURATE_INTR_MASKED"
+		    address="CYREG_SAR_SATURATE_INTR_MASKED" bitWidth="32" desc="Saturate interrupt masked request register">
+            <field name="SATURATE_INTR"         from="15"  to="0" access="RW" desc="Saturate Interrupt">
+            </field>
+		    </register>    
+ <register name="RANGE_INTR"
+		    address="CYREG_SAR_RANGE_INTR" bitWidth="32" desc="Range detect interrupt request register">
+            <field name="RANGE_INTR"            from="15"  to="0" access="RW" desc="Range detect Interrupt">
+            </field>
+		    </register>    
+ <register name="RANGE_INTR_SET"
+		    address="CYREG_SAR_RANGE_INTR_SET" bitWidth="32" desc="Range detect interrupt set request register">
+            <field name="RANGE_INTR"            from="15"  to="0" access="RW" desc="Range detect Interrupt">
+            </field>
+		    </register>    
+ <register name="RANGE_INTR_MASK"
+		    address="CYREG_SAR_RANGE_INTR_MASK" bitWidth="32" desc="Range detect interrupt mask register">
+            <field name="RANGE_INTR"            from="15"  to="0" access="RW" desc="Range detect Interrupt">
+            </field>
+		    </register>    
+ <register name="RANGE_INTR_MASKED"
+		    address="CYREG_SAR_RANGE_INTR_MASKED" bitWidth="32" desc="Range interrupt masked request register">
+            <field name="RANGE_INTR"            from="15"  to="0" access="RW" desc="Range detect Interrupt">
+            </field>
+		    </register>    
+ <register name="INTR_CAUSE"
+		    address="CYREG_SAR_INTR_CAUSE" bitWidth="32" desc="Interrupt cause register">
+		    </register>    
+ <register name="INJ_CHAN_CONFIG"
+		    address="CYREG_SAR_INJ_CHAN_CONFIG" bitWidth="32" desc="Injection channel configuration register">
+            <field name="INJ_PIN_ADDR"          from="2"  to="0" access="RW" desc="Address of the pin to be sampled by this channel">
+            </field>
+            <field name="INJ_PORT_ADDR"         from="6"  to="4" access="RW" desc="Address of the port that contains the pin to be sampled by this channel">
+            </field>
+            <field name="INJ_DIFFERENTIAL_EN"   from="8"  to="8" access="RW" desc="Differential enable for this channel">
+            </field>
+            <field name="INJ_RESOLUTION"        from="9"  to="9" access="RW" desc="Resolution for this channel">
+            </field>
+            <field name="INJ_AVG_EN"            from="10"  to="10" access="RW" desc="Averaging enable for this channel. If set the AVG_CNT and AVG_SHIFT settings are used for sampling the addressed pin(s).">
+            </field>
+            <field name="INJ_SAMPLE_TIME_SEL"   from="13"  to="12" access="RW" desc="Sample time select: select which of the 4 global sample times to use for this channel.">
+            </field>
+            <field name="INJ_TAILGATING"        from="30"  to="30" access="RW" desc="Injection channel tailgating">
+            </field>
+            <field name="INJ_START_EN"          from="31"  to="31" access="RW" desc="Set by firmware to enable the injection channel">
+            </field>
+		    </register>    
+ <register name="INJ_RESULT"
+		    address="CYREG_SAR_INJ_RESULT" bitWidth="32" desc="Injection channel result register">
+            <field name="INJ_RESULT"            from="15"  to="0" access="R" desc="SAR conversion result of the channel">
+            </field>
+            <field name="INJ_COLLISION_INTR_MIR" from="28"  to="28" access="R" desc="Mirror bit of corresponding bit in SAR_INTR register">
+            </field>
+            <field name="INJ_SATURATE_INTR_MIR" from="29"  to="29" access="R" desc="Mirror bit of corresponding bit in SAR_INTR register">
+            </field>
+            <field name="INJ_RANGE_INTR_MIR"    from="30"  to="30" access="R" desc="Mirror bit of corresponding bit in SAR_INTR register">
+            </field>
+            <field name="INJ_EOC_INTR_MIR"      from="31"  to="31" access="R" desc="Mirror bit of corresponding bit in SAR_INTR register">
+            </field>
+		    </register>    
+ <register name="MUX_SWITCH0"
+		    address="CYREG_SAR_MUX_SWITCH0" bitWidth="32" desc="SARMUX Firmware switch controls">
+		    </register>    
+ <register name="MUX_SWITCH_CLEAR0"
+		    address="CYREG_SAR_MUX_SWITCH_CLEAR0" bitWidth="32" desc="SARMUX Firmware switch control clear">
+		    </register>    
+ <register name="MUX_SWITCH1"
+		    address="CYREG_SAR_MUX_SWITCH1" bitWidth="32" desc="SARMUX Firmware switch controls">
+		    </register>    
+ <register name="MUX_SWITCH_CLEAR1"
+		    address="CYREG_SAR_MUX_SWITCH_CLEAR1" bitWidth="32" desc="SARMUX Firmware switch control clear">
+		    </register>    
+ <register name="MUX_SWITCH_HW_CTRL"
+		    address="CYREG_SAR_MUX_SWITCH_HW_CTRL" bitWidth="32" desc="SARMUX switch hardware control">
+		    </register>    
+ <register name="MUX_SWITCH_STATUS"
+		    address="CYREG_SAR_MUX_SWITCH_STATUS" bitWidth="32" desc="SARMUX switch status">
+		    </register>    
+ <register name="PUMP_CTRL"
+		    address="CYREG_SAR_PUMP_CTRL" bitWidth="32" desc="Switch pump control">
+		    </register>    
+ <register name="ANA_TRIM"
+		    address="CYREG_SAR_ANA_TRIM" bitWidth="32" desc="Analog trim register">
+		    </register>    
+ <register name="WOUNDING"
+		    address="CYREG_SAR_WOUNDING" bitWidth="32" desc="SAR wounding register">
+            <field name="WOUND_RESOLUTION"      from="1"  to="0" access="R" desc="Maximum SAR resolution allowed">
+            </field>
+		    </register>    
+            
+  </block>
+</deviceData>

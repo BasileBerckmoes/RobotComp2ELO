@@ -17,7 +17,7 @@
 #include <stdio.h> 
 #include <myUART.h>
 
-
+uint8 richting = 0;
 
 CY_ISR(SwitchMotorEN)
 {
@@ -26,70 +26,36 @@ CY_ISR(SwitchMotorEN)
 
 //Start alle firmwire blokken
 void initFirmwire()
-{
-	ADC_IR_Start();
-	ADC_IR_StartConvert();
-    
+{   
 	LCD_Start(); 
 	
 	MotorControl_Start();
-	
-	TimerUS_Start();
 
 	BleVDAC_Start();
 	BleBuffer_Start();
 	BleUart_Start();
-	sendBleDataTimer_Start();
+	//sendBleDataTimer_Start();
     
-    pwmMotorLinks = 0; 
-    pwmMotorRechts = 0; 
+    pwmMotorLinks = 255; 
+    pwmMotorRechts = 255; 
 } 
 
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
-    //drempelwaarde van de IR sensoren
-    IRDrempel = 100;
 
 	initFirmwire();
 	
 	//Interrupts
-	readIRSensors_StartEx(IRSensoren);
-	EnMotorISR_StartEx(SwitchMotorEN);
+	//EnMotorISR_StartEx(SwitchMotorEN);
 	BleRxISR_StartEx(MyRxInt);
-	//SendBleDataISR_StartEx(sendBleData);
-	
-    //Print start text op lcd
-	//LCD_Position(0u, 0u);
-	//LCD_PrintString("Druk om te starten");
-	
+    
     //schakel motoren uit 
 	MotorControl_WriteCompare1(0);
 	MotorControl_WriteCompare2(0);
-	ENA_Write(0);
+
+    ENA_Write(0);
 	ENB_Write(0);
-	
-    //wacht om te starten tot knop SW1 is ingedrukt
-	while(SW1_Read() == 1) //Wait until press on SW1
-	{
-//       looplicht();
-	}
-    
-//    if(SW2_Read() == 1)
-//    {
-//        if(boolSelect == 0) boolSelect = 1;
-//        else if (boolSelect == 1) boolSelect = 0;
-//    }
-    
-	MotorControl_WriteCompare1(pwmMotorLinks);
-	MotorControl_WriteCompare2(pwmMotorRechts);
-    //start de 5 LED Procedure
-	telProcedure();
-    ENA_Write(1);
-	ENB_Write(1);
-    
-    //Clear lcd zodat nieuwe waarden er op passen 
-	//LCD_ClearDisplay();
     
     //Loop
 	for(;;)
@@ -100,64 +66,31 @@ int main(void)
             //Zet de string in een buffer variable
 			if(GetRxStr())
 			{
-                
                 //Verwerk de string
 				ProcessCommandMsg();
 			}
 		}
         
-		//US deel
-		//===================================================================
-		//Teller die door de mux loopt
-		//selectUS = telTot(selectUS, 0, 2); //PAS DIT AAN INDIEN NIET ALE US SENSOREN ZIJN AANGESLOTEN!!!!!
-		//selectUS_Write(selectUS);
-		
-		//vraag afstand aan 1 van de 3 us sensoren
-	    // uint16 counterValue = readUSValue();
-		//schuif uitkomst timer in juiste array
-		//if (selectUS == 0) schuifRegister(avgUS1, counterValue);
-		//else if (selectUS == 1) schuifRegister(avgUS2, counterValue);
-		//else if (selectUS == 2) schuifRegister(avgUS3, counterValue);
-		
-		//berekenen van de mediaan
-        
-		//LCD deel   
-		//===================================================================
-	   // LCD_ClearDisplay();
-	   // print text en een test variable op de lcd
-		//printTextopLCD(pwmMotorLinks, pwmMotorRechts);
-		//print de binaire waarde van de infrarood sensoren op de lcd
-		//printBINopLCD(IRWaarden, 1);
-        
+     
         //Motoren met joystick
-        LCD_Position(0u,0u);
-        LCD_PrintInt16(pwmMotorLinks);
-        LCD_Position(1u,0u);
-        LCD_PrintInt16(pwmMotorRechts);
+        BepaalMotorWaarden();
         
-	    //CyDelay(10);
-		//motordeel
-		//===================================================================
-        
-        AnalyseerData(IRWaarden);
-      
         //Pas snelheid motoren aan
 		MotorControl_WriteCompare1(pwmMotorLinks);
         MotorControl_WriteCompare2(pwmMotorRechts);
 	}
 }
 
-//methode die een text en een testgetal op een 
-//void printTextopLCD(int testValue1, int testValue2)
-//{
-//	LCD_CLEAR_DISPLAY; //Clear display
-//	LCD_Position(0u,0u); //Put cursor top left
-//	LCD_PrintString("sensor: "); //print something
-//	LCD_Position(0u,9u); //Replace cursor
-//	LCD_PrintDecUint16(testValue1); //Print the value of first ultrasoonsensor
-//	LCD_Position(1u,9u); //Replace cursor
-//	LCD_PrintDecUint16(testValue2);
-//}
+void printTextopLCD(int testValue1, int testValue2)
+{
+	LCD_ClearDisplay(); //Clear display
+	LCD_Position(0u,0u); //Put cursor top left
+	LCD_PrintString("sensor: "); //print something
+	LCD_Position(0u,9u); //Replace cursor
+	LCD_PrintDecUint16(testValue1); //Print the value of first ultrasoonsensor
+	LCD_Position(1u,9u); //Replace cursor
+	LCD_PrintDecUint16(testValue2);
+}
 
 //methode die van min tot max telt en de huidige tel waarde terug geeft
 uint8 telTot(uint8 getal, uint8 min, uint8 max)
@@ -175,15 +108,15 @@ void printBINopLCD(uint8 value, int row)
 {
 	for(int i = 0; i < 8; i++)
 	{
-		//LCD_Position(row,i);
+		LCD_Position(row,i);
 		uint8 tmpWaarde =  exponent(2,i);
 		if ((value & tmpWaarde) == tmpWaarde)
 		{
-			//LCD_PrintDecUint16(1);
+			LCD_PrintDecUint16(1);
 		}
 			else 
 		{
-			//LCD_PrintDecUint16(0);
+			LCD_PrintDecUint16(0);
 		}  
 	 }  
 }
@@ -203,29 +136,6 @@ void telProcedure(void)
 	CyDelay(1000);
 }
 
-//void looplicht(void)
-//{
-//    LED1_Write(1);
-//	CyDelay(1000);
-//    LED1_Write(0);
-//	CyDelay(1000);
-//	LED2_Write(1);
-//	CyDelay(1000);
-//    LED2_Write(0);
-//	CyDelay(1000);
-//	LED3_Write(1);
-//	CyDelay(1000);
-//    LED3_Write(0);
-//	CyDelay(1000);
-//	LED4_Write(1);
-//	CyDelay(1000);
-//    LED4_Write(0);
-//	CyDelay(1000);
-//	LED5_Write(1);
-//	CyDelay(1000);   
-//    LED5_Write(0);
-//	CyDelay(1000);  
-//}
 
 //methode die een macht berekend
 int exponent(int grondgetal, int exponent)
@@ -238,6 +148,46 @@ int exponent(int grondgetal, int exponent)
 	return tmpWaarde;
 }
 
-
+void BepaalMotorWaarden()
+{
+    uint16 tmpValueY;
+    if (ValueY >= 122 && ValueY <= 126) tmpValueY = 0;
+    else if (ValueY < 122)
+    {
+        RijRichting_Write(0);
+        tmpValueY = 255 - (ValueY * 2);
+        //if (tmpValueY > 255) tmpValueY = 255;
+    }
+    else if (ValueY > 126)
+     {
+        RijRichting_Write(1);
+        tmpValueY = ValueY / 2;
+        //if (tmpValueY > 255) tmpValueY = 255;
+    }
+    
+    
+    LCD_Position(0u,0);
+    LCD_PrintDecUint16(tmpValueY);
+    
+    
+    LCD_Position(1u,0);
+    LCD_PrintDecUint16(ValueY);
+    
+    LCD_Position(1u,5);
+    LCD_PrintDecUint16(ValueX);
+    
+    pwmMotorLinks = tmpValueY;
+    pwmMotorRechts = tmpValueY;
+    
+    if (ValueX >= 122 && ValueX <= 128) return;
+    else if (ValueX < 122)
+    {
+        pwmMotorRechts = pwmMotorRechts - (100);
+    } 
+    else if (ValueX > 128)
+    {
+        pwmMotorLinks = pwmMotorLinks - (100);
+    }
+}
 
 
