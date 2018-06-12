@@ -1,0 +1,4696 @@
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"LiquidCrystal_I2C.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.LiquidCrystal_I2C_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	LiquidCrystal_I2C_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	LiquidCrystal_I2C_init, %function
+  25              	LiquidCrystal_I2C_init:
+  26              	.LFB63:
+  27              		.file 1 "LiquidCrystal_I2C.c"
+   1:LiquidCrystal_I2C.c **** #include "LiquidCrystal_I2C.h"
+   2:LiquidCrystal_I2C.c **** #include <stdlib.h>
+   3:LiquidCrystal_I2C.c **** 
+   4:LiquidCrystal_I2C.c **** //Portado para PSoC por Šarūnas Straigis
+   5:LiquidCrystal_I2C.c **** //http://www.element14.com/community/people/sarunaszx/blog
+   6:LiquidCrystal_I2C.c **** //Portado y modificado para PSoC 4 y PSoC 5LP por Brayan Bermudez y Carlos Diaz
+   7:LiquidCrystal_I2C.c **** //http://digitalprojectsudistrital.blogspot.com.co/
+   8:LiquidCrystal_I2C.c **** 
+   9:LiquidCrystal_I2C.c **** 
+  10:LiquidCrystal_I2C.c **** 
+  11:LiquidCrystal_I2C.c **** // When the display powers up, it is configured as follows:
+  12:LiquidCrystal_I2C.c **** //
+  13:LiquidCrystal_I2C.c **** // 1. Display clear
+  14:LiquidCrystal_I2C.c **** // 2. Function set: 
+  15:LiquidCrystal_I2C.c **** //    DL = 1; 8-bit interface data 
+  16:LiquidCrystal_I2C.c **** //    N = 0; 1-line display 
+  17:LiquidCrystal_I2C.c **** //    F = 0; 5x8 dot character font 
+  18:LiquidCrystal_I2C.c **** // 3. Display on/off control: 
+  19:LiquidCrystal_I2C.c **** //    D = 0; Display off 
+  20:LiquidCrystal_I2C.c **** //    C = 0; Cursor off 
+  21:LiquidCrystal_I2C.c **** //    B = 0; Blinking off 
+  22:LiquidCrystal_I2C.c **** // 4. Entry mode set: 
+  23:LiquidCrystal_I2C.c **** //    I/D = 1; Increment by 1
+  24:LiquidCrystal_I2C.c **** //    S = 0; No shift 
+  25:LiquidCrystal_I2C.c **** //
+  26:LiquidCrystal_I2C.c **** // Note, however, that resetting the Arduino doesn't reset the LCD, so we
+  27:LiquidCrystal_I2C.c **** // can't assume that its in that state when a sketch starts (and the
+  28:LiquidCrystal_I2C.c **** // LiquidCrystal constructor is called).
+  29:LiquidCrystal_I2C.c **** 
+  30:LiquidCrystal_I2C.c **** uint8_t _addr;
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 2
+
+
+  31:LiquidCrystal_I2C.c **** uint8_t _displayfunction;
+  32:LiquidCrystal_I2C.c **** uint8_t _displaycontrol;
+  33:LiquidCrystal_I2C.c **** uint8_t _displaymode;
+  34:LiquidCrystal_I2C.c **** uint8_t _cols;
+  35:LiquidCrystal_I2C.c **** uint8_t _rows;
+  36:LiquidCrystal_I2C.c **** uint8_t _charsize;
+  37:LiquidCrystal_I2C.c **** uint8_t _backlightval;
+  38:LiquidCrystal_I2C.c **** 
+  39:LiquidCrystal_I2C.c **** void LiquidCrystal_I2C_init(uint8_t lcd_addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t charsize)
+  40:LiquidCrystal_I2C.c **** {
+  28              		.loc 1 40 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  34 0000 10B4     		push	{r4}
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 4, -4
+  41:LiquidCrystal_I2C.c **** 	_addr = lcd_addr;
+  37              		.loc 1 41 0
+  38 0002 064C     		ldr	r4, .L3
+  39 0004 2070     		strb	r0, [r4]
+  42:LiquidCrystal_I2C.c **** 	_cols = lcd_cols;
+  40              		.loc 1 42 0
+  41 0006 0648     		ldr	r0, .L3+4
+  42              	.LVL1:
+  43 0008 0170     		strb	r1, [r0]
+  43:LiquidCrystal_I2C.c **** 	_rows = lcd_rows;
+  44              		.loc 1 43 0
+  45 000a 0649     		ldr	r1, .L3+8
+  46              	.LVL2:
+  47 000c 0A70     		strb	r2, [r1]
+  44:LiquidCrystal_I2C.c **** 	_charsize = charsize;
+  48              		.loc 1 44 0
+  49 000e 064A     		ldr	r2, .L3+12
+  50              	.LVL3:
+  51 0010 1370     		strb	r3, [r2]
+  45:LiquidCrystal_I2C.c **** 	_backlightval = LCD_BACKLIGHT;
+  52              		.loc 1 45 0
+  53 0012 0822     		movs	r2, #8
+  54 0014 054B     		ldr	r3, .L3+16
+  55              	.LVL4:
+  56 0016 1A70     		strb	r2, [r3]
+  46:LiquidCrystal_I2C.c ****     
+  47:LiquidCrystal_I2C.c ****     return;
+  48:LiquidCrystal_I2C.c **** }
+  57              		.loc 1 48 0
+  58 0018 10BC     		pop	{r4}
+  59              		.cfi_restore 4
+  60              		.cfi_def_cfa_offset 0
+  61 001a 7047     		bx	lr
+  62              	.L4:
+  63              		.align	2
+  64              	.L3:
+  65 001c 00000000 		.word	_addr
+  66 0020 00000000 		.word	_cols
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 3
+
+
+  67 0024 00000000 		.word	_rows
+  68 0028 00000000 		.word	_charsize
+  69 002c 00000000 		.word	_backlightval
+  70              		.cfi_endproc
+  71              	.LFE63:
+  72              		.size	LiquidCrystal_I2C_init, .-LiquidCrystal_I2C_init
+  73              		.section	.text.I2C_M_write_byte,"ax",%progbits
+  74              		.align	2
+  75              		.global	I2C_M_write_byte
+  76              		.thumb
+  77              		.thumb_func
+  78              		.type	I2C_M_write_byte, %function
+  79              	I2C_M_write_byte:
+  80              	.LFB94:
+  49:LiquidCrystal_I2C.c **** 
+  50:LiquidCrystal_I2C.c **** void begin(void){
+  51:LiquidCrystal_I2C.c ****   
+  52:LiquidCrystal_I2C.c **** 	_displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
+  53:LiquidCrystal_I2C.c **** 
+  54:LiquidCrystal_I2C.c **** 	if (_rows > 1) {
+  55:LiquidCrystal_I2C.c **** 		_displayfunction |= LCD_2LINE;
+  56:LiquidCrystal_I2C.c **** 	}
+  57:LiquidCrystal_I2C.c **** 
+  58:LiquidCrystal_I2C.c **** 	// for some 1 line displays you can select a 10 pixel high font
+  59:LiquidCrystal_I2C.c **** 	if ((_charsize != 0) && (_rows == 1)) {
+  60:LiquidCrystal_I2C.c **** 		_displayfunction |= LCD_5x10DOTS;
+  61:LiquidCrystal_I2C.c **** 	}
+  62:LiquidCrystal_I2C.c **** 
+  63:LiquidCrystal_I2C.c **** 	// SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
+  64:LiquidCrystal_I2C.c **** 	// according to datasheet, we need at least 40ms after power rises above 2.7V
+  65:LiquidCrystal_I2C.c **** 	// before sending commands. Arduino can turn on way befer 4.5V so we'll wait 50
+  66:LiquidCrystal_I2C.c **** 	CyDelay(50); 
+  67:LiquidCrystal_I2C.c **** 
+  68:LiquidCrystal_I2C.c **** 	// Now we pull both RS and R/W low to begin commands
+  69:LiquidCrystal_I2C.c **** 	expanderWrite(_backlightval);	// reset expander and turn backlight off (Bit 8 =1)
+  70:LiquidCrystal_I2C.c **** 	CyDelay(1000);
+  71:LiquidCrystal_I2C.c ****  
+  72:LiquidCrystal_I2C.c **** 	//put the LCD into 4 bit mode
+  73:LiquidCrystal_I2C.c **** 	// this is according to the hitachi HD44780 datasheet
+  74:LiquidCrystal_I2C.c **** 	// figure 24, pg 46
+  75:LiquidCrystal_I2C.c **** 
+  76:LiquidCrystal_I2C.c **** 	// we start in 8bit mode, try to set 4 bit mode
+  77:LiquidCrystal_I2C.c **** 	write4bits(0x03 << 4);
+  78:LiquidCrystal_I2C.c **** 	CyDelayUs(4500); // wait min 4.1ms
+  79:LiquidCrystal_I2C.c **** 
+  80:LiquidCrystal_I2C.c **** 	// second try
+  81:LiquidCrystal_I2C.c **** 	write4bits(0x03 << 4);
+  82:LiquidCrystal_I2C.c **** 	CyDelayUs(4500); // wait min 4.1ms
+  83:LiquidCrystal_I2C.c **** 
+  84:LiquidCrystal_I2C.c **** 	// third go!
+  85:LiquidCrystal_I2C.c **** 	write4bits(0x03 << 4); 
+  86:LiquidCrystal_I2C.c **** 	CyDelayUs(150);
+  87:LiquidCrystal_I2C.c **** 
+  88:LiquidCrystal_I2C.c **** 	// finally, set to 4-bit interface
+  89:LiquidCrystal_I2C.c **** 	write4bits(0x02 << 4); 
+  90:LiquidCrystal_I2C.c **** 
+  91:LiquidCrystal_I2C.c **** 	// set # lines, font size, etc.
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 4
+
+
+  92:LiquidCrystal_I2C.c **** 	command(LCD_FUNCTIONSET | _displayfunction);  
+  93:LiquidCrystal_I2C.c **** 
+  94:LiquidCrystal_I2C.c **** 	// turn the display on with no cursor or blinking default
+  95:LiquidCrystal_I2C.c **** 	_displaycontrol = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF;
+  96:LiquidCrystal_I2C.c **** 	display();
+  97:LiquidCrystal_I2C.c **** 	
+  98:LiquidCrystal_I2C.c **** 	// clear it off
+  99:LiquidCrystal_I2C.c **** 	clear();
+ 100:LiquidCrystal_I2C.c **** 	
+ 101:LiquidCrystal_I2C.c **** 	// Initialize to default text direction (for roman languages)
+ 102:LiquidCrystal_I2C.c **** 	_displaymode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
+ 103:LiquidCrystal_I2C.c **** 	
+ 104:LiquidCrystal_I2C.c **** 	// set the entry mode
+ 105:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 106:LiquidCrystal_I2C.c **** 	
+ 107:LiquidCrystal_I2C.c **** 	home();
+ 108:LiquidCrystal_I2C.c ****   
+ 109:LiquidCrystal_I2C.c ****     return;
+ 110:LiquidCrystal_I2C.c **** }
+ 111:LiquidCrystal_I2C.c **** 
+ 112:LiquidCrystal_I2C.c **** /********** high level commands, for the user! */
+ 113:LiquidCrystal_I2C.c **** void clear(void){
+ 114:LiquidCrystal_I2C.c ****     
+ 115:LiquidCrystal_I2C.c **** 	command(LCD_CLEARDISPLAY);// clear display, set cursor position to zero
+ 116:LiquidCrystal_I2C.c **** 	CyDelay(2);  // this command takes a long time!
+ 117:LiquidCrystal_I2C.c ****     
+ 118:LiquidCrystal_I2C.c ****     return;
+ 119:LiquidCrystal_I2C.c **** }
+ 120:LiquidCrystal_I2C.c **** 
+ 121:LiquidCrystal_I2C.c **** void home(void){
+ 122:LiquidCrystal_I2C.c **** 	
+ 123:LiquidCrystal_I2C.c ****     command(LCD_RETURNHOME);  // set cursor position to zero
+ 124:LiquidCrystal_I2C.c **** 	CyDelay(2);  // this command takes a long time!
+ 125:LiquidCrystal_I2C.c ****     
+ 126:LiquidCrystal_I2C.c ****     return;
+ 127:LiquidCrystal_I2C.c **** }
+ 128:LiquidCrystal_I2C.c **** 
+ 129:LiquidCrystal_I2C.c **** void setCursor(uint8_t col, uint8_t row){
+ 130:LiquidCrystal_I2C.c ****     
+ 131:LiquidCrystal_I2C.c **** 	int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
+ 132:LiquidCrystal_I2C.c **** 	if (row > _rows) {
+ 133:LiquidCrystal_I2C.c **** 		row = _rows-1;    // we count rows starting w/0
+ 134:LiquidCrystal_I2C.c **** 	}
+ 135:LiquidCrystal_I2C.c **** 	command(LCD_SETDDRAMADDR | (col + row_offsets[row]));
+ 136:LiquidCrystal_I2C.c ****     
+ 137:LiquidCrystal_I2C.c ****     return;
+ 138:LiquidCrystal_I2C.c **** }
+ 139:LiquidCrystal_I2C.c **** 
+ 140:LiquidCrystal_I2C.c **** // Turn the display on/off (quickly)
+ 141:LiquidCrystal_I2C.c **** void noDisplay(void){
+ 142:LiquidCrystal_I2C.c **** 	
+ 143:LiquidCrystal_I2C.c ****     _displaycontrol &= ~LCD_DISPLAYON;
+ 144:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 145:LiquidCrystal_I2C.c ****     
+ 146:LiquidCrystal_I2C.c ****     return;
+ 147:LiquidCrystal_I2C.c **** }
+ 148:LiquidCrystal_I2C.c **** void display(void){
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 5
+
+
+ 149:LiquidCrystal_I2C.c ****     
+ 150:LiquidCrystal_I2C.c **** 	_displaycontrol |= LCD_DISPLAYON;
+ 151:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 152:LiquidCrystal_I2C.c ****     
+ 153:LiquidCrystal_I2C.c ****     return;
+ 154:LiquidCrystal_I2C.c **** }
+ 155:LiquidCrystal_I2C.c **** 
+ 156:LiquidCrystal_I2C.c **** // Turns the underline cursor on/off
+ 157:LiquidCrystal_I2C.c **** void noCursor(void){
+ 158:LiquidCrystal_I2C.c **** 	
+ 159:LiquidCrystal_I2C.c ****     _displaycontrol &= ~LCD_CURSORON;
+ 160:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 161:LiquidCrystal_I2C.c ****     
+ 162:LiquidCrystal_I2C.c ****     return;
+ 163:LiquidCrystal_I2C.c **** }
+ 164:LiquidCrystal_I2C.c **** void cursor(void){
+ 165:LiquidCrystal_I2C.c **** 	
+ 166:LiquidCrystal_I2C.c ****     _displaycontrol |= LCD_CURSORON;
+ 167:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 168:LiquidCrystal_I2C.c ****     
+ 169:LiquidCrystal_I2C.c ****     return;
+ 170:LiquidCrystal_I2C.c **** }
+ 171:LiquidCrystal_I2C.c **** void clearLine(uint8 row){    
+ 172:LiquidCrystal_I2C.c ****     char line[_cols];
+ 173:LiquidCrystal_I2C.c ****     
+ 174:LiquidCrystal_I2C.c ****     setCursor(0,row);
+ 175:LiquidCrystal_I2C.c ****     for (uint8 i = 0; i < _cols; i++){
+ 176:LiquidCrystal_I2C.c ****          line[i]=' ';
+ 177:LiquidCrystal_I2C.c ****     }    
+ 178:LiquidCrystal_I2C.c ****     LCD_print(line);
+ 179:LiquidCrystal_I2C.c ****     setCursor(0,row);
+ 180:LiquidCrystal_I2C.c ****     
+ 181:LiquidCrystal_I2C.c ****     return;
+ 182:LiquidCrystal_I2C.c **** }
+ 183:LiquidCrystal_I2C.c **** 
+ 184:LiquidCrystal_I2C.c **** // Turn on and off the blinking cursor
+ 185:LiquidCrystal_I2C.c **** void noBlink(void){
+ 186:LiquidCrystal_I2C.c **** 	
+ 187:LiquidCrystal_I2C.c ****     _displaycontrol &= ~LCD_BLINKON;
+ 188:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 189:LiquidCrystal_I2C.c ****     
+ 190:LiquidCrystal_I2C.c ****     return;
+ 191:LiquidCrystal_I2C.c **** }
+ 192:LiquidCrystal_I2C.c **** void blink(void){
+ 193:LiquidCrystal_I2C.c ****     
+ 194:LiquidCrystal_I2C.c **** 	_displaycontrol |= LCD_BLINKON;
+ 195:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 196:LiquidCrystal_I2C.c ****     
+ 197:LiquidCrystal_I2C.c ****     return;
+ 198:LiquidCrystal_I2C.c **** }
+ 199:LiquidCrystal_I2C.c **** 
+ 200:LiquidCrystal_I2C.c **** // These commands scroll the display without changing the RAM
+ 201:LiquidCrystal_I2C.c **** void scrollDisplayLeft(void){
+ 202:LiquidCrystal_I2C.c ****     
+ 203:LiquidCrystal_I2C.c **** 	command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT);
+ 204:LiquidCrystal_I2C.c ****     
+ 205:LiquidCrystal_I2C.c ****     return;
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 6
+
+
+ 206:LiquidCrystal_I2C.c **** }
+ 207:LiquidCrystal_I2C.c **** void scrollDisplayRight(void){
+ 208:LiquidCrystal_I2C.c **** 	
+ 209:LiquidCrystal_I2C.c ****     command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT);
+ 210:LiquidCrystal_I2C.c ****     
+ 211:LiquidCrystal_I2C.c ****     return;
+ 212:LiquidCrystal_I2C.c **** }
+ 213:LiquidCrystal_I2C.c **** 
+ 214:LiquidCrystal_I2C.c **** // This is for text that flows Left to Right
+ 215:LiquidCrystal_I2C.c **** void leftToRight(void){
+ 216:LiquidCrystal_I2C.c ****     
+ 217:LiquidCrystal_I2C.c **** 	_displaymode |= LCD_ENTRYLEFT;
+ 218:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 219:LiquidCrystal_I2C.c ****     
+ 220:LiquidCrystal_I2C.c ****     return;
+ 221:LiquidCrystal_I2C.c **** }
+ 222:LiquidCrystal_I2C.c **** 
+ 223:LiquidCrystal_I2C.c **** // This is for text that flows Right to Left
+ 224:LiquidCrystal_I2C.c **** void rightToLeft(void){
+ 225:LiquidCrystal_I2C.c ****     
+ 226:LiquidCrystal_I2C.c **** 	_displaymode &= ~LCD_ENTRYLEFT;
+ 227:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 228:LiquidCrystal_I2C.c ****     
+ 229:LiquidCrystal_I2C.c ****     return;
+ 230:LiquidCrystal_I2C.c **** }
+ 231:LiquidCrystal_I2C.c **** 
+ 232:LiquidCrystal_I2C.c **** // This will 'right justify' text from the cursor
+ 233:LiquidCrystal_I2C.c **** void autoscroll(void){
+ 234:LiquidCrystal_I2C.c **** 	
+ 235:LiquidCrystal_I2C.c ****     _displaymode |= LCD_ENTRYSHIFTINCREMENT;
+ 236:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 237:LiquidCrystal_I2C.c ****     
+ 238:LiquidCrystal_I2C.c ****     return;
+ 239:LiquidCrystal_I2C.c **** }
+ 240:LiquidCrystal_I2C.c **** 
+ 241:LiquidCrystal_I2C.c **** // This will 'left justify' text from the cursor
+ 242:LiquidCrystal_I2C.c **** void noAutoscroll(void){
+ 243:LiquidCrystal_I2C.c **** 	
+ 244:LiquidCrystal_I2C.c ****     _displaymode &= ~LCD_ENTRYSHIFTINCREMENT;
+ 245:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 246:LiquidCrystal_I2C.c ****     
+ 247:LiquidCrystal_I2C.c ****     return;
+ 248:LiquidCrystal_I2C.c **** }
+ 249:LiquidCrystal_I2C.c **** 
+ 250:LiquidCrystal_I2C.c **** // Allows us to fill the first 8 CGRAM locations
+ 251:LiquidCrystal_I2C.c **** // with custom characters
+ 252:LiquidCrystal_I2C.c **** void createChar(uint8_t location, uint8_t charmap[]){ uint32_t i = 0;
+ 253:LiquidCrystal_I2C.c **** 	
+ 254:LiquidCrystal_I2C.c ****     location &= 0x7; // we only have 8 locations 0-7
+ 255:LiquidCrystal_I2C.c **** 	command(LCD_SETCGRAMADDR | (location << 3));
+ 256:LiquidCrystal_I2C.c **** 	for (i=0; i<8; i++) {
+ 257:LiquidCrystal_I2C.c **** 		write(charmap[i]);
+ 258:LiquidCrystal_I2C.c **** 	}
+ 259:LiquidCrystal_I2C.c ****     
+ 260:LiquidCrystal_I2C.c ****     return;
+ 261:LiquidCrystal_I2C.c **** }
+ 262:LiquidCrystal_I2C.c **** 
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 7
+
+
+ 263:LiquidCrystal_I2C.c **** // Turn the (optional) backlight off/on
+ 264:LiquidCrystal_I2C.c **** void noBacklight(void) {
+ 265:LiquidCrystal_I2C.c **** 	
+ 266:LiquidCrystal_I2C.c ****     _backlightval=LCD_NOBACKLIGHT;
+ 267:LiquidCrystal_I2C.c **** 	expanderWrite(0);
+ 268:LiquidCrystal_I2C.c ****     
+ 269:LiquidCrystal_I2C.c ****     return;
+ 270:LiquidCrystal_I2C.c **** }
+ 271:LiquidCrystal_I2C.c **** 
+ 272:LiquidCrystal_I2C.c **** void backlight(void){
+ 273:LiquidCrystal_I2C.c ****     
+ 274:LiquidCrystal_I2C.c **** 	_backlightval=LCD_BACKLIGHT;
+ 275:LiquidCrystal_I2C.c **** 	expanderWrite(0);
+ 276:LiquidCrystal_I2C.c ****     
+ 277:LiquidCrystal_I2C.c ****     return;
+ 278:LiquidCrystal_I2C.c **** }
+ 279:LiquidCrystal_I2C.c **** 
+ 280:LiquidCrystal_I2C.c **** /*********** mid level commands, for sending data/cmds */
+ 281:LiquidCrystal_I2C.c **** 
+ 282:LiquidCrystal_I2C.c **** void command(uint8_t value){
+ 283:LiquidCrystal_I2C.c **** 	
+ 284:LiquidCrystal_I2C.c ****     send(value, 0);
+ 285:LiquidCrystal_I2C.c ****     
+ 286:LiquidCrystal_I2C.c ****     return;
+ 287:LiquidCrystal_I2C.c **** }
+ 288:LiquidCrystal_I2C.c **** 
+ 289:LiquidCrystal_I2C.c ****  void write(uint8_t value){
+ 290:LiquidCrystal_I2C.c ****     
+ 291:LiquidCrystal_I2C.c **** 	send(value, Rs);
+ 292:LiquidCrystal_I2C.c ****     
+ 293:LiquidCrystal_I2C.c ****     return;
+ 294:LiquidCrystal_I2C.c **** }
+ 295:LiquidCrystal_I2C.c **** 
+ 296:LiquidCrystal_I2C.c **** 
+ 297:LiquidCrystal_I2C.c **** /************ low level data pushing commands **********/
+ 298:LiquidCrystal_I2C.c **** 
+ 299:LiquidCrystal_I2C.c **** // write either command or data
+ 300:LiquidCrystal_I2C.c **** void send(uint8_t value, uint8_t mode){
+ 301:LiquidCrystal_I2C.c ****     
+ 302:LiquidCrystal_I2C.c **** 	uint8_t highnib=value&0xf0;
+ 303:LiquidCrystal_I2C.c **** 	uint8_t lownib=(value<<4)&0xf0;
+ 304:LiquidCrystal_I2C.c **** 	write4bits((highnib)|mode);
+ 305:LiquidCrystal_I2C.c **** 	write4bits((lownib)|mode); 
+ 306:LiquidCrystal_I2C.c ****     
+ 307:LiquidCrystal_I2C.c ****     return;
+ 308:LiquidCrystal_I2C.c **** }
+ 309:LiquidCrystal_I2C.c **** 
+ 310:LiquidCrystal_I2C.c **** void write4bits(uint8_t value) {
+ 311:LiquidCrystal_I2C.c ****     
+ 312:LiquidCrystal_I2C.c **** 	expanderWrite(value);
+ 313:LiquidCrystal_I2C.c **** 	pulseEnable(value);
+ 314:LiquidCrystal_I2C.c ****     
+ 315:LiquidCrystal_I2C.c ****     return;
+ 316:LiquidCrystal_I2C.c **** }
+ 317:LiquidCrystal_I2C.c **** 
+ 318:LiquidCrystal_I2C.c **** void expanderWrite(uint8_t _data){     
+ 319:LiquidCrystal_I2C.c ****     
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 8
+
+
+ 320:LiquidCrystal_I2C.c **** 	I2C_M_write_byte(_addr,_data | _backlightval);	   
+ 321:LiquidCrystal_I2C.c ****     
+ 322:LiquidCrystal_I2C.c ****     return;
+ 323:LiquidCrystal_I2C.c **** }
+ 324:LiquidCrystal_I2C.c **** 
+ 325:LiquidCrystal_I2C.c **** void pulseEnable(uint8_t _data){
+ 326:LiquidCrystal_I2C.c ****     
+ 327:LiquidCrystal_I2C.c **** 	expanderWrite(_data | En);	// En high
+ 328:LiquidCrystal_I2C.c **** 	CyDelayUs(1);		// enable pulse must be >450ns
+ 329:LiquidCrystal_I2C.c **** 	expanderWrite(_data & ~En);	// En low
+ 330:LiquidCrystal_I2C.c **** 	CyDelayUs(50);		// commands need > 37us to settle
+ 331:LiquidCrystal_I2C.c ****     
+ 332:LiquidCrystal_I2C.c ****     return;
+ 333:LiquidCrystal_I2C.c **** }
+ 334:LiquidCrystal_I2C.c **** 
+ 335:LiquidCrystal_I2C.c **** void load_custom_character(uint8_t char_num, uint8_t *rows){
+ 336:LiquidCrystal_I2C.c **** 	
+ 337:LiquidCrystal_I2C.c ****     createChar(char_num, rows);
+ 338:LiquidCrystal_I2C.c ****     
+ 339:LiquidCrystal_I2C.c ****     return;
+ 340:LiquidCrystal_I2C.c **** }
+ 341:LiquidCrystal_I2C.c **** 
+ 342:LiquidCrystal_I2C.c **** void setBacklight(uint8_t new_val){
+ 343:LiquidCrystal_I2C.c ****     
+ 344:LiquidCrystal_I2C.c **** 	if (new_val) {
+ 345:LiquidCrystal_I2C.c **** 		backlight();		// turn backlight on
+ 346:LiquidCrystal_I2C.c **** 	} else {
+ 347:LiquidCrystal_I2C.c **** 		noBacklight();		// turn backlight off
+ 348:LiquidCrystal_I2C.c **** 	}
+ 349:LiquidCrystal_I2C.c ****     
+ 350:LiquidCrystal_I2C.c ****     return;
+ 351:LiquidCrystal_I2C.c **** }
+ 352:LiquidCrystal_I2C.c **** 
+ 353:LiquidCrystal_I2C.c **** void LCD_print(char word[]){ uint32_t i = 0;
+ 354:LiquidCrystal_I2C.c ****     
+ 355:LiquidCrystal_I2C.c ****     uint8_t size = strlen(word);
+ 356:LiquidCrystal_I2C.c ****     
+ 357:LiquidCrystal_I2C.c ****     for (i = 0; i < size; i++){
+ 358:LiquidCrystal_I2C.c ****         write(word[i]);
+ 359:LiquidCrystal_I2C.c ****     }
+ 360:LiquidCrystal_I2C.c **** 
+ 361:LiquidCrystal_I2C.c ****     return;
+ 362:LiquidCrystal_I2C.c **** }
+ 363:LiquidCrystal_I2C.c **** 
+ 364:LiquidCrystal_I2C.c **** void LCD_print_num(int n ,uint8 radix)
+ 365:LiquidCrystal_I2C.c **** {
+ 366:LiquidCrystal_I2C.c ****     char buffer [sizeof(int)*8+1];
+ 367:LiquidCrystal_I2C.c ****     itoa(n,buffer,radix);
+ 368:LiquidCrystal_I2C.c ****     LCD_print(buffer);
+ 369:LiquidCrystal_I2C.c **** 
+ 370:LiquidCrystal_I2C.c ****     return;
+ 371:LiquidCrystal_I2C.c **** }
+ 372:LiquidCrystal_I2C.c **** 
+ 373:LiquidCrystal_I2C.c **** void I2C_M_write_byte(uint8_t addr,uint8_t data){ 
+  81              		.loc 1 373 0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 9
+
+
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              	.LVL5:
+  86 0000 10B5     		push	{r4, lr}
+  87              		.cfi_def_cfa_offset 8
+  88              		.cfi_offset 4, -8
+  89              		.cfi_offset 14, -4
+  90 0002 0C46     		mov	r4, r1
+ 374:LiquidCrystal_I2C.c **** /*
+ 375:LiquidCrystal_I2C.c ****     Pin_1_Write(0u);
+ 376:LiquidCrystal_I2C.c ****     I2C_MasterSendStart(addr, 0);
+ 377:LiquidCrystal_I2C.c ****     i2C_
+ 378:LiquidCrystal_I2C.c ****     Pin_2_Write(0u);
+ 379:LiquidCrystal_I2C.c ****     I2C_MasterWriteByte(data);
+ 380:LiquidCrystal_I2C.c ****     I2C_MasterSendStop();
+ 381:LiquidCrystal_I2C.c ****     */
+ 382:LiquidCrystal_I2C.c ****     
+ 383:LiquidCrystal_I2C.c **** if CY_PSOC5    
+ 384:LiquidCrystal_I2C.c ****     I2C_MasterSendStart(addr, 0);      
+  91              		.loc 1 384 0
+  92 0004 0021     		movs	r1, #0
+  93              	.LVL6:
+  94 0006 FFF7FEFF 		bl	I2C_MasterSendStart
+  95              	.LVL7:
+ 385:LiquidCrystal_I2C.c ****     I2C_MasterWriteByte(data);    
+  96              		.loc 1 385 0
+  97 000a 2046     		mov	r0, r4
+  98 000c FFF7FEFF 		bl	I2C_MasterWriteByte
+  99              	.LVL8:
+ 386:LiquidCrystal_I2C.c ****     I2C_MasterSendStop();
+ 100              		.loc 1 386 0
+ 101 0010 FFF7FEFF 		bl	I2C_MasterSendStop
+ 102              	.LVL9:
+ 103 0014 10BD     		pop	{r4, pc}
+ 104              		.cfi_endproc
+ 105              	.LFE94:
+ 106              		.size	I2C_M_write_byte, .-I2C_M_write_byte
+ 107 0016 00BF     		.section	.text.expanderWrite,"ax",%progbits
+ 108              		.align	2
+ 109              		.global	expanderWrite
+ 110              		.thumb
+ 111              		.thumb_func
+ 112              		.type	expanderWrite, %function
+ 113              	expanderWrite:
+ 114              	.LFB88:
+ 318:LiquidCrystal_I2C.c ****     
+ 115              		.loc 1 318 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              	.LVL10:
+ 120 0000 08B5     		push	{r3, lr}
+ 121              		.cfi_def_cfa_offset 8
+ 122              		.cfi_offset 3, -8
+ 123              		.cfi_offset 14, -4
+ 320:LiquidCrystal_I2C.c ****     
+ 124              		.loc 1 320 0
+ 125 0002 044B     		ldr	r3, .L9
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 10
+
+
+ 126 0004 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 127 0006 0143     		orrs	r1, r1, r0
+ 128 0008 034B     		ldr	r3, .L9+4
+ 129 000a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 130              	.LVL11:
+ 131 000c FFF7FEFF 		bl	I2C_M_write_byte
+ 132              	.LVL12:
+ 133 0010 08BD     		pop	{r3, pc}
+ 134              	.L10:
+ 135 0012 00BF     		.align	2
+ 136              	.L9:
+ 137 0014 00000000 		.word	_backlightval
+ 138 0018 00000000 		.word	_addr
+ 139              		.cfi_endproc
+ 140              	.LFE88:
+ 141              		.size	expanderWrite, .-expanderWrite
+ 142              		.section	.text.noBacklight,"ax",%progbits
+ 143              		.align	2
+ 144              		.global	noBacklight
+ 145              		.thumb
+ 146              		.thumb_func
+ 147              		.type	noBacklight, %function
+ 148              	noBacklight:
+ 149              	.LFB82:
+ 264:LiquidCrystal_I2C.c **** 	
+ 150              		.loc 1 264 0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154 0000 08B5     		push	{r3, lr}
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 3, -8
+ 157              		.cfi_offset 14, -4
+ 266:LiquidCrystal_I2C.c **** 	expanderWrite(0);
+ 158              		.loc 1 266 0
+ 159 0002 0020     		movs	r0, #0
+ 160 0004 024B     		ldr	r3, .L13
+ 161 0006 1870     		strb	r0, [r3]
+ 267:LiquidCrystal_I2C.c ****     
+ 162              		.loc 1 267 0
+ 163 0008 FFF7FEFF 		bl	expanderWrite
+ 164              	.LVL13:
+ 165 000c 08BD     		pop	{r3, pc}
+ 166              	.L14:
+ 167 000e 00BF     		.align	2
+ 168              	.L13:
+ 169 0010 00000000 		.word	_backlightval
+ 170              		.cfi_endproc
+ 171              	.LFE82:
+ 172              		.size	noBacklight, .-noBacklight
+ 173              		.section	.text.backlight,"ax",%progbits
+ 174              		.align	2
+ 175              		.global	backlight
+ 176              		.thumb
+ 177              		.thumb_func
+ 178              		.type	backlight, %function
+ 179              	backlight:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 11
+
+
+ 180              	.LFB83:
+ 272:LiquidCrystal_I2C.c ****     
+ 181              		.loc 1 272 0
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185 0000 08B5     		push	{r3, lr}
+ 186              		.cfi_def_cfa_offset 8
+ 187              		.cfi_offset 3, -8
+ 188              		.cfi_offset 14, -4
+ 274:LiquidCrystal_I2C.c **** 	expanderWrite(0);
+ 189              		.loc 1 274 0
+ 190 0002 0822     		movs	r2, #8
+ 191 0004 024B     		ldr	r3, .L17
+ 192 0006 1A70     		strb	r2, [r3]
+ 275:LiquidCrystal_I2C.c ****     
+ 193              		.loc 1 275 0
+ 194 0008 0020     		movs	r0, #0
+ 195 000a FFF7FEFF 		bl	expanderWrite
+ 196              	.LVL14:
+ 197 000e 08BD     		pop	{r3, pc}
+ 198              	.L18:
+ 199              		.align	2
+ 200              	.L17:
+ 201 0010 00000000 		.word	_backlightval
+ 202              		.cfi_endproc
+ 203              	.LFE83:
+ 204              		.size	backlight, .-backlight
+ 205              		.section	.text.setBacklight,"ax",%progbits
+ 206              		.align	2
+ 207              		.global	setBacklight
+ 208              		.thumb
+ 209              		.thumb_func
+ 210              		.type	setBacklight, %function
+ 211              	setBacklight:
+ 212              	.LFB91:
+ 342:LiquidCrystal_I2C.c ****     
+ 213              		.loc 1 342 0
+ 214              		.cfi_startproc
+ 215              		@ args = 0, pretend = 0, frame = 0
+ 216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 217              	.LVL15:
+ 218 0000 08B5     		push	{r3, lr}
+ 219              		.cfi_def_cfa_offset 8
+ 220              		.cfi_offset 3, -8
+ 221              		.cfi_offset 14, -4
+ 344:LiquidCrystal_I2C.c **** 		backlight();		// turn backlight on
+ 222              		.loc 1 344 0
+ 223 0002 10B1     		cbz	r0, .L20
+ 345:LiquidCrystal_I2C.c **** 	} else {
+ 224              		.loc 1 345 0
+ 225 0004 FFF7FEFF 		bl	backlight
+ 226              	.LVL16:
+ 227 0008 08BD     		pop	{r3, pc}
+ 228              	.LVL17:
+ 229              	.L20:
+ 347:LiquidCrystal_I2C.c **** 	}
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 12
+
+
+ 230              		.loc 1 347 0
+ 231 000a FFF7FEFF 		bl	noBacklight
+ 232              	.LVL18:
+ 233 000e 08BD     		pop	{r3, pc}
+ 234              		.cfi_endproc
+ 235              	.LFE91:
+ 236              		.size	setBacklight, .-setBacklight
+ 237              		.section	.text.pulseEnable,"ax",%progbits
+ 238              		.align	2
+ 239              		.global	pulseEnable
+ 240              		.thumb
+ 241              		.thumb_func
+ 242              		.type	pulseEnable, %function
+ 243              	pulseEnable:
+ 244              	.LFB89:
+ 325:LiquidCrystal_I2C.c ****     
+ 245              		.loc 1 325 0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249              	.LVL19:
+ 250 0000 10B5     		push	{r4, lr}
+ 251              		.cfi_def_cfa_offset 8
+ 252              		.cfi_offset 4, -8
+ 253              		.cfi_offset 14, -4
+ 254 0002 0446     		mov	r4, r0
+ 327:LiquidCrystal_I2C.c **** 	CyDelayUs(1);		// enable pulse must be >450ns
+ 255              		.loc 1 327 0
+ 256 0004 40F00400 		orr	r0, r0, #4
+ 257              	.LVL20:
+ 258 0008 FFF7FEFF 		bl	expanderWrite
+ 259              	.LVL21:
+ 328:LiquidCrystal_I2C.c **** 	expanderWrite(_data & ~En);	// En low
+ 260              		.loc 1 328 0
+ 261 000c 0120     		movs	r0, #1
+ 262 000e FFF7FEFF 		bl	CyDelayUs
+ 263              	.LVL22:
+ 329:LiquidCrystal_I2C.c **** 	CyDelayUs(50);		// commands need > 37us to settle
+ 264              		.loc 1 329 0
+ 265 0012 04F0FB00 		and	r0, r4, #251
+ 266 0016 FFF7FEFF 		bl	expanderWrite
+ 267              	.LVL23:
+ 330:LiquidCrystal_I2C.c ****     
+ 268              		.loc 1 330 0
+ 269 001a 3220     		movs	r0, #50
+ 270 001c FFF7FEFF 		bl	CyDelayUs
+ 271              	.LVL24:
+ 272 0020 10BD     		pop	{r4, pc}
+ 273              		.cfi_endproc
+ 274              	.LFE89:
+ 275              		.size	pulseEnable, .-pulseEnable
+ 276 0022 00BF     		.section	.text.write4bits,"ax",%progbits
+ 277              		.align	2
+ 278              		.global	write4bits
+ 279              		.thumb
+ 280              		.thumb_func
+ 281              		.type	write4bits, %function
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 13
+
+
+ 282              	write4bits:
+ 283              	.LFB87:
+ 310:LiquidCrystal_I2C.c ****     
+ 284              		.loc 1 310 0
+ 285              		.cfi_startproc
+ 286              		@ args = 0, pretend = 0, frame = 0
+ 287              		@ frame_needed = 0, uses_anonymous_args = 0
+ 288              	.LVL25:
+ 289 0000 10B5     		push	{r4, lr}
+ 290              		.cfi_def_cfa_offset 8
+ 291              		.cfi_offset 4, -8
+ 292              		.cfi_offset 14, -4
+ 293 0002 0446     		mov	r4, r0
+ 312:LiquidCrystal_I2C.c **** 	pulseEnable(value);
+ 294              		.loc 1 312 0
+ 295 0004 FFF7FEFF 		bl	expanderWrite
+ 296              	.LVL26:
+ 313:LiquidCrystal_I2C.c ****     
+ 297              		.loc 1 313 0
+ 298 0008 2046     		mov	r0, r4
+ 299 000a FFF7FEFF 		bl	pulseEnable
+ 300              	.LVL27:
+ 301 000e 10BD     		pop	{r4, pc}
+ 302              		.cfi_endproc
+ 303              	.LFE87:
+ 304              		.size	write4bits, .-write4bits
+ 305              		.section	.text.send,"ax",%progbits
+ 306              		.align	2
+ 307              		.global	send
+ 308              		.thumb
+ 309              		.thumb_func
+ 310              		.type	send, %function
+ 311              	send:
+ 312              	.LFB86:
+ 300:LiquidCrystal_I2C.c ****     
+ 313              		.loc 1 300 0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              	.LVL28:
+ 318 0000 38B5     		push	{r3, r4, r5, lr}
+ 319              		.cfi_def_cfa_offset 16
+ 320              		.cfi_offset 3, -16
+ 321              		.cfi_offset 4, -12
+ 322              		.cfi_offset 5, -8
+ 323              		.cfi_offset 14, -4
+ 324 0002 0D46     		mov	r5, r1
+ 302:LiquidCrystal_I2C.c **** 	uint8_t lownib=(value<<4)&0xf0;
+ 325              		.loc 1 302 0
+ 326 0004 00F0F003 		and	r3, r0, #240
+ 327              	.LVL29:
+ 303:LiquidCrystal_I2C.c **** 	write4bits((highnib)|mode);
+ 328              		.loc 1 303 0
+ 329 0008 0401     		lsls	r4, r0, #4
+ 330 000a E4B2     		uxtb	r4, r4
+ 331              	.LVL30:
+ 304:LiquidCrystal_I2C.c **** 	write4bits((lownib)|mode); 
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 14
+
+
+ 332              		.loc 1 304 0
+ 333 000c 43EA0100 		orr	r0, r3, r1
+ 334              	.LVL31:
+ 335 0010 FFF7FEFF 		bl	write4bits
+ 336              	.LVL32:
+ 305:LiquidCrystal_I2C.c ****     
+ 337              		.loc 1 305 0
+ 338 0014 44EA0500 		orr	r0, r4, r5
+ 339 0018 FFF7FEFF 		bl	write4bits
+ 340              	.LVL33:
+ 341 001c 38BD     		pop	{r3, r4, r5, pc}
+ 342              		.cfi_endproc
+ 343              	.LFE86:
+ 344              		.size	send, .-send
+ 345 001e 00BF     		.section	.text.command,"ax",%progbits
+ 346              		.align	2
+ 347              		.global	command
+ 348              		.thumb
+ 349              		.thumb_func
+ 350              		.type	command, %function
+ 351              	command:
+ 352              	.LFB84:
+ 282:LiquidCrystal_I2C.c **** 	
+ 353              		.loc 1 282 0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 0
+ 356              		@ frame_needed = 0, uses_anonymous_args = 0
+ 357              	.LVL34:
+ 358 0000 08B5     		push	{r3, lr}
+ 359              		.cfi_def_cfa_offset 8
+ 360              		.cfi_offset 3, -8
+ 361              		.cfi_offset 14, -4
+ 284:LiquidCrystal_I2C.c ****     
+ 362              		.loc 1 284 0
+ 363 0002 0021     		movs	r1, #0
+ 364 0004 FFF7FEFF 		bl	send
+ 365              	.LVL35:
+ 366 0008 08BD     		pop	{r3, pc}
+ 367              		.cfi_endproc
+ 368              	.LFE84:
+ 369              		.size	command, .-command
+ 370 000a 00BF     		.section	.text.clear,"ax",%progbits
+ 371              		.align	2
+ 372              		.global	clear
+ 373              		.thumb
+ 374              		.thumb_func
+ 375              		.type	clear, %function
+ 376              	clear:
+ 377              	.LFB65:
+ 113:LiquidCrystal_I2C.c ****     
+ 378              		.loc 1 113 0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382 0000 08B5     		push	{r3, lr}
+ 383              		.cfi_def_cfa_offset 8
+ 384              		.cfi_offset 3, -8
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 15
+
+
+ 385              		.cfi_offset 14, -4
+ 115:LiquidCrystal_I2C.c **** 	CyDelay(2);  // this command takes a long time!
+ 386              		.loc 1 115 0
+ 387 0002 0120     		movs	r0, #1
+ 388 0004 FFF7FEFF 		bl	command
+ 389              	.LVL36:
+ 116:LiquidCrystal_I2C.c ****     
+ 390              		.loc 1 116 0
+ 391 0008 0220     		movs	r0, #2
+ 392 000a FFF7FEFF 		bl	CyDelay
+ 393              	.LVL37:
+ 394 000e 08BD     		pop	{r3, pc}
+ 395              		.cfi_endproc
+ 396              	.LFE65:
+ 397              		.size	clear, .-clear
+ 398              		.section	.text.home,"ax",%progbits
+ 399              		.align	2
+ 400              		.global	home
+ 401              		.thumb
+ 402              		.thumb_func
+ 403              		.type	home, %function
+ 404              	home:
+ 405              	.LFB66:
+ 121:LiquidCrystal_I2C.c **** 	
+ 406              		.loc 1 121 0
+ 407              		.cfi_startproc
+ 408              		@ args = 0, pretend = 0, frame = 0
+ 409              		@ frame_needed = 0, uses_anonymous_args = 0
+ 410 0000 08B5     		push	{r3, lr}
+ 411              		.cfi_def_cfa_offset 8
+ 412              		.cfi_offset 3, -8
+ 413              		.cfi_offset 14, -4
+ 123:LiquidCrystal_I2C.c **** 	CyDelay(2);  // this command takes a long time!
+ 414              		.loc 1 123 0
+ 415 0002 0220     		movs	r0, #2
+ 416 0004 FFF7FEFF 		bl	command
+ 417              	.LVL38:
+ 124:LiquidCrystal_I2C.c ****     
+ 418              		.loc 1 124 0
+ 419 0008 0220     		movs	r0, #2
+ 420 000a FFF7FEFF 		bl	CyDelay
+ 421              	.LVL39:
+ 422 000e 08BD     		pop	{r3, pc}
+ 423              		.cfi_endproc
+ 424              	.LFE66:
+ 425              		.size	home, .-home
+ 426              		.section	.text.setCursor,"ax",%progbits
+ 427              		.align	2
+ 428              		.global	setCursor
+ 429              		.thumb
+ 430              		.thumb_func
+ 431              		.type	setCursor, %function
+ 432              	setCursor:
+ 433              	.LFB67:
+ 129:LiquidCrystal_I2C.c ****     
+ 434              		.loc 1 129 0
+ 435              		.cfi_startproc
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 16
+
+
+ 436              		@ args = 0, pretend = 0, frame = 16
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+ 438              	.LVL40:
+ 439 0000 30B5     		push	{r4, r5, lr}
+ 440              		.cfi_def_cfa_offset 12
+ 441              		.cfi_offset 4, -12
+ 442              		.cfi_offset 5, -8
+ 443              		.cfi_offset 14, -4
+ 444 0002 85B0     		sub	sp, sp, #20
+ 445              		.cfi_def_cfa_offset 32
+ 446 0004 0546     		mov	r5, r0
+ 447 0006 0C46     		mov	r4, r1
+ 131:LiquidCrystal_I2C.c **** 	if (row > _rows) {
+ 448              		.loc 1 131 0
+ 449 0008 0C4B     		ldr	r3, .L38
+ 450 000a 0FCB     		ldmia	r3, {r0, r1, r2, r3}
+ 451              	.LVL41:
+ 452 000c 0DF1100E 		add	lr, sp, #16
+ 453 0010 0EE90F00 		stmdb	lr, {r0, r1, r2, r3}
+ 132:LiquidCrystal_I2C.c **** 		row = _rows-1;    // we count rows starting w/0
+ 454              		.loc 1 132 0
+ 455 0014 0A4B     		ldr	r3, .L38+4
+ 456 0016 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 457 0018 A342     		cmp	r3, r4
+ 458 001a 01D2     		bcs	.L36
+ 133:LiquidCrystal_I2C.c **** 	}
+ 459              		.loc 1 133 0
+ 460 001c 5C1E     		subs	r4, r3, #1
+ 461 001e E4B2     		uxtb	r4, r4
+ 462              	.LVL42:
+ 463              	.L36:
+ 135:LiquidCrystal_I2C.c ****     
+ 464              		.loc 1 135 0
+ 465 0020 04AB     		add	r3, sp, #16
+ 466 0022 03EB8404 		add	r4, r3, r4, lsl #2
+ 467              	.LVL43:
+ 468 0026 54F8100C 		ldr	r0, [r4, #-16]
+ 469 002a 2844     		add	r0, r0, r5
+ 470 002c 60F07F00 		orn	r0, r0, #127
+ 471 0030 C0B2     		uxtb	r0, r0
+ 472 0032 FFF7FEFF 		bl	command
+ 473              	.LVL44:
+ 138:LiquidCrystal_I2C.c **** 
+ 474              		.loc 1 138 0
+ 475 0036 05B0     		add	sp, sp, #20
+ 476              		.cfi_def_cfa_offset 12
+ 477              		@ sp needed
+ 478 0038 30BD     		pop	{r4, r5, pc}
+ 479              	.L39:
+ 480 003a 00BF     		.align	2
+ 481              	.L38:
+ 482 003c 00000000 		.word	.LANCHOR0
+ 483 0040 00000000 		.word	_rows
+ 484              		.cfi_endproc
+ 485              	.LFE67:
+ 486              		.size	setCursor, .-setCursor
+ 487              		.section	.text.noDisplay,"ax",%progbits
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 17
+
+
+ 488              		.align	2
+ 489              		.global	noDisplay
+ 490              		.thumb
+ 491              		.thumb_func
+ 492              		.type	noDisplay, %function
+ 493              	noDisplay:
+ 494              	.LFB68:
+ 141:LiquidCrystal_I2C.c **** 	
+ 495              		.loc 1 141 0
+ 496              		.cfi_startproc
+ 497              		@ args = 0, pretend = 0, frame = 0
+ 498              		@ frame_needed = 0, uses_anonymous_args = 0
+ 499 0000 08B5     		push	{r3, lr}
+ 500              		.cfi_def_cfa_offset 8
+ 501              		.cfi_offset 3, -8
+ 502              		.cfi_offset 14, -4
+ 143:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 503              		.loc 1 143 0
+ 504 0002 054B     		ldr	r3, .L42
+ 505 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 506 0006 00F0FB00 		and	r0, r0, #251
+ 507 000a 1870     		strb	r0, [r3]
+ 144:LiquidCrystal_I2C.c ****     
+ 508              		.loc 1 144 0
+ 509 000c 40F00800 		orr	r0, r0, #8
+ 510 0010 FFF7FEFF 		bl	command
+ 511              	.LVL45:
+ 512 0014 08BD     		pop	{r3, pc}
+ 513              	.L43:
+ 514 0016 00BF     		.align	2
+ 515              	.L42:
+ 516 0018 00000000 		.word	_displaycontrol
+ 517              		.cfi_endproc
+ 518              	.LFE68:
+ 519              		.size	noDisplay, .-noDisplay
+ 520              		.section	.text.display,"ax",%progbits
+ 521              		.align	2
+ 522              		.global	display
+ 523              		.thumb
+ 524              		.thumb_func
+ 525              		.type	display, %function
+ 526              	display:
+ 527              	.LFB69:
+ 148:LiquidCrystal_I2C.c ****     
+ 528              		.loc 1 148 0
+ 529              		.cfi_startproc
+ 530              		@ args = 0, pretend = 0, frame = 0
+ 531              		@ frame_needed = 0, uses_anonymous_args = 0
+ 532 0000 08B5     		push	{r3, lr}
+ 533              		.cfi_def_cfa_offset 8
+ 534              		.cfi_offset 3, -8
+ 535              		.cfi_offset 14, -4
+ 150:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 536              		.loc 1 150 0
+ 537 0002 054B     		ldr	r3, .L46
+ 538 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 539 0006 40F00400 		orr	r0, r0, #4
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 18
+
+
+ 540 000a 1870     		strb	r0, [r3]
+ 151:LiquidCrystal_I2C.c ****     
+ 541              		.loc 1 151 0
+ 542 000c 40F00800 		orr	r0, r0, #8
+ 543 0010 FFF7FEFF 		bl	command
+ 544              	.LVL46:
+ 545 0014 08BD     		pop	{r3, pc}
+ 546              	.L47:
+ 547 0016 00BF     		.align	2
+ 548              	.L46:
+ 549 0018 00000000 		.word	_displaycontrol
+ 550              		.cfi_endproc
+ 551              	.LFE69:
+ 552              		.size	display, .-display
+ 553              		.section	.text.noCursor,"ax",%progbits
+ 554              		.align	2
+ 555              		.global	noCursor
+ 556              		.thumb
+ 557              		.thumb_func
+ 558              		.type	noCursor, %function
+ 559              	noCursor:
+ 560              	.LFB70:
+ 157:LiquidCrystal_I2C.c **** 	
+ 561              		.loc 1 157 0
+ 562              		.cfi_startproc
+ 563              		@ args = 0, pretend = 0, frame = 0
+ 564              		@ frame_needed = 0, uses_anonymous_args = 0
+ 565 0000 08B5     		push	{r3, lr}
+ 566              		.cfi_def_cfa_offset 8
+ 567              		.cfi_offset 3, -8
+ 568              		.cfi_offset 14, -4
+ 159:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 569              		.loc 1 159 0
+ 570 0002 054B     		ldr	r3, .L50
+ 571 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 572 0006 00F0FD00 		and	r0, r0, #253
+ 573 000a 1870     		strb	r0, [r3]
+ 160:LiquidCrystal_I2C.c ****     
+ 574              		.loc 1 160 0
+ 575 000c 40F00800 		orr	r0, r0, #8
+ 576 0010 FFF7FEFF 		bl	command
+ 577              	.LVL47:
+ 578 0014 08BD     		pop	{r3, pc}
+ 579              	.L51:
+ 580 0016 00BF     		.align	2
+ 581              	.L50:
+ 582 0018 00000000 		.word	_displaycontrol
+ 583              		.cfi_endproc
+ 584              	.LFE70:
+ 585              		.size	noCursor, .-noCursor
+ 586              		.section	.text.cursor,"ax",%progbits
+ 587              		.align	2
+ 588              		.global	cursor
+ 589              		.thumb
+ 590              		.thumb_func
+ 591              		.type	cursor, %function
+ 592              	cursor:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 19
+
+
+ 593              	.LFB71:
+ 164:LiquidCrystal_I2C.c **** 	
+ 594              		.loc 1 164 0
+ 595              		.cfi_startproc
+ 596              		@ args = 0, pretend = 0, frame = 0
+ 597              		@ frame_needed = 0, uses_anonymous_args = 0
+ 598 0000 08B5     		push	{r3, lr}
+ 599              		.cfi_def_cfa_offset 8
+ 600              		.cfi_offset 3, -8
+ 601              		.cfi_offset 14, -4
+ 166:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 602              		.loc 1 166 0
+ 603 0002 054B     		ldr	r3, .L54
+ 604 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 605 0006 40F00200 		orr	r0, r0, #2
+ 606 000a 1870     		strb	r0, [r3]
+ 167:LiquidCrystal_I2C.c ****     
+ 607              		.loc 1 167 0
+ 608 000c 40F00800 		orr	r0, r0, #8
+ 609 0010 FFF7FEFF 		bl	command
+ 610              	.LVL48:
+ 611 0014 08BD     		pop	{r3, pc}
+ 612              	.L55:
+ 613 0016 00BF     		.align	2
+ 614              	.L54:
+ 615 0018 00000000 		.word	_displaycontrol
+ 616              		.cfi_endproc
+ 617              	.LFE71:
+ 618              		.size	cursor, .-cursor
+ 619              		.section	.text.noBlink,"ax",%progbits
+ 620              		.align	2
+ 621              		.global	noBlink
+ 622              		.thumb
+ 623              		.thumb_func
+ 624              		.type	noBlink, %function
+ 625              	noBlink:
+ 626              	.LFB73:
+ 185:LiquidCrystal_I2C.c **** 	
+ 627              		.loc 1 185 0
+ 628              		.cfi_startproc
+ 629              		@ args = 0, pretend = 0, frame = 0
+ 630              		@ frame_needed = 0, uses_anonymous_args = 0
+ 631 0000 08B5     		push	{r3, lr}
+ 632              		.cfi_def_cfa_offset 8
+ 633              		.cfi_offset 3, -8
+ 634              		.cfi_offset 14, -4
+ 187:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 635              		.loc 1 187 0
+ 636 0002 054B     		ldr	r3, .L58
+ 637 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 638 0006 00F0FE00 		and	r0, r0, #254
+ 639 000a 1870     		strb	r0, [r3]
+ 188:LiquidCrystal_I2C.c ****     
+ 640              		.loc 1 188 0
+ 641 000c 40F00800 		orr	r0, r0, #8
+ 642 0010 FFF7FEFF 		bl	command
+ 643              	.LVL49:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 20
+
+
+ 644 0014 08BD     		pop	{r3, pc}
+ 645              	.L59:
+ 646 0016 00BF     		.align	2
+ 647              	.L58:
+ 648 0018 00000000 		.word	_displaycontrol
+ 649              		.cfi_endproc
+ 650              	.LFE73:
+ 651              		.size	noBlink, .-noBlink
+ 652              		.section	.text.blink,"ax",%progbits
+ 653              		.align	2
+ 654              		.global	blink
+ 655              		.thumb
+ 656              		.thumb_func
+ 657              		.type	blink, %function
+ 658              	blink:
+ 659              	.LFB74:
+ 192:LiquidCrystal_I2C.c ****     
+ 660              		.loc 1 192 0
+ 661              		.cfi_startproc
+ 662              		@ args = 0, pretend = 0, frame = 0
+ 663              		@ frame_needed = 0, uses_anonymous_args = 0
+ 664 0000 08B5     		push	{r3, lr}
+ 665              		.cfi_def_cfa_offset 8
+ 666              		.cfi_offset 3, -8
+ 667              		.cfi_offset 14, -4
+ 194:LiquidCrystal_I2C.c **** 	command(LCD_DISPLAYCONTROL | _displaycontrol);
+ 668              		.loc 1 194 0
+ 669 0002 054B     		ldr	r3, .L62
+ 670 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 671 0006 40F00100 		orr	r0, r0, #1
+ 672 000a 1870     		strb	r0, [r3]
+ 195:LiquidCrystal_I2C.c ****     
+ 673              		.loc 1 195 0
+ 674 000c 40F00800 		orr	r0, r0, #8
+ 675 0010 FFF7FEFF 		bl	command
+ 676              	.LVL50:
+ 677 0014 08BD     		pop	{r3, pc}
+ 678              	.L63:
+ 679 0016 00BF     		.align	2
+ 680              	.L62:
+ 681 0018 00000000 		.word	_displaycontrol
+ 682              		.cfi_endproc
+ 683              	.LFE74:
+ 684              		.size	blink, .-blink
+ 685              		.section	.text.scrollDisplayLeft,"ax",%progbits
+ 686              		.align	2
+ 687              		.global	scrollDisplayLeft
+ 688              		.thumb
+ 689              		.thumb_func
+ 690              		.type	scrollDisplayLeft, %function
+ 691              	scrollDisplayLeft:
+ 692              	.LFB75:
+ 201:LiquidCrystal_I2C.c ****     
+ 693              		.loc 1 201 0
+ 694              		.cfi_startproc
+ 695              		@ args = 0, pretend = 0, frame = 0
+ 696              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 21
+
+
+ 697 0000 08B5     		push	{r3, lr}
+ 698              		.cfi_def_cfa_offset 8
+ 699              		.cfi_offset 3, -8
+ 700              		.cfi_offset 14, -4
+ 203:LiquidCrystal_I2C.c ****     
+ 701              		.loc 1 203 0
+ 702 0002 1820     		movs	r0, #24
+ 703 0004 FFF7FEFF 		bl	command
+ 704              	.LVL51:
+ 705 0008 08BD     		pop	{r3, pc}
+ 706              		.cfi_endproc
+ 707              	.LFE75:
+ 708              		.size	scrollDisplayLeft, .-scrollDisplayLeft
+ 709 000a 00BF     		.section	.text.scrollDisplayRight,"ax",%progbits
+ 710              		.align	2
+ 711              		.global	scrollDisplayRight
+ 712              		.thumb
+ 713              		.thumb_func
+ 714              		.type	scrollDisplayRight, %function
+ 715              	scrollDisplayRight:
+ 716              	.LFB76:
+ 207:LiquidCrystal_I2C.c **** 	
+ 717              		.loc 1 207 0
+ 718              		.cfi_startproc
+ 719              		@ args = 0, pretend = 0, frame = 0
+ 720              		@ frame_needed = 0, uses_anonymous_args = 0
+ 721 0000 08B5     		push	{r3, lr}
+ 722              		.cfi_def_cfa_offset 8
+ 723              		.cfi_offset 3, -8
+ 724              		.cfi_offset 14, -4
+ 209:LiquidCrystal_I2C.c ****     
+ 725              		.loc 1 209 0
+ 726 0002 1C20     		movs	r0, #28
+ 727 0004 FFF7FEFF 		bl	command
+ 728              	.LVL52:
+ 729 0008 08BD     		pop	{r3, pc}
+ 730              		.cfi_endproc
+ 731              	.LFE76:
+ 732              		.size	scrollDisplayRight, .-scrollDisplayRight
+ 733 000a 00BF     		.section	.text.leftToRight,"ax",%progbits
+ 734              		.align	2
+ 735              		.global	leftToRight
+ 736              		.thumb
+ 737              		.thumb_func
+ 738              		.type	leftToRight, %function
+ 739              	leftToRight:
+ 740              	.LFB77:
+ 215:LiquidCrystal_I2C.c ****     
+ 741              		.loc 1 215 0
+ 742              		.cfi_startproc
+ 743              		@ args = 0, pretend = 0, frame = 0
+ 744              		@ frame_needed = 0, uses_anonymous_args = 0
+ 745 0000 08B5     		push	{r3, lr}
+ 746              		.cfi_def_cfa_offset 8
+ 747              		.cfi_offset 3, -8
+ 748              		.cfi_offset 14, -4
+ 217:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 22
+
+
+ 749              		.loc 1 217 0
+ 750 0002 054B     		ldr	r3, .L70
+ 751 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 752 0006 40F00200 		orr	r0, r0, #2
+ 753 000a 1870     		strb	r0, [r3]
+ 218:LiquidCrystal_I2C.c ****     
+ 754              		.loc 1 218 0
+ 755 000c 40F00400 		orr	r0, r0, #4
+ 756 0010 FFF7FEFF 		bl	command
+ 757              	.LVL53:
+ 758 0014 08BD     		pop	{r3, pc}
+ 759              	.L71:
+ 760 0016 00BF     		.align	2
+ 761              	.L70:
+ 762 0018 00000000 		.word	_displaymode
+ 763              		.cfi_endproc
+ 764              	.LFE77:
+ 765              		.size	leftToRight, .-leftToRight
+ 766              		.section	.text.rightToLeft,"ax",%progbits
+ 767              		.align	2
+ 768              		.global	rightToLeft
+ 769              		.thumb
+ 770              		.thumb_func
+ 771              		.type	rightToLeft, %function
+ 772              	rightToLeft:
+ 773              	.LFB78:
+ 224:LiquidCrystal_I2C.c ****     
+ 774              		.loc 1 224 0
+ 775              		.cfi_startproc
+ 776              		@ args = 0, pretend = 0, frame = 0
+ 777              		@ frame_needed = 0, uses_anonymous_args = 0
+ 778 0000 08B5     		push	{r3, lr}
+ 779              		.cfi_def_cfa_offset 8
+ 780              		.cfi_offset 3, -8
+ 781              		.cfi_offset 14, -4
+ 226:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 782              		.loc 1 226 0
+ 783 0002 054B     		ldr	r3, .L74
+ 784 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 785 0006 00F0FD00 		and	r0, r0, #253
+ 786 000a 1870     		strb	r0, [r3]
+ 227:LiquidCrystal_I2C.c ****     
+ 787              		.loc 1 227 0
+ 788 000c 40F00400 		orr	r0, r0, #4
+ 789 0010 FFF7FEFF 		bl	command
+ 790              	.LVL54:
+ 791 0014 08BD     		pop	{r3, pc}
+ 792              	.L75:
+ 793 0016 00BF     		.align	2
+ 794              	.L74:
+ 795 0018 00000000 		.word	_displaymode
+ 796              		.cfi_endproc
+ 797              	.LFE78:
+ 798              		.size	rightToLeft, .-rightToLeft
+ 799              		.section	.text.autoscroll,"ax",%progbits
+ 800              		.align	2
+ 801              		.global	autoscroll
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 23
+
+
+ 802              		.thumb
+ 803              		.thumb_func
+ 804              		.type	autoscroll, %function
+ 805              	autoscroll:
+ 806              	.LFB79:
+ 233:LiquidCrystal_I2C.c **** 	
+ 807              		.loc 1 233 0
+ 808              		.cfi_startproc
+ 809              		@ args = 0, pretend = 0, frame = 0
+ 810              		@ frame_needed = 0, uses_anonymous_args = 0
+ 811 0000 08B5     		push	{r3, lr}
+ 812              		.cfi_def_cfa_offset 8
+ 813              		.cfi_offset 3, -8
+ 814              		.cfi_offset 14, -4
+ 235:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 815              		.loc 1 235 0
+ 816 0002 054B     		ldr	r3, .L78
+ 817 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 818 0006 40F00100 		orr	r0, r0, #1
+ 819 000a 1870     		strb	r0, [r3]
+ 236:LiquidCrystal_I2C.c ****     
+ 820              		.loc 1 236 0
+ 821 000c 40F00400 		orr	r0, r0, #4
+ 822 0010 FFF7FEFF 		bl	command
+ 823              	.LVL55:
+ 824 0014 08BD     		pop	{r3, pc}
+ 825              	.L79:
+ 826 0016 00BF     		.align	2
+ 827              	.L78:
+ 828 0018 00000000 		.word	_displaymode
+ 829              		.cfi_endproc
+ 830              	.LFE79:
+ 831              		.size	autoscroll, .-autoscroll
+ 832              		.section	.text.noAutoscroll,"ax",%progbits
+ 833              		.align	2
+ 834              		.global	noAutoscroll
+ 835              		.thumb
+ 836              		.thumb_func
+ 837              		.type	noAutoscroll, %function
+ 838              	noAutoscroll:
+ 839              	.LFB80:
+ 242:LiquidCrystal_I2C.c **** 	
+ 840              		.loc 1 242 0
+ 841              		.cfi_startproc
+ 842              		@ args = 0, pretend = 0, frame = 0
+ 843              		@ frame_needed = 0, uses_anonymous_args = 0
+ 844 0000 08B5     		push	{r3, lr}
+ 845              		.cfi_def_cfa_offset 8
+ 846              		.cfi_offset 3, -8
+ 847              		.cfi_offset 14, -4
+ 244:LiquidCrystal_I2C.c **** 	command(LCD_ENTRYMODESET | _displaymode);
+ 848              		.loc 1 244 0
+ 849 0002 054B     		ldr	r3, .L82
+ 850 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 851 0006 00F0FE00 		and	r0, r0, #254
+ 852 000a 1870     		strb	r0, [r3]
+ 245:LiquidCrystal_I2C.c ****     
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 24
+
+
+ 853              		.loc 1 245 0
+ 854 000c 40F00400 		orr	r0, r0, #4
+ 855 0010 FFF7FEFF 		bl	command
+ 856              	.LVL56:
+ 857 0014 08BD     		pop	{r3, pc}
+ 858              	.L83:
+ 859 0016 00BF     		.align	2
+ 860              	.L82:
+ 861 0018 00000000 		.word	_displaymode
+ 862              		.cfi_endproc
+ 863              	.LFE80:
+ 864              		.size	noAutoscroll, .-noAutoscroll
+ 865              		.section	.text.write,"ax",%progbits
+ 866              		.align	2
+ 867              		.global	write
+ 868              		.thumb
+ 869              		.thumb_func
+ 870              		.type	write, %function
+ 871              	write:
+ 872              	.LFB85:
+ 289:LiquidCrystal_I2C.c ****     
+ 873              		.loc 1 289 0
+ 874              		.cfi_startproc
+ 875              		@ args = 0, pretend = 0, frame = 0
+ 876              		@ frame_needed = 0, uses_anonymous_args = 0
+ 877              	.LVL57:
+ 878 0000 08B5     		push	{r3, lr}
+ 879              		.cfi_def_cfa_offset 8
+ 880              		.cfi_offset 3, -8
+ 881              		.cfi_offset 14, -4
+ 291:LiquidCrystal_I2C.c ****     
+ 882              		.loc 1 291 0
+ 883 0002 0121     		movs	r1, #1
+ 884 0004 FFF7FEFF 		bl	send
+ 885              	.LVL58:
+ 886 0008 08BD     		pop	{r3, pc}
+ 887              		.cfi_endproc
+ 888              	.LFE85:
+ 889              		.size	write, .-write
+ 890 000a 00BF     		.section	.text.createChar,"ax",%progbits
+ 891              		.align	2
+ 892              		.global	createChar
+ 893              		.thumb
+ 894              		.thumb_func
+ 895              		.type	createChar, %function
+ 896              	createChar:
+ 897              	.LFB81:
+ 252:LiquidCrystal_I2C.c **** 	
+ 898              		.loc 1 252 0
+ 899              		.cfi_startproc
+ 900              		@ args = 0, pretend = 0, frame = 0
+ 901              		@ frame_needed = 0, uses_anonymous_args = 0
+ 902              	.LVL59:
+ 903 0000 38B5     		push	{r3, r4, r5, lr}
+ 904              		.cfi_def_cfa_offset 16
+ 905              		.cfi_offset 3, -16
+ 906              		.cfi_offset 4, -12
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 25
+
+
+ 907              		.cfi_offset 5, -8
+ 908              		.cfi_offset 14, -4
+ 909 0002 0D46     		mov	r5, r1
+ 910              	.LVL60:
+ 254:LiquidCrystal_I2C.c **** 	command(LCD_SETCGRAMADDR | (location << 3));
+ 911              		.loc 1 254 0
+ 912 0004 00F00700 		and	r0, r0, #7
+ 913              	.LVL61:
+ 255:LiquidCrystal_I2C.c **** 	for (i=0; i<8; i++) {
+ 914              		.loc 1 255 0
+ 915 0008 C000     		lsls	r0, r0, #3
+ 916              	.LVL62:
+ 917 000a 40F04000 		orr	r0, r0, #64
+ 918 000e FFF7FEFF 		bl	command
+ 919              	.LVL63:
+ 256:LiquidCrystal_I2C.c **** 		write(charmap[i]);
+ 920              		.loc 1 256 0
+ 921 0012 0024     		movs	r4, #0
+ 922 0014 03E0     		b	.L87
+ 923              	.LVL64:
+ 924              	.L88:
+ 257:LiquidCrystal_I2C.c **** 	}
+ 925              		.loc 1 257 0 discriminator 3
+ 926 0016 285D     		ldrb	r0, [r5, r4]	@ zero_extendqisi2
+ 927 0018 FFF7FEFF 		bl	write
+ 928              	.LVL65:
+ 256:LiquidCrystal_I2C.c **** 		write(charmap[i]);
+ 929              		.loc 1 256 0 discriminator 3
+ 930 001c 0134     		adds	r4, r4, #1
+ 931              	.LVL66:
+ 932              	.L87:
+ 256:LiquidCrystal_I2C.c **** 		write(charmap[i]);
+ 933              		.loc 1 256 0 is_stmt 0 discriminator 1
+ 934 001e 072C     		cmp	r4, #7
+ 935 0020 F9D9     		bls	.L88
+ 261:LiquidCrystal_I2C.c **** 
+ 936              		.loc 1 261 0 is_stmt 1
+ 937 0022 38BD     		pop	{r3, r4, r5, pc}
+ 938              		.cfi_endproc
+ 939              	.LFE81:
+ 940              		.size	createChar, .-createChar
+ 941              		.section	.text.load_custom_character,"ax",%progbits
+ 942              		.align	2
+ 943              		.global	load_custom_character
+ 944              		.thumb
+ 945              		.thumb_func
+ 946              		.type	load_custom_character, %function
+ 947              	load_custom_character:
+ 948              	.LFB90:
+ 335:LiquidCrystal_I2C.c **** 	
+ 949              		.loc 1 335 0
+ 950              		.cfi_startproc
+ 951              		@ args = 0, pretend = 0, frame = 0
+ 952              		@ frame_needed = 0, uses_anonymous_args = 0
+ 953              	.LVL67:
+ 954 0000 08B5     		push	{r3, lr}
+ 955              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 26
+
+
+ 956              		.cfi_offset 3, -8
+ 957              		.cfi_offset 14, -4
+ 337:LiquidCrystal_I2C.c ****     
+ 958              		.loc 1 337 0
+ 959 0002 FFF7FEFF 		bl	createChar
+ 960              	.LVL68:
+ 961 0006 08BD     		pop	{r3, pc}
+ 962              		.cfi_endproc
+ 963              	.LFE90:
+ 964              		.size	load_custom_character, .-load_custom_character
+ 965              		.section	.text.LCD_print,"ax",%progbits
+ 966              		.align	2
+ 967              		.global	LCD_print
+ 968              		.thumb
+ 969              		.thumb_func
+ 970              		.type	LCD_print, %function
+ 971              	LCD_print:
+ 972              	.LFB92:
+ 353:LiquidCrystal_I2C.c ****     
+ 973              		.loc 1 353 0
+ 974              		.cfi_startproc
+ 975              		@ args = 0, pretend = 0, frame = 0
+ 976              		@ frame_needed = 0, uses_anonymous_args = 0
+ 977              	.LVL69:
+ 978 0000 70B5     		push	{r4, r5, r6, lr}
+ 979              		.cfi_def_cfa_offset 16
+ 980              		.cfi_offset 4, -16
+ 981              		.cfi_offset 5, -12
+ 982              		.cfi_offset 6, -8
+ 983              		.cfi_offset 14, -4
+ 984 0002 0646     		mov	r6, r0
+ 985              	.LVL70:
+ 355:LiquidCrystal_I2C.c ****     
+ 986              		.loc 1 355 0
+ 987 0004 FFF7FEFF 		bl	strlen
+ 988              	.LVL71:
+ 989 0008 0546     		mov	r5, r0
+ 990              	.LVL72:
+ 357:LiquidCrystal_I2C.c ****         write(word[i]);
+ 991              		.loc 1 357 0
+ 992 000a 0024     		movs	r4, #0
+ 993 000c 03E0     		b	.L93
+ 994              	.LVL73:
+ 995              	.L94:
+ 358:LiquidCrystal_I2C.c ****     }
+ 996              		.loc 1 358 0 discriminator 3
+ 997 000e 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+ 998 0010 FFF7FEFF 		bl	write
+ 999              	.LVL74:
+ 357:LiquidCrystal_I2C.c ****         write(word[i]);
+ 1000              		.loc 1 357 0 discriminator 3
+ 1001 0014 0134     		adds	r4, r4, #1
+ 1002              	.LVL75:
+ 1003              	.L93:
+ 357:LiquidCrystal_I2C.c ****         write(word[i]);
+ 1004              		.loc 1 357 0 is_stmt 0 discriminator 1
+ 1005 0016 EBB2     		uxtb	r3, r5
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 27
+
+
+ 1006 0018 9C42     		cmp	r4, r3
+ 1007 001a F8D3     		bcc	.L94
+ 362:LiquidCrystal_I2C.c **** 
+ 1008              		.loc 1 362 0 is_stmt 1
+ 1009 001c 70BD     		pop	{r4, r5, r6, pc}
+ 1010              		.cfi_endproc
+ 1011              	.LFE92:
+ 1012              		.size	LCD_print, .-LCD_print
+ 1013 001e 00BF     		.section	.text.clearLine,"ax",%progbits
+ 1014              		.align	2
+ 1015              		.global	clearLine
+ 1016              		.thumb
+ 1017              		.thumb_func
+ 1018              		.type	clearLine, %function
+ 1019              	clearLine:
+ 1020              	.LFB72:
+ 171:LiquidCrystal_I2C.c ****     char line[_cols];
+ 1021              		.loc 1 171 0
+ 1022              		.cfi_startproc
+ 1023              		@ args = 0, pretend = 0, frame = 0
+ 1024              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1025              	.LVL76:
+ 1026 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1027              		.cfi_def_cfa_offset 16
+ 1028              		.cfi_offset 4, -16
+ 1029              		.cfi_offset 5, -12
+ 1030              		.cfi_offset 7, -8
+ 1031              		.cfi_offset 14, -4
+ 1032 0002 00AF     		add	r7, sp, #0
+ 1033              		.cfi_def_cfa_register 7
+ 1034 0004 0546     		mov	r5, r0
+ 172:LiquidCrystal_I2C.c ****     
+ 1035              		.loc 1 172 0
+ 1036 0006 0F4B     		ldr	r3, .L100
+ 1037 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1038              	.LVL77:
+ 1039 000a 0733     		adds	r3, r3, #7
+ 1040              	.LVL78:
+ 1041 000c 23F00703 		bic	r3, r3, #7
+ 1042              	.LVL79:
+ 1043 0010 ADEB030D 		sub	sp, sp, r3
+ 1044 0014 6C46     		mov	r4, sp
+ 1045              	.LVL80:
+ 174:LiquidCrystal_I2C.c ****     for (uint8 i = 0; i < _cols; i++){
+ 1046              		.loc 1 174 0
+ 1047 0016 0146     		mov	r1, r0
+ 1048 0018 0020     		movs	r0, #0
+ 1049              	.LVL81:
+ 1050 001a FFF7FEFF 		bl	setCursor
+ 1051              	.LVL82:
+ 1052              	.LBB2:
+ 175:LiquidCrystal_I2C.c ****          line[i]=' ';
+ 1053              		.loc 1 175 0
+ 1054 001e 0023     		movs	r3, #0
+ 1055 0020 03E0     		b	.L97
+ 1056              	.LVL83:
+ 1057              	.L98:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 28
+
+
+ 176:LiquidCrystal_I2C.c ****     }    
+ 1058              		.loc 1 176 0 discriminator 3
+ 1059 0022 2022     		movs	r2, #32
+ 1060 0024 E254     		strb	r2, [r4, r3]
+ 175:LiquidCrystal_I2C.c ****          line[i]=' ';
+ 1061              		.loc 1 175 0 discriminator 3
+ 1062 0026 0133     		adds	r3, r3, #1
+ 1063              	.LVL84:
+ 1064 0028 DBB2     		uxtb	r3, r3
+ 1065              	.LVL85:
+ 1066              	.L97:
+ 175:LiquidCrystal_I2C.c ****          line[i]=' ';
+ 1067              		.loc 1 175 0 is_stmt 0 discriminator 1
+ 1068 002a 064A     		ldr	r2, .L100
+ 1069 002c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1070 002e 9342     		cmp	r3, r2
+ 1071 0030 F7D3     		bcc	.L98
+ 1072              	.LBE2:
+ 178:LiquidCrystal_I2C.c ****     setCursor(0,row);
+ 1073              		.loc 1 178 0 is_stmt 1
+ 1074 0032 2046     		mov	r0, r4
+ 1075 0034 FFF7FEFF 		bl	LCD_print
+ 1076              	.LVL86:
+ 179:LiquidCrystal_I2C.c ****     
+ 1077              		.loc 1 179 0
+ 1078 0038 2946     		mov	r1, r5
+ 1079 003a 0020     		movs	r0, #0
+ 1080 003c FFF7FEFF 		bl	setCursor
+ 1081              	.LVL87:
+ 182:LiquidCrystal_I2C.c **** 
+ 1082              		.loc 1 182 0
+ 1083 0040 BD46     		mov	sp, r7
+ 1084              		.cfi_def_cfa_register 13
+ 1085              		@ sp needed
+ 1086 0042 B0BD     		pop	{r4, r5, r7, pc}
+ 1087              	.LVL88:
+ 1088              	.L101:
+ 1089              		.align	2
+ 1090              	.L100:
+ 1091 0044 00000000 		.word	_cols
+ 1092              		.cfi_endproc
+ 1093              	.LFE72:
+ 1094              		.size	clearLine, .-clearLine
+ 1095              		.section	.text.LCD_print_num,"ax",%progbits
+ 1096              		.align	2
+ 1097              		.global	LCD_print_num
+ 1098              		.thumb
+ 1099              		.thumb_func
+ 1100              		.type	LCD_print_num, %function
+ 1101              	LCD_print_num:
+ 1102              	.LFB93:
+ 365:LiquidCrystal_I2C.c ****     char buffer [sizeof(int)*8+1];
+ 1103              		.loc 1 365 0
+ 1104              		.cfi_startproc
+ 1105              		@ args = 0, pretend = 0, frame = 40
+ 1106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1107              	.LVL89:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 29
+
+
+ 1108 0000 00B5     		push	{lr}
+ 1109              		.cfi_def_cfa_offset 4
+ 1110              		.cfi_offset 14, -4
+ 1111 0002 8BB0     		sub	sp, sp, #44
+ 1112              		.cfi_def_cfa_offset 48
+ 367:LiquidCrystal_I2C.c ****     LCD_print(buffer);
+ 1113              		.loc 1 367 0
+ 1114 0004 0A46     		mov	r2, r1
+ 1115 0006 01A9     		add	r1, sp, #4
+ 1116              	.LVL90:
+ 1117 0008 FFF7FEFF 		bl	itoa
+ 1118              	.LVL91:
+ 368:LiquidCrystal_I2C.c **** 
+ 1119              		.loc 1 368 0
+ 1120 000c 01A8     		add	r0, sp, #4
+ 1121 000e FFF7FEFF 		bl	LCD_print
+ 1122              	.LVL92:
+ 371:LiquidCrystal_I2C.c **** 
+ 1123              		.loc 1 371 0
+ 1124 0012 0BB0     		add	sp, sp, #44
+ 1125              		.cfi_def_cfa_offset 4
+ 1126              		@ sp needed
+ 1127 0014 5DF804FB 		ldr	pc, [sp], #4
+ 1128              		.cfi_endproc
+ 1129              	.LFE93:
+ 1130              		.size	LCD_print_num, .-LCD_print_num
+ 1131              		.section	.text.begin,"ax",%progbits
+ 1132              		.align	2
+ 1133              		.global	begin
+ 1134              		.thumb
+ 1135              		.thumb_func
+ 1136              		.type	begin, %function
+ 1137              	begin:
+ 1138              	.LFB64:
+  50:LiquidCrystal_I2C.c ****   
+ 1139              		.loc 1 50 0
+ 1140              		.cfi_startproc
+ 1141              		@ args = 0, pretend = 0, frame = 0
+ 1142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1143 0000 08B5     		push	{r3, lr}
+ 1144              		.cfi_def_cfa_offset 8
+ 1145              		.cfi_offset 3, -8
+ 1146              		.cfi_offset 14, -4
+  52:LiquidCrystal_I2C.c **** 
+ 1147              		.loc 1 52 0
+ 1148 0002 0022     		movs	r2, #0
+ 1149 0004 254B     		ldr	r3, .L108
+ 1150 0006 1A70     		strb	r2, [r3]
+  54:LiquidCrystal_I2C.c **** 		_displayfunction |= LCD_2LINE;
+ 1151              		.loc 1 54 0
+ 1152 0008 254B     		ldr	r3, .L108+4
+ 1153 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1154 000c 012B     		cmp	r3, #1
+ 1155 000e 02D9     		bls	.L105
+  55:LiquidCrystal_I2C.c **** 	}
+ 1156              		.loc 1 55 0
+ 1157 0010 0821     		movs	r1, #8
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 30
+
+
+ 1158 0012 224A     		ldr	r2, .L108
+ 1159 0014 1170     		strb	r1, [r2]
+ 1160              	.L105:
+  59:LiquidCrystal_I2C.c **** 		_displayfunction |= LCD_5x10DOTS;
+ 1161              		.loc 1 59 0
+ 1162 0016 234A     		ldr	r2, .L108+8
+ 1163 0018 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1164 001a 32B1     		cbz	r2, .L106
+  59:LiquidCrystal_I2C.c **** 		_displayfunction |= LCD_5x10DOTS;
+ 1165              		.loc 1 59 0 is_stmt 0 discriminator 1
+ 1166 001c 012B     		cmp	r3, #1
+ 1167 001e 04D1     		bne	.L106
+  60:LiquidCrystal_I2C.c **** 	}
+ 1168              		.loc 1 60 0 is_stmt 1
+ 1169 0020 1E4A     		ldr	r2, .L108
+ 1170 0022 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1171 0024 43F00403 		orr	r3, r3, #4
+ 1172 0028 1370     		strb	r3, [r2]
+ 1173              	.L106:
+  66:LiquidCrystal_I2C.c **** 
+ 1174              		.loc 1 66 0
+ 1175 002a 3220     		movs	r0, #50
+ 1176 002c FFF7FEFF 		bl	CyDelay
+ 1177              	.LVL93:
+  69:LiquidCrystal_I2C.c **** 	CyDelay(1000);
+ 1178              		.loc 1 69 0
+ 1179 0030 1D4B     		ldr	r3, .L108+12
+ 1180 0032 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 1181 0034 FFF7FEFF 		bl	expanderWrite
+ 1182              	.LVL94:
+  70:LiquidCrystal_I2C.c ****  
+ 1183              		.loc 1 70 0
+ 1184 0038 4FF47A70 		mov	r0, #1000
+ 1185 003c FFF7FEFF 		bl	CyDelay
+ 1186              	.LVL95:
+  77:LiquidCrystal_I2C.c **** 	CyDelayUs(4500); // wait min 4.1ms
+ 1187              		.loc 1 77 0
+ 1188 0040 3020     		movs	r0, #48
+ 1189 0042 FFF7FEFF 		bl	write4bits
+ 1190              	.LVL96:
+  78:LiquidCrystal_I2C.c **** 
+ 1191              		.loc 1 78 0
+ 1192 0046 41F29410 		movw	r0, #4500
+ 1193 004a FFF7FEFF 		bl	CyDelayUs
+ 1194              	.LVL97:
+  81:LiquidCrystal_I2C.c **** 	CyDelayUs(4500); // wait min 4.1ms
+ 1195              		.loc 1 81 0
+ 1196 004e 3020     		movs	r0, #48
+ 1197 0050 FFF7FEFF 		bl	write4bits
+ 1198              	.LVL98:
+  82:LiquidCrystal_I2C.c **** 
+ 1199              		.loc 1 82 0
+ 1200 0054 41F29410 		movw	r0, #4500
+ 1201 0058 FFF7FEFF 		bl	CyDelayUs
+ 1202              	.LVL99:
+  85:LiquidCrystal_I2C.c **** 	CyDelayUs(150);
+ 1203              		.loc 1 85 0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 31
+
+
+ 1204 005c 3020     		movs	r0, #48
+ 1205 005e FFF7FEFF 		bl	write4bits
+ 1206              	.LVL100:
+  86:LiquidCrystal_I2C.c **** 
+ 1207              		.loc 1 86 0
+ 1208 0062 9620     		movs	r0, #150
+ 1209 0064 FFF7FEFF 		bl	CyDelayUs
+ 1210              	.LVL101:
+  89:LiquidCrystal_I2C.c **** 
+ 1211              		.loc 1 89 0
+ 1212 0068 2020     		movs	r0, #32
+ 1213 006a FFF7FEFF 		bl	write4bits
+ 1214              	.LVL102:
+  92:LiquidCrystal_I2C.c **** 
+ 1215              		.loc 1 92 0
+ 1216 006e 0B4B     		ldr	r3, .L108
+ 1217 0070 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 1218 0072 40F02000 		orr	r0, r0, #32
+ 1219 0076 FFF7FEFF 		bl	command
+ 1220              	.LVL103:
+  95:LiquidCrystal_I2C.c **** 	display();
+ 1221              		.loc 1 95 0
+ 1222 007a 0422     		movs	r2, #4
+ 1223 007c 0B4B     		ldr	r3, .L108+16
+ 1224 007e 1A70     		strb	r2, [r3]
+  96:LiquidCrystal_I2C.c **** 	
+ 1225              		.loc 1 96 0
+ 1226 0080 FFF7FEFF 		bl	display
+ 1227              	.LVL104:
+  99:LiquidCrystal_I2C.c **** 	
+ 1228              		.loc 1 99 0
+ 1229 0084 FFF7FEFF 		bl	clear
+ 1230              	.LVL105:
+ 102:LiquidCrystal_I2C.c **** 	
+ 1231              		.loc 1 102 0
+ 1232 0088 0222     		movs	r2, #2
+ 1233 008a 094B     		ldr	r3, .L108+20
+ 1234 008c 1A70     		strb	r2, [r3]
+ 105:LiquidCrystal_I2C.c **** 	
+ 1235              		.loc 1 105 0
+ 1236 008e 0620     		movs	r0, #6
+ 1237 0090 FFF7FEFF 		bl	command
+ 1238              	.LVL106:
+ 107:LiquidCrystal_I2C.c ****   
+ 1239              		.loc 1 107 0
+ 1240 0094 FFF7FEFF 		bl	home
+ 1241              	.LVL107:
+ 1242 0098 08BD     		pop	{r3, pc}
+ 1243              	.L109:
+ 1244 009a 00BF     		.align	2
+ 1245              	.L108:
+ 1246 009c 00000000 		.word	_displayfunction
+ 1247 00a0 00000000 		.word	_rows
+ 1248 00a4 00000000 		.word	_charsize
+ 1249 00a8 00000000 		.word	_backlightval
+ 1250 00ac 00000000 		.word	_displaycontrol
+ 1251 00b0 00000000 		.word	_displaymode
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 32
+
+
+ 1252              		.cfi_endproc
+ 1253              	.LFE64:
+ 1254              		.size	begin, .-begin
+ 1255              		.comm	_backlightval,1,1
+ 1256              		.comm	_charsize,1,1
+ 1257              		.comm	_rows,1,1
+ 1258              		.comm	_cols,1,1
+ 1259              		.comm	_displaymode,1,1
+ 1260              		.comm	_displaycontrol,1,1
+ 1261              		.comm	_displayfunction,1,1
+ 1262              		.comm	_addr,1,1
+ 1263              		.section	.rodata
+ 1264              		.align	2
+ 1265              		.set	.LANCHOR0,. + 0
+ 1266              	.LC0:
+ 1267 0000 00000000 		.word	0
+ 1268 0004 40000000 		.word	64
+ 1269 0008 14000000 		.word	20
+ 1270 000c 54000000 		.word	84
+ 1271              		.text
+ 1272              	.Letext0:
+ 1273              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1274              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1275              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 1276              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 1277              		.file 6 "Generated_Source\\PSoC5/I2C.h"
+ 1278              		.file 7 "Generated_Source\\PSoC5/CyLib.h"
+ 1279              		.file 8 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1280              		.file 9 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1281              		.section	.debug_info,"",%progbits
+ 1282              	.Ldebug_info0:
+ 1283 0000 6A0A0000 		.4byte	0xa6a
+ 1284 0004 0400     		.2byte	0x4
+ 1285 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1286 000a 04       		.byte	0x4
+ 1287 000b 01       		.uleb128 0x1
+ 1288 000c DA030000 		.4byte	.LASF91
+ 1289 0010 0C       		.byte	0xc
+ 1290 0011 81030000 		.4byte	.LASF92
+ 1291 0015 92020000 		.4byte	.LASF93
+ 1292 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1293 001d 00000000 		.4byte	0
+ 1294 0021 00000000 		.4byte	.Ldebug_line0
+ 1295 0025 02       		.uleb128 0x2
+ 1296 0026 01       		.byte	0x1
+ 1297 0027 06       		.byte	0x6
+ 1298 0028 A5010000 		.4byte	.LASF0
+ 1299 002c 03       		.uleb128 0x3
+ 1300 002d 1A010000 		.4byte	.LASF4
+ 1301 0031 02       		.byte	0x2
+ 1302 0032 1D       		.byte	0x1d
+ 1303 0033 37000000 		.4byte	0x37
+ 1304 0037 02       		.uleb128 0x2
+ 1305 0038 01       		.byte	0x1
+ 1306 0039 08       		.byte	0x8
+ 1307 003a 7C010000 		.4byte	.LASF1
+ 1308 003e 02       		.uleb128 0x2
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 33
+
+
+ 1309 003f 02       		.byte	0x2
+ 1310 0040 05       		.byte	0x5
+ 1311 0041 3A000000 		.4byte	.LASF2
+ 1312 0045 02       		.uleb128 0x2
+ 1313 0046 02       		.byte	0x2
+ 1314 0047 07       		.byte	0x7
+ 1315 0048 10020000 		.4byte	.LASF3
+ 1316 004c 03       		.uleb128 0x3
+ 1317 004d 50030000 		.4byte	.LASF5
+ 1318 0051 02       		.byte	0x2
+ 1319 0052 3F       		.byte	0x3f
+ 1320 0053 57000000 		.4byte	0x57
+ 1321 0057 02       		.uleb128 0x2
+ 1322 0058 04       		.byte	0x4
+ 1323 0059 05       		.byte	0x5
+ 1324 005a 02010000 		.4byte	.LASF6
+ 1325 005e 03       		.uleb128 0x3
+ 1326 005f 25030000 		.4byte	.LASF7
+ 1327 0063 02       		.byte	0x2
+ 1328 0064 41       		.byte	0x41
+ 1329 0065 69000000 		.4byte	0x69
+ 1330 0069 02       		.uleb128 0x2
+ 1331 006a 04       		.byte	0x4
+ 1332 006b 07       		.byte	0x7
+ 1333 006c FA020000 		.4byte	.LASF8
+ 1334 0070 02       		.uleb128 0x2
+ 1335 0071 08       		.byte	0x8
+ 1336 0072 05       		.byte	0x5
+ 1337 0073 F4000000 		.4byte	.LASF9
+ 1338 0077 02       		.uleb128 0x2
+ 1339 0078 08       		.byte	0x8
+ 1340 0079 07       		.byte	0x7
+ 1341 007a B9010000 		.4byte	.LASF10
+ 1342 007e 04       		.uleb128 0x4
+ 1343 007f 04       		.byte	0x4
+ 1344 0080 05       		.byte	0x5
+ 1345 0081 696E7400 		.ascii	"int\000"
+ 1346 0085 02       		.uleb128 0x2
+ 1347 0086 04       		.byte	0x4
+ 1348 0087 07       		.byte	0x7
+ 1349 0088 E0010000 		.4byte	.LASF11
+ 1350 008c 03       		.uleb128 0x3
+ 1351 008d AE000000 		.4byte	.LASF12
+ 1352 0091 03       		.byte	0x3
+ 1353 0092 18       		.byte	0x18
+ 1354 0093 2C000000 		.4byte	0x2c
+ 1355 0097 03       		.uleb128 0x3
+ 1356 0098 B1010000 		.4byte	.LASF13
+ 1357 009c 03       		.byte	0x3
+ 1358 009d 2C       		.byte	0x2c
+ 1359 009e 4C000000 		.4byte	0x4c
+ 1360 00a2 03       		.uleb128 0x3
+ 1361 00a3 D7010000 		.4byte	.LASF14
+ 1362 00a7 03       		.byte	0x3
+ 1363 00a8 30       		.byte	0x30
+ 1364 00a9 5E000000 		.4byte	0x5e
+ 1365 00ad 05       		.uleb128 0x5
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 34
+
+
+ 1366 00ae BF000000 		.4byte	.LASF15
+ 1367 00b2 04       		.byte	0x4
+ 1368 00b3 E401     		.2byte	0x1e4
+ 1369 00b5 37000000 		.4byte	0x37
+ 1370 00b9 02       		.uleb128 0x2
+ 1371 00ba 04       		.byte	0x4
+ 1372 00bb 04       		.byte	0x4
+ 1373 00bc E6000000 		.4byte	.LASF16
+ 1374 00c0 02       		.uleb128 0x2
+ 1375 00c1 08       		.byte	0x8
+ 1376 00c2 04       		.byte	0x4
+ 1377 00c3 0C030000 		.4byte	.LASF17
+ 1378 00c7 02       		.uleb128 0x2
+ 1379 00c8 01       		.byte	0x1
+ 1380 00c9 08       		.byte	0x8
+ 1381 00ca 44020000 		.4byte	.LASF18
+ 1382 00ce 02       		.uleb128 0x2
+ 1383 00cf 08       		.byte	0x8
+ 1384 00d0 04       		.byte	0x4
+ 1385 00d1 78000000 		.4byte	.LASF19
+ 1386 00d5 02       		.uleb128 0x2
+ 1387 00d6 04       		.byte	0x4
+ 1388 00d7 07       		.byte	0x7
+ 1389 00d8 0B010000 		.4byte	.LASF20
+ 1390 00dc 06       		.uleb128 0x6
+ 1391 00dd 04       		.byte	0x4
+ 1392 00de C7000000 		.4byte	0xc7
+ 1393 00e2 07       		.uleb128 0x7
+ 1394 00e3 A0030000 		.4byte	.LASF25
+ 1395 00e7 01       		.byte	0x1
+ 1396 00e8 27       		.byte	0x27
+ 1397 00e9 00000000 		.4byte	.LFB63
+ 1398 00ed 30000000 		.4byte	.LFE63-.LFB63
+ 1399 00f1 01       		.uleb128 0x1
+ 1400 00f2 9C       		.byte	0x9c
+ 1401 00f3 34010000 		.4byte	0x134
+ 1402 00f7 08       		.uleb128 0x8
+ 1403 00f8 6D030000 		.4byte	.LASF21
+ 1404 00fc 01       		.byte	0x1
+ 1405 00fd 27       		.byte	0x27
+ 1406 00fe 8C000000 		.4byte	0x8c
+ 1407 0102 00000000 		.4byte	.LLST0
+ 1408 0106 08       		.uleb128 0x8
+ 1409 0107 B6000000 		.4byte	.LASF22
+ 1410 010b 01       		.byte	0x1
+ 1411 010c 27       		.byte	0x27
+ 1412 010d 8C000000 		.4byte	0x8c
+ 1413 0111 22000000 		.4byte	.LLST1
+ 1414 0115 08       		.uleb128 0x8
+ 1415 0116 2B000000 		.4byte	.LASF23
+ 1416 011a 01       		.byte	0x1
+ 1417 011b 27       		.byte	0x27
+ 1418 011c 8C000000 		.4byte	0x8c
+ 1419 0120 44000000 		.4byte	.LLST2
+ 1420 0124 08       		.uleb128 0x8
+ 1421 0125 56000000 		.4byte	.LASF24
+ 1422 0129 01       		.byte	0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 35
+
+
+ 1423 012a 27       		.byte	0x27
+ 1424 012b 8C000000 		.4byte	0x8c
+ 1425 012f 66000000 		.4byte	.LLST3
+ 1426 0133 00       		.byte	0
+ 1427 0134 09       		.uleb128 0x9
+ 1428 0135 C5000000 		.4byte	.LASF26
+ 1429 0139 01       		.byte	0x1
+ 1430 013a 7501     		.2byte	0x175
+ 1431 013c 00000000 		.4byte	.LFB94
+ 1432 0140 16000000 		.4byte	.LFE94-.LFB94
+ 1433 0144 01       		.uleb128 0x1
+ 1434 0145 9C       		.byte	0x9c
+ 1435 0146 9B010000 		.4byte	0x19b
+ 1436 014a 0A       		.uleb128 0xa
+ 1437 014b 6A020000 		.4byte	.LASF27
+ 1438 014f 01       		.byte	0x1
+ 1439 0150 7501     		.2byte	0x175
+ 1440 0152 8C000000 		.4byte	0x8c
+ 1441 0156 88000000 		.4byte	.LLST4
+ 1442 015a 0A       		.uleb128 0xa
+ 1443 015b 83020000 		.4byte	.LASF28
+ 1444 015f 01       		.byte	0x1
+ 1445 0160 7501     		.2byte	0x175
+ 1446 0162 8C000000 		.4byte	0x8c
+ 1447 0166 A9000000 		.4byte	.LLST5
+ 1448 016a 0B       		.uleb128 0xb
+ 1449 016b 0A000000 		.4byte	.LVL7
+ 1450 016f 200A0000 		.4byte	0xa20
+ 1451 0173 7D010000 		.4byte	0x17d
+ 1452 0177 0C       		.uleb128 0xc
+ 1453 0178 01       		.uleb128 0x1
+ 1454 0179 51       		.byte	0x51
+ 1455 017a 01       		.uleb128 0x1
+ 1456 017b 30       		.byte	0x30
+ 1457 017c 00       		.byte	0
+ 1458 017d 0B       		.uleb128 0xb
+ 1459 017e 10000000 		.4byte	.LVL8
+ 1460 0182 2B0A0000 		.4byte	0xa2b
+ 1461 0186 91010000 		.4byte	0x191
+ 1462 018a 0C       		.uleb128 0xc
+ 1463 018b 01       		.uleb128 0x1
+ 1464 018c 50       		.byte	0x50
+ 1465 018d 02       		.uleb128 0x2
+ 1466 018e 74       		.byte	0x74
+ 1467 018f 00       		.sleb128 0
+ 1468 0190 00       		.byte	0
+ 1469 0191 0D       		.uleb128 0xd
+ 1470 0192 14000000 		.4byte	.LVL9
+ 1471 0196 360A0000 		.4byte	0xa36
+ 1472 019a 00       		.byte	0
+ 1473 019b 09       		.uleb128 0x9
+ 1474 019c 2A010000 		.4byte	.LASF29
+ 1475 01a0 01       		.byte	0x1
+ 1476 01a1 3E01     		.2byte	0x13e
+ 1477 01a3 00000000 		.4byte	.LFB88
+ 1478 01a7 1C000000 		.4byte	.LFE88-.LFB88
+ 1479 01ab 01       		.uleb128 0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 36
+
+
+ 1480 01ac 9C       		.byte	0x9c
+ 1481 01ad CB010000 		.4byte	0x1cb
+ 1482 01b1 0A       		.uleb128 0xa
+ 1483 01b2 14010000 		.4byte	.LASF30
+ 1484 01b6 01       		.byte	0x1
+ 1485 01b7 3E01     		.2byte	0x13e
+ 1486 01b9 8C000000 		.4byte	0x8c
+ 1487 01bd CA000000 		.4byte	.LLST6
+ 1488 01c1 0D       		.uleb128 0xd
+ 1489 01c2 10000000 		.4byte	.LVL12
+ 1490 01c6 34010000 		.4byte	0x134
+ 1491 01ca 00       		.byte	0
+ 1492 01cb 09       		.uleb128 0x9
+ 1493 01cc 6F020000 		.4byte	.LASF31
+ 1494 01d0 01       		.byte	0x1
+ 1495 01d1 0801     		.2byte	0x108
+ 1496 01d3 00000000 		.4byte	.LFB82
+ 1497 01d7 14000000 		.4byte	.LFE82-.LFB82
+ 1498 01db 01       		.uleb128 0x1
+ 1499 01dc 9C       		.byte	0x9c
+ 1500 01dd F1010000 		.4byte	0x1f1
+ 1501 01e1 0E       		.uleb128 0xe
+ 1502 01e2 0C000000 		.4byte	.LVL13
+ 1503 01e6 9B010000 		.4byte	0x19b
+ 1504 01ea 0C       		.uleb128 0xc
+ 1505 01eb 01       		.uleb128 0x1
+ 1506 01ec 50       		.byte	0x50
+ 1507 01ed 01       		.uleb128 0x1
+ 1508 01ee 30       		.byte	0x30
+ 1509 01ef 00       		.byte	0
+ 1510 01f0 00       		.byte	0
+ 1511 01f1 09       		.uleb128 0x9
+ 1512 01f2 63030000 		.4byte	.LASF32
+ 1513 01f6 01       		.byte	0x1
+ 1514 01f7 1001     		.2byte	0x110
+ 1515 01f9 00000000 		.4byte	.LFB83
+ 1516 01fd 14000000 		.4byte	.LFE83-.LFB83
+ 1517 0201 01       		.uleb128 0x1
+ 1518 0202 9C       		.byte	0x9c
+ 1519 0203 17020000 		.4byte	0x217
+ 1520 0207 0E       		.uleb128 0xe
+ 1521 0208 0E000000 		.4byte	.LVL14
+ 1522 020c 9B010000 		.4byte	0x19b
+ 1523 0210 0C       		.uleb128 0xc
+ 1524 0211 01       		.uleb128 0x1
+ 1525 0212 50       		.byte	0x50
+ 1526 0213 01       		.uleb128 0x1
+ 1527 0214 30       		.byte	0x30
+ 1528 0215 00       		.byte	0
+ 1529 0216 00       		.byte	0
+ 1530 0217 09       		.uleb128 0x9
+ 1531 0218 2D020000 		.4byte	.LASF33
+ 1532 021c 01       		.byte	0x1
+ 1533 021d 5601     		.2byte	0x156
+ 1534 021f 00000000 		.4byte	.LFB91
+ 1535 0223 10000000 		.4byte	.LFE91-.LFB91
+ 1536 0227 01       		.uleb128 0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 37
+
+
+ 1537 0228 9C       		.byte	0x9c
+ 1538 0229 50020000 		.4byte	0x250
+ 1539 022d 0A       		.uleb128 0xa
+ 1540 022e 05000000 		.4byte	.LASF34
+ 1541 0232 01       		.byte	0x1
+ 1542 0233 5601     		.2byte	0x156
+ 1543 0235 8C000000 		.4byte	0x8c
+ 1544 0239 EB000000 		.4byte	.LLST7
+ 1545 023d 0D       		.uleb128 0xd
+ 1546 023e 08000000 		.4byte	.LVL16
+ 1547 0242 F1010000 		.4byte	0x1f1
+ 1548 0246 0D       		.uleb128 0xd
+ 1549 0247 0E000000 		.4byte	.LVL18
+ 1550 024b CB010000 		.4byte	0x1cb
+ 1551 024f 00       		.byte	0
+ 1552 0250 09       		.uleb128 0x9
+ 1553 0251 50020000 		.4byte	.LASF35
+ 1554 0255 01       		.byte	0x1
+ 1555 0256 4501     		.2byte	0x145
+ 1556 0258 00000000 		.4byte	.LFB89
+ 1557 025c 22000000 		.4byte	.LFE89-.LFB89
+ 1558 0260 01       		.uleb128 0x1
+ 1559 0261 9C       		.byte	0x9c
+ 1560 0262 C7020000 		.4byte	0x2c7
+ 1561 0266 0A       		.uleb128 0xa
+ 1562 0267 14010000 		.4byte	.LASF30
+ 1563 026b 01       		.byte	0x1
+ 1564 026c 4501     		.2byte	0x145
+ 1565 026e 8C000000 		.4byte	0x8c
+ 1566 0272 25010000 		.4byte	.LLST8
+ 1567 0276 0B       		.uleb128 0xb
+ 1568 0277 0C000000 		.4byte	.LVL21
+ 1569 027b 9B010000 		.4byte	0x19b
+ 1570 027f 8C020000 		.4byte	0x28c
+ 1571 0283 0C       		.uleb128 0xc
+ 1572 0284 01       		.uleb128 0x1
+ 1573 0285 50       		.byte	0x50
+ 1574 0286 04       		.uleb128 0x4
+ 1575 0287 74       		.byte	0x74
+ 1576 0288 00       		.sleb128 0
+ 1577 0289 34       		.byte	0x34
+ 1578 028a 21       		.byte	0x21
+ 1579 028b 00       		.byte	0
+ 1580 028c 0B       		.uleb128 0xb
+ 1581 028d 12000000 		.4byte	.LVL22
+ 1582 0291 410A0000 		.4byte	0xa41
+ 1583 0295 9F020000 		.4byte	0x29f
+ 1584 0299 0C       		.uleb128 0xc
+ 1585 029a 01       		.uleb128 0x1
+ 1586 029b 50       		.byte	0x50
+ 1587 029c 01       		.uleb128 0x1
+ 1588 029d 31       		.byte	0x31
+ 1589 029e 00       		.byte	0
+ 1590 029f 0B       		.uleb128 0xb
+ 1591 02a0 1A000000 		.4byte	.LVL23
+ 1592 02a4 9B010000 		.4byte	0x19b
+ 1593 02a8 B6020000 		.4byte	0x2b6
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 38
+
+
+ 1594 02ac 0C       		.uleb128 0xc
+ 1595 02ad 01       		.uleb128 0x1
+ 1596 02ae 50       		.byte	0x50
+ 1597 02af 05       		.uleb128 0x5
+ 1598 02b0 74       		.byte	0x74
+ 1599 02b1 00       		.sleb128 0
+ 1600 02b2 08       		.byte	0x8
+ 1601 02b3 FB       		.byte	0xfb
+ 1602 02b4 1A       		.byte	0x1a
+ 1603 02b5 00       		.byte	0
+ 1604 02b6 0E       		.uleb128 0xe
+ 1605 02b7 20000000 		.4byte	.LVL24
+ 1606 02bb 410A0000 		.4byte	0xa41
+ 1607 02bf 0C       		.uleb128 0xc
+ 1608 02c0 01       		.uleb128 0x1
+ 1609 02c1 50       		.byte	0x50
+ 1610 02c2 02       		.uleb128 0x2
+ 1611 02c3 08       		.byte	0x8
+ 1612 02c4 32       		.byte	0x32
+ 1613 02c5 00       		.byte	0
+ 1614 02c6 00       		.byte	0
+ 1615 02c7 09       		.uleb128 0x9
+ 1616 02c8 76030000 		.4byte	.LASF36
+ 1617 02cc 01       		.byte	0x1
+ 1618 02cd 3601     		.2byte	0x136
+ 1619 02cf 00000000 		.4byte	.LFB87
+ 1620 02d3 10000000 		.4byte	.LFE87-.LFB87
+ 1621 02d7 01       		.uleb128 0x1
+ 1622 02d8 9C       		.byte	0x9c
+ 1623 02d9 12030000 		.4byte	0x312
+ 1624 02dd 0A       		.uleb128 0xa
+ 1625 02de 97000000 		.4byte	.LASF37
+ 1626 02e2 01       		.byte	0x1
+ 1627 02e3 3601     		.2byte	0x136
+ 1628 02e5 8C000000 		.4byte	0x8c
+ 1629 02e9 46010000 		.4byte	.LLST9
+ 1630 02ed 0B       		.uleb128 0xb
+ 1631 02ee 08000000 		.4byte	.LVL26
+ 1632 02f2 9B010000 		.4byte	0x19b
+ 1633 02f6 01030000 		.4byte	0x301
+ 1634 02fa 0C       		.uleb128 0xc
+ 1635 02fb 01       		.uleb128 0x1
+ 1636 02fc 50       		.byte	0x50
+ 1637 02fd 02       		.uleb128 0x2
+ 1638 02fe 74       		.byte	0x74
+ 1639 02ff 00       		.sleb128 0
+ 1640 0300 00       		.byte	0
+ 1641 0301 0E       		.uleb128 0xe
+ 1642 0302 0E000000 		.4byte	.LVL27
+ 1643 0306 50020000 		.4byte	0x250
+ 1644 030a 0C       		.uleb128 0xc
+ 1645 030b 01       		.uleb128 0x1
+ 1646 030c 50       		.byte	0x50
+ 1647 030d 02       		.uleb128 0x2
+ 1648 030e 74       		.byte	0x74
+ 1649 030f 00       		.sleb128 0
+ 1650 0310 00       		.byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 39
+
+
+ 1651 0311 00       		.byte	0
+ 1652 0312 09       		.uleb128 0x9
+ 1653 0313 26000000 		.4byte	.LASF38
+ 1654 0317 01       		.byte	0x1
+ 1655 0318 2C01     		.2byte	0x12c
+ 1656 031a 00000000 		.4byte	.LFB86
+ 1657 031e 1E000000 		.4byte	.LFE86-.LFB86
+ 1658 0322 01       		.uleb128 0x1
+ 1659 0323 9C       		.byte	0x9c
+ 1660 0324 83030000 		.4byte	0x383
+ 1661 0328 0A       		.uleb128 0xa
+ 1662 0329 97000000 		.4byte	.LASF37
+ 1663 032d 01       		.byte	0x1
+ 1664 032e 2C01     		.2byte	0x12c
+ 1665 0330 8C000000 		.4byte	0x8c
+ 1666 0334 67010000 		.4byte	.LLST10
+ 1667 0338 0A       		.uleb128 0xa
+ 1668 0339 92000000 		.4byte	.LASF39
+ 1669 033d 01       		.byte	0x1
+ 1670 033e 2C01     		.2byte	0x12c
+ 1671 0340 8C000000 		.4byte	0x8c
+ 1672 0344 88010000 		.4byte	.LLST11
+ 1673 0348 0F       		.uleb128 0xf
+ 1674 0349 EC000000 		.4byte	.LASF40
+ 1675 034d 01       		.byte	0x1
+ 1676 034e 2E01     		.2byte	0x12e
+ 1677 0350 8C000000 		.4byte	0x8c
+ 1678 0354 A9010000 		.4byte	.LLST12
+ 1679 0358 10       		.uleb128 0x10
+ 1680 0359 D0010000 		.4byte	.LASF41
+ 1681 035d 01       		.byte	0x1
+ 1682 035e 2F01     		.2byte	0x12f
+ 1683 0360 8C000000 		.4byte	0x8c
+ 1684 0364 01       		.uleb128 0x1
+ 1685 0365 54       		.byte	0x54
+ 1686 0366 0D       		.uleb128 0xd
+ 1687 0367 14000000 		.4byte	.LVL32
+ 1688 036b C7020000 		.4byte	0x2c7
+ 1689 036f 0E       		.uleb128 0xe
+ 1690 0370 1C000000 		.4byte	.LVL33
+ 1691 0374 C7020000 		.4byte	0x2c7
+ 1692 0378 0C       		.uleb128 0xc
+ 1693 0379 01       		.uleb128 0x1
+ 1694 037a 50       		.byte	0x50
+ 1695 037b 05       		.uleb128 0x5
+ 1696 037c 74       		.byte	0x74
+ 1697 037d 00       		.sleb128 0
+ 1698 037e 75       		.byte	0x75
+ 1699 037f 00       		.sleb128 0
+ 1700 0380 21       		.byte	0x21
+ 1701 0381 00       		.byte	0
+ 1702 0382 00       		.byte	0
+ 1703 0383 09       		.uleb128 0x9
+ 1704 0384 83040000 		.4byte	.LASF42
+ 1705 0388 01       		.byte	0x1
+ 1706 0389 1A01     		.2byte	0x11a
+ 1707 038b 00000000 		.4byte	.LFB84
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 40
+
+
+ 1708 038f 0A000000 		.4byte	.LFE84-.LFB84
+ 1709 0393 01       		.uleb128 0x1
+ 1710 0394 9C       		.byte	0x9c
+ 1711 0395 B9030000 		.4byte	0x3b9
+ 1712 0399 0A       		.uleb128 0xa
+ 1713 039a 97000000 		.4byte	.LASF37
+ 1714 039e 01       		.byte	0x1
+ 1715 039f 1A01     		.2byte	0x11a
+ 1716 03a1 8C000000 		.4byte	0x8c
+ 1717 03a5 BC010000 		.4byte	.LLST13
+ 1718 03a9 0E       		.uleb128 0xe
+ 1719 03aa 08000000 		.4byte	.LVL35
+ 1720 03ae 12030000 		.4byte	0x312
+ 1721 03b2 0C       		.uleb128 0xc
+ 1722 03b3 01       		.uleb128 0x1
+ 1723 03b4 51       		.byte	0x51
+ 1724 03b5 01       		.uleb128 0x1
+ 1725 03b6 30       		.byte	0x30
+ 1726 03b7 00       		.byte	0
+ 1727 03b8 00       		.byte	0
+ 1728 03b9 07       		.uleb128 0x7
+ 1729 03ba 24010000 		.4byte	.LASF43
+ 1730 03be 01       		.byte	0x1
+ 1731 03bf 71       		.byte	0x71
+ 1732 03c0 00000000 		.4byte	.LFB65
+ 1733 03c4 10000000 		.4byte	.LFE65-.LFB65
+ 1734 03c8 01       		.uleb128 0x1
+ 1735 03c9 9C       		.byte	0x9c
+ 1736 03ca F1030000 		.4byte	0x3f1
+ 1737 03ce 0B       		.uleb128 0xb
+ 1738 03cf 08000000 		.4byte	.LVL36
+ 1739 03d3 83030000 		.4byte	0x383
+ 1740 03d7 E1030000 		.4byte	0x3e1
+ 1741 03db 0C       		.uleb128 0xc
+ 1742 03dc 01       		.uleb128 0x1
+ 1743 03dd 50       		.byte	0x50
+ 1744 03de 01       		.uleb128 0x1
+ 1745 03df 31       		.byte	0x31
+ 1746 03e0 00       		.byte	0
+ 1747 03e1 0E       		.uleb128 0xe
+ 1748 03e2 0E000000 		.4byte	.LVL37
+ 1749 03e6 4C0A0000 		.4byte	0xa4c
+ 1750 03ea 0C       		.uleb128 0xc
+ 1751 03eb 01       		.uleb128 0x1
+ 1752 03ec 50       		.byte	0x50
+ 1753 03ed 01       		.uleb128 0x1
+ 1754 03ee 32       		.byte	0x32
+ 1755 03ef 00       		.byte	0
+ 1756 03f0 00       		.byte	0
+ 1757 03f1 07       		.uleb128 0x7
+ 1758 03f2 DB000000 		.4byte	.LASF44
+ 1759 03f6 01       		.byte	0x1
+ 1760 03f7 79       		.byte	0x79
+ 1761 03f8 00000000 		.4byte	.LFB66
+ 1762 03fc 10000000 		.4byte	.LFE66-.LFB66
+ 1763 0400 01       		.uleb128 0x1
+ 1764 0401 9C       		.byte	0x9c
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 41
+
+
+ 1765 0402 29040000 		.4byte	0x429
+ 1766 0406 0B       		.uleb128 0xb
+ 1767 0407 08000000 		.4byte	.LVL38
+ 1768 040b 83030000 		.4byte	0x383
+ 1769 040f 19040000 		.4byte	0x419
+ 1770 0413 0C       		.uleb128 0xc
+ 1771 0414 01       		.uleb128 0x1
+ 1772 0415 50       		.byte	0x50
+ 1773 0416 01       		.uleb128 0x1
+ 1774 0417 32       		.byte	0x32
+ 1775 0418 00       		.byte	0
+ 1776 0419 0E       		.uleb128 0xe
+ 1777 041a 0E000000 		.4byte	.LVL39
+ 1778 041e 4C0A0000 		.4byte	0xa4c
+ 1779 0422 0C       		.uleb128 0xc
+ 1780 0423 01       		.uleb128 0x1
+ 1781 0424 50       		.byte	0x50
+ 1782 0425 01       		.uleb128 0x1
+ 1783 0426 32       		.byte	0x32
+ 1784 0427 00       		.byte	0
+ 1785 0428 00       		.byte	0
+ 1786 0429 07       		.uleb128 0x7
+ 1787 042a 1B030000 		.4byte	.LASF45
+ 1788 042e 01       		.byte	0x1
+ 1789 042f 81       		.byte	0x81
+ 1790 0430 00000000 		.4byte	.LFB67
+ 1791 0434 44000000 		.4byte	.LFE67-.LFB67
+ 1792 0438 01       		.uleb128 0x1
+ 1793 0439 9C       		.byte	0x9c
+ 1794 043a 82040000 		.4byte	0x482
+ 1795 043e 11       		.uleb128 0x11
+ 1796 043f 636F6C00 		.ascii	"col\000"
+ 1797 0443 01       		.byte	0x1
+ 1798 0444 81       		.byte	0x81
+ 1799 0445 8C000000 		.4byte	0x8c
+ 1800 0449 DD010000 		.4byte	.LLST14
+ 1801 044d 11       		.uleb128 0x11
+ 1802 044e 726F7700 		.ascii	"row\000"
+ 1803 0452 01       		.byte	0x1
+ 1804 0453 81       		.byte	0x81
+ 1805 0454 8C000000 		.4byte	0x8c
+ 1806 0458 FE010000 		.4byte	.LLST15
+ 1807 045c 12       		.uleb128 0x12
+ 1808 045d 51010000 		.4byte	.LASF46
+ 1809 0461 01       		.byte	0x1
+ 1810 0462 83       		.byte	0x83
+ 1811 0463 82040000 		.4byte	0x482
+ 1812 0467 02       		.uleb128 0x2
+ 1813 0468 91       		.byte	0x91
+ 1814 0469 60       		.sleb128 -32
+ 1815 046a 0E       		.uleb128 0xe
+ 1816 046b 36000000 		.4byte	.LVL44
+ 1817 046f 83030000 		.4byte	0x383
+ 1818 0473 0C       		.uleb128 0xc
+ 1819 0474 01       		.uleb128 0x1
+ 1820 0475 50       		.byte	0x50
+ 1821 0476 09       		.uleb128 0x9
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 42
+
+
+ 1822 0477 74       		.byte	0x74
+ 1823 0478 70       		.sleb128 -16
+ 1824 0479 06       		.byte	0x6
+ 1825 047a 75       		.byte	0x75
+ 1826 047b 00       		.sleb128 0
+ 1827 047c 22       		.byte	0x22
+ 1828 047d 09       		.byte	0x9
+ 1829 047e 80       		.byte	0x80
+ 1830 047f 21       		.byte	0x21
+ 1831 0480 00       		.byte	0
+ 1832 0481 00       		.byte	0
+ 1833 0482 13       		.uleb128 0x13
+ 1834 0483 7E000000 		.4byte	0x7e
+ 1835 0487 92040000 		.4byte	0x492
+ 1836 048b 14       		.uleb128 0x14
+ 1837 048c D5000000 		.4byte	0xd5
+ 1838 0490 03       		.byte	0x3
+ 1839 0491 00       		.byte	0
+ 1840 0492 07       		.uleb128 0x7
+ 1841 0493 3A020000 		.4byte	.LASF47
+ 1842 0497 01       		.byte	0x1
+ 1843 0498 8D       		.byte	0x8d
+ 1844 0499 00000000 		.4byte	.LFB68
+ 1845 049d 1C000000 		.4byte	.LFE68-.LFB68
+ 1846 04a1 01       		.uleb128 0x1
+ 1847 04a2 9C       		.byte	0x9c
+ 1848 04a3 B1040000 		.4byte	0x4b1
+ 1849 04a7 0D       		.uleb128 0xd
+ 1850 04a8 14000000 		.4byte	.LVL45
+ 1851 04ac 83030000 		.4byte	0x383
+ 1852 04b0 00       		.byte	0
+ 1853 04b1 07       		.uleb128 0x7
+ 1854 04b2 13030000 		.4byte	.LASF48
+ 1855 04b6 01       		.byte	0x1
+ 1856 04b7 94       		.byte	0x94
+ 1857 04b8 00000000 		.4byte	.LFB69
+ 1858 04bc 1C000000 		.4byte	.LFE69-.LFB69
+ 1859 04c0 01       		.uleb128 0x1
+ 1860 04c1 9C       		.byte	0x9c
+ 1861 04c2 D0040000 		.4byte	0x4d0
+ 1862 04c6 0D       		.uleb128 0xd
+ 1863 04c7 14000000 		.4byte	.LVL46
+ 1864 04cb 83030000 		.4byte	0x383
+ 1865 04cf 00       		.byte	0
+ 1866 04d0 07       		.uleb128 0x7
+ 1867 04d1 01020000 		.4byte	.LASF49
+ 1868 04d5 01       		.byte	0x1
+ 1869 04d6 9D       		.byte	0x9d
+ 1870 04d7 00000000 		.4byte	.LFB70
+ 1871 04db 1C000000 		.4byte	.LFE70-.LFB70
+ 1872 04df 01       		.uleb128 0x1
+ 1873 04e0 9C       		.byte	0x9c
+ 1874 04e1 EF040000 		.4byte	0x4ef
+ 1875 04e5 0D       		.uleb128 0xd
+ 1876 04e6 14000000 		.4byte	.LVL47
+ 1877 04ea 83030000 		.4byte	0x383
+ 1878 04ee 00       		.byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 43
+
+
+ 1879 04ef 07       		.uleb128 0x7
+ 1880 04f0 8A010000 		.4byte	.LASF50
+ 1881 04f4 01       		.byte	0x1
+ 1882 04f5 A4       		.byte	0xa4
+ 1883 04f6 00000000 		.4byte	.LFB71
+ 1884 04fa 1C000000 		.4byte	.LFE71-.LFB71
+ 1885 04fe 01       		.uleb128 0x1
+ 1886 04ff 9C       		.byte	0x9c
+ 1887 0500 0E050000 		.4byte	0x50e
+ 1888 0504 0D       		.uleb128 0xd
+ 1889 0505 14000000 		.4byte	.LVL48
+ 1890 0509 83030000 		.4byte	0x383
+ 1891 050d 00       		.byte	0
+ 1892 050e 07       		.uleb128 0x7
+ 1893 050f 7B020000 		.4byte	.LASF51
+ 1894 0513 01       		.byte	0x1
+ 1895 0514 B9       		.byte	0xb9
+ 1896 0515 00000000 		.4byte	.LFB73
+ 1897 0519 1C000000 		.4byte	.LFE73-.LFB73
+ 1898 051d 01       		.uleb128 0x1
+ 1899 051e 9C       		.byte	0x9c
+ 1900 051f 2D050000 		.4byte	0x52d
+ 1901 0523 0D       		.uleb128 0xd
+ 1902 0524 14000000 		.4byte	.LVL49
+ 1903 0528 83030000 		.4byte	0x383
+ 1904 052c 00       		.byte	0
+ 1905 052d 07       		.uleb128 0x7
+ 1906 052e 1A000000 		.4byte	.LASF52
+ 1907 0532 01       		.byte	0x1
+ 1908 0533 C0       		.byte	0xc0
+ 1909 0534 00000000 		.4byte	.LFB74
+ 1910 0538 1C000000 		.4byte	.LFE74-.LFB74
+ 1911 053c 01       		.uleb128 0x1
+ 1912 053d 9C       		.byte	0x9c
+ 1913 053e 4C050000 		.4byte	0x54c
+ 1914 0542 0D       		.uleb128 0xd
+ 1915 0543 14000000 		.4byte	.LVL50
+ 1916 0547 83030000 		.4byte	0x383
+ 1917 054b 00       		.byte	0
+ 1918 054c 07       		.uleb128 0x7
+ 1919 054d 3E030000 		.4byte	.LASF53
+ 1920 0551 01       		.byte	0x1
+ 1921 0552 C9       		.byte	0xc9
+ 1922 0553 00000000 		.4byte	.LFB75
+ 1923 0557 0A000000 		.4byte	.LFE75-.LFB75
+ 1924 055b 01       		.uleb128 0x1
+ 1925 055c 9C       		.byte	0x9c
+ 1926 055d 71050000 		.4byte	0x571
+ 1927 0561 0E       		.uleb128 0xe
+ 1928 0562 08000000 		.4byte	.LVL51
+ 1929 0566 83030000 		.4byte	0x383
+ 1930 056a 0C       		.uleb128 0xc
+ 1931 056b 01       		.uleb128 0x1
+ 1932 056c 50       		.byte	0x50
+ 1933 056d 01       		.uleb128 0x1
+ 1934 056e 48       		.byte	0x48
+ 1935 056f 00       		.byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 44
+
+
+ 1936 0570 00       		.byte	0
+ 1937 0571 07       		.uleb128 0x7
+ 1938 0572 65000000 		.4byte	.LASF54
+ 1939 0576 01       		.byte	0x1
+ 1940 0577 CF       		.byte	0xcf
+ 1941 0578 00000000 		.4byte	.LFB76
+ 1942 057c 0A000000 		.4byte	.LFE76-.LFB76
+ 1943 0580 01       		.uleb128 0x1
+ 1944 0581 9C       		.byte	0x9c
+ 1945 0582 96050000 		.4byte	0x596
+ 1946 0586 0E       		.uleb128 0xe
+ 1947 0587 08000000 		.4byte	.LVL52
+ 1948 058b 83030000 		.4byte	0x383
+ 1949 058f 0C       		.uleb128 0xc
+ 1950 0590 01       		.uleb128 0x1
+ 1951 0591 50       		.byte	0x50
+ 1952 0592 01       		.uleb128 0x1
+ 1953 0593 4C       		.byte	0x4c
+ 1954 0594 00       		.byte	0
+ 1955 0595 00       		.byte	0
+ 1956 0596 07       		.uleb128 0x7
+ 1957 0597 B7030000 		.4byte	.LASF55
+ 1958 059b 01       		.byte	0x1
+ 1959 059c D7       		.byte	0xd7
+ 1960 059d 00000000 		.4byte	.LFB77
+ 1961 05a1 1C000000 		.4byte	.LFE77-.LFB77
+ 1962 05a5 01       		.uleb128 0x1
+ 1963 05a6 9C       		.byte	0x9c
+ 1964 05a7 B5050000 		.4byte	0x5b5
+ 1965 05ab 0D       		.uleb128 0xd
+ 1966 05ac 14000000 		.4byte	.LVL53
+ 1967 05b0 83030000 		.4byte	0x383
+ 1968 05b4 00       		.byte	0
+ 1969 05b5 07       		.uleb128 0x7
+ 1970 05b6 D8020000 		.4byte	.LASF56
+ 1971 05ba 01       		.byte	0x1
+ 1972 05bb E0       		.byte	0xe0
+ 1973 05bc 00000000 		.4byte	.LFB78
+ 1974 05c0 1C000000 		.4byte	.LFE78-.LFB78
+ 1975 05c4 01       		.uleb128 0x1
+ 1976 05c5 9C       		.byte	0x9c
+ 1977 05c6 D4050000 		.4byte	0x5d4
+ 1978 05ca 0D       		.uleb128 0xd
+ 1979 05cb 14000000 		.4byte	.LVL54
+ 1980 05cf 83030000 		.4byte	0x383
+ 1981 05d3 00       		.byte	0
+ 1982 05d4 07       		.uleb128 0x7
+ 1983 05d5 95030000 		.4byte	.LASF57
+ 1984 05d9 01       		.byte	0x1
+ 1985 05da E9       		.byte	0xe9
+ 1986 05db 00000000 		.4byte	.LFB79
+ 1987 05df 1C000000 		.4byte	.LFE79-.LFB79
+ 1988 05e3 01       		.uleb128 0x1
+ 1989 05e4 9C       		.byte	0x9c
+ 1990 05e5 F3050000 		.4byte	0x5f3
+ 1991 05e9 0D       		.uleb128 0xd
+ 1992 05ea 14000000 		.4byte	.LVL55
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 45
+
+
+ 1993 05ee 83030000 		.4byte	0x383
+ 1994 05f2 00       		.byte	0
+ 1995 05f3 07       		.uleb128 0x7
+ 1996 05f4 49000000 		.4byte	.LASF58
+ 1997 05f8 01       		.byte	0x1
+ 1998 05f9 F2       		.byte	0xf2
+ 1999 05fa 00000000 		.4byte	.LFB80
+ 2000 05fe 1C000000 		.4byte	.LFE80-.LFB80
+ 2001 0602 01       		.uleb128 0x1
+ 2002 0603 9C       		.byte	0x9c
+ 2003 0604 12060000 		.4byte	0x612
+ 2004 0608 0D       		.uleb128 0xd
+ 2005 0609 14000000 		.4byte	.LVL56
+ 2006 060d 83030000 		.4byte	0x383
+ 2007 0611 00       		.byte	0
+ 2008 0612 09       		.uleb128 0x9
+ 2009 0613 20000000 		.4byte	.LASF59
+ 2010 0617 01       		.byte	0x1
+ 2011 0618 2101     		.2byte	0x121
+ 2012 061a 00000000 		.4byte	.LFB85
+ 2013 061e 0A000000 		.4byte	.LFE85-.LFB85
+ 2014 0622 01       		.uleb128 0x1
+ 2015 0623 9C       		.byte	0x9c
+ 2016 0624 48060000 		.4byte	0x648
+ 2017 0628 0A       		.uleb128 0xa
+ 2018 0629 97000000 		.4byte	.LASF37
+ 2019 062d 01       		.byte	0x1
+ 2020 062e 2101     		.2byte	0x121
+ 2021 0630 8C000000 		.4byte	0x8c
+ 2022 0634 2A020000 		.4byte	.LLST16
+ 2023 0638 0E       		.uleb128 0xe
+ 2024 0639 08000000 		.4byte	.LVL58
+ 2025 063d 12030000 		.4byte	0x312
+ 2026 0641 0C       		.uleb128 0xc
+ 2027 0642 01       		.uleb128 0x1
+ 2028 0643 51       		.byte	0x51
+ 2029 0644 01       		.uleb128 0x1
+ 2030 0645 31       		.byte	0x31
+ 2031 0646 00       		.byte	0
+ 2032 0647 00       		.byte	0
+ 2033 0648 07       		.uleb128 0x7
+ 2034 0649 9A010000 		.4byte	.LASF60
+ 2035 064d 01       		.byte	0x1
+ 2036 064e FC       		.byte	0xfc
+ 2037 064f 00000000 		.4byte	.LFB81
+ 2038 0653 24000000 		.4byte	.LFE81-.LFB81
+ 2039 0657 01       		.uleb128 0x1
+ 2040 0658 9C       		.byte	0x9c
+ 2041 0659 9B060000 		.4byte	0x69b
+ 2042 065d 08       		.uleb128 0x8
+ 2043 065e 5A030000 		.4byte	.LASF61
+ 2044 0662 01       		.byte	0x1
+ 2045 0663 FC       		.byte	0xfc
+ 2046 0664 8C000000 		.4byte	0x8c
+ 2047 0668 4B020000 		.4byte	.LLST17
+ 2048 066c 08       		.uleb128 0x8
+ 2049 066d 36030000 		.4byte	.LASF62
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 46
+
+
+ 2050 0671 01       		.byte	0x1
+ 2051 0672 FC       		.byte	0xfc
+ 2052 0673 9B060000 		.4byte	0x69b
+ 2053 0677 69020000 		.4byte	.LLST18
+ 2054 067b 15       		.uleb128 0x15
+ 2055 067c 6900     		.ascii	"i\000"
+ 2056 067e 01       		.byte	0x1
+ 2057 067f FC       		.byte	0xfc
+ 2058 0680 A2000000 		.4byte	0xa2
+ 2059 0684 87020000 		.4byte	.LLST19
+ 2060 0688 0D       		.uleb128 0xd
+ 2061 0689 12000000 		.4byte	.LVL63
+ 2062 068d 83030000 		.4byte	0x383
+ 2063 0691 0D       		.uleb128 0xd
+ 2064 0692 1C000000 		.4byte	.LVL65
+ 2065 0696 12060000 		.4byte	0x612
+ 2066 069a 00       		.byte	0
+ 2067 069b 06       		.uleb128 0x6
+ 2068 069c 04       		.byte	0x4
+ 2069 069d 8C000000 		.4byte	0x8c
+ 2070 06a1 09       		.uleb128 0x9
+ 2071 06a2 E4020000 		.4byte	.LASF63
+ 2072 06a6 01       		.byte	0x1
+ 2073 06a7 4F01     		.2byte	0x14f
+ 2074 06a9 00000000 		.4byte	.LFB90
+ 2075 06ad 08000000 		.4byte	.LFE90-.LFB90
+ 2076 06b1 01       		.uleb128 0x1
+ 2077 06b2 9C       		.byte	0x9c
+ 2078 06b3 E9060000 		.4byte	0x6e9
+ 2079 06b7 0A       		.uleb128 0xa
+ 2080 06b8 91010000 		.4byte	.LASF64
+ 2081 06bc 01       		.byte	0x1
+ 2082 06bd 4F01     		.2byte	0x14f
+ 2083 06bf 8C000000 		.4byte	0x8c
+ 2084 06c3 A6020000 		.4byte	.LLST20
+ 2085 06c7 0A       		.uleb128 0xa
+ 2086 06c8 44000000 		.4byte	.LASF65
+ 2087 06cc 01       		.byte	0x1
+ 2088 06cd 4F01     		.2byte	0x14f
+ 2089 06cf 9B060000 		.4byte	0x69b
+ 2090 06d3 C7020000 		.4byte	.LLST21
+ 2091 06d7 0E       		.uleb128 0xe
+ 2092 06d8 06000000 		.4byte	.LVL68
+ 2093 06dc 48060000 		.4byte	0x648
+ 2094 06e0 0C       		.uleb128 0xc
+ 2095 06e1 01       		.uleb128 0x1
+ 2096 06e2 51       		.byte	0x51
+ 2097 06e3 03       		.uleb128 0x3
+ 2098 06e4 F3       		.byte	0xf3
+ 2099 06e5 01       		.uleb128 0x1
+ 2100 06e6 51       		.byte	0x51
+ 2101 06e7 00       		.byte	0
+ 2102 06e8 00       		.byte	0
+ 2103 06e9 09       		.uleb128 0x9
+ 2104 06ea 23020000 		.4byte	.LASF66
+ 2105 06ee 01       		.byte	0x1
+ 2106 06ef 6101     		.2byte	0x161
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 47
+
+
+ 2107 06f1 00000000 		.4byte	.LFB92
+ 2108 06f5 1E000000 		.4byte	.LFE92-.LFB92
+ 2109 06f9 01       		.uleb128 0x1
+ 2110 06fa 9C       		.byte	0x9c
+ 2111 06fb 49070000 		.4byte	0x749
+ 2112 06ff 0A       		.uleb128 0xa
+ 2113 0700 00000000 		.4byte	.LASF67
+ 2114 0704 01       		.byte	0x1
+ 2115 0705 6101     		.2byte	0x161
+ 2116 0707 DC000000 		.4byte	0xdc
+ 2117 070b E8020000 		.4byte	.LLST22
+ 2118 070f 16       		.uleb128 0x16
+ 2119 0710 6900     		.ascii	"i\000"
+ 2120 0712 01       		.byte	0x1
+ 2121 0713 6101     		.2byte	0x161
+ 2122 0715 A2000000 		.4byte	0xa2
+ 2123 0719 06030000 		.4byte	.LLST23
+ 2124 071d 10       		.uleb128 0x10
+ 2125 071e 4C010000 		.4byte	.LASF68
+ 2126 0722 01       		.byte	0x1
+ 2127 0723 6301     		.2byte	0x163
+ 2128 0725 8C000000 		.4byte	0x8c
+ 2129 0729 01       		.uleb128 0x1
+ 2130 072a 55       		.byte	0x55
+ 2131 072b 0B       		.uleb128 0xb
+ 2132 072c 08000000 		.4byte	.LVL71
+ 2133 0730 570A0000 		.4byte	0xa57
+ 2134 0734 3F070000 		.4byte	0x73f
+ 2135 0738 0C       		.uleb128 0xc
+ 2136 0739 01       		.uleb128 0x1
+ 2137 073a 50       		.byte	0x50
+ 2138 073b 02       		.uleb128 0x2
+ 2139 073c 76       		.byte	0x76
+ 2140 073d 00       		.sleb128 0
+ 2141 073e 00       		.byte	0
+ 2142 073f 0D       		.uleb128 0xd
+ 2143 0740 14000000 		.4byte	.LVL74
+ 2144 0744 12060000 		.4byte	0x612
+ 2145 0748 00       		.byte	0
+ 2146 0749 07       		.uleb128 0x7
+ 2147 074a 88020000 		.4byte	.LASF69
+ 2148 074e 01       		.byte	0x1
+ 2149 074f AB       		.byte	0xab
+ 2150 0750 00000000 		.4byte	.LFB72
+ 2151 0754 48000000 		.4byte	.LFE72-.LFB72
+ 2152 0758 01       		.uleb128 0x1
+ 2153 0759 9C       		.byte	0x9c
+ 2154 075a E3070000 		.4byte	0x7e3
+ 2155 075e 11       		.uleb128 0x11
+ 2156 075f 726F7700 		.ascii	"row\000"
+ 2157 0763 01       		.byte	0x1
+ 2158 0764 AB       		.byte	0xab
+ 2159 0765 AD000000 		.4byte	0xad
+ 2160 0769 25030000 		.4byte	.LLST24
+ 2161 076d 17       		.uleb128 0x17
+ 2162 076e F6070000 		.4byte	0x7f6
+ 2163 0772 46030000 		.4byte	.LLST25
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 48
+
+
+ 2164 0776 18       		.uleb128 0x18
+ 2165 0777 D6000000 		.4byte	.LASF70
+ 2166 077b 01       		.byte	0x1
+ 2167 077c AC       		.byte	0xac
+ 2168 077d E3070000 		.4byte	0x7e3
+ 2169 0781 89030000 		.4byte	.LLST26
+ 2170 0785 19       		.uleb128 0x19
+ 2171 0786 1E000000 		.4byte	.LBB2
+ 2172 078a 14000000 		.4byte	.LBE2-.LBB2
+ 2173 078e A0070000 		.4byte	0x7a0
+ 2174 0792 15       		.uleb128 0x15
+ 2175 0793 6900     		.ascii	"i\000"
+ 2176 0795 01       		.byte	0x1
+ 2177 0796 AF       		.byte	0xaf
+ 2178 0797 AD000000 		.4byte	0xad
+ 2179 079b 9D030000 		.4byte	.LLST27
+ 2180 079f 00       		.byte	0
+ 2181 07a0 0B       		.uleb128 0xb
+ 2182 07a1 1E000000 		.4byte	.LVL82
+ 2183 07a5 29040000 		.4byte	0x429
+ 2184 07a9 B9070000 		.4byte	0x7b9
+ 2185 07ad 0C       		.uleb128 0xc
+ 2186 07ae 01       		.uleb128 0x1
+ 2187 07af 50       		.byte	0x50
+ 2188 07b0 01       		.uleb128 0x1
+ 2189 07b1 30       		.byte	0x30
+ 2190 07b2 0C       		.uleb128 0xc
+ 2191 07b3 01       		.uleb128 0x1
+ 2192 07b4 51       		.byte	0x51
+ 2193 07b5 02       		.uleb128 0x2
+ 2194 07b6 75       		.byte	0x75
+ 2195 07b7 00       		.sleb128 0
+ 2196 07b8 00       		.byte	0
+ 2197 07b9 0B       		.uleb128 0xb
+ 2198 07ba 38000000 		.4byte	.LVL86
+ 2199 07be E9060000 		.4byte	0x6e9
+ 2200 07c2 CD070000 		.4byte	0x7cd
+ 2201 07c6 0C       		.uleb128 0xc
+ 2202 07c7 01       		.uleb128 0x1
+ 2203 07c8 50       		.byte	0x50
+ 2204 07c9 02       		.uleb128 0x2
+ 2205 07ca 74       		.byte	0x74
+ 2206 07cb 00       		.sleb128 0
+ 2207 07cc 00       		.byte	0
+ 2208 07cd 0E       		.uleb128 0xe
+ 2209 07ce 40000000 		.4byte	.LVL87
+ 2210 07d2 29040000 		.4byte	0x429
+ 2211 07d6 0C       		.uleb128 0xc
+ 2212 07d7 01       		.uleb128 0x1
+ 2213 07d8 50       		.byte	0x50
+ 2214 07d9 01       		.uleb128 0x1
+ 2215 07da 30       		.byte	0x30
+ 2216 07db 0C       		.uleb128 0xc
+ 2217 07dc 01       		.uleb128 0x1
+ 2218 07dd 51       		.byte	0x51
+ 2219 07de 02       		.uleb128 0x2
+ 2220 07df 75       		.byte	0x75
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 49
+
+
+ 2221 07e0 00       		.sleb128 0
+ 2222 07e1 00       		.byte	0
+ 2223 07e2 00       		.byte	0
+ 2224 07e3 13       		.uleb128 0x13
+ 2225 07e4 C7000000 		.4byte	0xc7
+ 2226 07e8 F6070000 		.4byte	0x7f6
+ 2227 07ec 1A       		.uleb128 0x1a
+ 2228 07ed D5000000 		.4byte	0xd5
+ 2229 07f1 6D070000 		.4byte	0x76d
+ 2230 07f5 00       		.byte	0
+ 2231 07f6 1B       		.uleb128 0x1b
+ 2232 07f7 D5000000 		.4byte	0xd5
+ 2233 07fb 09       		.uleb128 0x9
+ 2234 07fc 5C020000 		.4byte	.LASF71
+ 2235 0800 01       		.byte	0x1
+ 2236 0801 6C01     		.2byte	0x16c
+ 2237 0803 00000000 		.4byte	.LFB93
+ 2238 0807 18000000 		.4byte	.LFE93-.LFB93
+ 2239 080b 01       		.uleb128 0x1
+ 2240 080c 9C       		.byte	0x9c
+ 2241 080d 6A080000 		.4byte	0x86a
+ 2242 0811 1C       		.uleb128 0x1c
+ 2243 0812 6E00     		.ascii	"n\000"
+ 2244 0814 01       		.byte	0x1
+ 2245 0815 6C01     		.2byte	0x16c
+ 2246 0817 7E000000 		.4byte	0x7e
+ 2247 081b C7030000 		.4byte	.LLST28
+ 2248 081f 0A       		.uleb128 0xa
+ 2249 0820 0A020000 		.4byte	.LASF72
+ 2250 0824 01       		.byte	0x1
+ 2251 0825 6C01     		.2byte	0x16c
+ 2252 0827 AD000000 		.4byte	0xad
+ 2253 082b E8030000 		.4byte	.LLST29
+ 2254 082f 10       		.uleb128 0x10
+ 2255 0830 D1020000 		.4byte	.LASF73
+ 2256 0834 01       		.byte	0x1
+ 2257 0835 6E01     		.2byte	0x16e
+ 2258 0837 6A080000 		.4byte	0x86a
+ 2259 083b 02       		.uleb128 0x2
+ 2260 083c 91       		.byte	0x91
+ 2261 083d 54       		.sleb128 -44
+ 2262 083e 0B       		.uleb128 0xb
+ 2263 083f 0C000000 		.4byte	.LVL91
+ 2264 0843 620A0000 		.4byte	0xa62
+ 2265 0847 59080000 		.4byte	0x859
+ 2266 084b 0C       		.uleb128 0xc
+ 2267 084c 01       		.uleb128 0x1
+ 2268 084d 50       		.byte	0x50
+ 2269 084e 03       		.uleb128 0x3
+ 2270 084f F3       		.byte	0xf3
+ 2271 0850 01       		.uleb128 0x1
+ 2272 0851 50       		.byte	0x50
+ 2273 0852 0C       		.uleb128 0xc
+ 2274 0853 01       		.uleb128 0x1
+ 2275 0854 51       		.byte	0x51
+ 2276 0855 02       		.uleb128 0x2
+ 2277 0856 91       		.byte	0x91
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 50
+
+
+ 2278 0857 54       		.sleb128 -44
+ 2279 0858 00       		.byte	0
+ 2280 0859 0E       		.uleb128 0xe
+ 2281 085a 12000000 		.4byte	.LVL92
+ 2282 085e E9060000 		.4byte	0x6e9
+ 2283 0862 0C       		.uleb128 0xc
+ 2284 0863 01       		.uleb128 0x1
+ 2285 0864 50       		.byte	0x50
+ 2286 0865 02       		.uleb128 0x2
+ 2287 0866 91       		.byte	0x91
+ 2288 0867 54       		.sleb128 -44
+ 2289 0868 00       		.byte	0
+ 2290 0869 00       		.byte	0
+ 2291 086a 13       		.uleb128 0x13
+ 2292 086b C7000000 		.4byte	0xc7
+ 2293 086f 7A080000 		.4byte	0x87a
+ 2294 0873 14       		.uleb128 0x14
+ 2295 0874 D5000000 		.4byte	0xd5
+ 2296 0878 20       		.byte	0x20
+ 2297 0879 00       		.byte	0
+ 2298 087a 07       		.uleb128 0x7
+ 2299 087b 5F000000 		.4byte	.LASF74
+ 2300 087f 01       		.byte	0x1
+ 2301 0880 32       		.byte	0x32
+ 2302 0881 00000000 		.4byte	.LFB64
+ 2303 0885 B4000000 		.4byte	.LFE64-.LFB64
+ 2304 0889 01       		.uleb128 0x1
+ 2305 088a 9C       		.byte	0x9c
+ 2306 088b 87090000 		.4byte	0x987
+ 2307 088f 0B       		.uleb128 0xb
+ 2308 0890 30000000 		.4byte	.LVL93
+ 2309 0894 4C0A0000 		.4byte	0xa4c
+ 2310 0898 A3080000 		.4byte	0x8a3
+ 2311 089c 0C       		.uleb128 0xc
+ 2312 089d 01       		.uleb128 0x1
+ 2313 089e 50       		.byte	0x50
+ 2314 089f 02       		.uleb128 0x2
+ 2315 08a0 08       		.byte	0x8
+ 2316 08a1 32       		.byte	0x32
+ 2317 08a2 00       		.byte	0
+ 2318 08a3 0D       		.uleb128 0xd
+ 2319 08a4 38000000 		.4byte	.LVL94
+ 2320 08a8 9B010000 		.4byte	0x19b
+ 2321 08ac 0B       		.uleb128 0xb
+ 2322 08ad 40000000 		.4byte	.LVL95
+ 2323 08b1 4C0A0000 		.4byte	0xa4c
+ 2324 08b5 C1080000 		.4byte	0x8c1
+ 2325 08b9 0C       		.uleb128 0xc
+ 2326 08ba 01       		.uleb128 0x1
+ 2327 08bb 50       		.byte	0x50
+ 2328 08bc 03       		.uleb128 0x3
+ 2329 08bd 0A       		.byte	0xa
+ 2330 08be E803     		.2byte	0x3e8
+ 2331 08c0 00       		.byte	0
+ 2332 08c1 0B       		.uleb128 0xb
+ 2333 08c2 46000000 		.4byte	.LVL96
+ 2334 08c6 C7020000 		.4byte	0x2c7
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 51
+
+
+ 2335 08ca D5080000 		.4byte	0x8d5
+ 2336 08ce 0C       		.uleb128 0xc
+ 2337 08cf 01       		.uleb128 0x1
+ 2338 08d0 50       		.byte	0x50
+ 2339 08d1 02       		.uleb128 0x2
+ 2340 08d2 08       		.byte	0x8
+ 2341 08d3 30       		.byte	0x30
+ 2342 08d4 00       		.byte	0
+ 2343 08d5 0B       		.uleb128 0xb
+ 2344 08d6 4E000000 		.4byte	.LVL97
+ 2345 08da 410A0000 		.4byte	0xa41
+ 2346 08de EA080000 		.4byte	0x8ea
+ 2347 08e2 0C       		.uleb128 0xc
+ 2348 08e3 01       		.uleb128 0x1
+ 2349 08e4 50       		.byte	0x50
+ 2350 08e5 03       		.uleb128 0x3
+ 2351 08e6 0A       		.byte	0xa
+ 2352 08e7 9411     		.2byte	0x1194
+ 2353 08e9 00       		.byte	0
+ 2354 08ea 0B       		.uleb128 0xb
+ 2355 08eb 54000000 		.4byte	.LVL98
+ 2356 08ef C7020000 		.4byte	0x2c7
+ 2357 08f3 FE080000 		.4byte	0x8fe
+ 2358 08f7 0C       		.uleb128 0xc
+ 2359 08f8 01       		.uleb128 0x1
+ 2360 08f9 50       		.byte	0x50
+ 2361 08fa 02       		.uleb128 0x2
+ 2362 08fb 08       		.byte	0x8
+ 2363 08fc 30       		.byte	0x30
+ 2364 08fd 00       		.byte	0
+ 2365 08fe 0B       		.uleb128 0xb
+ 2366 08ff 5C000000 		.4byte	.LVL99
+ 2367 0903 410A0000 		.4byte	0xa41
+ 2368 0907 13090000 		.4byte	0x913
+ 2369 090b 0C       		.uleb128 0xc
+ 2370 090c 01       		.uleb128 0x1
+ 2371 090d 50       		.byte	0x50
+ 2372 090e 03       		.uleb128 0x3
+ 2373 090f 0A       		.byte	0xa
+ 2374 0910 9411     		.2byte	0x1194
+ 2375 0912 00       		.byte	0
+ 2376 0913 0B       		.uleb128 0xb
+ 2377 0914 62000000 		.4byte	.LVL100
+ 2378 0918 C7020000 		.4byte	0x2c7
+ 2379 091c 27090000 		.4byte	0x927
+ 2380 0920 0C       		.uleb128 0xc
+ 2381 0921 01       		.uleb128 0x1
+ 2382 0922 50       		.byte	0x50
+ 2383 0923 02       		.uleb128 0x2
+ 2384 0924 08       		.byte	0x8
+ 2385 0925 30       		.byte	0x30
+ 2386 0926 00       		.byte	0
+ 2387 0927 0B       		.uleb128 0xb
+ 2388 0928 68000000 		.4byte	.LVL101
+ 2389 092c 410A0000 		.4byte	0xa41
+ 2390 0930 3B090000 		.4byte	0x93b
+ 2391 0934 0C       		.uleb128 0xc
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 52
+
+
+ 2392 0935 01       		.uleb128 0x1
+ 2393 0936 50       		.byte	0x50
+ 2394 0937 02       		.uleb128 0x2
+ 2395 0938 08       		.byte	0x8
+ 2396 0939 96       		.byte	0x96
+ 2397 093a 00       		.byte	0
+ 2398 093b 0B       		.uleb128 0xb
+ 2399 093c 6E000000 		.4byte	.LVL102
+ 2400 0940 C7020000 		.4byte	0x2c7
+ 2401 0944 4F090000 		.4byte	0x94f
+ 2402 0948 0C       		.uleb128 0xc
+ 2403 0949 01       		.uleb128 0x1
+ 2404 094a 50       		.byte	0x50
+ 2405 094b 02       		.uleb128 0x2
+ 2406 094c 08       		.byte	0x8
+ 2407 094d 20       		.byte	0x20
+ 2408 094e 00       		.byte	0
+ 2409 094f 0D       		.uleb128 0xd
+ 2410 0950 7A000000 		.4byte	.LVL103
+ 2411 0954 83030000 		.4byte	0x383
+ 2412 0958 0D       		.uleb128 0xd
+ 2413 0959 84000000 		.4byte	.LVL104
+ 2414 095d B1040000 		.4byte	0x4b1
+ 2415 0961 0D       		.uleb128 0xd
+ 2416 0962 88000000 		.4byte	.LVL105
+ 2417 0966 B9030000 		.4byte	0x3b9
+ 2418 096a 0B       		.uleb128 0xb
+ 2419 096b 94000000 		.4byte	.LVL106
+ 2420 096f 83030000 		.4byte	0x383
+ 2421 0973 7D090000 		.4byte	0x97d
+ 2422 0977 0C       		.uleb128 0xc
+ 2423 0978 01       		.uleb128 0x1
+ 2424 0979 50       		.byte	0x50
+ 2425 097a 01       		.uleb128 0x1
+ 2426 097b 36       		.byte	0x36
+ 2427 097c 00       		.byte	0
+ 2428 097d 0D       		.uleb128 0xd
+ 2429 097e 98000000 		.4byte	.LVL107
+ 2430 0982 F1030000 		.4byte	0x3f1
+ 2431 0986 00       		.byte	0
+ 2432 0987 1D       		.uleb128 0x1d
+ 2433 0988 CD030000 		.4byte	.LASF75
+ 2434 098c 05       		.byte	0x5
+ 2435 098d 1207     		.2byte	0x712
+ 2436 098f 93090000 		.4byte	0x993
+ 2437 0993 1E       		.uleb128 0x1e
+ 2438 0994 97000000 		.4byte	0x97
+ 2439 0998 1F       		.uleb128 0x1f
+ 2440 0999 34000000 		.4byte	.LASF76
+ 2441 099d 01       		.byte	0x1
+ 2442 099e 1E       		.byte	0x1e
+ 2443 099f 8C000000 		.4byte	0x8c
+ 2444 09a3 05       		.uleb128 0x5
+ 2445 09a4 03       		.byte	0x3
+ 2446 09a5 00000000 		.4byte	_addr
+ 2447 09a9 1F       		.uleb128 0x1f
+ 2448 09aa 9D000000 		.4byte	.LASF77
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 53
+
+
+ 2449 09ae 01       		.byte	0x1
+ 2450 09af 1F       		.byte	0x1f
+ 2451 09b0 8C000000 		.4byte	0x8c
+ 2452 09b4 05       		.uleb128 0x5
+ 2453 09b5 03       		.byte	0x3
+ 2454 09b6 00000000 		.4byte	_displayfunction
+ 2455 09ba 1F       		.uleb128 0x1f
+ 2456 09bb 5D010000 		.4byte	.LASF78
+ 2457 09bf 01       		.byte	0x1
+ 2458 09c0 20       		.byte	0x20
+ 2459 09c1 8C000000 		.4byte	0x8c
+ 2460 09c5 05       		.uleb128 0x5
+ 2461 09c6 03       		.byte	0x3
+ 2462 09c7 00000000 		.4byte	_displaycontrol
+ 2463 09cb 1F       		.uleb128 0x1f
+ 2464 09cc 0D000000 		.4byte	.LASF79
+ 2465 09d0 01       		.byte	0x1
+ 2466 09d1 21       		.byte	0x21
+ 2467 09d2 8C000000 		.4byte	0x8c
+ 2468 09d6 05       		.uleb128 0x5
+ 2469 09d7 03       		.byte	0x3
+ 2470 09d8 00000000 		.4byte	_displaymode
+ 2471 09dc 1F       		.uleb128 0x1f
+ 2472 09dd 30030000 		.4byte	.LASF80
+ 2473 09e1 01       		.byte	0x1
+ 2474 09e2 22       		.byte	0x22
+ 2475 09e3 8C000000 		.4byte	0x8c
+ 2476 09e7 05       		.uleb128 0x5
+ 2477 09e8 03       		.byte	0x3
+ 2478 09e9 00000000 		.4byte	_cols
+ 2479 09ed 1F       		.uleb128 0x1f
+ 2480 09ee E0000000 		.4byte	.LASF81
+ 2481 09f2 01       		.byte	0x1
+ 2482 09f3 23       		.byte	0x23
+ 2483 09f4 8C000000 		.4byte	0x8c
+ 2484 09f8 05       		.uleb128 0x5
+ 2485 09f9 03       		.byte	0x3
+ 2486 09fa 00000000 		.4byte	_rows
+ 2487 09fe 1F       		.uleb128 0x1f
+ 2488 09ff C3030000 		.4byte	.LASF82
+ 2489 0a03 01       		.byte	0x1
+ 2490 0a04 24       		.byte	0x24
+ 2491 0a05 8C000000 		.4byte	0x8c
+ 2492 0a09 05       		.uleb128 0x5
+ 2493 0a0a 03       		.byte	0x3
+ 2494 0a0b 00000000 		.4byte	_charsize
+ 2495 0a0f 1F       		.uleb128 0x1f
+ 2496 0a10 84000000 		.4byte	.LASF83
+ 2497 0a14 01       		.byte	0x1
+ 2498 0a15 25       		.byte	0x25
+ 2499 0a16 8C000000 		.4byte	0x8c
+ 2500 0a1a 05       		.uleb128 0x5
+ 2501 0a1b 03       		.byte	0x3
+ 2502 0a1c 00000000 		.4byte	_backlightval
+ 2503 0a20 20       		.uleb128 0x20
+ 2504 0a21 ED010000 		.4byte	.LASF84
+ 2505 0a25 ED010000 		.4byte	.LASF84
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 54
+
+
+ 2506 0a29 06       		.byte	0x6
+ 2507 0a2a B1       		.byte	0xb1
+ 2508 0a2b 20       		.uleb128 0x20
+ 2509 0a2c 38010000 		.4byte	.LASF85
+ 2510 0a30 38010000 		.4byte	.LASF85
+ 2511 0a34 06       		.byte	0x6
+ 2512 0a35 B6       		.byte	0xb6
+ 2513 0a36 20       		.uleb128 0x20
+ 2514 0a37 70040000 		.4byte	.LASF86
+ 2515 0a3b 70040000 		.4byte	.LASF86
+ 2516 0a3f 06       		.byte	0x6
+ 2517 0a40 B5       		.byte	0xb5
+ 2518 0a41 20       		.uleb128 0x20
+ 2519 0a42 72010000 		.4byte	.LASF87
+ 2520 0a46 72010000 		.4byte	.LASF87
+ 2521 0a4a 07       		.byte	0x7
+ 2522 0a4b 77       		.byte	0x77
+ 2523 0a4c 20       		.uleb128 0x20
+ 2524 0a4d 68040000 		.4byte	.LASF88
+ 2525 0a51 68040000 		.4byte	.LASF88
+ 2526 0a55 07       		.byte	0x7
+ 2527 0a56 76       		.byte	0x76
+ 2528 0a57 20       		.uleb128 0x20
+ 2529 0a58 49020000 		.4byte	.LASF89
+ 2530 0a5c 49020000 		.4byte	.LASF89
+ 2531 0a60 08       		.byte	0x8
+ 2532 0a61 21       		.byte	0x21
+ 2533 0a62 20       		.uleb128 0x20
+ 2534 0a63 6D010000 		.4byte	.LASF90
+ 2535 0a67 6D010000 		.4byte	.LASF90
+ 2536 0a6b 09       		.byte	0x9
+ 2537 0a6c CB       		.byte	0xcb
+ 2538 0a6d 00       		.byte	0
+ 2539              		.section	.debug_abbrev,"",%progbits
+ 2540              	.Ldebug_abbrev0:
+ 2541 0000 01       		.uleb128 0x1
+ 2542 0001 11       		.uleb128 0x11
+ 2543 0002 01       		.byte	0x1
+ 2544 0003 25       		.uleb128 0x25
+ 2545 0004 0E       		.uleb128 0xe
+ 2546 0005 13       		.uleb128 0x13
+ 2547 0006 0B       		.uleb128 0xb
+ 2548 0007 03       		.uleb128 0x3
+ 2549 0008 0E       		.uleb128 0xe
+ 2550 0009 1B       		.uleb128 0x1b
+ 2551 000a 0E       		.uleb128 0xe
+ 2552 000b 55       		.uleb128 0x55
+ 2553 000c 17       		.uleb128 0x17
+ 2554 000d 11       		.uleb128 0x11
+ 2555 000e 01       		.uleb128 0x1
+ 2556 000f 10       		.uleb128 0x10
+ 2557 0010 17       		.uleb128 0x17
+ 2558 0011 00       		.byte	0
+ 2559 0012 00       		.byte	0
+ 2560 0013 02       		.uleb128 0x2
+ 2561 0014 24       		.uleb128 0x24
+ 2562 0015 00       		.byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 55
+
+
+ 2563 0016 0B       		.uleb128 0xb
+ 2564 0017 0B       		.uleb128 0xb
+ 2565 0018 3E       		.uleb128 0x3e
+ 2566 0019 0B       		.uleb128 0xb
+ 2567 001a 03       		.uleb128 0x3
+ 2568 001b 0E       		.uleb128 0xe
+ 2569 001c 00       		.byte	0
+ 2570 001d 00       		.byte	0
+ 2571 001e 03       		.uleb128 0x3
+ 2572 001f 16       		.uleb128 0x16
+ 2573 0020 00       		.byte	0
+ 2574 0021 03       		.uleb128 0x3
+ 2575 0022 0E       		.uleb128 0xe
+ 2576 0023 3A       		.uleb128 0x3a
+ 2577 0024 0B       		.uleb128 0xb
+ 2578 0025 3B       		.uleb128 0x3b
+ 2579 0026 0B       		.uleb128 0xb
+ 2580 0027 49       		.uleb128 0x49
+ 2581 0028 13       		.uleb128 0x13
+ 2582 0029 00       		.byte	0
+ 2583 002a 00       		.byte	0
+ 2584 002b 04       		.uleb128 0x4
+ 2585 002c 24       		.uleb128 0x24
+ 2586 002d 00       		.byte	0
+ 2587 002e 0B       		.uleb128 0xb
+ 2588 002f 0B       		.uleb128 0xb
+ 2589 0030 3E       		.uleb128 0x3e
+ 2590 0031 0B       		.uleb128 0xb
+ 2591 0032 03       		.uleb128 0x3
+ 2592 0033 08       		.uleb128 0x8
+ 2593 0034 00       		.byte	0
+ 2594 0035 00       		.byte	0
+ 2595 0036 05       		.uleb128 0x5
+ 2596 0037 16       		.uleb128 0x16
+ 2597 0038 00       		.byte	0
+ 2598 0039 03       		.uleb128 0x3
+ 2599 003a 0E       		.uleb128 0xe
+ 2600 003b 3A       		.uleb128 0x3a
+ 2601 003c 0B       		.uleb128 0xb
+ 2602 003d 3B       		.uleb128 0x3b
+ 2603 003e 05       		.uleb128 0x5
+ 2604 003f 49       		.uleb128 0x49
+ 2605 0040 13       		.uleb128 0x13
+ 2606 0041 00       		.byte	0
+ 2607 0042 00       		.byte	0
+ 2608 0043 06       		.uleb128 0x6
+ 2609 0044 0F       		.uleb128 0xf
+ 2610 0045 00       		.byte	0
+ 2611 0046 0B       		.uleb128 0xb
+ 2612 0047 0B       		.uleb128 0xb
+ 2613 0048 49       		.uleb128 0x49
+ 2614 0049 13       		.uleb128 0x13
+ 2615 004a 00       		.byte	0
+ 2616 004b 00       		.byte	0
+ 2617 004c 07       		.uleb128 0x7
+ 2618 004d 2E       		.uleb128 0x2e
+ 2619 004e 01       		.byte	0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 56
+
+
+ 2620 004f 3F       		.uleb128 0x3f
+ 2621 0050 19       		.uleb128 0x19
+ 2622 0051 03       		.uleb128 0x3
+ 2623 0052 0E       		.uleb128 0xe
+ 2624 0053 3A       		.uleb128 0x3a
+ 2625 0054 0B       		.uleb128 0xb
+ 2626 0055 3B       		.uleb128 0x3b
+ 2627 0056 0B       		.uleb128 0xb
+ 2628 0057 27       		.uleb128 0x27
+ 2629 0058 19       		.uleb128 0x19
+ 2630 0059 11       		.uleb128 0x11
+ 2631 005a 01       		.uleb128 0x1
+ 2632 005b 12       		.uleb128 0x12
+ 2633 005c 06       		.uleb128 0x6
+ 2634 005d 40       		.uleb128 0x40
+ 2635 005e 18       		.uleb128 0x18
+ 2636 005f 9742     		.uleb128 0x2117
+ 2637 0061 19       		.uleb128 0x19
+ 2638 0062 01       		.uleb128 0x1
+ 2639 0063 13       		.uleb128 0x13
+ 2640 0064 00       		.byte	0
+ 2641 0065 00       		.byte	0
+ 2642 0066 08       		.uleb128 0x8
+ 2643 0067 05       		.uleb128 0x5
+ 2644 0068 00       		.byte	0
+ 2645 0069 03       		.uleb128 0x3
+ 2646 006a 0E       		.uleb128 0xe
+ 2647 006b 3A       		.uleb128 0x3a
+ 2648 006c 0B       		.uleb128 0xb
+ 2649 006d 3B       		.uleb128 0x3b
+ 2650 006e 0B       		.uleb128 0xb
+ 2651 006f 49       		.uleb128 0x49
+ 2652 0070 13       		.uleb128 0x13
+ 2653 0071 02       		.uleb128 0x2
+ 2654 0072 17       		.uleb128 0x17
+ 2655 0073 00       		.byte	0
+ 2656 0074 00       		.byte	0
+ 2657 0075 09       		.uleb128 0x9
+ 2658 0076 2E       		.uleb128 0x2e
+ 2659 0077 01       		.byte	0x1
+ 2660 0078 3F       		.uleb128 0x3f
+ 2661 0079 19       		.uleb128 0x19
+ 2662 007a 03       		.uleb128 0x3
+ 2663 007b 0E       		.uleb128 0xe
+ 2664 007c 3A       		.uleb128 0x3a
+ 2665 007d 0B       		.uleb128 0xb
+ 2666 007e 3B       		.uleb128 0x3b
+ 2667 007f 05       		.uleb128 0x5
+ 2668 0080 27       		.uleb128 0x27
+ 2669 0081 19       		.uleb128 0x19
+ 2670 0082 11       		.uleb128 0x11
+ 2671 0083 01       		.uleb128 0x1
+ 2672 0084 12       		.uleb128 0x12
+ 2673 0085 06       		.uleb128 0x6
+ 2674 0086 40       		.uleb128 0x40
+ 2675 0087 18       		.uleb128 0x18
+ 2676 0088 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 57
+
+
+ 2677 008a 19       		.uleb128 0x19
+ 2678 008b 01       		.uleb128 0x1
+ 2679 008c 13       		.uleb128 0x13
+ 2680 008d 00       		.byte	0
+ 2681 008e 00       		.byte	0
+ 2682 008f 0A       		.uleb128 0xa
+ 2683 0090 05       		.uleb128 0x5
+ 2684 0091 00       		.byte	0
+ 2685 0092 03       		.uleb128 0x3
+ 2686 0093 0E       		.uleb128 0xe
+ 2687 0094 3A       		.uleb128 0x3a
+ 2688 0095 0B       		.uleb128 0xb
+ 2689 0096 3B       		.uleb128 0x3b
+ 2690 0097 05       		.uleb128 0x5
+ 2691 0098 49       		.uleb128 0x49
+ 2692 0099 13       		.uleb128 0x13
+ 2693 009a 02       		.uleb128 0x2
+ 2694 009b 17       		.uleb128 0x17
+ 2695 009c 00       		.byte	0
+ 2696 009d 00       		.byte	0
+ 2697 009e 0B       		.uleb128 0xb
+ 2698 009f 898201   		.uleb128 0x4109
+ 2699 00a2 01       		.byte	0x1
+ 2700 00a3 11       		.uleb128 0x11
+ 2701 00a4 01       		.uleb128 0x1
+ 2702 00a5 31       		.uleb128 0x31
+ 2703 00a6 13       		.uleb128 0x13
+ 2704 00a7 01       		.uleb128 0x1
+ 2705 00a8 13       		.uleb128 0x13
+ 2706 00a9 00       		.byte	0
+ 2707 00aa 00       		.byte	0
+ 2708 00ab 0C       		.uleb128 0xc
+ 2709 00ac 8A8201   		.uleb128 0x410a
+ 2710 00af 00       		.byte	0
+ 2711 00b0 02       		.uleb128 0x2
+ 2712 00b1 18       		.uleb128 0x18
+ 2713 00b2 9142     		.uleb128 0x2111
+ 2714 00b4 18       		.uleb128 0x18
+ 2715 00b5 00       		.byte	0
+ 2716 00b6 00       		.byte	0
+ 2717 00b7 0D       		.uleb128 0xd
+ 2718 00b8 898201   		.uleb128 0x4109
+ 2719 00bb 00       		.byte	0
+ 2720 00bc 11       		.uleb128 0x11
+ 2721 00bd 01       		.uleb128 0x1
+ 2722 00be 31       		.uleb128 0x31
+ 2723 00bf 13       		.uleb128 0x13
+ 2724 00c0 00       		.byte	0
+ 2725 00c1 00       		.byte	0
+ 2726 00c2 0E       		.uleb128 0xe
+ 2727 00c3 898201   		.uleb128 0x4109
+ 2728 00c6 01       		.byte	0x1
+ 2729 00c7 11       		.uleb128 0x11
+ 2730 00c8 01       		.uleb128 0x1
+ 2731 00c9 31       		.uleb128 0x31
+ 2732 00ca 13       		.uleb128 0x13
+ 2733 00cb 00       		.byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 58
+
+
+ 2734 00cc 00       		.byte	0
+ 2735 00cd 0F       		.uleb128 0xf
+ 2736 00ce 34       		.uleb128 0x34
+ 2737 00cf 00       		.byte	0
+ 2738 00d0 03       		.uleb128 0x3
+ 2739 00d1 0E       		.uleb128 0xe
+ 2740 00d2 3A       		.uleb128 0x3a
+ 2741 00d3 0B       		.uleb128 0xb
+ 2742 00d4 3B       		.uleb128 0x3b
+ 2743 00d5 05       		.uleb128 0x5
+ 2744 00d6 49       		.uleb128 0x49
+ 2745 00d7 13       		.uleb128 0x13
+ 2746 00d8 02       		.uleb128 0x2
+ 2747 00d9 17       		.uleb128 0x17
+ 2748 00da 00       		.byte	0
+ 2749 00db 00       		.byte	0
+ 2750 00dc 10       		.uleb128 0x10
+ 2751 00dd 34       		.uleb128 0x34
+ 2752 00de 00       		.byte	0
+ 2753 00df 03       		.uleb128 0x3
+ 2754 00e0 0E       		.uleb128 0xe
+ 2755 00e1 3A       		.uleb128 0x3a
+ 2756 00e2 0B       		.uleb128 0xb
+ 2757 00e3 3B       		.uleb128 0x3b
+ 2758 00e4 05       		.uleb128 0x5
+ 2759 00e5 49       		.uleb128 0x49
+ 2760 00e6 13       		.uleb128 0x13
+ 2761 00e7 02       		.uleb128 0x2
+ 2762 00e8 18       		.uleb128 0x18
+ 2763 00e9 00       		.byte	0
+ 2764 00ea 00       		.byte	0
+ 2765 00eb 11       		.uleb128 0x11
+ 2766 00ec 05       		.uleb128 0x5
+ 2767 00ed 00       		.byte	0
+ 2768 00ee 03       		.uleb128 0x3
+ 2769 00ef 08       		.uleb128 0x8
+ 2770 00f0 3A       		.uleb128 0x3a
+ 2771 00f1 0B       		.uleb128 0xb
+ 2772 00f2 3B       		.uleb128 0x3b
+ 2773 00f3 0B       		.uleb128 0xb
+ 2774 00f4 49       		.uleb128 0x49
+ 2775 00f5 13       		.uleb128 0x13
+ 2776 00f6 02       		.uleb128 0x2
+ 2777 00f7 17       		.uleb128 0x17
+ 2778 00f8 00       		.byte	0
+ 2779 00f9 00       		.byte	0
+ 2780 00fa 12       		.uleb128 0x12
+ 2781 00fb 34       		.uleb128 0x34
+ 2782 00fc 00       		.byte	0
+ 2783 00fd 03       		.uleb128 0x3
+ 2784 00fe 0E       		.uleb128 0xe
+ 2785 00ff 3A       		.uleb128 0x3a
+ 2786 0100 0B       		.uleb128 0xb
+ 2787 0101 3B       		.uleb128 0x3b
+ 2788 0102 0B       		.uleb128 0xb
+ 2789 0103 49       		.uleb128 0x49
+ 2790 0104 13       		.uleb128 0x13
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 59
+
+
+ 2791 0105 02       		.uleb128 0x2
+ 2792 0106 18       		.uleb128 0x18
+ 2793 0107 00       		.byte	0
+ 2794 0108 00       		.byte	0
+ 2795 0109 13       		.uleb128 0x13
+ 2796 010a 01       		.uleb128 0x1
+ 2797 010b 01       		.byte	0x1
+ 2798 010c 49       		.uleb128 0x49
+ 2799 010d 13       		.uleb128 0x13
+ 2800 010e 01       		.uleb128 0x1
+ 2801 010f 13       		.uleb128 0x13
+ 2802 0110 00       		.byte	0
+ 2803 0111 00       		.byte	0
+ 2804 0112 14       		.uleb128 0x14
+ 2805 0113 21       		.uleb128 0x21
+ 2806 0114 00       		.byte	0
+ 2807 0115 49       		.uleb128 0x49
+ 2808 0116 13       		.uleb128 0x13
+ 2809 0117 2F       		.uleb128 0x2f
+ 2810 0118 0B       		.uleb128 0xb
+ 2811 0119 00       		.byte	0
+ 2812 011a 00       		.byte	0
+ 2813 011b 15       		.uleb128 0x15
+ 2814 011c 34       		.uleb128 0x34
+ 2815 011d 00       		.byte	0
+ 2816 011e 03       		.uleb128 0x3
+ 2817 011f 08       		.uleb128 0x8
+ 2818 0120 3A       		.uleb128 0x3a
+ 2819 0121 0B       		.uleb128 0xb
+ 2820 0122 3B       		.uleb128 0x3b
+ 2821 0123 0B       		.uleb128 0xb
+ 2822 0124 49       		.uleb128 0x49
+ 2823 0125 13       		.uleb128 0x13
+ 2824 0126 02       		.uleb128 0x2
+ 2825 0127 17       		.uleb128 0x17
+ 2826 0128 00       		.byte	0
+ 2827 0129 00       		.byte	0
+ 2828 012a 16       		.uleb128 0x16
+ 2829 012b 34       		.uleb128 0x34
+ 2830 012c 00       		.byte	0
+ 2831 012d 03       		.uleb128 0x3
+ 2832 012e 08       		.uleb128 0x8
+ 2833 012f 3A       		.uleb128 0x3a
+ 2834 0130 0B       		.uleb128 0xb
+ 2835 0131 3B       		.uleb128 0x3b
+ 2836 0132 05       		.uleb128 0x5
+ 2837 0133 49       		.uleb128 0x49
+ 2838 0134 13       		.uleb128 0x13
+ 2839 0135 02       		.uleb128 0x2
+ 2840 0136 17       		.uleb128 0x17
+ 2841 0137 00       		.byte	0
+ 2842 0138 00       		.byte	0
+ 2843 0139 17       		.uleb128 0x17
+ 2844 013a 34       		.uleb128 0x34
+ 2845 013b 00       		.byte	0
+ 2846 013c 34       		.uleb128 0x34
+ 2847 013d 19       		.uleb128 0x19
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 60
+
+
+ 2848 013e 49       		.uleb128 0x49
+ 2849 013f 13       		.uleb128 0x13
+ 2850 0140 02       		.uleb128 0x2
+ 2851 0141 17       		.uleb128 0x17
+ 2852 0142 00       		.byte	0
+ 2853 0143 00       		.byte	0
+ 2854 0144 18       		.uleb128 0x18
+ 2855 0145 34       		.uleb128 0x34
+ 2856 0146 00       		.byte	0
+ 2857 0147 03       		.uleb128 0x3
+ 2858 0148 0E       		.uleb128 0xe
+ 2859 0149 3A       		.uleb128 0x3a
+ 2860 014a 0B       		.uleb128 0xb
+ 2861 014b 3B       		.uleb128 0x3b
+ 2862 014c 0B       		.uleb128 0xb
+ 2863 014d 49       		.uleb128 0x49
+ 2864 014e 13       		.uleb128 0x13
+ 2865 014f 02       		.uleb128 0x2
+ 2866 0150 17       		.uleb128 0x17
+ 2867 0151 00       		.byte	0
+ 2868 0152 00       		.byte	0
+ 2869 0153 19       		.uleb128 0x19
+ 2870 0154 0B       		.uleb128 0xb
+ 2871 0155 01       		.byte	0x1
+ 2872 0156 11       		.uleb128 0x11
+ 2873 0157 01       		.uleb128 0x1
+ 2874 0158 12       		.uleb128 0x12
+ 2875 0159 06       		.uleb128 0x6
+ 2876 015a 01       		.uleb128 0x1
+ 2877 015b 13       		.uleb128 0x13
+ 2878 015c 00       		.byte	0
+ 2879 015d 00       		.byte	0
+ 2880 015e 1A       		.uleb128 0x1a
+ 2881 015f 21       		.uleb128 0x21
+ 2882 0160 00       		.byte	0
+ 2883 0161 49       		.uleb128 0x49
+ 2884 0162 13       		.uleb128 0x13
+ 2885 0163 2F       		.uleb128 0x2f
+ 2886 0164 13       		.uleb128 0x13
+ 2887 0165 00       		.byte	0
+ 2888 0166 00       		.byte	0
+ 2889 0167 1B       		.uleb128 0x1b
+ 2890 0168 26       		.uleb128 0x26
+ 2891 0169 00       		.byte	0
+ 2892 016a 49       		.uleb128 0x49
+ 2893 016b 13       		.uleb128 0x13
+ 2894 016c 00       		.byte	0
+ 2895 016d 00       		.byte	0
+ 2896 016e 1C       		.uleb128 0x1c
+ 2897 016f 05       		.uleb128 0x5
+ 2898 0170 00       		.byte	0
+ 2899 0171 03       		.uleb128 0x3
+ 2900 0172 08       		.uleb128 0x8
+ 2901 0173 3A       		.uleb128 0x3a
+ 2902 0174 0B       		.uleb128 0xb
+ 2903 0175 3B       		.uleb128 0x3b
+ 2904 0176 05       		.uleb128 0x5
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 61
+
+
+ 2905 0177 49       		.uleb128 0x49
+ 2906 0178 13       		.uleb128 0x13
+ 2907 0179 02       		.uleb128 0x2
+ 2908 017a 17       		.uleb128 0x17
+ 2909 017b 00       		.byte	0
+ 2910 017c 00       		.byte	0
+ 2911 017d 1D       		.uleb128 0x1d
+ 2912 017e 34       		.uleb128 0x34
+ 2913 017f 00       		.byte	0
+ 2914 0180 03       		.uleb128 0x3
+ 2915 0181 0E       		.uleb128 0xe
+ 2916 0182 3A       		.uleb128 0x3a
+ 2917 0183 0B       		.uleb128 0xb
+ 2918 0184 3B       		.uleb128 0x3b
+ 2919 0185 05       		.uleb128 0x5
+ 2920 0186 49       		.uleb128 0x49
+ 2921 0187 13       		.uleb128 0x13
+ 2922 0188 3F       		.uleb128 0x3f
+ 2923 0189 19       		.uleb128 0x19
+ 2924 018a 3C       		.uleb128 0x3c
+ 2925 018b 19       		.uleb128 0x19
+ 2926 018c 00       		.byte	0
+ 2927 018d 00       		.byte	0
+ 2928 018e 1E       		.uleb128 0x1e
+ 2929 018f 35       		.uleb128 0x35
+ 2930 0190 00       		.byte	0
+ 2931 0191 49       		.uleb128 0x49
+ 2932 0192 13       		.uleb128 0x13
+ 2933 0193 00       		.byte	0
+ 2934 0194 00       		.byte	0
+ 2935 0195 1F       		.uleb128 0x1f
+ 2936 0196 34       		.uleb128 0x34
+ 2937 0197 00       		.byte	0
+ 2938 0198 03       		.uleb128 0x3
+ 2939 0199 0E       		.uleb128 0xe
+ 2940 019a 3A       		.uleb128 0x3a
+ 2941 019b 0B       		.uleb128 0xb
+ 2942 019c 3B       		.uleb128 0x3b
+ 2943 019d 0B       		.uleb128 0xb
+ 2944 019e 49       		.uleb128 0x49
+ 2945 019f 13       		.uleb128 0x13
+ 2946 01a0 3F       		.uleb128 0x3f
+ 2947 01a1 19       		.uleb128 0x19
+ 2948 01a2 02       		.uleb128 0x2
+ 2949 01a3 18       		.uleb128 0x18
+ 2950 01a4 00       		.byte	0
+ 2951 01a5 00       		.byte	0
+ 2952 01a6 20       		.uleb128 0x20
+ 2953 01a7 2E       		.uleb128 0x2e
+ 2954 01a8 00       		.byte	0
+ 2955 01a9 3F       		.uleb128 0x3f
+ 2956 01aa 19       		.uleb128 0x19
+ 2957 01ab 3C       		.uleb128 0x3c
+ 2958 01ac 19       		.uleb128 0x19
+ 2959 01ad 6E       		.uleb128 0x6e
+ 2960 01ae 0E       		.uleb128 0xe
+ 2961 01af 03       		.uleb128 0x3
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 62
+
+
+ 2962 01b0 0E       		.uleb128 0xe
+ 2963 01b1 3A       		.uleb128 0x3a
+ 2964 01b2 0B       		.uleb128 0xb
+ 2965 01b3 3B       		.uleb128 0x3b
+ 2966 01b4 0B       		.uleb128 0xb
+ 2967 01b5 00       		.byte	0
+ 2968 01b6 00       		.byte	0
+ 2969 01b7 00       		.byte	0
+ 2970              		.section	.debug_loc,"",%progbits
+ 2971              	.Ldebug_loc0:
+ 2972              	.LLST0:
+ 2973 0000 00000000 		.4byte	.LVL0
+ 2974 0004 08000000 		.4byte	.LVL1
+ 2975 0008 0100     		.2byte	0x1
+ 2976 000a 50       		.byte	0x50
+ 2977 000b 08000000 		.4byte	.LVL1
+ 2978 000f 30000000 		.4byte	.LFE63
+ 2979 0013 0500     		.2byte	0x5
+ 2980 0015 03       		.byte	0x3
+ 2981 0016 00000000 		.4byte	_addr
+ 2982 001a 00000000 		.4byte	0
+ 2983 001e 00000000 		.4byte	0
+ 2984              	.LLST1:
+ 2985 0022 00000000 		.4byte	.LVL0
+ 2986 0026 0C000000 		.4byte	.LVL2
+ 2987 002a 0100     		.2byte	0x1
+ 2988 002c 51       		.byte	0x51
+ 2989 002d 0C000000 		.4byte	.LVL2
+ 2990 0031 30000000 		.4byte	.LFE63
+ 2991 0035 0500     		.2byte	0x5
+ 2992 0037 03       		.byte	0x3
+ 2993 0038 00000000 		.4byte	_cols
+ 2994 003c 00000000 		.4byte	0
+ 2995 0040 00000000 		.4byte	0
+ 2996              	.LLST2:
+ 2997 0044 00000000 		.4byte	.LVL0
+ 2998 0048 10000000 		.4byte	.LVL3
+ 2999 004c 0100     		.2byte	0x1
+ 3000 004e 52       		.byte	0x52
+ 3001 004f 10000000 		.4byte	.LVL3
+ 3002 0053 30000000 		.4byte	.LFE63
+ 3003 0057 0500     		.2byte	0x5
+ 3004 0059 03       		.byte	0x3
+ 3005 005a 00000000 		.4byte	_rows
+ 3006 005e 00000000 		.4byte	0
+ 3007 0062 00000000 		.4byte	0
+ 3008              	.LLST3:
+ 3009 0066 00000000 		.4byte	.LVL0
+ 3010 006a 16000000 		.4byte	.LVL4
+ 3011 006e 0100     		.2byte	0x1
+ 3012 0070 53       		.byte	0x53
+ 3013 0071 16000000 		.4byte	.LVL4
+ 3014 0075 30000000 		.4byte	.LFE63
+ 3015 0079 0500     		.2byte	0x5
+ 3016 007b 03       		.byte	0x3
+ 3017 007c 00000000 		.4byte	_charsize
+ 3018 0080 00000000 		.4byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 63
+
+
+ 3019 0084 00000000 		.4byte	0
+ 3020              	.LLST4:
+ 3021 0088 00000000 		.4byte	.LVL5
+ 3022 008c 09000000 		.4byte	.LVL7-1
+ 3023 0090 0100     		.2byte	0x1
+ 3024 0092 50       		.byte	0x50
+ 3025 0093 09000000 		.4byte	.LVL7-1
+ 3026 0097 16000000 		.4byte	.LFE94
+ 3027 009b 0400     		.2byte	0x4
+ 3028 009d F3       		.byte	0xf3
+ 3029 009e 01       		.uleb128 0x1
+ 3030 009f 50       		.byte	0x50
+ 3031 00a0 9F       		.byte	0x9f
+ 3032 00a1 00000000 		.4byte	0
+ 3033 00a5 00000000 		.4byte	0
+ 3034              	.LLST5:
+ 3035 00a9 00000000 		.4byte	.LVL5
+ 3036 00ad 06000000 		.4byte	.LVL6
+ 3037 00b1 0100     		.2byte	0x1
+ 3038 00b3 51       		.byte	0x51
+ 3039 00b4 06000000 		.4byte	.LVL6
+ 3040 00b8 16000000 		.4byte	.LFE94
+ 3041 00bc 0400     		.2byte	0x4
+ 3042 00be F3       		.byte	0xf3
+ 3043 00bf 01       		.uleb128 0x1
+ 3044 00c0 51       		.byte	0x51
+ 3045 00c1 9F       		.byte	0x9f
+ 3046 00c2 00000000 		.4byte	0
+ 3047 00c6 00000000 		.4byte	0
+ 3048              	.LLST6:
+ 3049 00ca 00000000 		.4byte	.LVL10
+ 3050 00ce 0C000000 		.4byte	.LVL11
+ 3051 00d2 0100     		.2byte	0x1
+ 3052 00d4 50       		.byte	0x50
+ 3053 00d5 0C000000 		.4byte	.LVL11
+ 3054 00d9 1C000000 		.4byte	.LFE88
+ 3055 00dd 0400     		.2byte	0x4
+ 3056 00df F3       		.byte	0xf3
+ 3057 00e0 01       		.uleb128 0x1
+ 3058 00e1 50       		.byte	0x50
+ 3059 00e2 9F       		.byte	0x9f
+ 3060 00e3 00000000 		.4byte	0
+ 3061 00e7 00000000 		.4byte	0
+ 3062              	.LLST7:
+ 3063 00eb 00000000 		.4byte	.LVL15
+ 3064 00ef 07000000 		.4byte	.LVL16-1
+ 3065 00f3 0100     		.2byte	0x1
+ 3066 00f5 50       		.byte	0x50
+ 3067 00f6 07000000 		.4byte	.LVL16-1
+ 3068 00fa 0A000000 		.4byte	.LVL17
+ 3069 00fe 0400     		.2byte	0x4
+ 3070 0100 F3       		.byte	0xf3
+ 3071 0101 01       		.uleb128 0x1
+ 3072 0102 50       		.byte	0x50
+ 3073 0103 9F       		.byte	0x9f
+ 3074 0104 0A000000 		.4byte	.LVL17
+ 3075 0108 0D000000 		.4byte	.LVL18-1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 64
+
+
+ 3076 010c 0100     		.2byte	0x1
+ 3077 010e 50       		.byte	0x50
+ 3078 010f 0D000000 		.4byte	.LVL18-1
+ 3079 0113 10000000 		.4byte	.LFE91
+ 3080 0117 0400     		.2byte	0x4
+ 3081 0119 F3       		.byte	0xf3
+ 3082 011a 01       		.uleb128 0x1
+ 3083 011b 50       		.byte	0x50
+ 3084 011c 9F       		.byte	0x9f
+ 3085 011d 00000000 		.4byte	0
+ 3086 0121 00000000 		.4byte	0
+ 3087              	.LLST8:
+ 3088 0125 00000000 		.4byte	.LVL19
+ 3089 0129 08000000 		.4byte	.LVL20
+ 3090 012d 0100     		.2byte	0x1
+ 3091 012f 50       		.byte	0x50
+ 3092 0130 08000000 		.4byte	.LVL20
+ 3093 0134 22000000 		.4byte	.LFE89
+ 3094 0138 0400     		.2byte	0x4
+ 3095 013a F3       		.byte	0xf3
+ 3096 013b 01       		.uleb128 0x1
+ 3097 013c 50       		.byte	0x50
+ 3098 013d 9F       		.byte	0x9f
+ 3099 013e 00000000 		.4byte	0
+ 3100 0142 00000000 		.4byte	0
+ 3101              	.LLST9:
+ 3102 0146 00000000 		.4byte	.LVL25
+ 3103 014a 07000000 		.4byte	.LVL26-1
+ 3104 014e 0100     		.2byte	0x1
+ 3105 0150 50       		.byte	0x50
+ 3106 0151 07000000 		.4byte	.LVL26-1
+ 3107 0155 10000000 		.4byte	.LFE87
+ 3108 0159 0400     		.2byte	0x4
+ 3109 015b F3       		.byte	0xf3
+ 3110 015c 01       		.uleb128 0x1
+ 3111 015d 50       		.byte	0x50
+ 3112 015e 9F       		.byte	0x9f
+ 3113 015f 00000000 		.4byte	0
+ 3114 0163 00000000 		.4byte	0
+ 3115              	.LLST10:
+ 3116 0167 00000000 		.4byte	.LVL28
+ 3117 016b 10000000 		.4byte	.LVL31
+ 3118 016f 0100     		.2byte	0x1
+ 3119 0171 50       		.byte	0x50
+ 3120 0172 10000000 		.4byte	.LVL31
+ 3121 0176 1E000000 		.4byte	.LFE86
+ 3122 017a 0400     		.2byte	0x4
+ 3123 017c F3       		.byte	0xf3
+ 3124 017d 01       		.uleb128 0x1
+ 3125 017e 50       		.byte	0x50
+ 3126 017f 9F       		.byte	0x9f
+ 3127 0180 00000000 		.4byte	0
+ 3128 0184 00000000 		.4byte	0
+ 3129              	.LLST11:
+ 3130 0188 00000000 		.4byte	.LVL28
+ 3131 018c 13000000 		.4byte	.LVL32-1
+ 3132 0190 0100     		.2byte	0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 65
+
+
+ 3133 0192 51       		.byte	0x51
+ 3134 0193 13000000 		.4byte	.LVL32-1
+ 3135 0197 1E000000 		.4byte	.LFE86
+ 3136 019b 0400     		.2byte	0x4
+ 3137 019d F3       		.byte	0xf3
+ 3138 019e 01       		.uleb128 0x1
+ 3139 019f 51       		.byte	0x51
+ 3140 01a0 9F       		.byte	0x9f
+ 3141 01a1 00000000 		.4byte	0
+ 3142 01a5 00000000 		.4byte	0
+ 3143              	.LLST12:
+ 3144 01a9 08000000 		.4byte	.LVL29
+ 3145 01ad 13000000 		.4byte	.LVL32-1
+ 3146 01b1 0100     		.2byte	0x1
+ 3147 01b3 53       		.byte	0x53
+ 3148 01b4 00000000 		.4byte	0
+ 3149 01b8 00000000 		.4byte	0
+ 3150              	.LLST13:
+ 3151 01bc 00000000 		.4byte	.LVL34
+ 3152 01c0 07000000 		.4byte	.LVL35-1
+ 3153 01c4 0100     		.2byte	0x1
+ 3154 01c6 50       		.byte	0x50
+ 3155 01c7 07000000 		.4byte	.LVL35-1
+ 3156 01cb 0A000000 		.4byte	.LFE84
+ 3157 01cf 0400     		.2byte	0x4
+ 3158 01d1 F3       		.byte	0xf3
+ 3159 01d2 01       		.uleb128 0x1
+ 3160 01d3 50       		.byte	0x50
+ 3161 01d4 9F       		.byte	0x9f
+ 3162 01d5 00000000 		.4byte	0
+ 3163 01d9 00000000 		.4byte	0
+ 3164              	.LLST14:
+ 3165 01dd 00000000 		.4byte	.LVL40
+ 3166 01e1 0C000000 		.4byte	.LVL41
+ 3167 01e5 0100     		.2byte	0x1
+ 3168 01e7 50       		.byte	0x50
+ 3169 01e8 0C000000 		.4byte	.LVL41
+ 3170 01ec 44000000 		.4byte	.LFE67
+ 3171 01f0 0400     		.2byte	0x4
+ 3172 01f2 F3       		.byte	0xf3
+ 3173 01f3 01       		.uleb128 0x1
+ 3174 01f4 50       		.byte	0x50
+ 3175 01f5 9F       		.byte	0x9f
+ 3176 01f6 00000000 		.4byte	0
+ 3177 01fa 00000000 		.4byte	0
+ 3178              	.LLST15:
+ 3179 01fe 00000000 		.4byte	.LVL40
+ 3180 0202 0C000000 		.4byte	.LVL41
+ 3181 0206 0100     		.2byte	0x1
+ 3182 0208 51       		.byte	0x51
+ 3183 0209 0C000000 		.4byte	.LVL41
+ 3184 020d 20000000 		.4byte	.LVL42
+ 3185 0211 0400     		.2byte	0x4
+ 3186 0213 F3       		.byte	0xf3
+ 3187 0214 01       		.uleb128 0x1
+ 3188 0215 51       		.byte	0x51
+ 3189 0216 9F       		.byte	0x9f
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 66
+
+
+ 3190 0217 20000000 		.4byte	.LVL42
+ 3191 021b 26000000 		.4byte	.LVL43
+ 3192 021f 0100     		.2byte	0x1
+ 3193 0221 54       		.byte	0x54
+ 3194 0222 00000000 		.4byte	0
+ 3195 0226 00000000 		.4byte	0
+ 3196              	.LLST16:
+ 3197 022a 00000000 		.4byte	.LVL57
+ 3198 022e 07000000 		.4byte	.LVL58-1
+ 3199 0232 0100     		.2byte	0x1
+ 3200 0234 50       		.byte	0x50
+ 3201 0235 07000000 		.4byte	.LVL58-1
+ 3202 0239 0A000000 		.4byte	.LFE85
+ 3203 023d 0400     		.2byte	0x4
+ 3204 023f F3       		.byte	0xf3
+ 3205 0240 01       		.uleb128 0x1
+ 3206 0241 50       		.byte	0x50
+ 3207 0242 9F       		.byte	0x9f
+ 3208 0243 00000000 		.4byte	0
+ 3209 0247 00000000 		.4byte	0
+ 3210              	.LLST17:
+ 3211 024b 00000000 		.4byte	.LVL59
+ 3212 024f 08000000 		.4byte	.LVL61
+ 3213 0253 0100     		.2byte	0x1
+ 3214 0255 50       		.byte	0x50
+ 3215 0256 08000000 		.4byte	.LVL61
+ 3216 025a 0A000000 		.4byte	.LVL62
+ 3217 025e 0100     		.2byte	0x1
+ 3218 0260 50       		.byte	0x50
+ 3219 0261 00000000 		.4byte	0
+ 3220 0265 00000000 		.4byte	0
+ 3221              	.LLST18:
+ 3222 0269 00000000 		.4byte	.LVL59
+ 3223 026d 11000000 		.4byte	.LVL63-1
+ 3224 0271 0100     		.2byte	0x1
+ 3225 0273 51       		.byte	0x51
+ 3226 0274 11000000 		.4byte	.LVL63-1
+ 3227 0278 24000000 		.4byte	.LFE81
+ 3228 027c 0100     		.2byte	0x1
+ 3229 027e 55       		.byte	0x55
+ 3230 027f 00000000 		.4byte	0
+ 3231 0283 00000000 		.4byte	0
+ 3232              	.LLST19:
+ 3233 0287 04000000 		.4byte	.LVL60
+ 3234 028b 16000000 		.4byte	.LVL64
+ 3235 028f 0200     		.2byte	0x2
+ 3236 0291 30       		.byte	0x30
+ 3237 0292 9F       		.byte	0x9f
+ 3238 0293 16000000 		.4byte	.LVL64
+ 3239 0297 24000000 		.4byte	.LFE81
+ 3240 029b 0100     		.2byte	0x1
+ 3241 029d 54       		.byte	0x54
+ 3242 029e 00000000 		.4byte	0
+ 3243 02a2 00000000 		.4byte	0
+ 3244              	.LLST20:
+ 3245 02a6 00000000 		.4byte	.LVL67
+ 3246 02aa 05000000 		.4byte	.LVL68-1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 67
+
+
+ 3247 02ae 0100     		.2byte	0x1
+ 3248 02b0 50       		.byte	0x50
+ 3249 02b1 05000000 		.4byte	.LVL68-1
+ 3250 02b5 08000000 		.4byte	.LFE90
+ 3251 02b9 0400     		.2byte	0x4
+ 3252 02bb F3       		.byte	0xf3
+ 3253 02bc 01       		.uleb128 0x1
+ 3254 02bd 50       		.byte	0x50
+ 3255 02be 9F       		.byte	0x9f
+ 3256 02bf 00000000 		.4byte	0
+ 3257 02c3 00000000 		.4byte	0
+ 3258              	.LLST21:
+ 3259 02c7 00000000 		.4byte	.LVL67
+ 3260 02cb 05000000 		.4byte	.LVL68-1
+ 3261 02cf 0100     		.2byte	0x1
+ 3262 02d1 51       		.byte	0x51
+ 3263 02d2 05000000 		.4byte	.LVL68-1
+ 3264 02d6 08000000 		.4byte	.LFE90
+ 3265 02da 0400     		.2byte	0x4
+ 3266 02dc F3       		.byte	0xf3
+ 3267 02dd 01       		.uleb128 0x1
+ 3268 02de 51       		.byte	0x51
+ 3269 02df 9F       		.byte	0x9f
+ 3270 02e0 00000000 		.4byte	0
+ 3271 02e4 00000000 		.4byte	0
+ 3272              	.LLST22:
+ 3273 02e8 00000000 		.4byte	.LVL69
+ 3274 02ec 07000000 		.4byte	.LVL71-1
+ 3275 02f0 0100     		.2byte	0x1
+ 3276 02f2 50       		.byte	0x50
+ 3277 02f3 07000000 		.4byte	.LVL71-1
+ 3278 02f7 1E000000 		.4byte	.LFE92
+ 3279 02fb 0100     		.2byte	0x1
+ 3280 02fd 56       		.byte	0x56
+ 3281 02fe 00000000 		.4byte	0
+ 3282 0302 00000000 		.4byte	0
+ 3283              	.LLST23:
+ 3284 0306 04000000 		.4byte	.LVL70
+ 3285 030a 0E000000 		.4byte	.LVL73
+ 3286 030e 0200     		.2byte	0x2
+ 3287 0310 30       		.byte	0x30
+ 3288 0311 9F       		.byte	0x9f
+ 3289 0312 0E000000 		.4byte	.LVL73
+ 3290 0316 1E000000 		.4byte	.LFE92
+ 3291 031a 0100     		.2byte	0x1
+ 3292 031c 54       		.byte	0x54
+ 3293 031d 00000000 		.4byte	0
+ 3294 0321 00000000 		.4byte	0
+ 3295              	.LLST24:
+ 3296 0325 00000000 		.4byte	.LVL76
+ 3297 0329 1A000000 		.4byte	.LVL81
+ 3298 032d 0100     		.2byte	0x1
+ 3299 032f 50       		.byte	0x50
+ 3300 0330 1A000000 		.4byte	.LVL81
+ 3301 0334 48000000 		.4byte	.LFE72
+ 3302 0338 0400     		.2byte	0x4
+ 3303 033a F3       		.byte	0xf3
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 68
+
+
+ 3304 033b 01       		.uleb128 0x1
+ 3305 033c 50       		.byte	0x50
+ 3306 033d 9F       		.byte	0x9f
+ 3307 033e 00000000 		.4byte	0
+ 3308 0342 00000000 		.4byte	0
+ 3309              	.LLST25:
+ 3310 0346 0A000000 		.4byte	.LVL77
+ 3311 034a 0C000000 		.4byte	.LVL78
+ 3312 034e 0800     		.2byte	0x8
+ 3313 0350 73       		.byte	0x73
+ 3314 0351 00       		.sleb128 0
+ 3315 0352 08       		.byte	0x8
+ 3316 0353 FF       		.byte	0xff
+ 3317 0354 1A       		.byte	0x1a
+ 3318 0355 31       		.byte	0x31
+ 3319 0356 1C       		.byte	0x1c
+ 3320 0357 9F       		.byte	0x9f
+ 3321 0358 0C000000 		.4byte	.LVL78
+ 3322 035c 10000000 		.4byte	.LVL79
+ 3323 0360 0800     		.2byte	0x8
+ 3324 0362 73       		.byte	0x73
+ 3325 0363 79       		.sleb128 -7
+ 3326 0364 08       		.byte	0x8
+ 3327 0365 FF       		.byte	0xff
+ 3328 0366 1A       		.byte	0x1a
+ 3329 0367 31       		.byte	0x31
+ 3330 0368 1C       		.byte	0x1c
+ 3331 0369 9F       		.byte	0x9f
+ 3332 036a 10000000 		.4byte	.LVL79
+ 3333 036e 1D000000 		.4byte	.LVL82-1
+ 3334 0372 0D00     		.2byte	0xd
+ 3335 0374 03       		.byte	0x3
+ 3336 0375 00000000 		.4byte	_cols
+ 3337 0379 94       		.byte	0x94
+ 3338 037a 01       		.byte	0x1
+ 3339 037b 08       		.byte	0x8
+ 3340 037c FF       		.byte	0xff
+ 3341 037d 1A       		.byte	0x1a
+ 3342 037e 31       		.byte	0x31
+ 3343 037f 1C       		.byte	0x1c
+ 3344 0380 9F       		.byte	0x9f
+ 3345 0381 00000000 		.4byte	0
+ 3346 0385 00000000 		.4byte	0
+ 3347              	.LLST26:
+ 3348 0389 16000000 		.4byte	.LVL80
+ 3349 038d 44000000 		.4byte	.LVL88
+ 3350 0391 0200     		.2byte	0x2
+ 3351 0393 74       		.byte	0x74
+ 3352 0394 00       		.sleb128 0
+ 3353 0395 00000000 		.4byte	0
+ 3354 0399 00000000 		.4byte	0
+ 3355              	.LLST27:
+ 3356 039d 1E000000 		.4byte	.LVL82
+ 3357 03a1 22000000 		.4byte	.LVL83
+ 3358 03a5 0200     		.2byte	0x2
+ 3359 03a7 30       		.byte	0x30
+ 3360 03a8 9F       		.byte	0x9f
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 69
+
+
+ 3361 03a9 22000000 		.4byte	.LVL83
+ 3362 03ad 28000000 		.4byte	.LVL84
+ 3363 03b1 0100     		.2byte	0x1
+ 3364 03b3 53       		.byte	0x53
+ 3365 03b4 2A000000 		.4byte	.LVL85
+ 3366 03b8 37000000 		.4byte	.LVL86-1
+ 3367 03bc 0100     		.2byte	0x1
+ 3368 03be 53       		.byte	0x53
+ 3369 03bf 00000000 		.4byte	0
+ 3370 03c3 00000000 		.4byte	0
+ 3371              	.LLST28:
+ 3372 03c7 00000000 		.4byte	.LVL89
+ 3373 03cb 0B000000 		.4byte	.LVL91-1
+ 3374 03cf 0100     		.2byte	0x1
+ 3375 03d1 50       		.byte	0x50
+ 3376 03d2 0B000000 		.4byte	.LVL91-1
+ 3377 03d6 18000000 		.4byte	.LFE93
+ 3378 03da 0400     		.2byte	0x4
+ 3379 03dc F3       		.byte	0xf3
+ 3380 03dd 01       		.uleb128 0x1
+ 3381 03de 50       		.byte	0x50
+ 3382 03df 9F       		.byte	0x9f
+ 3383 03e0 00000000 		.4byte	0
+ 3384 03e4 00000000 		.4byte	0
+ 3385              	.LLST29:
+ 3386 03e8 00000000 		.4byte	.LVL89
+ 3387 03ec 08000000 		.4byte	.LVL90
+ 3388 03f0 0100     		.2byte	0x1
+ 3389 03f2 51       		.byte	0x51
+ 3390 03f3 08000000 		.4byte	.LVL90
+ 3391 03f7 18000000 		.4byte	.LFE93
+ 3392 03fb 0400     		.2byte	0x4
+ 3393 03fd F3       		.byte	0xf3
+ 3394 03fe 01       		.uleb128 0x1
+ 3395 03ff 51       		.byte	0x51
+ 3396 0400 9F       		.byte	0x9f
+ 3397 0401 00000000 		.4byte	0
+ 3398 0405 00000000 		.4byte	0
+ 3399              		.section	.debug_aranges,"",%progbits
+ 3400 0000 14010000 		.4byte	0x114
+ 3401 0004 0200     		.2byte	0x2
+ 3402 0006 00000000 		.4byte	.Ldebug_info0
+ 3403 000a 04       		.byte	0x4
+ 3404 000b 00       		.byte	0
+ 3405 000c 0000     		.2byte	0
+ 3406 000e 0000     		.2byte	0
+ 3407 0010 00000000 		.4byte	.LFB63
+ 3408 0014 30000000 		.4byte	.LFE63-.LFB63
+ 3409 0018 00000000 		.4byte	.LFB94
+ 3410 001c 16000000 		.4byte	.LFE94-.LFB94
+ 3411 0020 00000000 		.4byte	.LFB88
+ 3412 0024 1C000000 		.4byte	.LFE88-.LFB88
+ 3413 0028 00000000 		.4byte	.LFB82
+ 3414 002c 14000000 		.4byte	.LFE82-.LFB82
+ 3415 0030 00000000 		.4byte	.LFB83
+ 3416 0034 14000000 		.4byte	.LFE83-.LFB83
+ 3417 0038 00000000 		.4byte	.LFB91
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 70
+
+
+ 3418 003c 10000000 		.4byte	.LFE91-.LFB91
+ 3419 0040 00000000 		.4byte	.LFB89
+ 3420 0044 22000000 		.4byte	.LFE89-.LFB89
+ 3421 0048 00000000 		.4byte	.LFB87
+ 3422 004c 10000000 		.4byte	.LFE87-.LFB87
+ 3423 0050 00000000 		.4byte	.LFB86
+ 3424 0054 1E000000 		.4byte	.LFE86-.LFB86
+ 3425 0058 00000000 		.4byte	.LFB84
+ 3426 005c 0A000000 		.4byte	.LFE84-.LFB84
+ 3427 0060 00000000 		.4byte	.LFB65
+ 3428 0064 10000000 		.4byte	.LFE65-.LFB65
+ 3429 0068 00000000 		.4byte	.LFB66
+ 3430 006c 10000000 		.4byte	.LFE66-.LFB66
+ 3431 0070 00000000 		.4byte	.LFB67
+ 3432 0074 44000000 		.4byte	.LFE67-.LFB67
+ 3433 0078 00000000 		.4byte	.LFB68
+ 3434 007c 1C000000 		.4byte	.LFE68-.LFB68
+ 3435 0080 00000000 		.4byte	.LFB69
+ 3436 0084 1C000000 		.4byte	.LFE69-.LFB69
+ 3437 0088 00000000 		.4byte	.LFB70
+ 3438 008c 1C000000 		.4byte	.LFE70-.LFB70
+ 3439 0090 00000000 		.4byte	.LFB71
+ 3440 0094 1C000000 		.4byte	.LFE71-.LFB71
+ 3441 0098 00000000 		.4byte	.LFB73
+ 3442 009c 1C000000 		.4byte	.LFE73-.LFB73
+ 3443 00a0 00000000 		.4byte	.LFB74
+ 3444 00a4 1C000000 		.4byte	.LFE74-.LFB74
+ 3445 00a8 00000000 		.4byte	.LFB75
+ 3446 00ac 0A000000 		.4byte	.LFE75-.LFB75
+ 3447 00b0 00000000 		.4byte	.LFB76
+ 3448 00b4 0A000000 		.4byte	.LFE76-.LFB76
+ 3449 00b8 00000000 		.4byte	.LFB77
+ 3450 00bc 1C000000 		.4byte	.LFE77-.LFB77
+ 3451 00c0 00000000 		.4byte	.LFB78
+ 3452 00c4 1C000000 		.4byte	.LFE78-.LFB78
+ 3453 00c8 00000000 		.4byte	.LFB79
+ 3454 00cc 1C000000 		.4byte	.LFE79-.LFB79
+ 3455 00d0 00000000 		.4byte	.LFB80
+ 3456 00d4 1C000000 		.4byte	.LFE80-.LFB80
+ 3457 00d8 00000000 		.4byte	.LFB85
+ 3458 00dc 0A000000 		.4byte	.LFE85-.LFB85
+ 3459 00e0 00000000 		.4byte	.LFB81
+ 3460 00e4 24000000 		.4byte	.LFE81-.LFB81
+ 3461 00e8 00000000 		.4byte	.LFB90
+ 3462 00ec 08000000 		.4byte	.LFE90-.LFB90
+ 3463 00f0 00000000 		.4byte	.LFB92
+ 3464 00f4 1E000000 		.4byte	.LFE92-.LFB92
+ 3465 00f8 00000000 		.4byte	.LFB72
+ 3466 00fc 48000000 		.4byte	.LFE72-.LFB72
+ 3467 0100 00000000 		.4byte	.LFB93
+ 3468 0104 18000000 		.4byte	.LFE93-.LFB93
+ 3469 0108 00000000 		.4byte	.LFB64
+ 3470 010c B4000000 		.4byte	.LFE64-.LFB64
+ 3471 0110 00000000 		.4byte	0
+ 3472 0114 00000000 		.4byte	0
+ 3473              		.section	.debug_ranges,"",%progbits
+ 3474              	.Ldebug_ranges0:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 71
+
+
+ 3475 0000 00000000 		.4byte	.LFB63
+ 3476 0004 30000000 		.4byte	.LFE63
+ 3477 0008 00000000 		.4byte	.LFB94
+ 3478 000c 16000000 		.4byte	.LFE94
+ 3479 0010 00000000 		.4byte	.LFB88
+ 3480 0014 1C000000 		.4byte	.LFE88
+ 3481 0018 00000000 		.4byte	.LFB82
+ 3482 001c 14000000 		.4byte	.LFE82
+ 3483 0020 00000000 		.4byte	.LFB83
+ 3484 0024 14000000 		.4byte	.LFE83
+ 3485 0028 00000000 		.4byte	.LFB91
+ 3486 002c 10000000 		.4byte	.LFE91
+ 3487 0030 00000000 		.4byte	.LFB89
+ 3488 0034 22000000 		.4byte	.LFE89
+ 3489 0038 00000000 		.4byte	.LFB87
+ 3490 003c 10000000 		.4byte	.LFE87
+ 3491 0040 00000000 		.4byte	.LFB86
+ 3492 0044 1E000000 		.4byte	.LFE86
+ 3493 0048 00000000 		.4byte	.LFB84
+ 3494 004c 0A000000 		.4byte	.LFE84
+ 3495 0050 00000000 		.4byte	.LFB65
+ 3496 0054 10000000 		.4byte	.LFE65
+ 3497 0058 00000000 		.4byte	.LFB66
+ 3498 005c 10000000 		.4byte	.LFE66
+ 3499 0060 00000000 		.4byte	.LFB67
+ 3500 0064 44000000 		.4byte	.LFE67
+ 3501 0068 00000000 		.4byte	.LFB68
+ 3502 006c 1C000000 		.4byte	.LFE68
+ 3503 0070 00000000 		.4byte	.LFB69
+ 3504 0074 1C000000 		.4byte	.LFE69
+ 3505 0078 00000000 		.4byte	.LFB70
+ 3506 007c 1C000000 		.4byte	.LFE70
+ 3507 0080 00000000 		.4byte	.LFB71
+ 3508 0084 1C000000 		.4byte	.LFE71
+ 3509 0088 00000000 		.4byte	.LFB73
+ 3510 008c 1C000000 		.4byte	.LFE73
+ 3511 0090 00000000 		.4byte	.LFB74
+ 3512 0094 1C000000 		.4byte	.LFE74
+ 3513 0098 00000000 		.4byte	.LFB75
+ 3514 009c 0A000000 		.4byte	.LFE75
+ 3515 00a0 00000000 		.4byte	.LFB76
+ 3516 00a4 0A000000 		.4byte	.LFE76
+ 3517 00a8 00000000 		.4byte	.LFB77
+ 3518 00ac 1C000000 		.4byte	.LFE77
+ 3519 00b0 00000000 		.4byte	.LFB78
+ 3520 00b4 1C000000 		.4byte	.LFE78
+ 3521 00b8 00000000 		.4byte	.LFB79
+ 3522 00bc 1C000000 		.4byte	.LFE79
+ 3523 00c0 00000000 		.4byte	.LFB80
+ 3524 00c4 1C000000 		.4byte	.LFE80
+ 3525 00c8 00000000 		.4byte	.LFB85
+ 3526 00cc 0A000000 		.4byte	.LFE85
+ 3527 00d0 00000000 		.4byte	.LFB81
+ 3528 00d4 24000000 		.4byte	.LFE81
+ 3529 00d8 00000000 		.4byte	.LFB90
+ 3530 00dc 08000000 		.4byte	.LFE90
+ 3531 00e0 00000000 		.4byte	.LFB92
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 72
+
+
+ 3532 00e4 1E000000 		.4byte	.LFE92
+ 3533 00e8 00000000 		.4byte	.LFB72
+ 3534 00ec 48000000 		.4byte	.LFE72
+ 3535 00f0 00000000 		.4byte	.LFB93
+ 3536 00f4 18000000 		.4byte	.LFE93
+ 3537 00f8 00000000 		.4byte	.LFB64
+ 3538 00fc B4000000 		.4byte	.LFE64
+ 3539 0100 00000000 		.4byte	0
+ 3540 0104 00000000 		.4byte	0
+ 3541              		.section	.debug_line,"",%progbits
+ 3542              	.Ldebug_line0:
+ 3543 0000 90040000 		.section	.debug_str,"MS",%progbits,1
+ 3543      0200ED01 
+ 3543      00000201 
+ 3543      FB0E0D00 
+ 3543      01010101 
+ 3544              	.LASF67:
+ 3545 0000 776F7264 		.ascii	"word\000"
+ 3545      00
+ 3546              	.LASF34:
+ 3547 0005 6E65775F 		.ascii	"new_val\000"
+ 3547      76616C00 
+ 3548              	.LASF79:
+ 3549 000d 5F646973 		.ascii	"_displaymode\000"
+ 3549      706C6179 
+ 3549      6D6F6465 
+ 3549      00
+ 3550              	.LASF52:
+ 3551 001a 626C696E 		.ascii	"blink\000"
+ 3551      6B00
+ 3552              	.LASF59:
+ 3553 0020 77726974 		.ascii	"write\000"
+ 3553      6500
+ 3554              	.LASF38:
+ 3555 0026 73656E64 		.ascii	"send\000"
+ 3555      00
+ 3556              	.LASF23:
+ 3557 002b 6C63645F 		.ascii	"lcd_rows\000"
+ 3557      726F7773 
+ 3557      00
+ 3558              	.LASF76:
+ 3559 0034 5F616464 		.ascii	"_addr\000"
+ 3559      7200
+ 3560              	.LASF2:
+ 3561 003a 73686F72 		.ascii	"short int\000"
+ 3561      7420696E 
+ 3561      7400
+ 3562              	.LASF65:
+ 3563 0044 726F7773 		.ascii	"rows\000"
+ 3563      00
+ 3564              	.LASF58:
+ 3565 0049 6E6F4175 		.ascii	"noAutoscroll\000"
+ 3565      746F7363 
+ 3565      726F6C6C 
+ 3565      00
+ 3566              	.LASF24:
+ 3567 0056 63686172 		.ascii	"charsize\000"
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 73
+
+
+ 3567      73697A65 
+ 3567      00
+ 3568              	.LASF74:
+ 3569 005f 62656769 		.ascii	"begin\000"
+ 3569      6E00
+ 3570              	.LASF54:
+ 3571 0065 7363726F 		.ascii	"scrollDisplayRight\000"
+ 3571      6C6C4469 
+ 3571      73706C61 
+ 3571      79526967 
+ 3571      687400
+ 3572              	.LASF19:
+ 3573 0078 6C6F6E67 		.ascii	"long double\000"
+ 3573      20646F75 
+ 3573      626C6500 
+ 3574              	.LASF83:
+ 3575 0084 5F626163 		.ascii	"_backlightval\000"
+ 3575      6B6C6967 
+ 3575      68747661 
+ 3575      6C00
+ 3576              	.LASF39:
+ 3577 0092 6D6F6465 		.ascii	"mode\000"
+ 3577      00
+ 3578              	.LASF37:
+ 3579 0097 76616C75 		.ascii	"value\000"
+ 3579      6500
+ 3580              	.LASF77:
+ 3581 009d 5F646973 		.ascii	"_displayfunction\000"
+ 3581      706C6179 
+ 3581      66756E63 
+ 3581      74696F6E 
+ 3581      00
+ 3582              	.LASF12:
+ 3583 00ae 75696E74 		.ascii	"uint8_t\000"
+ 3583      385F7400 
+ 3584              	.LASF22:
+ 3585 00b6 6C63645F 		.ascii	"lcd_cols\000"
+ 3585      636F6C73 
+ 3585      00
+ 3586              	.LASF15:
+ 3587 00bf 75696E74 		.ascii	"uint8\000"
+ 3587      3800
+ 3588              	.LASF26:
+ 3589 00c5 4932435F 		.ascii	"I2C_M_write_byte\000"
+ 3589      4D5F7772 
+ 3589      6974655F 
+ 3589      62797465 
+ 3589      00
+ 3590              	.LASF70:
+ 3591 00d6 6C696E65 		.ascii	"line\000"
+ 3591      00
+ 3592              	.LASF44:
+ 3593 00db 686F6D65 		.ascii	"home\000"
+ 3593      00
+ 3594              	.LASF81:
+ 3595 00e0 5F726F77 		.ascii	"_rows\000"
+ 3595      7300
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 74
+
+
+ 3596              	.LASF16:
+ 3597 00e6 666C6F61 		.ascii	"float\000"
+ 3597      7400
+ 3598              	.LASF40:
+ 3599 00ec 68696768 		.ascii	"highnib\000"
+ 3599      6E696200 
+ 3600              	.LASF9:
+ 3601 00f4 6C6F6E67 		.ascii	"long long int\000"
+ 3601      206C6F6E 
+ 3601      6720696E 
+ 3601      7400
+ 3602              	.LASF6:
+ 3603 0102 6C6F6E67 		.ascii	"long int\000"
+ 3603      20696E74 
+ 3603      00
+ 3604              	.LASF20:
+ 3605 010b 73697A65 		.ascii	"sizetype\000"
+ 3605      74797065 
+ 3605      00
+ 3606              	.LASF30:
+ 3607 0114 5F646174 		.ascii	"_data\000"
+ 3607      6100
+ 3608              	.LASF4:
+ 3609 011a 5F5F7569 		.ascii	"__uint8_t\000"
+ 3609      6E74385F 
+ 3609      7400
+ 3610              	.LASF43:
+ 3611 0124 636C6561 		.ascii	"clear\000"
+ 3611      7200
+ 3612              	.LASF29:
+ 3613 012a 65787061 		.ascii	"expanderWrite\000"
+ 3613      6E646572 
+ 3613      57726974 
+ 3613      6500
+ 3614              	.LASF85:
+ 3615 0138 4932435F 		.ascii	"I2C_MasterWriteByte\000"
+ 3615      4D617374 
+ 3615      65725772 
+ 3615      69746542 
+ 3615      79746500 
+ 3616              	.LASF68:
+ 3617 014c 73697A65 		.ascii	"size\000"
+ 3617      00
+ 3618              	.LASF46:
+ 3619 0151 726F775F 		.ascii	"row_offsets\000"
+ 3619      6F666673 
+ 3619      65747300 
+ 3620              	.LASF78:
+ 3621 015d 5F646973 		.ascii	"_displaycontrol\000"
+ 3621      706C6179 
+ 3621      636F6E74 
+ 3621      726F6C00 
+ 3622              	.LASF90:
+ 3623 016d 69746F61 		.ascii	"itoa\000"
+ 3623      00
+ 3624              	.LASF87:
+ 3625 0172 43794465 		.ascii	"CyDelayUs\000"
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 75
+
+
+ 3625      6C617955 
+ 3625      7300
+ 3626              	.LASF1:
+ 3627 017c 756E7369 		.ascii	"unsigned char\000"
+ 3627      676E6564 
+ 3627      20636861 
+ 3627      7200
+ 3628              	.LASF50:
+ 3629 018a 63757273 		.ascii	"cursor\000"
+ 3629      6F7200
+ 3630              	.LASF64:
+ 3631 0191 63686172 		.ascii	"char_num\000"
+ 3631      5F6E756D 
+ 3631      00
+ 3632              	.LASF60:
+ 3633 019a 63726561 		.ascii	"createChar\000"
+ 3633      74654368 
+ 3633      617200
+ 3634              	.LASF0:
+ 3635 01a5 7369676E 		.ascii	"signed char\000"
+ 3635      65642063 
+ 3635      68617200 
+ 3636              	.LASF13:
+ 3637 01b1 696E7433 		.ascii	"int32_t\000"
+ 3637      325F7400 
+ 3638              	.LASF10:
+ 3639 01b9 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3639      206C6F6E 
+ 3639      6720756E 
+ 3639      7369676E 
+ 3639      65642069 
+ 3640              	.LASF41:
+ 3641 01d0 6C6F776E 		.ascii	"lownib\000"
+ 3641      696200
+ 3642              	.LASF14:
+ 3643 01d7 75696E74 		.ascii	"uint32_t\000"
+ 3643      33325F74 
+ 3643      00
+ 3644              	.LASF11:
+ 3645 01e0 756E7369 		.ascii	"unsigned int\000"
+ 3645      676E6564 
+ 3645      20696E74 
+ 3645      00
+ 3646              	.LASF84:
+ 3647 01ed 4932435F 		.ascii	"I2C_MasterSendStart\000"
+ 3647      4D617374 
+ 3647      65725365 
+ 3647      6E645374 
+ 3647      61727400 
+ 3648              	.LASF49:
+ 3649 0201 6E6F4375 		.ascii	"noCursor\000"
+ 3649      72736F72 
+ 3649      00
+ 3650              	.LASF72:
+ 3651 020a 72616469 		.ascii	"radix\000"
+ 3651      7800
+ 3652              	.LASF3:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 76
+
+
+ 3653 0210 73686F72 		.ascii	"short unsigned int\000"
+ 3653      7420756E 
+ 3653      7369676E 
+ 3653      65642069 
+ 3653      6E7400
+ 3654              	.LASF66:
+ 3655 0223 4C43445F 		.ascii	"LCD_print\000"
+ 3655      7072696E 
+ 3655      7400
+ 3656              	.LASF33:
+ 3657 022d 73657442 		.ascii	"setBacklight\000"
+ 3657      61636B6C 
+ 3657      69676874 
+ 3657      00
+ 3658              	.LASF47:
+ 3659 023a 6E6F4469 		.ascii	"noDisplay\000"
+ 3659      73706C61 
+ 3659      7900
+ 3660              	.LASF18:
+ 3661 0244 63686172 		.ascii	"char\000"
+ 3661      00
+ 3662              	.LASF89:
+ 3663 0249 7374726C 		.ascii	"strlen\000"
+ 3663      656E00
+ 3664              	.LASF35:
+ 3665 0250 70756C73 		.ascii	"pulseEnable\000"
+ 3665      65456E61 
+ 3665      626C6500 
+ 3666              	.LASF71:
+ 3667 025c 4C43445F 		.ascii	"LCD_print_num\000"
+ 3667      7072696E 
+ 3667      745F6E75 
+ 3667      6D00
+ 3668              	.LASF27:
+ 3669 026a 61646472 		.ascii	"addr\000"
+ 3669      00
+ 3670              	.LASF31:
+ 3671 026f 6E6F4261 		.ascii	"noBacklight\000"
+ 3671      636B6C69 
+ 3671      67687400 
+ 3672              	.LASF51:
+ 3673 027b 6E6F426C 		.ascii	"noBlink\000"
+ 3673      696E6B00 
+ 3674              	.LASF28:
+ 3675 0283 64617461 		.ascii	"data\000"
+ 3675      00
+ 3676              	.LASF69:
+ 3677 0288 636C6561 		.ascii	"clearLine\000"
+ 3677      724C696E 
+ 3677      6500
+ 3678              	.LASF93:
+ 3679 0292 433A5C55 		.ascii	"C:\\Users\\Hugo\\Documents\\PSoC Creator\\Projectin"
+ 3679      73657273 
+ 3679      5C487567 
+ 3679      6F5C446F 
+ 3679      63756D65 
+ 3680 02c0 6F5C416E 		.ascii	"o\\AnalogIR.cydsn\000"
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 77
+
+
+ 3680      616C6F67 
+ 3680      49522E63 
+ 3680      7964736E 
+ 3680      00
+ 3681              	.LASF73:
+ 3682 02d1 62756666 		.ascii	"buffer\000"
+ 3682      657200
+ 3683              	.LASF56:
+ 3684 02d8 72696768 		.ascii	"rightToLeft\000"
+ 3684      74546F4C 
+ 3684      65667400 
+ 3685              	.LASF63:
+ 3686 02e4 6C6F6164 		.ascii	"load_custom_character\000"
+ 3686      5F637573 
+ 3686      746F6D5F 
+ 3686      63686172 
+ 3686      61637465 
+ 3687              	.LASF8:
+ 3688 02fa 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3688      20756E73 
+ 3688      69676E65 
+ 3688      6420696E 
+ 3688      7400
+ 3689              	.LASF17:
+ 3690 030c 646F7562 		.ascii	"double\000"
+ 3690      6C6500
+ 3691              	.LASF48:
+ 3692 0313 64697370 		.ascii	"display\000"
+ 3692      6C617900 
+ 3693              	.LASF45:
+ 3694 031b 73657443 		.ascii	"setCursor\000"
+ 3694      7572736F 
+ 3694      7200
+ 3695              	.LASF7:
+ 3696 0325 5F5F7569 		.ascii	"__uint32_t\000"
+ 3696      6E743332 
+ 3696      5F7400
+ 3697              	.LASF80:
+ 3698 0330 5F636F6C 		.ascii	"_cols\000"
+ 3698      7300
+ 3699              	.LASF62:
+ 3700 0336 63686172 		.ascii	"charmap\000"
+ 3700      6D617000 
+ 3701              	.LASF53:
+ 3702 033e 7363726F 		.ascii	"scrollDisplayLeft\000"
+ 3702      6C6C4469 
+ 3702      73706C61 
+ 3702      794C6566 
+ 3702      7400
+ 3703              	.LASF5:
+ 3704 0350 5F5F696E 		.ascii	"__int32_t\000"
+ 3704      7433325F 
+ 3704      7400
+ 3705              	.LASF61:
+ 3706 035a 6C6F6361 		.ascii	"location\000"
+ 3706      74696F6E 
+ 3706      00
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 78
+
+
+ 3707              	.LASF32:
+ 3708 0363 6261636B 		.ascii	"backlight\000"
+ 3708      6C696768 
+ 3708      7400
+ 3709              	.LASF21:
+ 3710 036d 6C63645F 		.ascii	"lcd_addr\000"
+ 3710      61646472 
+ 3710      00
+ 3711              	.LASF36:
+ 3712 0376 77726974 		.ascii	"write4bits\000"
+ 3712      65346269 
+ 3712      747300
+ 3713              	.LASF92:
+ 3714 0381 4C697175 		.ascii	"LiquidCrystal_I2C.c\000"
+ 3714      69644372 
+ 3714      79737461 
+ 3714      6C5F4932 
+ 3714      432E6300 
+ 3715              	.LASF57:
+ 3716 0395 6175746F 		.ascii	"autoscroll\000"
+ 3716      7363726F 
+ 3716      6C6C00
+ 3717              	.LASF25:
+ 3718 03a0 4C697175 		.ascii	"LiquidCrystal_I2C_init\000"
+ 3718      69644372 
+ 3718      79737461 
+ 3718      6C5F4932 
+ 3718      435F696E 
+ 3719              	.LASF55:
+ 3720 03b7 6C656674 		.ascii	"leftToRight\000"
+ 3720      546F5269 
+ 3720      67687400 
+ 3721              	.LASF82:
+ 3722 03c3 5F636861 		.ascii	"_charsize\000"
+ 3722      7273697A 
+ 3722      6500
+ 3723              	.LASF75:
+ 3724 03cd 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 3724      52784275 
+ 3724      66666572 
+ 3724      00
+ 3725              	.LASF91:
+ 3726 03da 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3726      43313120 
+ 3726      352E342E 
+ 3726      31203230 
+ 3726      31363036 
+ 3727 040d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 3727      20726576 
+ 3727      6973696F 
+ 3727      6E203233 
+ 3727      37373135 
+ 3728 0440 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 3728      66756E63 
+ 3728      74696F6E 
+ 3728      2D736563 
+ 3728      74696F6E 
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccWsuKLu.s 			page 79
+
+
+ 3729              	.LASF88:
+ 3730 0468 43794465 		.ascii	"CyDelay\000"
+ 3730      6C617900 
+ 3731              	.LASF86:
+ 3732 0470 4932435F 		.ascii	"I2C_MasterSendStop\000"
+ 3732      4D617374 
+ 3732      65725365 
+ 3732      6E645374 
+ 3732      6F7000
+ 3733              	.LASF42:
+ 3734 0483 636F6D6D 		.ascii	"command\000"
+ 3734      616E6400 
+ 3735              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

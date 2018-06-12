@@ -1,0 +1,2905 @@
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"Driving.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Drive,"ax",%progbits
+  20              		.align	2
+  21              		.global	Drive
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	Drive, %function
+  25              	Drive:
+  26              	.LFB63:
+  27              		.file 1 "Driving.c"
+   1:Driving.c     **** /* ========================================
+   2:Driving.c     ****  *
+   3:Driving.c     ****  * Copyright YOUR COMPANY, THE YEAR
+   4:Driving.c     ****  * All Rights Reserved
+   5:Driving.c     ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:Driving.c     ****  *
+   7:Driving.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:Driving.c     ****  * WHICH IS THE PROPERTY OF your company.
+   9:Driving.c     ****  *
+  10:Driving.c     ****  * ========================================
+  11:Driving.c     **** */
+  12:Driving.c     **** #include "Driving.h"
+  13:Driving.c     **** 
+  14:Driving.c     **** uint8_t motor_Direction_High[3] = Motor_Direction_High;    
+  15:Driving.c     **** uint8_t motor_Direction_Low[3] = Motor_Direction_Low;    
+  16:Driving.c     **** uint8_t motor_Difference[3] = Motor_Difference;    
+  17:Driving.c     **** 
+  18:Driving.c     **** 
+  19:Driving.c     **** int16 direction=0;
+  20:Driving.c     **** 
+  21:Driving.c     **** uint8_t path =0;
+  22:Driving.c     **** _Bool holdL;
+  23:Driving.c     **** _Bool holdR;
+  24:Driving.c     **** 
+  25:Driving.c     **** 
+  26:Driving.c     ****     uint8 ToLeft=0;
+  27:Driving.c     ****     uint8 ToRight=0;   
+  28:Driving.c     ****     void Drive(uint8_t ir[8])
+  29:Driving.c     **** { 
+  28              		.loc 1 29 0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 2
+
+
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  30:Driving.c     ****      ToLeft=0;
+  37              		.loc 1 30 0
+  38 0002 314B     		ldr	r3, .L14
+  39 0004 0022     		movs	r2, #0
+  40 0006 1A70     		strb	r2, [r3]
+  31:Driving.c     ****      ToRight=0;   
+  41              		.loc 1 31 0
+  42 0008 5A70     		strb	r2, [r3, #1]
+  43              	.LVL1:
+  44              	.LBB2:
+  32:Driving.c     ****     //path =0;
+  33:Driving.c     ****     for (uint8_t i = 1; i < 4; i++){
+  45              		.loc 1 33 0
+  46 000a 0123     		movs	r3, #1
+  47 000c 21E0     		b	.L2
+  48              	.LVL2:
+  49              	.L5:
+  34:Driving.c     ****         if(ir[i]>ir_compare)    {ToLeft+=(16>>(i-1));      holdR=0; holdL =0;   /*path=path + (128>
+  50              		.loc 1 34 0
+  51 000e C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+  52 0010 602A     		cmp	r2, #96
+  53 0012 0BD9     		bls	.L3
+  54              		.loc 1 34 0 is_stmt 0 discriminator 1
+  55 0014 591E     		subs	r1, r3, #1
+  56 0016 1022     		movs	r2, #16
+  57 0018 0A41     		asrs	r2, r2, r1
+  58 001a 2B49     		ldr	r1, .L14
+  59 001c 0C78     		ldrb	r4, [r1]	@ zero_extendqisi2
+  60 001e 2244     		add	r2, r2, r4
+  61 0020 0A70     		strb	r2, [r1]
+  62 0022 0022     		movs	r2, #0
+  63 0024 2949     		ldr	r1, .L14+4
+  64 0026 0A70     		strb	r2, [r1]
+  65 0028 2949     		ldr	r1, .L14+8
+  66 002a 0A70     		strb	r2, [r1]
+  67              	.L3:
+  35:Driving.c     ****         if(ir[7-i]>ir_compare)  {ToRight+=(16>>(i-1));     holdL=0; holdR =0;   /*path=path + (1<<i
+  68              		.loc 1 35 0 is_stmt 1
+  69 002c C3F10702 		rsb	r2, r3, #7
+  70 0030 825C     		ldrb	r2, [r0, r2]	@ zero_extendqisi2
+  71 0032 602A     		cmp	r2, #96
+  72 0034 0BD9     		bls	.L4
+  73              		.loc 1 35 0 is_stmt 0 discriminator 1
+  74 0036 591E     		subs	r1, r3, #1
+  75 0038 1022     		movs	r2, #16
+  76 003a 0A41     		asrs	r2, r2, r1
+  77 003c 2249     		ldr	r1, .L14
+  78 003e 4C78     		ldrb	r4, [r1, #1]	@ zero_extendqisi2
+  79 0040 2244     		add	r2, r2, r4
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 3
+
+
+  80 0042 4A70     		strb	r2, [r1, #1]
+  81 0044 0022     		movs	r2, #0
+  82 0046 2249     		ldr	r1, .L14+8
+  83 0048 0A70     		strb	r2, [r1]
+  84 004a 2049     		ldr	r1, .L14+4
+  85 004c 0A70     		strb	r2, [r1]
+  86              	.L4:
+  33:Driving.c     ****         if(ir[i]>ir_compare)    {ToLeft+=(16>>(i-1));      holdR=0; holdL =0;   /*path=path + (128>
+  87              		.loc 1 33 0 is_stmt 1 discriminator 2
+  88 004e 0133     		adds	r3, r3, #1
+  89              	.LVL3:
+  90 0050 DBB2     		uxtb	r3, r3
+  91              	.LVL4:
+  92              	.L2:
+  33:Driving.c     ****         if(ir[i]>ir_compare)    {ToLeft+=(16>>(i-1));      holdR=0; holdL =0;   /*path=path + (128>
+  93              		.loc 1 33 0 is_stmt 0 discriminator 1
+  94 0052 032B     		cmp	r3, #3
+  95 0054 DBD9     		bls	.L5
+  96              	.LBE2:
+  36:Driving.c     ****     }
+  37:Driving.c     ****     if(ir[0]>ir_compare)    {holdL =1;  /*path=path + (128);*/}   
+  97              		.loc 1 37 0 is_stmt 1
+  98 0056 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  99              	.LVL5:
+ 100 0058 602B     		cmp	r3, #96
+ 101 005a 02D9     		bls	.L6
+ 102              		.loc 1 37 0 is_stmt 0 discriminator 1
+ 103 005c 0122     		movs	r2, #1
+ 104 005e 1C4B     		ldr	r3, .L14+8
+ 105 0060 1A70     		strb	r2, [r3]
+ 106              	.L6:
+  38:Driving.c     ****     if(ir[7]>ir_compare)    {holdR =1;  /*path=path + (1);*/} 
+ 107              		.loc 1 38 0 is_stmt 1
+ 108 0062 C379     		ldrb	r3, [r0, #7]	@ zero_extendqisi2
+ 109 0064 602B     		cmp	r3, #96
+ 110 0066 02D9     		bls	.L7
+ 111              		.loc 1 38 0 is_stmt 0 discriminator 1
+ 112 0068 0122     		movs	r2, #1
+ 113 006a 184B     		ldr	r3, .L14+4
+ 114 006c 1A70     		strb	r2, [r3]
+ 115              	.L7:
+  39:Driving.c     ****     if(holdL==1)       ToLeft=Motor_Main;
+ 116              		.loc 1 39 0 is_stmt 1
+ 117 006e 184B     		ldr	r3, .L14+8
+ 118 0070 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 119 0072 13B1     		cbz	r3, .L8
+ 120              		.loc 1 39 0 is_stmt 0 discriminator 1
+ 121 0074 1F22     		movs	r2, #31
+ 122 0076 144B     		ldr	r3, .L14
+ 123 0078 1A70     		strb	r2, [r3]
+ 124              	.L8:
+  40:Driving.c     ****     if(holdR==1)       ToRight=Motor_Main;
+ 125              		.loc 1 40 0 is_stmt 1
+ 126 007a 144B     		ldr	r3, .L14+4
+ 127 007c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 128 007e 13B1     		cbz	r3, .L9
+ 129              		.loc 1 40 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 4
+
+
+ 130 0080 1F22     		movs	r2, #31
+ 131 0082 114B     		ldr	r3, .L14
+ 132 0084 5A70     		strb	r2, [r3, #1]
+ 133              	.L9:
+  41:Driving.c     ****     
+  42:Driving.c     ****     direction = ToLeft;    
+ 134              		.loc 1 42 0 is_stmt 1
+ 135 0086 104A     		ldr	r2, .L14
+ 136 0088 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  43:Driving.c     ****     direction -= ToRight;    
+ 137              		.loc 1 43 0
+ 138 008a 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 139 008c 5B1A     		subs	r3, r3, r1
+ 140 008e 5380     		strh	r3, [r2, #2]	@ movhi
+  44:Driving.c     ****     
+  45:Driving.c     ****     if(direction>0)     {ToLeft = Motor_Main; ToRight = Motor_Main - direction;}
+ 141              		.loc 1 45 0
+ 142 0090 002B     		cmp	r3, #0
+ 143 0092 03DD     		ble	.L10
+ 144              		.loc 1 45 0 is_stmt 0 discriminator 1
+ 145 0094 1F21     		movs	r1, #31
+ 146 0096 1170     		strb	r1, [r2]
+ 147 0098 C91A     		subs	r1, r1, r3
+ 148 009a 5170     		strb	r1, [r2, #1]
+ 149              	.L10:
+  46:Driving.c     ****     if(direction==0)    {ToLeft = Motor_Main>>1; ToRight = Motor_Main>>2;}
+ 150              		.loc 1 46 0 is_stmt 1
+ 151 009c 23B9     		cbnz	r3, .L11
+ 152              		.loc 1 46 0 is_stmt 0 discriminator 1
+ 153 009e 0A4A     		ldr	r2, .L14
+ 154 00a0 0F21     		movs	r1, #15
+ 155 00a2 1170     		strb	r1, [r2]
+ 156 00a4 0721     		movs	r1, #7
+ 157 00a6 5170     		strb	r1, [r2, #1]
+ 158              	.L11:
+  47:Driving.c     ****     if(direction<0)     {ToLeft = Motor_Main+ direction; ToRight = Motor_Main;}
+ 159              		.loc 1 47 0 is_stmt 1
+ 160 00a8 002B     		cmp	r3, #0
+ 161 00aa 04DA     		bge	.L12
+ 162              		.loc 1 47 0 is_stmt 0 discriminator 1
+ 163 00ac 064A     		ldr	r2, .L14
+ 164 00ae 1F33     		adds	r3, r3, #31
+ 165 00b0 1370     		strb	r3, [r2]
+ 166 00b2 1F23     		movs	r3, #31
+ 167 00b4 5370     		strb	r3, [r2, #1]
+ 168              	.L12:
+  48:Driving.c     ****     
+  49:Driving.c     ****     PWM_1_WriteCompare1(ToLeft);
+ 169              		.loc 1 49 0 is_stmt 1
+ 170 00b6 044C     		ldr	r4, .L14
+ 171 00b8 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 172              	.LVL6:
+ 173 00ba FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 174              	.LVL7:
+  50:Driving.c     ****     PWM_1_WriteCompare2(ToRight);          
+ 175              		.loc 1 50 0
+ 176 00be 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 5
+
+
+ 177 00c0 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 178              	.LVL8:
+ 179 00c4 10BD     		pop	{r4, pc}
+ 180              	.L15:
+ 181 00c6 00BF     		.align	2
+ 182              	.L14:
+ 183 00c8 00000000 		.word	.LANCHOR0
+ 184 00cc 00000000 		.word	holdR
+ 185 00d0 00000000 		.word	holdL
+ 186              		.cfi_endproc
+ 187              	.LFE63:
+ 188              		.size	Drive, .-Drive
+ 189              		.section	.text.Drive2,"ax",%progbits
+ 190              		.align	2
+ 191              		.global	Drive2
+ 192              		.thumb
+ 193              		.thumb_func
+ 194              		.type	Drive2, %function
+ 195              	Drive2:
+ 196              	.LFB64:
+  51:Driving.c     **** }
+  52:Driving.c     ****     void Drive2(uint8_t ir[8])
+  53:Driving.c     **** {
+ 197              		.loc 1 53 0
+ 198              		.cfi_startproc
+ 199              		@ args = 0, pretend = 0, frame = 0
+ 200              		@ frame_needed = 0, uses_anonymous_args = 0
+ 201              	.LVL9:
+ 202 0000 10B5     		push	{r4, lr}
+ 203              		.cfi_def_cfa_offset 8
+ 204              		.cfi_offset 4, -8
+ 205              		.cfi_offset 14, -4
+  54:Driving.c     ****     if(ir[0]>ir_compare){holdL =1;}
+ 206              		.loc 1 54 0
+ 207 0002 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 208 0004 602B     		cmp	r3, #96
+ 209 0006 02D9     		bls	.L17
+ 210              		.loc 1 54 0 is_stmt 0 discriminator 1
+ 211 0008 0122     		movs	r2, #1
+ 212 000a 344B     		ldr	r3, .L33
+ 213 000c 1A70     		strb	r2, [r3]
+ 214              	.L17:
+  55:Driving.c     ****     if(ir[7]>ir_compare){holdR =1;}
+ 215              		.loc 1 55 0 is_stmt 1
+ 216 000e C179     		ldrb	r1, [r0, #7]	@ zero_extendqisi2
+ 217 0010 6029     		cmp	r1, #96
+ 218 0012 02D9     		bls	.L18
+ 219              		.loc 1 55 0 is_stmt 0 discriminator 1
+ 220 0014 0122     		movs	r2, #1
+ 221 0016 324B     		ldr	r3, .L33+4
+ 222 0018 1A70     		strb	r2, [r3]
+ 223              	.L18:
+  56:Driving.c     ****     if(holdL || holdR){ToLeft=255;ToRight=255;}
+ 224              		.loc 1 56 0 is_stmt 1
+ 225 001a 304B     		ldr	r3, .L33
+ 226 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 227 001e 002B     		cmp	r3, #0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 6
+
+
+ 228 0020 FFD1     		bne	.L20
+ 229              	.L20:
+  57:Driving.c     ****     if(holdL && holdR);
+  58:Driving.c     ****      ToLeft=0;
+ 230              		.loc 1 58 0
+ 231 0022 304B     		ldr	r3, .L33+8
+ 232 0024 0022     		movs	r2, #0
+ 233 0026 1A70     		strb	r2, [r3]
+  59:Driving.c     ****      ToRight=0;   
+ 234              		.loc 1 59 0
+ 235 0028 5A70     		strb	r2, [r3, #1]
+  60:Driving.c     ****     path =0;
+ 236              		.loc 1 60 0
+ 237 002a 1A71     		strb	r2, [r3, #4]
+ 238              	.LVL10:
+ 239              	.LBB3:
+  61:Driving.c     ****     for (uint8_t i = 1; i < 4; i++){
+ 240              		.loc 1 61 0
+ 241 002c 0123     		movs	r3, #1
+ 242 002e 1DE0     		b	.L21
+ 243              	.LVL11:
+ 244              	.L24:
+  62:Driving.c     ****         if(ir[i]>ir_compare)    {    holdR =0;  holdL =0;  ToLeft =Motor_Drive>>(i-1);  } 
+ 245              		.loc 1 62 0
+ 246 0030 C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+ 247 0032 602A     		cmp	r2, #96
+ 248 0034 09D9     		bls	.L22
+ 249              		.loc 1 62 0 is_stmt 0 discriminator 1
+ 250 0036 0022     		movs	r2, #0
+ 251 0038 294C     		ldr	r4, .L33+4
+ 252 003a 2270     		strb	r2, [r4]
+ 253 003c 274C     		ldr	r4, .L33
+ 254 003e 2270     		strb	r2, [r4]
+ 255 0040 5C1E     		subs	r4, r3, #1
+ 256 0042 1F22     		movs	r2, #31
+ 257 0044 2241     		asrs	r2, r2, r4
+ 258 0046 274C     		ldr	r4, .L33+8
+ 259 0048 2270     		strb	r2, [r4]
+ 260              	.L22:
+  63:Driving.c     ****         if(ir[7-i]>ir_compare)  {    holdL =0;  holdR =0;  ToRight=Motor_Drive>>(i-1);  }
+ 261              		.loc 1 63 0 is_stmt 1
+ 262 004a C3F10702 		rsb	r2, r3, #7
+ 263 004e 825C     		ldrb	r2, [r0, r2]	@ zero_extendqisi2
+ 264 0050 602A     		cmp	r2, #96
+ 265 0052 09D9     		bls	.L23
+ 266              		.loc 1 63 0 is_stmt 0 discriminator 1
+ 267 0054 0022     		movs	r2, #0
+ 268 0056 214C     		ldr	r4, .L33
+ 269 0058 2270     		strb	r2, [r4]
+ 270 005a 214C     		ldr	r4, .L33+4
+ 271 005c 2270     		strb	r2, [r4]
+ 272 005e 5C1E     		subs	r4, r3, #1
+ 273 0060 1F22     		movs	r2, #31
+ 274 0062 2241     		asrs	r2, r2, r4
+ 275 0064 1F4C     		ldr	r4, .L33+8
+ 276 0066 6270     		strb	r2, [r4, #1]
+ 277              	.L23:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 7
+
+
+  61:Driving.c     ****     for (uint8_t i = 1; i < 4; i++){
+ 278              		.loc 1 61 0 is_stmt 1 discriminator 2
+ 279 0068 0133     		adds	r3, r3, #1
+ 280              	.LVL12:
+ 281 006a DBB2     		uxtb	r3, r3
+ 282              	.LVL13:
+ 283              	.L21:
+  61:Driving.c     ****     for (uint8_t i = 1; i < 4; i++){
+ 284              		.loc 1 61 0 is_stmt 0 discriminator 1
+ 285 006c 032B     		cmp	r3, #3
+ 286 006e DFD9     		bls	.L24
+ 287              	.LBE3:
+  64:Driving.c     ****     }
+  65:Driving.c     ****     if(ir[0]>ir_compare)    {holdL =1;  }   
+ 288              		.loc 1 65 0 is_stmt 1
+ 289 0070 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 290              	.LVL14:
+ 291 0072 602B     		cmp	r3, #96
+ 292 0074 02D9     		bls	.L25
+ 293              		.loc 1 65 0 is_stmt 0 discriminator 1
+ 294 0076 0122     		movs	r2, #1
+ 295 0078 184B     		ldr	r3, .L33
+ 296 007a 1A70     		strb	r2, [r3]
+ 297              	.L25:
+  66:Driving.c     ****     if(ir[7]>ir_compare)    {holdR =1;  } 
+ 298              		.loc 1 66 0 is_stmt 1
+ 299 007c 6029     		cmp	r1, #96
+ 300 007e 02D9     		bls	.L26
+ 301              		.loc 1 66 0 is_stmt 0 discriminator 1
+ 302 0080 0122     		movs	r2, #1
+ 303 0082 174B     		ldr	r3, .L33+4
+ 304 0084 1A70     		strb	r2, [r3]
+ 305              	.L26:
+  67:Driving.c     ****     if(holdL==1)       ToLeft=255;
+ 306              		.loc 1 67 0 is_stmt 1
+ 307 0086 154B     		ldr	r3, .L33
+ 308 0088 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 309 008a 13B1     		cbz	r3, .L27
+ 310              		.loc 1 67 0 is_stmt 0 discriminator 1
+ 311 008c FF22     		movs	r2, #255
+ 312 008e 154B     		ldr	r3, .L33+8
+ 313 0090 1A70     		strb	r2, [r3]
+ 314              	.L27:
+  68:Driving.c     ****     if(holdR==1)       ToRight=255;
+ 315              		.loc 1 68 0 is_stmt 1
+ 316 0092 134B     		ldr	r3, .L33+4
+ 317 0094 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 318 0096 13B1     		cbz	r3, .L28
+ 319              		.loc 1 68 0 is_stmt 0 discriminator 1
+ 320 0098 FF22     		movs	r2, #255
+ 321 009a 124B     		ldr	r3, .L33+8
+ 322 009c 5A70     		strb	r2, [r3, #1]
+ 323              	.L28:
+  69:Driving.c     ****     
+  70:Driving.c     ****     direction = ToLeft;    
+ 324              		.loc 1 70 0 is_stmt 1
+ 325 009e 114A     		ldr	r2, .L33+8
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 8
+
+
+ 326 00a0 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  71:Driving.c     ****     direction -= ToRight;    
+ 327              		.loc 1 71 0
+ 328 00a2 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 329 00a4 5B1A     		subs	r3, r3, r1
+ 330 00a6 5380     		strh	r3, [r2, #2]	@ movhi
+  72:Driving.c     ****     
+  73:Driving.c     ****     if(direction>0)     {ToLeft = Motor_Main; ToRight = Motor_Main - direction;}
+ 331              		.loc 1 73 0
+ 332 00a8 002B     		cmp	r3, #0
+ 333 00aa 03DD     		ble	.L29
+ 334              		.loc 1 73 0 is_stmt 0 discriminator 1
+ 335 00ac 1F21     		movs	r1, #31
+ 336 00ae 1170     		strb	r1, [r2]
+ 337 00b0 C91A     		subs	r1, r1, r3
+ 338 00b2 5170     		strb	r1, [r2, #1]
+ 339              	.L29:
+  74:Driving.c     ****     if(direction==0)    {ToLeft = Motor_Drive; ToRight = Motor_Drive;}
+ 340              		.loc 1 74 0 is_stmt 1
+ 341 00b4 1BB9     		cbnz	r3, .L30
+ 342              		.loc 1 74 0 is_stmt 0 discriminator 1
+ 343 00b6 0B4A     		ldr	r2, .L33+8
+ 344 00b8 1F21     		movs	r1, #31
+ 345 00ba 1170     		strb	r1, [r2]
+ 346 00bc 5170     		strb	r1, [r2, #1]
+ 347              	.L30:
+  75:Driving.c     ****     if(direction<0)     {ToLeft = Motor_Main+ direction; ToRight = Motor_Main;}
+ 348              		.loc 1 75 0 is_stmt 1
+ 349 00be 002B     		cmp	r3, #0
+ 350 00c0 04DA     		bge	.L31
+ 351              		.loc 1 75 0 is_stmt 0 discriminator 1
+ 352 00c2 084A     		ldr	r2, .L33+8
+ 353 00c4 1F33     		adds	r3, r3, #31
+ 354 00c6 1370     		strb	r3, [r2]
+ 355 00c8 1F23     		movs	r3, #31
+ 356 00ca 5370     		strb	r3, [r2, #1]
+ 357              	.L31:
+  76:Driving.c     ****     
+  77:Driving.c     ****     PWM_1_WriteCompare1(ToLeft);
+ 358              		.loc 1 77 0 is_stmt 1
+ 359 00cc 054C     		ldr	r4, .L33+8
+ 360 00ce 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 361              	.LVL15:
+ 362 00d0 FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 363              	.LVL16:
+  78:Driving.c     ****     PWM_1_WriteCompare2(ToRight);  
+ 364              		.loc 1 78 0
+ 365 00d4 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 366 00d6 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 367              	.LVL17:
+ 368 00da 10BD     		pop	{r4, pc}
+ 369              	.L34:
+ 370              		.align	2
+ 371              	.L33:
+ 372 00dc 00000000 		.word	holdL
+ 373 00e0 00000000 		.word	holdR
+ 374 00e4 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 9
+
+
+ 375              		.cfi_endproc
+ 376              	.LFE64:
+ 377              		.size	Drive2, .-Drive2
+ 378              		.section	.text.Straight,"ax",%progbits
+ 379              		.align	2
+ 380              		.global	Straight
+ 381              		.thumb
+ 382              		.thumb_func
+ 383              		.type	Straight, %function
+ 384              	Straight:
+ 385              	.LFB67:
+  79:Driving.c     **** }
+  80:Driving.c     **** 
+  81:Driving.c     **** 
+  82:Driving.c     ****     void DriveBetter(uint8_t ir[8])
+  83:Driving.c     **** {     
+  84:Driving.c     ****     if(ir[0]>ir_compare){holdL =1;}
+  85:Driving.c     ****     if(ir[7]>ir_compare){holdR =1;}    
+  86:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+  87:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+  88:Driving.c     ****     if(holdR)  {HardTurn(Right);}       
+  89:Driving.c     ****     for (uint8_t i = 0; i < 3; i++){
+  90:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn(Left,i);  return;}
+  91:Driving.c     ****         if(ir[6-i]>ir_compare){ holdL =0;   holdR =0;   Turn(Right,i);  return;}
+  92:Driving.c     ****     }
+  93:Driving.c     ****     if(!holdL && !holdR)    Straight();     
+  94:Driving.c     **** }
+  95:Driving.c     **** void DriveBetterSwing(uint8_t ir[8])
+  96:Driving.c     **** {     
+  97:Driving.c     ****     if(ir[0]>ir_compare || ir[1]>ir_compare){holdL =1;}
+  98:Driving.c     ****     if(ir[7]>ir_compare || ir[6]>ir_compare){holdR =1;}    
+  99:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+ 100:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 101:Driving.c     ****     if(holdR)  {HardTurn(Right);}       
+ 102:Driving.c     ****     for (uint8_t i = 0; i < 3; i++){
+ 103:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn_Difference(Left,i);  return;}
+ 104:Driving.c     ****         if(ir[6-i]>ir_compare){ holdL =0;   holdR =0;   Turn_Difference(Right,i);  return;}
+ 105:Driving.c     ****     }
+ 106:Driving.c     ****     if(!holdL && !holdR)    Straight(); 
+ 107:Driving.c     **** }
+ 108:Driving.c     ****     
+ 109:Driving.c     **** void Straight()
+ 110:Driving.c     **** {    
+ 386              		.loc 1 110 0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 0
+ 389              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390 0000 08B5     		push	{r3, lr}
+ 391              		.cfi_def_cfa_offset 8
+ 392              		.cfi_offset 3, -8
+ 393              		.cfi_offset 14, -4
+ 111:Driving.c     ****     Pin_Motor_1_Write(Forward);
+ 394              		.loc 1 111 0
+ 395 0002 0120     		movs	r0, #1
+ 396 0004 FFF7FEFF 		bl	Pin_Motor_1_Write
+ 397              	.LVL18:
+ 112:Driving.c     ****     Pin_Motor_2_Write(Forward);
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 10
+
+
+ 398              		.loc 1 112 0
+ 399 0008 0120     		movs	r0, #1
+ 400 000a FFF7FEFF 		bl	Pin_Motor_2_Write
+ 401              	.LVL19:
+ 113:Driving.c     ****     PWM_1_WriteCompare1(Motor_Drive);
+ 402              		.loc 1 113 0
+ 403 000e 1F20     		movs	r0, #31
+ 404 0010 FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 405              	.LVL20:
+ 114:Driving.c     ****     PWM_1_WriteCompare2(Motor_Drive);  
+ 406              		.loc 1 114 0
+ 407 0014 1F20     		movs	r0, #31
+ 408 0016 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 409              	.LVL21:
+ 410 001a 08BD     		pop	{r3, pc}
+ 411              		.cfi_endproc
+ 412              	.LFE67:
+ 413              		.size	Straight, .-Straight
+ 414              		.section	.text.Backwards,"ax",%progbits
+ 415              		.align	2
+ 416              		.global	Backwards
+ 417              		.thumb
+ 418              		.thumb_func
+ 419              		.type	Backwards, %function
+ 420              	Backwards:
+ 421              	.LFB68:
+ 115:Driving.c     **** }
+ 116:Driving.c     **** void Backwards()
+ 117:Driving.c     **** {    
+ 422              		.loc 1 117 0
+ 423              		.cfi_startproc
+ 424              		@ args = 0, pretend = 0, frame = 0
+ 425              		@ frame_needed = 0, uses_anonymous_args = 0
+ 426 0000 08B5     		push	{r3, lr}
+ 427              		.cfi_def_cfa_offset 8
+ 428              		.cfi_offset 3, -8
+ 429              		.cfi_offset 14, -4
+ 118:Driving.c     ****     Pin_Motor_1_Write(Backward);
+ 430              		.loc 1 118 0
+ 431 0002 0220     		movs	r0, #2
+ 432 0004 FFF7FEFF 		bl	Pin_Motor_1_Write
+ 433              	.LVL22:
+ 119:Driving.c     ****     Pin_Motor_2_Write(Backward);
+ 434              		.loc 1 119 0
+ 435 0008 0220     		movs	r0, #2
+ 436 000a FFF7FEFF 		bl	Pin_Motor_2_Write
+ 437              	.LVL23:
+ 120:Driving.c     ****     PWM_1_WriteCompare1(Motor_Drive);
+ 438              		.loc 1 120 0
+ 439 000e 1F20     		movs	r0, #31
+ 440 0010 FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 441              	.LVL24:
+ 121:Driving.c     ****     PWM_1_WriteCompare2(Motor_Drive);  
+ 442              		.loc 1 121 0
+ 443 0014 1F20     		movs	r0, #31
+ 444 0016 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 445              	.LVL25:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 11
+
+
+ 446 001a 08BD     		pop	{r3, pc}
+ 447              		.cfi_endproc
+ 448              	.LFE68:
+ 449              		.size	Backwards, .-Backwards
+ 450              		.section	.text.HardTurn,"ax",%progbits
+ 451              		.align	2
+ 452              		.global	HardTurn
+ 453              		.thumb
+ 454              		.thumb_func
+ 455              		.type	HardTurn, %function
+ 456              	HardTurn:
+ 457              	.LFB69:
+ 122:Driving.c     **** }
+ 123:Driving.c     **** void HardTurn(_Bool left_right)
+ 124:Driving.c     **** {
+ 458              		.loc 1 124 0
+ 459              		.cfi_startproc
+ 460              		@ args = 0, pretend = 0, frame = 0
+ 461              		@ frame_needed = 0, uses_anonymous_args = 0
+ 462              	.LVL26:
+ 463 0000 08B5     		push	{r3, lr}
+ 464              		.cfi_def_cfa_offset 8
+ 465              		.cfi_offset 3, -8
+ 466              		.cfi_offset 14, -4
+ 125:Driving.c     ****     if(left_right)  {Pin_Motor_1_Write(Backward);   Pin_Motor_2_Write(Forward); Pin_Led_5_Write(1);
+ 467              		.loc 1 125 0
+ 468 0002 48B1     		cbz	r0, .L40
+ 469              		.loc 1 125 0 is_stmt 0 discriminator 1
+ 470 0004 0220     		movs	r0, #2
+ 471              	.LVL27:
+ 472 0006 FFF7FEFF 		bl	Pin_Motor_1_Write
+ 473              	.LVL28:
+ 474 000a 0120     		movs	r0, #1
+ 475 000c FFF7FEFF 		bl	Pin_Motor_2_Write
+ 476              	.LVL29:
+ 477 0010 0120     		movs	r0, #1
+ 478 0012 FFF7FEFF 		bl	Pin_Led_5_Write
+ 479              	.LVL30:
+ 480 0016 08E0     		b	.L41
+ 481              	.LVL31:
+ 482              	.L40:
+ 126:Driving.c     ****     else            {Pin_Motor_1_Write(Forward);    Pin_Motor_2_Write(Backward);Pin_Led_1_Write(1);
+ 483              		.loc 1 126 0 is_stmt 1
+ 484 0018 0120     		movs	r0, #1
+ 485              	.LVL32:
+ 486 001a FFF7FEFF 		bl	Pin_Motor_1_Write
+ 487              	.LVL33:
+ 488 001e 0220     		movs	r0, #2
+ 489 0020 FFF7FEFF 		bl	Pin_Motor_2_Write
+ 490              	.LVL34:
+ 491 0024 0120     		movs	r0, #1
+ 492 0026 FFF7FEFF 		bl	Pin_Led_1_Write
+ 493              	.LVL35:
+ 494              	.L41:
+ 127:Driving.c     ****     PWM_1_WriteCompare1(Motor_Turn);
+ 495              		.loc 1 127 0
+ 496 002a 1F20     		movs	r0, #31
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 12
+
+
+ 497 002c FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 498              	.LVL36:
+ 128:Driving.c     ****     PWM_1_WriteCompare2(Motor_Turn);
+ 499              		.loc 1 128 0
+ 500 0030 1F20     		movs	r0, #31
+ 501 0032 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 502              	.LVL37:
+ 503 0036 08BD     		pop	{r3, pc}
+ 504              		.cfi_endproc
+ 505              	.LFE69:
+ 506              		.size	HardTurn, .-HardTurn
+ 507              		.section	.text.Turn,"ax",%progbits
+ 508              		.align	2
+ 509              		.global	Turn
+ 510              		.thumb
+ 511              		.thumb_func
+ 512              		.type	Turn, %function
+ 513              	Turn:
+ 514              	.LFB70:
+ 129:Driving.c     **** }
+ 130:Driving.c     **** void Turn(_Bool left_right, uint8_t irLocation)
+ 131:Driving.c     **** {    
+ 515              		.loc 1 131 0
+ 516              		.cfi_startproc
+ 517              		@ args = 0, pretend = 0, frame = 0
+ 518              		@ frame_needed = 0, uses_anonymous_args = 0
+ 519              	.LVL38:
+ 520 0000 38B5     		push	{r3, r4, r5, lr}
+ 521              		.cfi_def_cfa_offset 16
+ 522              		.cfi_offset 3, -16
+ 523              		.cfi_offset 4, -12
+ 524              		.cfi_offset 5, -8
+ 525              		.cfi_offset 14, -4
+ 526 0002 0546     		mov	r5, r0
+ 527 0004 0C46     		mov	r4, r1
+ 132:Driving.c     ****     Pin_Motor_1_Write(Forward);
+ 528              		.loc 1 132 0
+ 529 0006 0120     		movs	r0, #1
+ 530              	.LVL39:
+ 531 0008 FFF7FEFF 		bl	Pin_Motor_1_Write
+ 532              	.LVL40:
+ 133:Driving.c     ****     Pin_Motor_2_Write(Forward);    
+ 533              		.loc 1 133 0
+ 534 000c 0120     		movs	r0, #1
+ 535 000e FFF7FEFF 		bl	Pin_Motor_2_Write
+ 536              	.LVL41:
+ 134:Driving.c     ****     if(left_right)
+ 537              		.loc 1 134 0
+ 538 0012 45B1     		cbz	r5, .L44
+ 135:Driving.c     ****     {
+ 136:Driving.c     ****         PWM_1_WriteCompare1(motor_Direction_Low[irLocation]);
+ 539              		.loc 1 136 0
+ 540 0014 084D     		ldr	r5, .L47
+ 541 0016 285D     		ldrb	r0, [r5, r4]	@ zero_extendqisi2
+ 542 0018 FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 543              	.LVL42:
+ 137:Driving.c     ****         PWM_1_WriteCompare2(motor_Direction_High[irLocation]);
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 13
+
+
+ 544              		.loc 1 137 0
+ 545 001c 2C44     		add	r4, r4, r5
+ 546 001e 2079     		ldrb	r0, [r4, #4]	@ zero_extendqisi2
+ 547 0020 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 548              	.LVL43:
+ 549 0024 38BD     		pop	{r3, r4, r5, pc}
+ 550              	.L44:
+ 138:Driving.c     ****     }   
+ 139:Driving.c     ****     else          
+ 140:Driving.c     ****     {
+ 141:Driving.c     ****         PWM_1_WriteCompare1(motor_Direction_High[irLocation]);
+ 551              		.loc 1 141 0
+ 552 0026 044D     		ldr	r5, .L47
+ 553 0028 2B19     		adds	r3, r5, r4
+ 554 002a 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 555 002c FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 556              	.LVL44:
+ 142:Driving.c     ****         PWM_1_WriteCompare2(motor_Direction_Low[irLocation]);
+ 557              		.loc 1 142 0
+ 558 0030 285D     		ldrb	r0, [r5, r4]	@ zero_extendqisi2
+ 559 0032 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 560              	.LVL45:
+ 561 0036 38BD     		pop	{r3, r4, r5, pc}
+ 562              	.L48:
+ 563              		.align	2
+ 564              	.L47:
+ 565 0038 00000000 		.word	.LANCHOR1
+ 566              		.cfi_endproc
+ 567              	.LFE70:
+ 568              		.size	Turn, .-Turn
+ 569              		.section	.text.DriveBetter,"ax",%progbits
+ 570              		.align	2
+ 571              		.global	DriveBetter
+ 572              		.thumb
+ 573              		.thumb_func
+ 574              		.type	DriveBetter, %function
+ 575              	DriveBetter:
+ 576              	.LFB65:
+  83:Driving.c     ****     if(ir[0]>ir_compare){holdL =1;}
+ 577              		.loc 1 83 0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 0
+ 580              		@ frame_needed = 0, uses_anonymous_args = 0
+ 581              	.LVL46:
+ 582 0000 10B5     		push	{r4, lr}
+ 583              		.cfi_def_cfa_offset 8
+ 584              		.cfi_offset 4, -8
+ 585              		.cfi_offset 14, -4
+ 586 0002 0446     		mov	r4, r0
+  84:Driving.c     ****     if(ir[7]>ir_compare){holdR =1;}    
+ 587              		.loc 1 84 0
+ 588 0004 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 589 0006 602B     		cmp	r3, #96
+ 590 0008 02D9     		bls	.L50
+  84:Driving.c     ****     if(ir[7]>ir_compare){holdR =1;}    
+ 591              		.loc 1 84 0 is_stmt 0 discriminator 1
+ 592 000a 0122     		movs	r2, #1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 14
+
+
+ 593 000c 224B     		ldr	r3, .L61
+ 594 000e 1A70     		strb	r2, [r3]
+ 595              	.L50:
+  85:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+ 596              		.loc 1 85 0 is_stmt 1
+ 597 0010 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 598 0012 602B     		cmp	r3, #96
+ 599 0014 02D9     		bls	.L51
+  85:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+ 600              		.loc 1 85 0 is_stmt 0 discriminator 1
+ 601 0016 0122     		movs	r2, #1
+ 602 0018 204B     		ldr	r3, .L61+4
+ 603 001a 1A70     		strb	r2, [r3]
+ 604              	.L51:
+  86:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 605              		.loc 1 86 0 is_stmt 1
+ 606 001c 1E4B     		ldr	r3, .L61
+ 607 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 608 0020 23B1     		cbz	r3, .L52
+  86:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 609              		.loc 1 86 0 is_stmt 0 discriminator 1
+ 610 0022 1E4B     		ldr	r3, .L61+4
+ 611 0024 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 612 0026 0BB1     		cbz	r3, .L52
+  86:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 613              		.loc 1 86 0 discriminator 2
+ 614 0028 FFF7FEFF 		bl	Straight
+ 615              	.LVL47:
+ 616              	.L52:
+  87:Driving.c     ****     if(holdR)  {HardTurn(Right);}       
+ 617              		.loc 1 87 0 is_stmt 1
+ 618 002c 1A4B     		ldr	r3, .L61
+ 619 002e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 620 0030 13B1     		cbz	r3, .L53
+  87:Driving.c     ****     if(holdR)  {HardTurn(Right);}       
+ 621              		.loc 1 87 0 is_stmt 0 discriminator 1
+ 622 0032 0120     		movs	r0, #1
+ 623 0034 FFF7FEFF 		bl	HardTurn
+ 624              	.LVL48:
+ 625              	.L53:
+  88:Driving.c     ****     for (uint8_t i = 0; i < 3; i++){
+ 626              		.loc 1 88 0 is_stmt 1
+ 627 0038 184B     		ldr	r3, .L61+4
+ 628 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 629 003c 13B1     		cbz	r3, .L54
+  88:Driving.c     ****     for (uint8_t i = 0; i < 3; i++){
+ 630              		.loc 1 88 0 is_stmt 0 discriminator 1
+ 631 003e 0020     		movs	r0, #0
+ 632 0040 FFF7FEFF 		bl	HardTurn
+ 633              	.LVL49:
+ 634              	.L54:
+ 635              	.LBB4:
+  89:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn(Left,i);  return;}
+ 636              		.loc 1 89 0 is_stmt 1
+ 637 0044 0021     		movs	r1, #0
+ 638 0046 1BE0     		b	.L55
+ 639              	.LVL50:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 15
+
+
+ 640              	.L59:
+  90:Driving.c     ****         if(ir[6-i]>ir_compare){ holdL =0;   holdR =0;   Turn(Right,i);  return;}
+ 641              		.loc 1 90 0
+ 642 0048 4B1C     		adds	r3, r1, #1
+ 643 004a E35C     		ldrb	r3, [r4, r3]	@ zero_extendqisi2
+ 644 004c 602B     		cmp	r3, #96
+ 645 004e 08D9     		bls	.L56
+  90:Driving.c     ****         if(ir[6-i]>ir_compare){ holdL =0;   holdR =0;   Turn(Right,i);  return;}
+ 646              		.loc 1 90 0 is_stmt 0 discriminator 1
+ 647 0050 0023     		movs	r3, #0
+ 648 0052 114A     		ldr	r2, .L61
+ 649 0054 1370     		strb	r3, [r2]
+ 650 0056 114A     		ldr	r2, .L61+4
+ 651 0058 1370     		strb	r3, [r2]
+ 652 005a 0120     		movs	r0, #1
+ 653 005c FFF7FEFF 		bl	Turn
+ 654              	.LVL51:
+ 655 0060 10BD     		pop	{r4, pc}
+ 656              	.LVL52:
+ 657              	.L56:
+  91:Driving.c     ****     }
+ 658              		.loc 1 91 0 is_stmt 1
+ 659 0062 C1F10603 		rsb	r3, r1, #6
+ 660 0066 E35C     		ldrb	r3, [r4, r3]	@ zero_extendqisi2
+ 661 0068 602B     		cmp	r3, #96
+ 662 006a 07D9     		bls	.L58
+  91:Driving.c     ****     }
+ 663              		.loc 1 91 0 is_stmt 0 discriminator 1
+ 664 006c 0020     		movs	r0, #0
+ 665 006e 0A4B     		ldr	r3, .L61
+ 666 0070 1870     		strb	r0, [r3]
+ 667 0072 0A4B     		ldr	r3, .L61+4
+ 668 0074 1870     		strb	r0, [r3]
+ 669 0076 FFF7FEFF 		bl	Turn
+ 670              	.LVL53:
+ 671 007a 10BD     		pop	{r4, pc}
+ 672              	.LVL54:
+ 673              	.L58:
+  89:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn(Left,i);  return;}
+ 674              		.loc 1 89 0 is_stmt 1 discriminator 2
+ 675 007c 0131     		adds	r1, r1, #1
+ 676              	.LVL55:
+ 677 007e C9B2     		uxtb	r1, r1
+ 678              	.LVL56:
+ 679              	.L55:
+  89:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn(Left,i);  return;}
+ 680              		.loc 1 89 0 is_stmt 0 discriminator 1
+ 681 0080 0229     		cmp	r1, #2
+ 682 0082 E1D9     		bls	.L59
+ 683              	.LBE4:
+  93:Driving.c     **** }
+ 684              		.loc 1 93 0 is_stmt 1
+ 685 0084 044B     		ldr	r3, .L61
+ 686 0086 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 687 0088 23B9     		cbnz	r3, .L49
+  93:Driving.c     **** }
+ 688              		.loc 1 93 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 16
+
+
+ 689 008a 044B     		ldr	r3, .L61+4
+ 690 008c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 691 008e 0BB9     		cbnz	r3, .L49
+  93:Driving.c     **** }
+ 692              		.loc 1 93 0 discriminator 2
+ 693 0090 FFF7FEFF 		bl	Straight
+ 694              	.LVL57:
+ 695              	.L49:
+ 696 0094 10BD     		pop	{r4, pc}
+ 697              	.LVL58:
+ 698              	.L62:
+ 699 0096 00BF     		.align	2
+ 700              	.L61:
+ 701 0098 00000000 		.word	holdL
+ 702 009c 00000000 		.word	holdR
+ 703              		.cfi_endproc
+ 704              	.LFE65:
+ 705              		.size	DriveBetter, .-DriveBetter
+ 706              		.section	.text.Turn_Difference,"ax",%progbits
+ 707              		.align	2
+ 708              		.global	Turn_Difference
+ 709              		.thumb
+ 710              		.thumb_func
+ 711              		.type	Turn_Difference, %function
+ 712              	Turn_Difference:
+ 713              	.LFB71:
+ 143:Driving.c     ****     }     
+ 144:Driving.c     **** }
+ 145:Driving.c     **** void Turn_Difference(_Bool left_right, uint8_t irLocation)
+ 146:Driving.c     **** {    
+ 714              		.loc 1 146 0 is_stmt 1
+ 715              		.cfi_startproc
+ 716              		@ args = 0, pretend = 0, frame = 0
+ 717              		@ frame_needed = 0, uses_anonymous_args = 0
+ 718              	.LVL59:
+ 719 0000 38B5     		push	{r3, r4, r5, lr}
+ 720              		.cfi_def_cfa_offset 16
+ 721              		.cfi_offset 3, -16
+ 722              		.cfi_offset 4, -12
+ 723              		.cfi_offset 5, -8
+ 724              		.cfi_offset 14, -4
+ 725 0002 0546     		mov	r5, r0
+ 726 0004 0C46     		mov	r4, r1
+ 147:Driving.c     ****     Pin_Motor_1_Write(Forward);
+ 727              		.loc 1 147 0
+ 728 0006 0120     		movs	r0, #1
+ 729              	.LVL60:
+ 730 0008 FFF7FEFF 		bl	Pin_Motor_1_Write
+ 731              	.LVL61:
+ 148:Driving.c     ****     Pin_Motor_2_Write(Forward);    
+ 732              		.loc 1 148 0
+ 733 000c 0120     		movs	r0, #1
+ 734 000e FFF7FEFF 		bl	Pin_Motor_2_Write
+ 735              	.LVL62:
+ 149:Driving.c     ****     if(left_right)  
+ 736              		.loc 1 149 0
+ 737 0012 5DB1     		cbz	r5, .L64
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 17
+
+
+ 150:Driving.c     ****     {
+ 151:Driving.c     ****         PWM_1_WriteCompare1(Motor_Drive-motor_Difference[irLocation]);
+ 738              		.loc 1 151 0
+ 739 0014 0B4B     		ldr	r3, .L67
+ 740 0016 1C44     		add	r4, r4, r3
+ 741 0018 207A     		ldrb	r0, [r4, #8]	@ zero_extendqisi2
+ 742 001a C0F11F00 		rsb	r0, r0, #31
+ 743 001e C0B2     		uxtb	r0, r0
+ 744 0020 FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 745              	.LVL63:
+ 152:Driving.c     ****         PWM_1_WriteCompare2(Motor_Turn);
+ 746              		.loc 1 152 0
+ 747 0024 1F20     		movs	r0, #31
+ 748 0026 FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 749              	.LVL64:
+ 750 002a 38BD     		pop	{r3, r4, r5, pc}
+ 751              	.L64:
+ 153:Driving.c     ****     }   
+ 154:Driving.c     ****     else            
+ 155:Driving.c     ****     {
+ 156:Driving.c     ****         PWM_1_WriteCompare1(Motor_Turn);   
+ 752              		.loc 1 156 0
+ 753 002c 1F20     		movs	r0, #31
+ 754 002e FFF7FEFF 		bl	PWM_1_WriteCompare1
+ 755              	.LVL65:
+ 157:Driving.c     ****         PWM_1_WriteCompare2(Motor_Drive-motor_Difference[irLocation]);
+ 756              		.loc 1 157 0
+ 757 0032 044B     		ldr	r3, .L67
+ 758 0034 1C44     		add	r4, r4, r3
+ 759 0036 207A     		ldrb	r0, [r4, #8]	@ zero_extendqisi2
+ 760 0038 C0F11F00 		rsb	r0, r0, #31
+ 761 003c C0B2     		uxtb	r0, r0
+ 762 003e FFF7FEFF 		bl	PWM_1_WriteCompare2
+ 763              	.LVL66:
+ 764 0042 38BD     		pop	{r3, r4, r5, pc}
+ 765              	.L68:
+ 766              		.align	2
+ 767              	.L67:
+ 768 0044 00000000 		.word	.LANCHOR1
+ 769              		.cfi_endproc
+ 770              	.LFE71:
+ 771              		.size	Turn_Difference, .-Turn_Difference
+ 772              		.section	.text.DriveBetterSwing,"ax",%progbits
+ 773              		.align	2
+ 774              		.global	DriveBetterSwing
+ 775              		.thumb
+ 776              		.thumb_func
+ 777              		.type	DriveBetterSwing, %function
+ 778              	DriveBetterSwing:
+ 779              	.LFB66:
+  96:Driving.c     ****     if(ir[0]>ir_compare || ir[1]>ir_compare){holdL =1;}
+ 780              		.loc 1 96 0
+ 781              		.cfi_startproc
+ 782              		@ args = 0, pretend = 0, frame = 0
+ 783              		@ frame_needed = 0, uses_anonymous_args = 0
+ 784              	.LVL67:
+ 785 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 18
+
+
+ 786              		.cfi_def_cfa_offset 8
+ 787              		.cfi_offset 4, -8
+ 788              		.cfi_offset 14, -4
+ 789 0002 0446     		mov	r4, r0
+  97:Driving.c     ****     if(ir[7]>ir_compare || ir[6]>ir_compare){holdR =1;}    
+ 790              		.loc 1 97 0
+ 791 0004 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 792 0006 602B     		cmp	r3, #96
+ 793 0008 02D8     		bhi	.L70
+  97:Driving.c     ****     if(ir[7]>ir_compare || ir[6]>ir_compare){holdR =1;}    
+ 794              		.loc 1 97 0 is_stmt 0 discriminator 2
+ 795 000a 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 796 000c 602B     		cmp	r3, #96
+ 797 000e 02D9     		bls	.L71
+ 798              	.L70:
+  97:Driving.c     ****     if(ir[7]>ir_compare || ir[6]>ir_compare){holdR =1;}    
+ 799              		.loc 1 97 0 discriminator 3
+ 800 0010 0122     		movs	r2, #1
+ 801 0012 244B     		ldr	r3, .L83
+ 802 0014 1A70     		strb	r2, [r3]
+ 803              	.L71:
+  98:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+ 804              		.loc 1 98 0 is_stmt 1
+ 805 0016 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 806 0018 602B     		cmp	r3, #96
+ 807 001a 02D8     		bhi	.L72
+  98:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+ 808              		.loc 1 98 0 is_stmt 0 discriminator 2
+ 809 001c A379     		ldrb	r3, [r4, #6]	@ zero_extendqisi2
+ 810 001e 602B     		cmp	r3, #96
+ 811 0020 02D9     		bls	.L73
+ 812              	.L72:
+  98:Driving.c     ****     if(holdL && holdR)  {  Straight(); }      
+ 813              		.loc 1 98 0 discriminator 3
+ 814 0022 0122     		movs	r2, #1
+ 815 0024 204B     		ldr	r3, .L83+4
+ 816 0026 1A70     		strb	r2, [r3]
+ 817              	.L73:
+  99:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 818              		.loc 1 99 0 is_stmt 1
+ 819 0028 1E4B     		ldr	r3, .L83
+ 820 002a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 821 002c 23B1     		cbz	r3, .L74
+  99:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 822              		.loc 1 99 0 is_stmt 0 discriminator 1
+ 823 002e 1E4B     		ldr	r3, .L83+4
+ 824 0030 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 825 0032 0BB1     		cbz	r3, .L74
+  99:Driving.c     ****     if(holdL)  {HardTurn(Left); }
+ 826              		.loc 1 99 0 discriminator 2
+ 827 0034 FFF7FEFF 		bl	Straight
+ 828              	.LVL68:
+ 829              	.L74:
+ 100:Driving.c     ****     if(holdR)  {HardTurn(Right);}       
+ 830              		.loc 1 100 0 is_stmt 1
+ 831 0038 1A4B     		ldr	r3, .L83
+ 832 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 19
+
+
+ 833 003c 13B1     		cbz	r3, .L75
+ 100:Driving.c     ****     if(holdR)  {HardTurn(Right);}       
+ 834              		.loc 1 100 0 is_stmt 0 discriminator 1
+ 835 003e 0120     		movs	r0, #1
+ 836 0040 FFF7FEFF 		bl	HardTurn
+ 837              	.LVL69:
+ 838              	.L75:
+ 101:Driving.c     ****     for (uint8_t i = 0; i < 3; i++){
+ 839              		.loc 1 101 0 is_stmt 1
+ 840 0044 184B     		ldr	r3, .L83+4
+ 841 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 842 0048 13B1     		cbz	r3, .L76
+ 101:Driving.c     ****     for (uint8_t i = 0; i < 3; i++){
+ 843              		.loc 1 101 0 is_stmt 0 discriminator 1
+ 844 004a 0020     		movs	r0, #0
+ 845 004c FFF7FEFF 		bl	HardTurn
+ 846              	.LVL70:
+ 847              	.L76:
+ 848              	.LBB5:
+ 102:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn_Difference(Left,i);  return;}
+ 849              		.loc 1 102 0 is_stmt 1
+ 850 0050 0021     		movs	r1, #0
+ 851 0052 1BE0     		b	.L77
+ 852              	.LVL71:
+ 853              	.L81:
+ 103:Driving.c     ****         if(ir[6-i]>ir_compare){ holdL =0;   holdR =0;   Turn_Difference(Right,i);  return;}
+ 854              		.loc 1 103 0
+ 855 0054 4B1C     		adds	r3, r1, #1
+ 856 0056 E35C     		ldrb	r3, [r4, r3]	@ zero_extendqisi2
+ 857 0058 602B     		cmp	r3, #96
+ 858 005a 08D9     		bls	.L78
+ 103:Driving.c     ****         if(ir[6-i]>ir_compare){ holdL =0;   holdR =0;   Turn_Difference(Right,i);  return;}
+ 859              		.loc 1 103 0 is_stmt 0 discriminator 1
+ 860 005c 0023     		movs	r3, #0
+ 861 005e 114A     		ldr	r2, .L83
+ 862 0060 1370     		strb	r3, [r2]
+ 863 0062 114A     		ldr	r2, .L83+4
+ 864 0064 1370     		strb	r3, [r2]
+ 865 0066 0120     		movs	r0, #1
+ 866 0068 FFF7FEFF 		bl	Turn_Difference
+ 867              	.LVL72:
+ 868 006c 10BD     		pop	{r4, pc}
+ 869              	.LVL73:
+ 870              	.L78:
+ 104:Driving.c     ****     }
+ 871              		.loc 1 104 0 is_stmt 1
+ 872 006e C1F10603 		rsb	r3, r1, #6
+ 873 0072 E35C     		ldrb	r3, [r4, r3]	@ zero_extendqisi2
+ 874 0074 602B     		cmp	r3, #96
+ 875 0076 07D9     		bls	.L80
+ 104:Driving.c     ****     }
+ 876              		.loc 1 104 0 is_stmt 0 discriminator 1
+ 877 0078 0020     		movs	r0, #0
+ 878 007a 0A4B     		ldr	r3, .L83
+ 879 007c 1870     		strb	r0, [r3]
+ 880 007e 0A4B     		ldr	r3, .L83+4
+ 881 0080 1870     		strb	r0, [r3]
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 20
+
+
+ 882 0082 FFF7FEFF 		bl	Turn_Difference
+ 883              	.LVL74:
+ 884 0086 10BD     		pop	{r4, pc}
+ 885              	.LVL75:
+ 886              	.L80:
+ 102:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn_Difference(Left,i);  return;}
+ 887              		.loc 1 102 0 is_stmt 1 discriminator 2
+ 888 0088 0131     		adds	r1, r1, #1
+ 889              	.LVL76:
+ 890 008a C9B2     		uxtb	r1, r1
+ 891              	.LVL77:
+ 892              	.L77:
+ 102:Driving.c     ****         if(ir[1+i]>ir_compare){   holdL =0;   holdR =0;   Turn_Difference(Left,i);  return;}
+ 893              		.loc 1 102 0 is_stmt 0 discriminator 1
+ 894 008c 0229     		cmp	r1, #2
+ 895 008e E1D9     		bls	.L81
+ 896              	.LBE5:
+ 106:Driving.c     **** }
+ 897              		.loc 1 106 0 is_stmt 1
+ 898 0090 044B     		ldr	r3, .L83
+ 899 0092 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 900 0094 23B9     		cbnz	r3, .L69
+ 106:Driving.c     **** }
+ 901              		.loc 1 106 0 is_stmt 0 discriminator 1
+ 902 0096 044B     		ldr	r3, .L83+4
+ 903 0098 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 904 009a 0BB9     		cbnz	r3, .L69
+ 106:Driving.c     **** }
+ 905              		.loc 1 106 0 discriminator 2
+ 906 009c FFF7FEFF 		bl	Straight
+ 907              	.LVL78:
+ 908              	.L69:
+ 909 00a0 10BD     		pop	{r4, pc}
+ 910              	.LVL79:
+ 911              	.L84:
+ 912 00a2 00BF     		.align	2
+ 913              	.L83:
+ 914 00a4 00000000 		.word	holdL
+ 915 00a8 00000000 		.word	holdR
+ 916              		.cfi_endproc
+ 917              	.LFE66:
+ 918              		.size	DriveBetterSwing, .-DriveBetterSwing
+ 919              		.global	ToRight
+ 920              		.global	ToLeft
+ 921              		.comm	holdR,1,1
+ 922              		.comm	holdL,1,1
+ 923              		.global	path
+ 924              		.global	direction
+ 925              		.global	motor_Difference
+ 926              		.global	motor_Direction_Low
+ 927              		.global	motor_Direction_High
+ 928              		.data
+ 929              		.align	2
+ 930              		.set	.LANCHOR1,. + 0
+ 931              		.type	motor_Direction_Low, %object
+ 932              		.size	motor_Direction_Low, 3
+ 933              	motor_Direction_Low:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 21
+
+
+ 934 0000 00       		.byte	0
+ 935 0001 09       		.byte	9
+ 936 0002 0E       		.byte	14
+ 937 0003 00       		.space	1
+ 938              		.type	motor_Direction_High, %object
+ 939              		.size	motor_Direction_High, 3
+ 940              	motor_Direction_High:
+ 941 0004 1F       		.byte	31
+ 942 0005 17       		.byte	23
+ 943 0006 12       		.byte	18
+ 944 0007 00       		.space	1
+ 945              		.type	motor_Difference, %object
+ 946              		.size	motor_Difference, 3
+ 947              	motor_Difference:
+ 948 0008 1F       		.byte	31
+ 949 0009 10       		.byte	16
+ 950 000a 04       		.byte	4
+ 951              		.bss
+ 952              		.align	1
+ 953              		.set	.LANCHOR0,. + 0
+ 954              		.type	ToLeft, %object
+ 955              		.size	ToLeft, 1
+ 956              	ToLeft:
+ 957 0000 00       		.space	1
+ 958              		.type	ToRight, %object
+ 959              		.size	ToRight, 1
+ 960              	ToRight:
+ 961 0001 00       		.space	1
+ 962              		.type	direction, %object
+ 963              		.size	direction, 2
+ 964              	direction:
+ 965 0002 0000     		.space	2
+ 966              		.type	path, %object
+ 967              		.size	path, 1
+ 968              	path:
+ 969 0004 00       		.space	1
+ 970              		.text
+ 971              	.Letext0:
+ 972              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 973              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 974              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 975              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 976              		.file 6 "Generated_Source\\PSoC5/PWM_1.h"
+ 977              		.file 7 "Generated_Source\\PSoC5/Pin_Motor_1.h"
+ 978              		.file 8 "Generated_Source\\PSoC5/Pin_Motor_2.h"
+ 979              		.file 9 "Generated_Source\\PSoC5/Pin_Led_5.h"
+ 980              		.file 10 "Generated_Source\\PSoC5/Pin_Led_1.h"
+ 981              		.section	.debug_info,"",%progbits
+ 982              	.Ldebug_info0:
+ 983 0000 31060000 		.4byte	0x631
+ 984 0004 0400     		.2byte	0x4
+ 985 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 986 000a 04       		.byte	0x4
+ 987 000b 01       		.uleb128 0x1
+ 988 000c DF000000 		.4byte	.LASF48
+ 989 0010 0C       		.byte	0xc
+ 990 0011 9D020000 		.4byte	.LASF49
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 22
+
+
+ 991 0015 77000000 		.4byte	.LASF50
+ 992 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 993 001d 00000000 		.4byte	0
+ 994 0021 00000000 		.4byte	.Ldebug_line0
+ 995 0025 02       		.uleb128 0x2
+ 996 0026 01       		.byte	0x1
+ 997 0027 06       		.byte	0x6
+ 998 0028 C5000000 		.4byte	.LASF0
+ 999 002c 03       		.uleb128 0x3
+ 1000 002d 00000000 		.4byte	.LASF4
+ 1001 0031 02       		.byte	0x2
+ 1002 0032 1D       		.byte	0x1d
+ 1003 0033 37000000 		.4byte	0x37
+ 1004 0037 02       		.uleb128 0x2
+ 1005 0038 01       		.byte	0x1
+ 1006 0039 08       		.byte	0x8
+ 1007 003a D1000000 		.4byte	.LASF1
+ 1008 003e 02       		.uleb128 0x2
+ 1009 003f 02       		.byte	0x2
+ 1010 0040 05       		.byte	0x5
+ 1011 0041 8D020000 		.4byte	.LASF2
+ 1012 0045 02       		.uleb128 0x2
+ 1013 0046 02       		.byte	0x2
+ 1014 0047 07       		.byte	0x7
+ 1015 0048 91010000 		.4byte	.LASF3
+ 1016 004c 03       		.uleb128 0x3
+ 1017 004d 0A000000 		.4byte	.LASF5
+ 1018 0051 02       		.byte	0x2
+ 1019 0052 3F       		.byte	0x3f
+ 1020 0053 57000000 		.4byte	0x57
+ 1021 0057 02       		.uleb128 0x2
+ 1022 0058 04       		.byte	0x4
+ 1023 0059 05       		.byte	0x5
+ 1024 005a 20020000 		.4byte	.LASF6
+ 1025 005e 02       		.uleb128 0x2
+ 1026 005f 04       		.byte	0x4
+ 1027 0060 07       		.byte	0x7
+ 1028 0061 73010000 		.4byte	.LASF7
+ 1029 0065 02       		.uleb128 0x2
+ 1030 0066 08       		.byte	0x8
+ 1031 0067 05       		.byte	0x5
+ 1032 0068 47020000 		.4byte	.LASF8
+ 1033 006c 02       		.uleb128 0x2
+ 1034 006d 08       		.byte	0x8
+ 1035 006e 07       		.byte	0x7
+ 1036 006f E7010000 		.4byte	.LASF9
+ 1037 0073 04       		.uleb128 0x4
+ 1038 0074 04       		.byte	0x4
+ 1039 0075 05       		.byte	0x5
+ 1040 0076 696E7400 		.ascii	"int\000"
+ 1041 007a 02       		.uleb128 0x2
+ 1042 007b 04       		.byte	0x4
+ 1043 007c 07       		.byte	0x7
+ 1044 007d DA010000 		.4byte	.LASF10
+ 1045 0081 03       		.uleb128 0x3
+ 1046 0082 FE010000 		.4byte	.LASF11
+ 1047 0086 03       		.byte	0x3
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 23
+
+
+ 1048 0087 18       		.byte	0x18
+ 1049 0088 2C000000 		.4byte	0x2c
+ 1050 008c 03       		.uleb128 0x3
+ 1051 008d 2F020000 		.4byte	.LASF12
+ 1052 0091 03       		.byte	0x3
+ 1053 0092 2C       		.byte	0x2c
+ 1054 0093 4C000000 		.4byte	0x4c
+ 1055 0097 05       		.uleb128 0x5
+ 1056 0098 97020000 		.4byte	.LASF13
+ 1057 009c 04       		.byte	0x4
+ 1058 009d E401     		.2byte	0x1e4
+ 1059 009f 37000000 		.4byte	0x37
+ 1060 00a3 05       		.uleb128 0x5
+ 1061 00a4 6D010000 		.4byte	.LASF14
+ 1062 00a8 04       		.byte	0x4
+ 1063 00a9 E801     		.2byte	0x1e8
+ 1064 00ab 3E000000 		.4byte	0x3e
+ 1065 00af 02       		.uleb128 0x2
+ 1066 00b0 04       		.byte	0x4
+ 1067 00b1 04       		.byte	0x4
+ 1068 00b2 BF000000 		.4byte	.LASF15
+ 1069 00b6 02       		.uleb128 0x2
+ 1070 00b7 08       		.byte	0x8
+ 1071 00b8 04       		.byte	0x4
+ 1072 00b9 C2010000 		.4byte	.LASF16
+ 1073 00bd 02       		.uleb128 0x2
+ 1074 00be 01       		.byte	0x1
+ 1075 00bf 08       		.byte	0x8
+ 1076 00c0 55020000 		.4byte	.LASF17
+ 1077 00c4 02       		.uleb128 0x2
+ 1078 00c5 08       		.byte	0x8
+ 1079 00c6 04       		.byte	0x4
+ 1080 00c7 CE020000 		.4byte	.LASF18
+ 1081 00cb 02       		.uleb128 0x2
+ 1082 00cc 04       		.byte	0x4
+ 1083 00cd 07       		.byte	0x7
+ 1084 00ce 3E020000 		.4byte	.LASF19
+ 1085 00d2 06       		.uleb128 0x6
+ 1086 00d3 14000000 		.4byte	.LASF20
+ 1087 00d7 01       		.byte	0x1
+ 1088 00d8 1C       		.byte	0x1c
+ 1089 00d9 00000000 		.4byte	.LFB63
+ 1090 00dd D4000000 		.4byte	.LFE63-.LFB63
+ 1091 00e1 01       		.uleb128 0x1
+ 1092 00e2 9C       		.byte	0x9c
+ 1093 00e3 23010000 		.4byte	0x123
+ 1094 00e7 07       		.uleb128 0x7
+ 1095 00e8 697200   		.ascii	"ir\000"
+ 1096 00eb 01       		.byte	0x1
+ 1097 00ec 1C       		.byte	0x1c
+ 1098 00ed 23010000 		.4byte	0x123
+ 1099 00f1 00000000 		.4byte	.LLST0
+ 1100 00f5 08       		.uleb128 0x8
+ 1101 00f6 0A000000 		.4byte	.LBB2
+ 1102 00fa 4C000000 		.4byte	.LBE2-.LBB2
+ 1103 00fe 10010000 		.4byte	0x110
+ 1104 0102 09       		.uleb128 0x9
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 24
+
+
+ 1105 0103 6900     		.ascii	"i\000"
+ 1106 0105 01       		.byte	0x1
+ 1107 0106 21       		.byte	0x21
+ 1108 0107 81000000 		.4byte	0x81
+ 1109 010b 21000000 		.4byte	.LLST1
+ 1110 010f 00       		.byte	0
+ 1111 0110 0A       		.uleb128 0xa
+ 1112 0111 BE000000 		.4byte	.LVL7
+ 1113 0115 F2050000 		.4byte	0x5f2
+ 1114 0119 0A       		.uleb128 0xa
+ 1115 011a C4000000 		.4byte	.LVL8
+ 1116 011e FD050000 		.4byte	0x5fd
+ 1117 0122 00       		.byte	0
+ 1118 0123 0B       		.uleb128 0xb
+ 1119 0124 04       		.byte	0x4
+ 1120 0125 81000000 		.4byte	0x81
+ 1121 0129 06       		.uleb128 0x6
+ 1122 012a AE010000 		.4byte	.LASF21
+ 1123 012e 01       		.byte	0x1
+ 1124 012f 34       		.byte	0x34
+ 1125 0130 00000000 		.4byte	.LFB64
+ 1126 0134 E8000000 		.4byte	.LFE64-.LFB64
+ 1127 0138 01       		.uleb128 0x1
+ 1128 0139 9C       		.byte	0x9c
+ 1129 013a 7A010000 		.4byte	0x17a
+ 1130 013e 07       		.uleb128 0x7
+ 1131 013f 697200   		.ascii	"ir\000"
+ 1132 0142 01       		.byte	0x1
+ 1133 0143 34       		.byte	0x34
+ 1134 0144 23010000 		.4byte	0x123
+ 1135 0148 4B000000 		.4byte	.LLST2
+ 1136 014c 08       		.uleb128 0x8
+ 1137 014d 2C000000 		.4byte	.LBB3
+ 1138 0151 44000000 		.4byte	.LBE3-.LBB3
+ 1139 0155 67010000 		.4byte	0x167
+ 1140 0159 09       		.uleb128 0x9
+ 1141 015a 6900     		.ascii	"i\000"
+ 1142 015c 01       		.byte	0x1
+ 1143 015d 3D       		.byte	0x3d
+ 1144 015e 81000000 		.4byte	0x81
+ 1145 0162 6C000000 		.4byte	.LLST3
+ 1146 0166 00       		.byte	0
+ 1147 0167 0A       		.uleb128 0xa
+ 1148 0168 D4000000 		.4byte	.LVL16
+ 1149 016c F2050000 		.4byte	0x5f2
+ 1150 0170 0A       		.uleb128 0xa
+ 1151 0171 DA000000 		.4byte	.LVL17
+ 1152 0175 FD050000 		.4byte	0x5fd
+ 1153 0179 00       		.byte	0
+ 1154 017a 0C       		.uleb128 0xc
+ 1155 017b D1010000 		.4byte	.LASF22
+ 1156 017f 01       		.byte	0x1
+ 1157 0180 6D       		.byte	0x6d
+ 1158 0181 00000000 		.4byte	.LFB67
+ 1159 0185 1C000000 		.4byte	.LFE67-.LFB67
+ 1160 0189 01       		.uleb128 0x1
+ 1161 018a 9C       		.byte	0x9c
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 25
+
+
+ 1162 018b D8010000 		.4byte	0x1d8
+ 1163 018f 0D       		.uleb128 0xd
+ 1164 0190 08000000 		.4byte	.LVL18
+ 1165 0194 08060000 		.4byte	0x608
+ 1166 0198 A2010000 		.4byte	0x1a2
+ 1167 019c 0E       		.uleb128 0xe
+ 1168 019d 01       		.uleb128 0x1
+ 1169 019e 50       		.byte	0x50
+ 1170 019f 01       		.uleb128 0x1
+ 1171 01a0 31       		.byte	0x31
+ 1172 01a1 00       		.byte	0
+ 1173 01a2 0D       		.uleb128 0xd
+ 1174 01a3 0E000000 		.4byte	.LVL19
+ 1175 01a7 13060000 		.4byte	0x613
+ 1176 01ab B5010000 		.4byte	0x1b5
+ 1177 01af 0E       		.uleb128 0xe
+ 1178 01b0 01       		.uleb128 0x1
+ 1179 01b1 50       		.byte	0x50
+ 1180 01b2 01       		.uleb128 0x1
+ 1181 01b3 31       		.byte	0x31
+ 1182 01b4 00       		.byte	0
+ 1183 01b5 0D       		.uleb128 0xd
+ 1184 01b6 14000000 		.4byte	.LVL20
+ 1185 01ba F2050000 		.4byte	0x5f2
+ 1186 01be C8010000 		.4byte	0x1c8
+ 1187 01c2 0E       		.uleb128 0xe
+ 1188 01c3 01       		.uleb128 0x1
+ 1189 01c4 50       		.byte	0x50
+ 1190 01c5 01       		.uleb128 0x1
+ 1191 01c6 4F       		.byte	0x4f
+ 1192 01c7 00       		.byte	0
+ 1193 01c8 0F       		.uleb128 0xf
+ 1194 01c9 1A000000 		.4byte	.LVL21
+ 1195 01cd FD050000 		.4byte	0x5fd
+ 1196 01d1 0E       		.uleb128 0xe
+ 1197 01d2 01       		.uleb128 0x1
+ 1198 01d3 50       		.byte	0x50
+ 1199 01d4 01       		.uleb128 0x1
+ 1200 01d5 4F       		.byte	0x4f
+ 1201 01d6 00       		.byte	0
+ 1202 01d7 00       		.byte	0
+ 1203 01d8 0C       		.uleb128 0xc
+ 1204 01d9 A4010000 		.4byte	.LASF23
+ 1205 01dd 01       		.byte	0x1
+ 1206 01de 74       		.byte	0x74
+ 1207 01df 00000000 		.4byte	.LFB68
+ 1208 01e3 1C000000 		.4byte	.LFE68-.LFB68
+ 1209 01e7 01       		.uleb128 0x1
+ 1210 01e8 9C       		.byte	0x9c
+ 1211 01e9 36020000 		.4byte	0x236
+ 1212 01ed 0D       		.uleb128 0xd
+ 1213 01ee 08000000 		.4byte	.LVL22
+ 1214 01f2 08060000 		.4byte	0x608
+ 1215 01f6 00020000 		.4byte	0x200
+ 1216 01fa 0E       		.uleb128 0xe
+ 1217 01fb 01       		.uleb128 0x1
+ 1218 01fc 50       		.byte	0x50
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 26
+
+
+ 1219 01fd 01       		.uleb128 0x1
+ 1220 01fe 32       		.byte	0x32
+ 1221 01ff 00       		.byte	0
+ 1222 0200 0D       		.uleb128 0xd
+ 1223 0201 0E000000 		.4byte	.LVL23
+ 1224 0205 13060000 		.4byte	0x613
+ 1225 0209 13020000 		.4byte	0x213
+ 1226 020d 0E       		.uleb128 0xe
+ 1227 020e 01       		.uleb128 0x1
+ 1228 020f 50       		.byte	0x50
+ 1229 0210 01       		.uleb128 0x1
+ 1230 0211 32       		.byte	0x32
+ 1231 0212 00       		.byte	0
+ 1232 0213 0D       		.uleb128 0xd
+ 1233 0214 14000000 		.4byte	.LVL24
+ 1234 0218 F2050000 		.4byte	0x5f2
+ 1235 021c 26020000 		.4byte	0x226
+ 1236 0220 0E       		.uleb128 0xe
+ 1237 0221 01       		.uleb128 0x1
+ 1238 0222 50       		.byte	0x50
+ 1239 0223 01       		.uleb128 0x1
+ 1240 0224 4F       		.byte	0x4f
+ 1241 0225 00       		.byte	0
+ 1242 0226 0F       		.uleb128 0xf
+ 1243 0227 1A000000 		.4byte	.LVL25
+ 1244 022b FD050000 		.4byte	0x5fd
+ 1245 022f 0E       		.uleb128 0xe
+ 1246 0230 01       		.uleb128 0x1
+ 1247 0231 50       		.byte	0x50
+ 1248 0232 01       		.uleb128 0x1
+ 1249 0233 4F       		.byte	0x4f
+ 1250 0234 00       		.byte	0
+ 1251 0235 00       		.byte	0
+ 1252 0236 06       		.uleb128 0x6
+ 1253 0237 B6000000 		.4byte	.LASF24
+ 1254 023b 01       		.byte	0x1
+ 1255 023c 7B       		.byte	0x7b
+ 1256 023d 00000000 		.4byte	.LFB69
+ 1257 0241 38000000 		.4byte	.LFE69-.LFB69
+ 1258 0245 01       		.uleb128 0x1
+ 1259 0246 9C       		.byte	0x9c
+ 1260 0247 EF020000 		.4byte	0x2ef
+ 1261 024b 10       		.uleb128 0x10
+ 1262 024c 3A000000 		.4byte	.LASF25
+ 1263 0250 01       		.byte	0x1
+ 1264 0251 7B       		.byte	0x7b
+ 1265 0252 EF020000 		.4byte	0x2ef
+ 1266 0256 96000000 		.4byte	.LLST4
+ 1267 025a 0D       		.uleb128 0xd
+ 1268 025b 0A000000 		.4byte	.LVL28
+ 1269 025f 08060000 		.4byte	0x608
+ 1270 0263 6D020000 		.4byte	0x26d
+ 1271 0267 0E       		.uleb128 0xe
+ 1272 0268 01       		.uleb128 0x1
+ 1273 0269 50       		.byte	0x50
+ 1274 026a 01       		.uleb128 0x1
+ 1275 026b 32       		.byte	0x32
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 27
+
+
+ 1276 026c 00       		.byte	0
+ 1277 026d 0D       		.uleb128 0xd
+ 1278 026e 10000000 		.4byte	.LVL29
+ 1279 0272 13060000 		.4byte	0x613
+ 1280 0276 80020000 		.4byte	0x280
+ 1281 027a 0E       		.uleb128 0xe
+ 1282 027b 01       		.uleb128 0x1
+ 1283 027c 50       		.byte	0x50
+ 1284 027d 01       		.uleb128 0x1
+ 1285 027e 31       		.byte	0x31
+ 1286 027f 00       		.byte	0
+ 1287 0280 0D       		.uleb128 0xd
+ 1288 0281 16000000 		.4byte	.LVL30
+ 1289 0285 1E060000 		.4byte	0x61e
+ 1290 0289 93020000 		.4byte	0x293
+ 1291 028d 0E       		.uleb128 0xe
+ 1292 028e 01       		.uleb128 0x1
+ 1293 028f 50       		.byte	0x50
+ 1294 0290 01       		.uleb128 0x1
+ 1295 0291 31       		.byte	0x31
+ 1296 0292 00       		.byte	0
+ 1297 0293 0D       		.uleb128 0xd
+ 1298 0294 1E000000 		.4byte	.LVL33
+ 1299 0298 08060000 		.4byte	0x608
+ 1300 029c A6020000 		.4byte	0x2a6
+ 1301 02a0 0E       		.uleb128 0xe
+ 1302 02a1 01       		.uleb128 0x1
+ 1303 02a2 50       		.byte	0x50
+ 1304 02a3 01       		.uleb128 0x1
+ 1305 02a4 31       		.byte	0x31
+ 1306 02a5 00       		.byte	0
+ 1307 02a6 0D       		.uleb128 0xd
+ 1308 02a7 24000000 		.4byte	.LVL34
+ 1309 02ab 13060000 		.4byte	0x613
+ 1310 02af B9020000 		.4byte	0x2b9
+ 1311 02b3 0E       		.uleb128 0xe
+ 1312 02b4 01       		.uleb128 0x1
+ 1313 02b5 50       		.byte	0x50
+ 1314 02b6 01       		.uleb128 0x1
+ 1315 02b7 32       		.byte	0x32
+ 1316 02b8 00       		.byte	0
+ 1317 02b9 0D       		.uleb128 0xd
+ 1318 02ba 2A000000 		.4byte	.LVL35
+ 1319 02be 29060000 		.4byte	0x629
+ 1320 02c2 CC020000 		.4byte	0x2cc
+ 1321 02c6 0E       		.uleb128 0xe
+ 1322 02c7 01       		.uleb128 0x1
+ 1323 02c8 50       		.byte	0x50
+ 1324 02c9 01       		.uleb128 0x1
+ 1325 02ca 31       		.byte	0x31
+ 1326 02cb 00       		.byte	0
+ 1327 02cc 0D       		.uleb128 0xd
+ 1328 02cd 30000000 		.4byte	.LVL36
+ 1329 02d1 F2050000 		.4byte	0x5f2
+ 1330 02d5 DF020000 		.4byte	0x2df
+ 1331 02d9 0E       		.uleb128 0xe
+ 1332 02da 01       		.uleb128 0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 28
+
+
+ 1333 02db 50       		.byte	0x50
+ 1334 02dc 01       		.uleb128 0x1
+ 1335 02dd 4F       		.byte	0x4f
+ 1336 02de 00       		.byte	0
+ 1337 02df 0F       		.uleb128 0xf
+ 1338 02e0 36000000 		.4byte	.LVL37
+ 1339 02e4 FD050000 		.4byte	0x5fd
+ 1340 02e8 0E       		.uleb128 0xe
+ 1341 02e9 01       		.uleb128 0x1
+ 1342 02ea 50       		.byte	0x50
+ 1343 02eb 01       		.uleb128 0x1
+ 1344 02ec 4F       		.byte	0x4f
+ 1345 02ed 00       		.byte	0
+ 1346 02ee 00       		.byte	0
+ 1347 02ef 02       		.uleb128 0x2
+ 1348 02f0 01       		.byte	0x1
+ 1349 02f1 02       		.byte	0x2
+ 1350 02f2 EF020000 		.4byte	.LASF26
+ 1351 02f6 06       		.uleb128 0x6
+ 1352 02f7 A7020000 		.4byte	.LASF27
+ 1353 02fb 01       		.byte	0x1
+ 1354 02fc 82       		.byte	0x82
+ 1355 02fd 00000000 		.4byte	.LFB70
+ 1356 0301 3C000000 		.4byte	.LFE70-.LFB70
+ 1357 0305 01       		.uleb128 0x1
+ 1358 0306 9C       		.byte	0x9c
+ 1359 0307 74030000 		.4byte	0x374
+ 1360 030b 10       		.uleb128 0x10
+ 1361 030c 3A000000 		.4byte	.LASF25
+ 1362 0310 01       		.byte	0x1
+ 1363 0311 82       		.byte	0x82
+ 1364 0312 EF020000 		.4byte	0x2ef
+ 1365 0316 D0000000 		.4byte	.LLST5
+ 1366 031a 10       		.uleb128 0x10
+ 1367 031b AC020000 		.4byte	.LASF28
+ 1368 031f 01       		.byte	0x1
+ 1369 0320 82       		.byte	0x82
+ 1370 0321 81000000 		.4byte	0x81
+ 1371 0325 F1000000 		.4byte	.LLST6
+ 1372 0329 0D       		.uleb128 0xd
+ 1373 032a 0C000000 		.4byte	.LVL40
+ 1374 032e 08060000 		.4byte	0x608
+ 1375 0332 3C030000 		.4byte	0x33c
+ 1376 0336 0E       		.uleb128 0xe
+ 1377 0337 01       		.uleb128 0x1
+ 1378 0338 50       		.byte	0x50
+ 1379 0339 01       		.uleb128 0x1
+ 1380 033a 31       		.byte	0x31
+ 1381 033b 00       		.byte	0
+ 1382 033c 0D       		.uleb128 0xd
+ 1383 033d 12000000 		.4byte	.LVL41
+ 1384 0341 13060000 		.4byte	0x613
+ 1385 0345 4F030000 		.4byte	0x34f
+ 1386 0349 0E       		.uleb128 0xe
+ 1387 034a 01       		.uleb128 0x1
+ 1388 034b 50       		.byte	0x50
+ 1389 034c 01       		.uleb128 0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 29
+
+
+ 1390 034d 31       		.byte	0x31
+ 1391 034e 00       		.byte	0
+ 1392 034f 0A       		.uleb128 0xa
+ 1393 0350 1C000000 		.4byte	.LVL42
+ 1394 0354 F2050000 		.4byte	0x5f2
+ 1395 0358 0A       		.uleb128 0xa
+ 1396 0359 24000000 		.4byte	.LVL43
+ 1397 035d FD050000 		.4byte	0x5fd
+ 1398 0361 0A       		.uleb128 0xa
+ 1399 0362 30000000 		.4byte	.LVL44
+ 1400 0366 F2050000 		.4byte	0x5f2
+ 1401 036a 0A       		.uleb128 0xa
+ 1402 036b 36000000 		.4byte	.LVL45
+ 1403 036f FD050000 		.4byte	0x5fd
+ 1404 0373 00       		.byte	0
+ 1405 0374 06       		.uleb128 0x6
+ 1406 0375 85010000 		.4byte	.LASF29
+ 1407 0379 01       		.byte	0x1
+ 1408 037a 52       		.byte	0x52
+ 1409 037b 00000000 		.4byte	.LFB65
+ 1410 037f A0000000 		.4byte	.LFE65-.LFB65
+ 1411 0383 01       		.uleb128 0x1
+ 1412 0384 9C       		.byte	0x9c
+ 1413 0385 0D040000 		.4byte	0x40d
+ 1414 0389 07       		.uleb128 0x7
+ 1415 038a 697200   		.ascii	"ir\000"
+ 1416 038d 01       		.byte	0x1
+ 1417 038e 52       		.byte	0x52
+ 1418 038f 23010000 		.4byte	0x123
+ 1419 0393 12010000 		.4byte	.LLST7
+ 1420 0397 08       		.uleb128 0x8
+ 1421 0398 44000000 		.4byte	.LBB4
+ 1422 039c 40000000 		.4byte	.LBE4-.LBB4
+ 1423 03a0 D4030000 		.4byte	0x3d4
+ 1424 03a4 09       		.uleb128 0x9
+ 1425 03a5 6900     		.ascii	"i\000"
+ 1426 03a7 01       		.byte	0x1
+ 1427 03a8 59       		.byte	0x59
+ 1428 03a9 81000000 		.4byte	0x81
+ 1429 03ad 3E010000 		.4byte	.LLST8
+ 1430 03b1 0D       		.uleb128 0xd
+ 1431 03b2 60000000 		.4byte	.LVL51
+ 1432 03b6 F6020000 		.4byte	0x2f6
+ 1433 03ba C4030000 		.4byte	0x3c4
+ 1434 03be 0E       		.uleb128 0xe
+ 1435 03bf 01       		.uleb128 0x1
+ 1436 03c0 50       		.byte	0x50
+ 1437 03c1 01       		.uleb128 0x1
+ 1438 03c2 31       		.byte	0x31
+ 1439 03c3 00       		.byte	0
+ 1440 03c4 0F       		.uleb128 0xf
+ 1441 03c5 7A000000 		.4byte	.LVL53
+ 1442 03c9 F6020000 		.4byte	0x2f6
+ 1443 03cd 0E       		.uleb128 0xe
+ 1444 03ce 01       		.uleb128 0x1
+ 1445 03cf 50       		.byte	0x50
+ 1446 03d0 01       		.uleb128 0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 30
+
+
+ 1447 03d1 30       		.byte	0x30
+ 1448 03d2 00       		.byte	0
+ 1449 03d3 00       		.byte	0
+ 1450 03d4 0A       		.uleb128 0xa
+ 1451 03d5 2C000000 		.4byte	.LVL47
+ 1452 03d9 7A010000 		.4byte	0x17a
+ 1453 03dd 0D       		.uleb128 0xd
+ 1454 03de 38000000 		.4byte	.LVL48
+ 1455 03e2 36020000 		.4byte	0x236
+ 1456 03e6 F0030000 		.4byte	0x3f0
+ 1457 03ea 0E       		.uleb128 0xe
+ 1458 03eb 01       		.uleb128 0x1
+ 1459 03ec 50       		.byte	0x50
+ 1460 03ed 01       		.uleb128 0x1
+ 1461 03ee 31       		.byte	0x31
+ 1462 03ef 00       		.byte	0
+ 1463 03f0 0D       		.uleb128 0xd
+ 1464 03f1 44000000 		.4byte	.LVL49
+ 1465 03f5 36020000 		.4byte	0x236
+ 1466 03f9 03040000 		.4byte	0x403
+ 1467 03fd 0E       		.uleb128 0xe
+ 1468 03fe 01       		.uleb128 0x1
+ 1469 03ff 50       		.byte	0x50
+ 1470 0400 01       		.uleb128 0x1
+ 1471 0401 30       		.byte	0x30
+ 1472 0402 00       		.byte	0
+ 1473 0403 0A       		.uleb128 0xa
+ 1474 0404 94000000 		.4byte	.LVL57
+ 1475 0408 7A010000 		.4byte	0x17a
+ 1476 040c 00       		.byte	0
+ 1477 040d 06       		.uleb128 0x6
+ 1478 040e 1A000000 		.4byte	.LASF30
+ 1479 0412 01       		.byte	0x1
+ 1480 0413 91       		.byte	0x91
+ 1481 0414 00000000 		.4byte	.LFB71
+ 1482 0418 48000000 		.4byte	.LFE71-.LFB71
+ 1483 041c 01       		.uleb128 0x1
+ 1484 041d 9C       		.byte	0x9c
+ 1485 041e 9F040000 		.4byte	0x49f
+ 1486 0422 10       		.uleb128 0x10
+ 1487 0423 3A000000 		.4byte	.LASF25
+ 1488 0427 01       		.byte	0x1
+ 1489 0428 91       		.byte	0x91
+ 1490 0429 EF020000 		.4byte	0x2ef
+ 1491 042d 7E010000 		.4byte	.LLST9
+ 1492 0431 10       		.uleb128 0x10
+ 1493 0432 AC020000 		.4byte	.LASF28
+ 1494 0436 01       		.byte	0x1
+ 1495 0437 91       		.byte	0x91
+ 1496 0438 81000000 		.4byte	0x81
+ 1497 043c 9F010000 		.4byte	.LLST10
+ 1498 0440 0D       		.uleb128 0xd
+ 1499 0441 0C000000 		.4byte	.LVL61
+ 1500 0445 08060000 		.4byte	0x608
+ 1501 0449 53040000 		.4byte	0x453
+ 1502 044d 0E       		.uleb128 0xe
+ 1503 044e 01       		.uleb128 0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 31
+
+
+ 1504 044f 50       		.byte	0x50
+ 1505 0450 01       		.uleb128 0x1
+ 1506 0451 31       		.byte	0x31
+ 1507 0452 00       		.byte	0
+ 1508 0453 0D       		.uleb128 0xd
+ 1509 0454 12000000 		.4byte	.LVL62
+ 1510 0458 13060000 		.4byte	0x613
+ 1511 045c 66040000 		.4byte	0x466
+ 1512 0460 0E       		.uleb128 0xe
+ 1513 0461 01       		.uleb128 0x1
+ 1514 0462 50       		.byte	0x50
+ 1515 0463 01       		.uleb128 0x1
+ 1516 0464 31       		.byte	0x31
+ 1517 0465 00       		.byte	0
+ 1518 0466 0A       		.uleb128 0xa
+ 1519 0467 24000000 		.4byte	.LVL63
+ 1520 046b F2050000 		.4byte	0x5f2
+ 1521 046f 0D       		.uleb128 0xd
+ 1522 0470 2A000000 		.4byte	.LVL64
+ 1523 0474 FD050000 		.4byte	0x5fd
+ 1524 0478 82040000 		.4byte	0x482
+ 1525 047c 0E       		.uleb128 0xe
+ 1526 047d 01       		.uleb128 0x1
+ 1527 047e 50       		.byte	0x50
+ 1528 047f 01       		.uleb128 0x1
+ 1529 0480 4F       		.byte	0x4f
+ 1530 0481 00       		.byte	0
+ 1531 0482 0D       		.uleb128 0xd
+ 1532 0483 32000000 		.4byte	.LVL65
+ 1533 0487 F2050000 		.4byte	0x5f2
+ 1534 048b 95040000 		.4byte	0x495
+ 1535 048f 0E       		.uleb128 0xe
+ 1536 0490 01       		.uleb128 0x1
+ 1537 0491 50       		.byte	0x50
+ 1538 0492 01       		.uleb128 0x1
+ 1539 0493 4F       		.byte	0x4f
+ 1540 0494 00       		.byte	0
+ 1541 0495 0A       		.uleb128 0xa
+ 1542 0496 42000000 		.4byte	.LVL66
+ 1543 049a FD050000 		.4byte	0x5fd
+ 1544 049e 00       		.byte	0
+ 1545 049f 06       		.uleb128 0x6
+ 1546 04a0 5A020000 		.4byte	.LASF31
+ 1547 04a4 01       		.byte	0x1
+ 1548 04a5 5F       		.byte	0x5f
+ 1549 04a6 00000000 		.4byte	.LFB66
+ 1550 04aa AC000000 		.4byte	.LFE66-.LFB66
+ 1551 04ae 01       		.uleb128 0x1
+ 1552 04af 9C       		.byte	0x9c
+ 1553 04b0 38050000 		.4byte	0x538
+ 1554 04b4 07       		.uleb128 0x7
+ 1555 04b5 697200   		.ascii	"ir\000"
+ 1556 04b8 01       		.byte	0x1
+ 1557 04b9 5F       		.byte	0x5f
+ 1558 04ba 23010000 		.4byte	0x123
+ 1559 04be C0010000 		.4byte	.LLST11
+ 1560 04c2 08       		.uleb128 0x8
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 32
+
+
+ 1561 04c3 50000000 		.4byte	.LBB5
+ 1562 04c7 40000000 		.4byte	.LBE5-.LBB5
+ 1563 04cb FF040000 		.4byte	0x4ff
+ 1564 04cf 09       		.uleb128 0x9
+ 1565 04d0 6900     		.ascii	"i\000"
+ 1566 04d2 01       		.byte	0x1
+ 1567 04d3 66       		.byte	0x66
+ 1568 04d4 81000000 		.4byte	0x81
+ 1569 04d8 EC010000 		.4byte	.LLST12
+ 1570 04dc 0D       		.uleb128 0xd
+ 1571 04dd 6C000000 		.4byte	.LVL72
+ 1572 04e1 0D040000 		.4byte	0x40d
+ 1573 04e5 EF040000 		.4byte	0x4ef
+ 1574 04e9 0E       		.uleb128 0xe
+ 1575 04ea 01       		.uleb128 0x1
+ 1576 04eb 50       		.byte	0x50
+ 1577 04ec 01       		.uleb128 0x1
+ 1578 04ed 31       		.byte	0x31
+ 1579 04ee 00       		.byte	0
+ 1580 04ef 0F       		.uleb128 0xf
+ 1581 04f0 86000000 		.4byte	.LVL74
+ 1582 04f4 0D040000 		.4byte	0x40d
+ 1583 04f8 0E       		.uleb128 0xe
+ 1584 04f9 01       		.uleb128 0x1
+ 1585 04fa 50       		.byte	0x50
+ 1586 04fb 01       		.uleb128 0x1
+ 1587 04fc 30       		.byte	0x30
+ 1588 04fd 00       		.byte	0
+ 1589 04fe 00       		.byte	0
+ 1590 04ff 0A       		.uleb128 0xa
+ 1591 0500 38000000 		.4byte	.LVL68
+ 1592 0504 7A010000 		.4byte	0x17a
+ 1593 0508 0D       		.uleb128 0xd
+ 1594 0509 44000000 		.4byte	.LVL69
+ 1595 050d 36020000 		.4byte	0x236
+ 1596 0511 1B050000 		.4byte	0x51b
+ 1597 0515 0E       		.uleb128 0xe
+ 1598 0516 01       		.uleb128 0x1
+ 1599 0517 50       		.byte	0x50
+ 1600 0518 01       		.uleb128 0x1
+ 1601 0519 31       		.byte	0x31
+ 1602 051a 00       		.byte	0
+ 1603 051b 0D       		.uleb128 0xd
+ 1604 051c 50000000 		.4byte	.LVL70
+ 1605 0520 36020000 		.4byte	0x236
+ 1606 0524 2E050000 		.4byte	0x52e
+ 1607 0528 0E       		.uleb128 0xe
+ 1608 0529 01       		.uleb128 0x1
+ 1609 052a 50       		.byte	0x50
+ 1610 052b 01       		.uleb128 0x1
+ 1611 052c 30       		.byte	0x30
+ 1612 052d 00       		.byte	0
+ 1613 052e 0A       		.uleb128 0xa
+ 1614 052f A0000000 		.4byte	.LVL78
+ 1615 0533 7A010000 		.4byte	0x17a
+ 1616 0537 00       		.byte	0
+ 1617 0538 11       		.uleb128 0x11
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 33
+
+
+ 1618 0539 B5010000 		.4byte	.LASF32
+ 1619 053d 05       		.byte	0x5
+ 1620 053e 1207     		.2byte	0x712
+ 1621 0540 44050000 		.4byte	0x544
+ 1622 0544 12       		.uleb128 0x12
+ 1623 0545 8C000000 		.4byte	0x8c
+ 1624 0549 13       		.uleb128 0x13
+ 1625 054a 81000000 		.4byte	0x81
+ 1626 054e 59050000 		.4byte	0x559
+ 1627 0552 14       		.uleb128 0x14
+ 1628 0553 CB000000 		.4byte	0xcb
+ 1629 0557 02       		.byte	0x2
+ 1630 0558 00       		.byte	0
+ 1631 0559 15       		.uleb128 0x15
+ 1632 055a DA020000 		.4byte	.LASF33
+ 1633 055e 01       		.byte	0x1
+ 1634 055f 0E       		.byte	0xe
+ 1635 0560 49050000 		.4byte	0x549
+ 1636 0564 05       		.uleb128 0x5
+ 1637 0565 03       		.byte	0x3
+ 1638 0566 00000000 		.4byte	motor_Direction_High
+ 1639 056a 15       		.uleb128 0x15
+ 1640 056b 06020000 		.4byte	.LASF34
+ 1641 056f 01       		.byte	0x1
+ 1642 0570 0F       		.byte	0xf
+ 1643 0571 49050000 		.4byte	0x549
+ 1644 0575 05       		.uleb128 0x5
+ 1645 0576 03       		.byte	0x3
+ 1646 0577 00000000 		.4byte	motor_Direction_Low
+ 1647 057b 15       		.uleb128 0x15
+ 1648 057c F5020000 		.4byte	.LASF35
+ 1649 0580 01       		.byte	0x1
+ 1650 0581 10       		.byte	0x10
+ 1651 0582 49050000 		.4byte	0x549
+ 1652 0586 05       		.uleb128 0x5
+ 1653 0587 03       		.byte	0x3
+ 1654 0588 00000000 		.4byte	motor_Difference
+ 1655 058c 15       		.uleb128 0x15
+ 1656 058d 6D000000 		.4byte	.LASF36
+ 1657 0591 01       		.byte	0x1
+ 1658 0592 13       		.byte	0x13
+ 1659 0593 A3000000 		.4byte	0xa3
+ 1660 0597 05       		.uleb128 0x5
+ 1661 0598 03       		.byte	0x3
+ 1662 0599 00000000 		.4byte	direction
+ 1663 059d 15       		.uleb128 0x15
+ 1664 059e C9020000 		.4byte	.LASF37
+ 1665 05a2 01       		.byte	0x1
+ 1666 05a3 15       		.byte	0x15
+ 1667 05a4 81000000 		.4byte	0x81
+ 1668 05a8 05       		.uleb128 0x5
+ 1669 05a9 03       		.byte	0x3
+ 1670 05aa 00000000 		.4byte	path
+ 1671 05ae 15       		.uleb128 0x15
+ 1672 05af 1A020000 		.4byte	.LASF38
+ 1673 05b3 01       		.byte	0x1
+ 1674 05b4 16       		.byte	0x16
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 34
+
+
+ 1675 05b5 EF020000 		.4byte	0x2ef
+ 1676 05b9 05       		.uleb128 0x5
+ 1677 05ba 03       		.byte	0x3
+ 1678 05bb 00000000 		.4byte	holdL
+ 1679 05bf 15       		.uleb128 0x15
+ 1680 05c0 29020000 		.4byte	.LASF39
+ 1681 05c4 01       		.byte	0x1
+ 1682 05c5 17       		.byte	0x17
+ 1683 05c6 EF020000 		.4byte	0x2ef
+ 1684 05ca 05       		.uleb128 0x5
+ 1685 05cb 03       		.byte	0x3
+ 1686 05cc 00000000 		.4byte	holdR
+ 1687 05d0 15       		.uleb128 0x15
+ 1688 05d1 37020000 		.4byte	.LASF40
+ 1689 05d5 01       		.byte	0x1
+ 1690 05d6 1A       		.byte	0x1a
+ 1691 05d7 97000000 		.4byte	0x97
+ 1692 05db 05       		.uleb128 0x5
+ 1693 05dc 03       		.byte	0x3
+ 1694 05dd 00000000 		.4byte	ToLeft
+ 1695 05e1 15       		.uleb128 0x15
+ 1696 05e2 C9010000 		.4byte	.LASF41
+ 1697 05e6 01       		.byte	0x1
+ 1698 05e7 1B       		.byte	0x1b
+ 1699 05e8 97000000 		.4byte	0x97
+ 1700 05ec 05       		.uleb128 0x5
+ 1701 05ed 03       		.byte	0x3
+ 1702 05ee 00000000 		.4byte	ToRight
+ 1703 05f2 16       		.uleb128 0x16
+ 1704 05f3 45000000 		.4byte	.LASF42
+ 1705 05f7 45000000 		.4byte	.LASF42
+ 1706 05fb 06       		.byte	0x6
+ 1707 05fc C7       		.byte	0xc7
+ 1708 05fd 16       		.uleb128 0x16
+ 1709 05fe 59000000 		.4byte	.LASF43
+ 1710 0602 59000000 		.4byte	.LASF43
+ 1711 0606 06       		.byte	0x6
+ 1712 0607 CA       		.byte	0xca
+ 1713 0608 16       		.uleb128 0x16
+ 1714 0609 7B020000 		.4byte	.LASF44
+ 1715 060d 7B020000 		.4byte	.LASF44
+ 1716 0611 07       		.byte	0x7
+ 1717 0612 26       		.byte	0x26
+ 1718 0613 16       		.uleb128 0x16
+ 1719 0614 B7020000 		.4byte	.LASF45
+ 1720 0618 B7020000 		.4byte	.LASF45
+ 1721 061c 08       		.byte	0x8
+ 1722 061d 26       		.byte	0x26
+ 1723 061e 16       		.uleb128 0x16
+ 1724 061f 6B020000 		.4byte	.LASF46
+ 1725 0623 6B020000 		.4byte	.LASF46
+ 1726 0627 09       		.byte	0x9
+ 1727 0628 26       		.byte	0x26
+ 1728 0629 16       		.uleb128 0x16
+ 1729 062a 2A000000 		.4byte	.LASF47
+ 1730 062e 2A000000 		.4byte	.LASF47
+ 1731 0632 0A       		.byte	0xa
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 35
+
+
+ 1732 0633 26       		.byte	0x26
+ 1733 0634 00       		.byte	0
+ 1734              		.section	.debug_abbrev,"",%progbits
+ 1735              	.Ldebug_abbrev0:
+ 1736 0000 01       		.uleb128 0x1
+ 1737 0001 11       		.uleb128 0x11
+ 1738 0002 01       		.byte	0x1
+ 1739 0003 25       		.uleb128 0x25
+ 1740 0004 0E       		.uleb128 0xe
+ 1741 0005 13       		.uleb128 0x13
+ 1742 0006 0B       		.uleb128 0xb
+ 1743 0007 03       		.uleb128 0x3
+ 1744 0008 0E       		.uleb128 0xe
+ 1745 0009 1B       		.uleb128 0x1b
+ 1746 000a 0E       		.uleb128 0xe
+ 1747 000b 55       		.uleb128 0x55
+ 1748 000c 17       		.uleb128 0x17
+ 1749 000d 11       		.uleb128 0x11
+ 1750 000e 01       		.uleb128 0x1
+ 1751 000f 10       		.uleb128 0x10
+ 1752 0010 17       		.uleb128 0x17
+ 1753 0011 00       		.byte	0
+ 1754 0012 00       		.byte	0
+ 1755 0013 02       		.uleb128 0x2
+ 1756 0014 24       		.uleb128 0x24
+ 1757 0015 00       		.byte	0
+ 1758 0016 0B       		.uleb128 0xb
+ 1759 0017 0B       		.uleb128 0xb
+ 1760 0018 3E       		.uleb128 0x3e
+ 1761 0019 0B       		.uleb128 0xb
+ 1762 001a 03       		.uleb128 0x3
+ 1763 001b 0E       		.uleb128 0xe
+ 1764 001c 00       		.byte	0
+ 1765 001d 00       		.byte	0
+ 1766 001e 03       		.uleb128 0x3
+ 1767 001f 16       		.uleb128 0x16
+ 1768 0020 00       		.byte	0
+ 1769 0021 03       		.uleb128 0x3
+ 1770 0022 0E       		.uleb128 0xe
+ 1771 0023 3A       		.uleb128 0x3a
+ 1772 0024 0B       		.uleb128 0xb
+ 1773 0025 3B       		.uleb128 0x3b
+ 1774 0026 0B       		.uleb128 0xb
+ 1775 0027 49       		.uleb128 0x49
+ 1776 0028 13       		.uleb128 0x13
+ 1777 0029 00       		.byte	0
+ 1778 002a 00       		.byte	0
+ 1779 002b 04       		.uleb128 0x4
+ 1780 002c 24       		.uleb128 0x24
+ 1781 002d 00       		.byte	0
+ 1782 002e 0B       		.uleb128 0xb
+ 1783 002f 0B       		.uleb128 0xb
+ 1784 0030 3E       		.uleb128 0x3e
+ 1785 0031 0B       		.uleb128 0xb
+ 1786 0032 03       		.uleb128 0x3
+ 1787 0033 08       		.uleb128 0x8
+ 1788 0034 00       		.byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 36
+
+
+ 1789 0035 00       		.byte	0
+ 1790 0036 05       		.uleb128 0x5
+ 1791 0037 16       		.uleb128 0x16
+ 1792 0038 00       		.byte	0
+ 1793 0039 03       		.uleb128 0x3
+ 1794 003a 0E       		.uleb128 0xe
+ 1795 003b 3A       		.uleb128 0x3a
+ 1796 003c 0B       		.uleb128 0xb
+ 1797 003d 3B       		.uleb128 0x3b
+ 1798 003e 05       		.uleb128 0x5
+ 1799 003f 49       		.uleb128 0x49
+ 1800 0040 13       		.uleb128 0x13
+ 1801 0041 00       		.byte	0
+ 1802 0042 00       		.byte	0
+ 1803 0043 06       		.uleb128 0x6
+ 1804 0044 2E       		.uleb128 0x2e
+ 1805 0045 01       		.byte	0x1
+ 1806 0046 3F       		.uleb128 0x3f
+ 1807 0047 19       		.uleb128 0x19
+ 1808 0048 03       		.uleb128 0x3
+ 1809 0049 0E       		.uleb128 0xe
+ 1810 004a 3A       		.uleb128 0x3a
+ 1811 004b 0B       		.uleb128 0xb
+ 1812 004c 3B       		.uleb128 0x3b
+ 1813 004d 0B       		.uleb128 0xb
+ 1814 004e 27       		.uleb128 0x27
+ 1815 004f 19       		.uleb128 0x19
+ 1816 0050 11       		.uleb128 0x11
+ 1817 0051 01       		.uleb128 0x1
+ 1818 0052 12       		.uleb128 0x12
+ 1819 0053 06       		.uleb128 0x6
+ 1820 0054 40       		.uleb128 0x40
+ 1821 0055 18       		.uleb128 0x18
+ 1822 0056 9742     		.uleb128 0x2117
+ 1823 0058 19       		.uleb128 0x19
+ 1824 0059 01       		.uleb128 0x1
+ 1825 005a 13       		.uleb128 0x13
+ 1826 005b 00       		.byte	0
+ 1827 005c 00       		.byte	0
+ 1828 005d 07       		.uleb128 0x7
+ 1829 005e 05       		.uleb128 0x5
+ 1830 005f 00       		.byte	0
+ 1831 0060 03       		.uleb128 0x3
+ 1832 0061 08       		.uleb128 0x8
+ 1833 0062 3A       		.uleb128 0x3a
+ 1834 0063 0B       		.uleb128 0xb
+ 1835 0064 3B       		.uleb128 0x3b
+ 1836 0065 0B       		.uleb128 0xb
+ 1837 0066 49       		.uleb128 0x49
+ 1838 0067 13       		.uleb128 0x13
+ 1839 0068 02       		.uleb128 0x2
+ 1840 0069 17       		.uleb128 0x17
+ 1841 006a 00       		.byte	0
+ 1842 006b 00       		.byte	0
+ 1843 006c 08       		.uleb128 0x8
+ 1844 006d 0B       		.uleb128 0xb
+ 1845 006e 01       		.byte	0x1
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 37
+
+
+ 1846 006f 11       		.uleb128 0x11
+ 1847 0070 01       		.uleb128 0x1
+ 1848 0071 12       		.uleb128 0x12
+ 1849 0072 06       		.uleb128 0x6
+ 1850 0073 01       		.uleb128 0x1
+ 1851 0074 13       		.uleb128 0x13
+ 1852 0075 00       		.byte	0
+ 1853 0076 00       		.byte	0
+ 1854 0077 09       		.uleb128 0x9
+ 1855 0078 34       		.uleb128 0x34
+ 1856 0079 00       		.byte	0
+ 1857 007a 03       		.uleb128 0x3
+ 1858 007b 08       		.uleb128 0x8
+ 1859 007c 3A       		.uleb128 0x3a
+ 1860 007d 0B       		.uleb128 0xb
+ 1861 007e 3B       		.uleb128 0x3b
+ 1862 007f 0B       		.uleb128 0xb
+ 1863 0080 49       		.uleb128 0x49
+ 1864 0081 13       		.uleb128 0x13
+ 1865 0082 02       		.uleb128 0x2
+ 1866 0083 17       		.uleb128 0x17
+ 1867 0084 00       		.byte	0
+ 1868 0085 00       		.byte	0
+ 1869 0086 0A       		.uleb128 0xa
+ 1870 0087 898201   		.uleb128 0x4109
+ 1871 008a 00       		.byte	0
+ 1872 008b 11       		.uleb128 0x11
+ 1873 008c 01       		.uleb128 0x1
+ 1874 008d 31       		.uleb128 0x31
+ 1875 008e 13       		.uleb128 0x13
+ 1876 008f 00       		.byte	0
+ 1877 0090 00       		.byte	0
+ 1878 0091 0B       		.uleb128 0xb
+ 1879 0092 0F       		.uleb128 0xf
+ 1880 0093 00       		.byte	0
+ 1881 0094 0B       		.uleb128 0xb
+ 1882 0095 0B       		.uleb128 0xb
+ 1883 0096 49       		.uleb128 0x49
+ 1884 0097 13       		.uleb128 0x13
+ 1885 0098 00       		.byte	0
+ 1886 0099 00       		.byte	0
+ 1887 009a 0C       		.uleb128 0xc
+ 1888 009b 2E       		.uleb128 0x2e
+ 1889 009c 01       		.byte	0x1
+ 1890 009d 3F       		.uleb128 0x3f
+ 1891 009e 19       		.uleb128 0x19
+ 1892 009f 03       		.uleb128 0x3
+ 1893 00a0 0E       		.uleb128 0xe
+ 1894 00a1 3A       		.uleb128 0x3a
+ 1895 00a2 0B       		.uleb128 0xb
+ 1896 00a3 3B       		.uleb128 0x3b
+ 1897 00a4 0B       		.uleb128 0xb
+ 1898 00a5 11       		.uleb128 0x11
+ 1899 00a6 01       		.uleb128 0x1
+ 1900 00a7 12       		.uleb128 0x12
+ 1901 00a8 06       		.uleb128 0x6
+ 1902 00a9 40       		.uleb128 0x40
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 38
+
+
+ 1903 00aa 18       		.uleb128 0x18
+ 1904 00ab 9742     		.uleb128 0x2117
+ 1905 00ad 19       		.uleb128 0x19
+ 1906 00ae 01       		.uleb128 0x1
+ 1907 00af 13       		.uleb128 0x13
+ 1908 00b0 00       		.byte	0
+ 1909 00b1 00       		.byte	0
+ 1910 00b2 0D       		.uleb128 0xd
+ 1911 00b3 898201   		.uleb128 0x4109
+ 1912 00b6 01       		.byte	0x1
+ 1913 00b7 11       		.uleb128 0x11
+ 1914 00b8 01       		.uleb128 0x1
+ 1915 00b9 31       		.uleb128 0x31
+ 1916 00ba 13       		.uleb128 0x13
+ 1917 00bb 01       		.uleb128 0x1
+ 1918 00bc 13       		.uleb128 0x13
+ 1919 00bd 00       		.byte	0
+ 1920 00be 00       		.byte	0
+ 1921 00bf 0E       		.uleb128 0xe
+ 1922 00c0 8A8201   		.uleb128 0x410a
+ 1923 00c3 00       		.byte	0
+ 1924 00c4 02       		.uleb128 0x2
+ 1925 00c5 18       		.uleb128 0x18
+ 1926 00c6 9142     		.uleb128 0x2111
+ 1927 00c8 18       		.uleb128 0x18
+ 1928 00c9 00       		.byte	0
+ 1929 00ca 00       		.byte	0
+ 1930 00cb 0F       		.uleb128 0xf
+ 1931 00cc 898201   		.uleb128 0x4109
+ 1932 00cf 01       		.byte	0x1
+ 1933 00d0 11       		.uleb128 0x11
+ 1934 00d1 01       		.uleb128 0x1
+ 1935 00d2 31       		.uleb128 0x31
+ 1936 00d3 13       		.uleb128 0x13
+ 1937 00d4 00       		.byte	0
+ 1938 00d5 00       		.byte	0
+ 1939 00d6 10       		.uleb128 0x10
+ 1940 00d7 05       		.uleb128 0x5
+ 1941 00d8 00       		.byte	0
+ 1942 00d9 03       		.uleb128 0x3
+ 1943 00da 0E       		.uleb128 0xe
+ 1944 00db 3A       		.uleb128 0x3a
+ 1945 00dc 0B       		.uleb128 0xb
+ 1946 00dd 3B       		.uleb128 0x3b
+ 1947 00de 0B       		.uleb128 0xb
+ 1948 00df 49       		.uleb128 0x49
+ 1949 00e0 13       		.uleb128 0x13
+ 1950 00e1 02       		.uleb128 0x2
+ 1951 00e2 17       		.uleb128 0x17
+ 1952 00e3 00       		.byte	0
+ 1953 00e4 00       		.byte	0
+ 1954 00e5 11       		.uleb128 0x11
+ 1955 00e6 34       		.uleb128 0x34
+ 1956 00e7 00       		.byte	0
+ 1957 00e8 03       		.uleb128 0x3
+ 1958 00e9 0E       		.uleb128 0xe
+ 1959 00ea 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 39
+
+
+ 1960 00eb 0B       		.uleb128 0xb
+ 1961 00ec 3B       		.uleb128 0x3b
+ 1962 00ed 05       		.uleb128 0x5
+ 1963 00ee 49       		.uleb128 0x49
+ 1964 00ef 13       		.uleb128 0x13
+ 1965 00f0 3F       		.uleb128 0x3f
+ 1966 00f1 19       		.uleb128 0x19
+ 1967 00f2 3C       		.uleb128 0x3c
+ 1968 00f3 19       		.uleb128 0x19
+ 1969 00f4 00       		.byte	0
+ 1970 00f5 00       		.byte	0
+ 1971 00f6 12       		.uleb128 0x12
+ 1972 00f7 35       		.uleb128 0x35
+ 1973 00f8 00       		.byte	0
+ 1974 00f9 49       		.uleb128 0x49
+ 1975 00fa 13       		.uleb128 0x13
+ 1976 00fb 00       		.byte	0
+ 1977 00fc 00       		.byte	0
+ 1978 00fd 13       		.uleb128 0x13
+ 1979 00fe 01       		.uleb128 0x1
+ 1980 00ff 01       		.byte	0x1
+ 1981 0100 49       		.uleb128 0x49
+ 1982 0101 13       		.uleb128 0x13
+ 1983 0102 01       		.uleb128 0x1
+ 1984 0103 13       		.uleb128 0x13
+ 1985 0104 00       		.byte	0
+ 1986 0105 00       		.byte	0
+ 1987 0106 14       		.uleb128 0x14
+ 1988 0107 21       		.uleb128 0x21
+ 1989 0108 00       		.byte	0
+ 1990 0109 49       		.uleb128 0x49
+ 1991 010a 13       		.uleb128 0x13
+ 1992 010b 2F       		.uleb128 0x2f
+ 1993 010c 0B       		.uleb128 0xb
+ 1994 010d 00       		.byte	0
+ 1995 010e 00       		.byte	0
+ 1996 010f 15       		.uleb128 0x15
+ 1997 0110 34       		.uleb128 0x34
+ 1998 0111 00       		.byte	0
+ 1999 0112 03       		.uleb128 0x3
+ 2000 0113 0E       		.uleb128 0xe
+ 2001 0114 3A       		.uleb128 0x3a
+ 2002 0115 0B       		.uleb128 0xb
+ 2003 0116 3B       		.uleb128 0x3b
+ 2004 0117 0B       		.uleb128 0xb
+ 2005 0118 49       		.uleb128 0x49
+ 2006 0119 13       		.uleb128 0x13
+ 2007 011a 3F       		.uleb128 0x3f
+ 2008 011b 19       		.uleb128 0x19
+ 2009 011c 02       		.uleb128 0x2
+ 2010 011d 18       		.uleb128 0x18
+ 2011 011e 00       		.byte	0
+ 2012 011f 00       		.byte	0
+ 2013 0120 16       		.uleb128 0x16
+ 2014 0121 2E       		.uleb128 0x2e
+ 2015 0122 00       		.byte	0
+ 2016 0123 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 40
+
+
+ 2017 0124 19       		.uleb128 0x19
+ 2018 0125 3C       		.uleb128 0x3c
+ 2019 0126 19       		.uleb128 0x19
+ 2020 0127 6E       		.uleb128 0x6e
+ 2021 0128 0E       		.uleb128 0xe
+ 2022 0129 03       		.uleb128 0x3
+ 2023 012a 0E       		.uleb128 0xe
+ 2024 012b 3A       		.uleb128 0x3a
+ 2025 012c 0B       		.uleb128 0xb
+ 2026 012d 3B       		.uleb128 0x3b
+ 2027 012e 0B       		.uleb128 0xb
+ 2028 012f 00       		.byte	0
+ 2029 0130 00       		.byte	0
+ 2030 0131 00       		.byte	0
+ 2031              		.section	.debug_loc,"",%progbits
+ 2032              	.Ldebug_loc0:
+ 2033              	.LLST0:
+ 2034 0000 00000000 		.4byte	.LVL0
+ 2035 0004 BA000000 		.4byte	.LVL6
+ 2036 0008 0100     		.2byte	0x1
+ 2037 000a 50       		.byte	0x50
+ 2038 000b BA000000 		.4byte	.LVL6
+ 2039 000f D4000000 		.4byte	.LFE63
+ 2040 0013 0400     		.2byte	0x4
+ 2041 0015 F3       		.byte	0xf3
+ 2042 0016 01       		.uleb128 0x1
+ 2043 0017 50       		.byte	0x50
+ 2044 0018 9F       		.byte	0x9f
+ 2045 0019 00000000 		.4byte	0
+ 2046 001d 00000000 		.4byte	0
+ 2047              	.LLST1:
+ 2048 0021 0A000000 		.4byte	.LVL1
+ 2049 0025 0E000000 		.4byte	.LVL2
+ 2050 0029 0200     		.2byte	0x2
+ 2051 002b 31       		.byte	0x31
+ 2052 002c 9F       		.byte	0x9f
+ 2053 002d 0E000000 		.4byte	.LVL2
+ 2054 0031 50000000 		.4byte	.LVL3
+ 2055 0035 0100     		.2byte	0x1
+ 2056 0037 53       		.byte	0x53
+ 2057 0038 52000000 		.4byte	.LVL4
+ 2058 003c 58000000 		.4byte	.LVL5
+ 2059 0040 0100     		.2byte	0x1
+ 2060 0042 53       		.byte	0x53
+ 2061 0043 00000000 		.4byte	0
+ 2062 0047 00000000 		.4byte	0
+ 2063              	.LLST2:
+ 2064 004b 00000000 		.4byte	.LVL9
+ 2065 004f D0000000 		.4byte	.LVL15
+ 2066 0053 0100     		.2byte	0x1
+ 2067 0055 50       		.byte	0x50
+ 2068 0056 D0000000 		.4byte	.LVL15
+ 2069 005a E8000000 		.4byte	.LFE64
+ 2070 005e 0400     		.2byte	0x4
+ 2071 0060 F3       		.byte	0xf3
+ 2072 0061 01       		.uleb128 0x1
+ 2073 0062 50       		.byte	0x50
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 41
+
+
+ 2074 0063 9F       		.byte	0x9f
+ 2075 0064 00000000 		.4byte	0
+ 2076 0068 00000000 		.4byte	0
+ 2077              	.LLST3:
+ 2078 006c 2C000000 		.4byte	.LVL10
+ 2079 0070 30000000 		.4byte	.LVL11
+ 2080 0074 0200     		.2byte	0x2
+ 2081 0076 31       		.byte	0x31
+ 2082 0077 9F       		.byte	0x9f
+ 2083 0078 30000000 		.4byte	.LVL11
+ 2084 007c 6A000000 		.4byte	.LVL12
+ 2085 0080 0100     		.2byte	0x1
+ 2086 0082 53       		.byte	0x53
+ 2087 0083 6C000000 		.4byte	.LVL13
+ 2088 0087 72000000 		.4byte	.LVL14
+ 2089 008b 0100     		.2byte	0x1
+ 2090 008d 53       		.byte	0x53
+ 2091 008e 00000000 		.4byte	0
+ 2092 0092 00000000 		.4byte	0
+ 2093              	.LLST4:
+ 2094 0096 00000000 		.4byte	.LVL26
+ 2095 009a 06000000 		.4byte	.LVL27
+ 2096 009e 0100     		.2byte	0x1
+ 2097 00a0 50       		.byte	0x50
+ 2098 00a1 06000000 		.4byte	.LVL27
+ 2099 00a5 18000000 		.4byte	.LVL31
+ 2100 00a9 0400     		.2byte	0x4
+ 2101 00ab F3       		.byte	0xf3
+ 2102 00ac 01       		.uleb128 0x1
+ 2103 00ad 50       		.byte	0x50
+ 2104 00ae 9F       		.byte	0x9f
+ 2105 00af 18000000 		.4byte	.LVL31
+ 2106 00b3 1A000000 		.4byte	.LVL32
+ 2107 00b7 0100     		.2byte	0x1
+ 2108 00b9 50       		.byte	0x50
+ 2109 00ba 1A000000 		.4byte	.LVL32
+ 2110 00be 38000000 		.4byte	.LFE69
+ 2111 00c2 0400     		.2byte	0x4
+ 2112 00c4 F3       		.byte	0xf3
+ 2113 00c5 01       		.uleb128 0x1
+ 2114 00c6 50       		.byte	0x50
+ 2115 00c7 9F       		.byte	0x9f
+ 2116 00c8 00000000 		.4byte	0
+ 2117 00cc 00000000 		.4byte	0
+ 2118              	.LLST5:
+ 2119 00d0 00000000 		.4byte	.LVL38
+ 2120 00d4 08000000 		.4byte	.LVL39
+ 2121 00d8 0100     		.2byte	0x1
+ 2122 00da 50       		.byte	0x50
+ 2123 00db 08000000 		.4byte	.LVL39
+ 2124 00df 3C000000 		.4byte	.LFE70
+ 2125 00e3 0400     		.2byte	0x4
+ 2126 00e5 F3       		.byte	0xf3
+ 2127 00e6 01       		.uleb128 0x1
+ 2128 00e7 50       		.byte	0x50
+ 2129 00e8 9F       		.byte	0x9f
+ 2130 00e9 00000000 		.4byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 42
+
+
+ 2131 00ed 00000000 		.4byte	0
+ 2132              	.LLST6:
+ 2133 00f1 00000000 		.4byte	.LVL38
+ 2134 00f5 0B000000 		.4byte	.LVL40-1
+ 2135 00f9 0100     		.2byte	0x1
+ 2136 00fb 51       		.byte	0x51
+ 2137 00fc 0B000000 		.4byte	.LVL40-1
+ 2138 0100 3C000000 		.4byte	.LFE70
+ 2139 0104 0400     		.2byte	0x4
+ 2140 0106 F3       		.byte	0xf3
+ 2141 0107 01       		.uleb128 0x1
+ 2142 0108 51       		.byte	0x51
+ 2143 0109 9F       		.byte	0x9f
+ 2144 010a 00000000 		.4byte	0
+ 2145 010e 00000000 		.4byte	0
+ 2146              	.LLST7:
+ 2147 0112 00000000 		.4byte	.LVL46
+ 2148 0116 2B000000 		.4byte	.LVL47-1
+ 2149 011a 0100     		.2byte	0x1
+ 2150 011c 50       		.byte	0x50
+ 2151 011d 2B000000 		.4byte	.LVL47-1
+ 2152 0121 96000000 		.4byte	.LVL58
+ 2153 0125 0100     		.2byte	0x1
+ 2154 0127 54       		.byte	0x54
+ 2155 0128 96000000 		.4byte	.LVL58
+ 2156 012c A0000000 		.4byte	.LFE65
+ 2157 0130 0400     		.2byte	0x4
+ 2158 0132 F3       		.byte	0xf3
+ 2159 0133 01       		.uleb128 0x1
+ 2160 0134 50       		.byte	0x50
+ 2161 0135 9F       		.byte	0x9f
+ 2162 0136 00000000 		.4byte	0
+ 2163 013a 00000000 		.4byte	0
+ 2164              	.LLST8:
+ 2165 013e 44000000 		.4byte	.LVL49
+ 2166 0142 48000000 		.4byte	.LVL50
+ 2167 0146 0200     		.2byte	0x2
+ 2168 0148 30       		.byte	0x30
+ 2169 0149 9F       		.byte	0x9f
+ 2170 014a 48000000 		.4byte	.LVL50
+ 2171 014e 5F000000 		.4byte	.LVL51-1
+ 2172 0152 0100     		.2byte	0x1
+ 2173 0154 51       		.byte	0x51
+ 2174 0155 62000000 		.4byte	.LVL52
+ 2175 0159 79000000 		.4byte	.LVL53-1
+ 2176 015d 0100     		.2byte	0x1
+ 2177 015f 51       		.byte	0x51
+ 2178 0160 7C000000 		.4byte	.LVL54
+ 2179 0164 7E000000 		.4byte	.LVL55
+ 2180 0168 0100     		.2byte	0x1
+ 2181 016a 51       		.byte	0x51
+ 2182 016b 80000000 		.4byte	.LVL56
+ 2183 016f 93000000 		.4byte	.LVL57-1
+ 2184 0173 0100     		.2byte	0x1
+ 2185 0175 51       		.byte	0x51
+ 2186 0176 00000000 		.4byte	0
+ 2187 017a 00000000 		.4byte	0
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 43
+
+
+ 2188              	.LLST9:
+ 2189 017e 00000000 		.4byte	.LVL59
+ 2190 0182 08000000 		.4byte	.LVL60
+ 2191 0186 0100     		.2byte	0x1
+ 2192 0188 50       		.byte	0x50
+ 2193 0189 08000000 		.4byte	.LVL60
+ 2194 018d 48000000 		.4byte	.LFE71
+ 2195 0191 0400     		.2byte	0x4
+ 2196 0193 F3       		.byte	0xf3
+ 2197 0194 01       		.uleb128 0x1
+ 2198 0195 50       		.byte	0x50
+ 2199 0196 9F       		.byte	0x9f
+ 2200 0197 00000000 		.4byte	0
+ 2201 019b 00000000 		.4byte	0
+ 2202              	.LLST10:
+ 2203 019f 00000000 		.4byte	.LVL59
+ 2204 01a3 0B000000 		.4byte	.LVL61-1
+ 2205 01a7 0100     		.2byte	0x1
+ 2206 01a9 51       		.byte	0x51
+ 2207 01aa 0B000000 		.4byte	.LVL61-1
+ 2208 01ae 48000000 		.4byte	.LFE71
+ 2209 01b2 0400     		.2byte	0x4
+ 2210 01b4 F3       		.byte	0xf3
+ 2211 01b5 01       		.uleb128 0x1
+ 2212 01b6 51       		.byte	0x51
+ 2213 01b7 9F       		.byte	0x9f
+ 2214 01b8 00000000 		.4byte	0
+ 2215 01bc 00000000 		.4byte	0
+ 2216              	.LLST11:
+ 2217 01c0 00000000 		.4byte	.LVL67
+ 2218 01c4 37000000 		.4byte	.LVL68-1
+ 2219 01c8 0100     		.2byte	0x1
+ 2220 01ca 50       		.byte	0x50
+ 2221 01cb 37000000 		.4byte	.LVL68-1
+ 2222 01cf A2000000 		.4byte	.LVL79
+ 2223 01d3 0100     		.2byte	0x1
+ 2224 01d5 54       		.byte	0x54
+ 2225 01d6 A2000000 		.4byte	.LVL79
+ 2226 01da AC000000 		.4byte	.LFE66
+ 2227 01de 0400     		.2byte	0x4
+ 2228 01e0 F3       		.byte	0xf3
+ 2229 01e1 01       		.uleb128 0x1
+ 2230 01e2 50       		.byte	0x50
+ 2231 01e3 9F       		.byte	0x9f
+ 2232 01e4 00000000 		.4byte	0
+ 2233 01e8 00000000 		.4byte	0
+ 2234              	.LLST12:
+ 2235 01ec 50000000 		.4byte	.LVL70
+ 2236 01f0 54000000 		.4byte	.LVL71
+ 2237 01f4 0200     		.2byte	0x2
+ 2238 01f6 30       		.byte	0x30
+ 2239 01f7 9F       		.byte	0x9f
+ 2240 01f8 54000000 		.4byte	.LVL71
+ 2241 01fc 6B000000 		.4byte	.LVL72-1
+ 2242 0200 0100     		.2byte	0x1
+ 2243 0202 51       		.byte	0x51
+ 2244 0203 6E000000 		.4byte	.LVL73
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 44
+
+
+ 2245 0207 85000000 		.4byte	.LVL74-1
+ 2246 020b 0100     		.2byte	0x1
+ 2247 020d 51       		.byte	0x51
+ 2248 020e 88000000 		.4byte	.LVL75
+ 2249 0212 8A000000 		.4byte	.LVL76
+ 2250 0216 0100     		.2byte	0x1
+ 2251 0218 51       		.byte	0x51
+ 2252 0219 8C000000 		.4byte	.LVL77
+ 2253 021d 9F000000 		.4byte	.LVL78-1
+ 2254 0221 0100     		.2byte	0x1
+ 2255 0223 51       		.byte	0x51
+ 2256 0224 00000000 		.4byte	0
+ 2257 0228 00000000 		.4byte	0
+ 2258              		.section	.debug_aranges,"",%progbits
+ 2259 0000 5C000000 		.4byte	0x5c
+ 2260 0004 0200     		.2byte	0x2
+ 2261 0006 00000000 		.4byte	.Ldebug_info0
+ 2262 000a 04       		.byte	0x4
+ 2263 000b 00       		.byte	0
+ 2264 000c 0000     		.2byte	0
+ 2265 000e 0000     		.2byte	0
+ 2266 0010 00000000 		.4byte	.LFB63
+ 2267 0014 D4000000 		.4byte	.LFE63-.LFB63
+ 2268 0018 00000000 		.4byte	.LFB64
+ 2269 001c E8000000 		.4byte	.LFE64-.LFB64
+ 2270 0020 00000000 		.4byte	.LFB67
+ 2271 0024 1C000000 		.4byte	.LFE67-.LFB67
+ 2272 0028 00000000 		.4byte	.LFB68
+ 2273 002c 1C000000 		.4byte	.LFE68-.LFB68
+ 2274 0030 00000000 		.4byte	.LFB69
+ 2275 0034 38000000 		.4byte	.LFE69-.LFB69
+ 2276 0038 00000000 		.4byte	.LFB70
+ 2277 003c 3C000000 		.4byte	.LFE70-.LFB70
+ 2278 0040 00000000 		.4byte	.LFB65
+ 2279 0044 A0000000 		.4byte	.LFE65-.LFB65
+ 2280 0048 00000000 		.4byte	.LFB71
+ 2281 004c 48000000 		.4byte	.LFE71-.LFB71
+ 2282 0050 00000000 		.4byte	.LFB66
+ 2283 0054 AC000000 		.4byte	.LFE66-.LFB66
+ 2284 0058 00000000 		.4byte	0
+ 2285 005c 00000000 		.4byte	0
+ 2286              		.section	.debug_ranges,"",%progbits
+ 2287              	.Ldebug_ranges0:
+ 2288 0000 00000000 		.4byte	.LFB63
+ 2289 0004 D4000000 		.4byte	.LFE63
+ 2290 0008 00000000 		.4byte	.LFB64
+ 2291 000c E8000000 		.4byte	.LFE64
+ 2292 0010 00000000 		.4byte	.LFB67
+ 2293 0014 1C000000 		.4byte	.LFE67
+ 2294 0018 00000000 		.4byte	.LFB68
+ 2295 001c 1C000000 		.4byte	.LFE68
+ 2296 0020 00000000 		.4byte	.LFB69
+ 2297 0024 38000000 		.4byte	.LFE69
+ 2298 0028 00000000 		.4byte	.LFB70
+ 2299 002c 3C000000 		.4byte	.LFE70
+ 2300 0030 00000000 		.4byte	.LFB65
+ 2301 0034 A0000000 		.4byte	.LFE65
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 45
+
+
+ 2302 0038 00000000 		.4byte	.LFB71
+ 2303 003c 48000000 		.4byte	.LFE71
+ 2304 0040 00000000 		.4byte	.LFB66
+ 2305 0044 AC000000 		.4byte	.LFE66
+ 2306 0048 00000000 		.4byte	0
+ 2307 004c 00000000 		.4byte	0
+ 2308              		.section	.debug_line,"",%progbits
+ 2309              	.Ldebug_line0:
+ 2310 0000 CD030000 		.section	.debug_str,"MS",%progbits,1
+ 2310      02009A01 
+ 2310      00000201 
+ 2310      FB0E0D00 
+ 2310      01010101 
+ 2311              	.LASF4:
+ 2312 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 2312      6E74385F 
+ 2312      7400
+ 2313              	.LASF5:
+ 2314 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 2314      7433325F 
+ 2314      7400
+ 2315              	.LASF20:
+ 2316 0014 44726976 		.ascii	"Drive\000"
+ 2316      6500
+ 2317              	.LASF30:
+ 2318 001a 5475726E 		.ascii	"Turn_Difference\000"
+ 2318      5F446966 
+ 2318      66657265 
+ 2318      6E636500 
+ 2319              	.LASF47:
+ 2320 002a 50696E5F 		.ascii	"Pin_Led_1_Write\000"
+ 2320      4C65645F 
+ 2320      315F5772 
+ 2320      69746500 
+ 2321              	.LASF25:
+ 2322 003a 6C656674 		.ascii	"left_right\000"
+ 2322      5F726967 
+ 2322      687400
+ 2323              	.LASF42:
+ 2324 0045 50574D5F 		.ascii	"PWM_1_WriteCompare1\000"
+ 2324      315F5772 
+ 2324      69746543 
+ 2324      6F6D7061 
+ 2324      72653100 
+ 2325              	.LASF43:
+ 2326 0059 50574D5F 		.ascii	"PWM_1_WriteCompare2\000"
+ 2326      315F5772 
+ 2326      69746543 
+ 2326      6F6D7061 
+ 2326      72653200 
+ 2327              	.LASF36:
+ 2328 006d 64697265 		.ascii	"direction\000"
+ 2328      6374696F 
+ 2328      6E00
+ 2329              	.LASF50:
+ 2330 0077 433A5C55 		.ascii	"C:\\Users\\Hugo\\Documents\\PSoC Creator\\Projectin"
+ 2330      73657273 
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 46
+
+
+ 2330      5C487567 
+ 2330      6F5C446F 
+ 2330      63756D65 
+ 2331 00a5 6F5C416E 		.ascii	"o\\AnalogIR.cydsn\000"
+ 2331      616C6F67 
+ 2331      49522E63 
+ 2331      7964736E 
+ 2331      00
+ 2332              	.LASF24:
+ 2333 00b6 48617264 		.ascii	"HardTurn\000"
+ 2333      5475726E 
+ 2333      00
+ 2334              	.LASF15:
+ 2335 00bf 666C6F61 		.ascii	"float\000"
+ 2335      7400
+ 2336              	.LASF0:
+ 2337 00c5 7369676E 		.ascii	"signed char\000"
+ 2337      65642063 
+ 2337      68617200 
+ 2338              	.LASF1:
+ 2339 00d1 756E7369 		.ascii	"unsigned char\000"
+ 2339      676E6564 
+ 2339      20636861 
+ 2339      7200
+ 2340              	.LASF48:
+ 2341 00df 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2341      43313120 
+ 2341      352E342E 
+ 2341      31203230 
+ 2341      31363036 
+ 2342 0112 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2342      20726576 
+ 2342      6973696F 
+ 2342      6E203233 
+ 2342      37373135 
+ 2343 0145 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2343      66756E63 
+ 2343      74696F6E 
+ 2343      2D736563 
+ 2343      74696F6E 
+ 2344              	.LASF14:
+ 2345 016d 696E7431 		.ascii	"int16\000"
+ 2345      3600
+ 2346              	.LASF7:
+ 2347 0173 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2347      20756E73 
+ 2347      69676E65 
+ 2347      6420696E 
+ 2347      7400
+ 2348              	.LASF29:
+ 2349 0185 44726976 		.ascii	"DriveBetter\000"
+ 2349      65426574 
+ 2349      74657200 
+ 2350              	.LASF3:
+ 2351 0191 73686F72 		.ascii	"short unsigned int\000"
+ 2351      7420756E 
+ 2351      7369676E 
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 47
+
+
+ 2351      65642069 
+ 2351      6E7400
+ 2352              	.LASF23:
+ 2353 01a4 4261636B 		.ascii	"Backwards\000"
+ 2353      77617264 
+ 2353      7300
+ 2354              	.LASF21:
+ 2355 01ae 44726976 		.ascii	"Drive2\000"
+ 2355      653200
+ 2356              	.LASF32:
+ 2357 01b5 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2357      52784275 
+ 2357      66666572 
+ 2357      00
+ 2358              	.LASF16:
+ 2359 01c2 646F7562 		.ascii	"double\000"
+ 2359      6C6500
+ 2360              	.LASF41:
+ 2361 01c9 546F5269 		.ascii	"ToRight\000"
+ 2361      67687400 
+ 2362              	.LASF22:
+ 2363 01d1 53747261 		.ascii	"Straight\000"
+ 2363      69676874 
+ 2363      00
+ 2364              	.LASF10:
+ 2365 01da 756E7369 		.ascii	"unsigned int\000"
+ 2365      676E6564 
+ 2365      20696E74 
+ 2365      00
+ 2366              	.LASF9:
+ 2367 01e7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2367      206C6F6E 
+ 2367      6720756E 
+ 2367      7369676E 
+ 2367      65642069 
+ 2368              	.LASF11:
+ 2369 01fe 75696E74 		.ascii	"uint8_t\000"
+ 2369      385F7400 
+ 2370              	.LASF34:
+ 2371 0206 6D6F746F 		.ascii	"motor_Direction_Low\000"
+ 2371      725F4469 
+ 2371      72656374 
+ 2371      696F6E5F 
+ 2371      4C6F7700 
+ 2372              	.LASF38:
+ 2373 021a 686F6C64 		.ascii	"holdL\000"
+ 2373      4C00
+ 2374              	.LASF6:
+ 2375 0220 6C6F6E67 		.ascii	"long int\000"
+ 2375      20696E74 
+ 2375      00
+ 2376              	.LASF39:
+ 2377 0229 686F6C64 		.ascii	"holdR\000"
+ 2377      5200
+ 2378              	.LASF12:
+ 2379 022f 696E7433 		.ascii	"int32_t\000"
+ 2379      325F7400 
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 48
+
+
+ 2380              	.LASF40:
+ 2381 0237 546F4C65 		.ascii	"ToLeft\000"
+ 2381      667400
+ 2382              	.LASF19:
+ 2383 023e 73697A65 		.ascii	"sizetype\000"
+ 2383      74797065 
+ 2383      00
+ 2384              	.LASF8:
+ 2385 0247 6C6F6E67 		.ascii	"long long int\000"
+ 2385      206C6F6E 
+ 2385      6720696E 
+ 2385      7400
+ 2386              	.LASF17:
+ 2387 0255 63686172 		.ascii	"char\000"
+ 2387      00
+ 2388              	.LASF31:
+ 2389 025a 44726976 		.ascii	"DriveBetterSwing\000"
+ 2389      65426574 
+ 2389      74657253 
+ 2389      77696E67 
+ 2389      00
+ 2390              	.LASF46:
+ 2391 026b 50696E5F 		.ascii	"Pin_Led_5_Write\000"
+ 2391      4C65645F 
+ 2391      355F5772 
+ 2391      69746500 
+ 2392              	.LASF44:
+ 2393 027b 50696E5F 		.ascii	"Pin_Motor_1_Write\000"
+ 2393      4D6F746F 
+ 2393      725F315F 
+ 2393      57726974 
+ 2393      6500
+ 2394              	.LASF2:
+ 2395 028d 73686F72 		.ascii	"short int\000"
+ 2395      7420696E 
+ 2395      7400
+ 2396              	.LASF13:
+ 2397 0297 75696E74 		.ascii	"uint8\000"
+ 2397      3800
+ 2398              	.LASF49:
+ 2399 029d 44726976 		.ascii	"Driving.c\000"
+ 2399      696E672E 
+ 2399      6300
+ 2400              	.LASF27:
+ 2401 02a7 5475726E 		.ascii	"Turn\000"
+ 2401      00
+ 2402              	.LASF28:
+ 2403 02ac 69724C6F 		.ascii	"irLocation\000"
+ 2403      63617469 
+ 2403      6F6E00
+ 2404              	.LASF45:
+ 2405 02b7 50696E5F 		.ascii	"Pin_Motor_2_Write\000"
+ 2405      4D6F746F 
+ 2405      725F325F 
+ 2405      57726974 
+ 2405      6500
+ 2406              	.LASF37:
+ARM GAS  C:\Users\Hugo\AppData\Local\Temp\ccLC25Ce.s 			page 49
+
+
+ 2407 02c9 70617468 		.ascii	"path\000"
+ 2407      00
+ 2408              	.LASF18:
+ 2409 02ce 6C6F6E67 		.ascii	"long double\000"
+ 2409      20646F75 
+ 2409      626C6500 
+ 2410              	.LASF33:
+ 2411 02da 6D6F746F 		.ascii	"motor_Direction_High\000"
+ 2411      725F4469 
+ 2411      72656374 
+ 2411      696F6E5F 
+ 2411      48696768 
+ 2412              	.LASF26:
+ 2413 02ef 5F426F6F 		.ascii	"_Bool\000"
+ 2413      6C00
+ 2414              	.LASF35:
+ 2415 02f5 6D6F746F 		.ascii	"motor_Difference\000"
+ 2415      725F4469 
+ 2415      66666572 
+ 2415      656E6365 
+ 2415      00
+ 2416              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
